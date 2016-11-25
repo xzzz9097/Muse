@@ -42,39 +42,45 @@ class SpotifyHelper: NSObject {
         execAppleScript(qSpotifyPreviousTrack)
     }
     
-    func currentPlaybackPosition() -> Float {
-        return Float(execAppleScriptWithOutput(qSpotifyPlaybackPosition)!)!
+    func currentPlaybackPosition() -> Float? {
+        guard let stringValue = execAppleScriptWithOutput(qSpotifyPlaybackPosition) else { return nil }
+        
+        return Float(stringValue)
     }
     
     func goTo(time: Float) {
         setAppleScriptVariable(qSpotifySetPlaybackPosition, String(time))
     }
     
-    func artworkURL() -> String {
-        return execAppleScriptWithOutput(qSpotifyArtworkURL)!
+    func artworkURL() -> String? {
+        return execAppleScriptWithOutput(qSpotifyArtworkURL)
     }
     
     func songFromNotification(notification: NSNotification) -> Song {
         // Retrieve new value from notification
-        let songName = notification.userInfo?[kSpotifySongName]! as? String
-        let songArtist = notification.userInfo?[kSpotifySongArtist]! as? String
-        let songAlbum = notification.userInfo?[kSpotifySongAlbum]! as? String
+        guard let userInfo = notification.userInfo else { return Song() }
         
-        let songArtworkURL = artworkURL()
+        guard
+            let songName = userInfo[kSpotifySongName] as? String,
+            let songArtist = userInfo[kSpotifySongArtist] as? String,
+            let songAlbum = userInfo[kSpotifySongAlbum] as? String,
         
-        let isPlaying = notification.userInfo?[kSpotifyPlayerState]! as? String == kSpotifyPlayerStatePlaying
-        let songPlaybackPosition = notification.userInfo?[kSpotifySongPlaybackPosition]! as? Float
-        let songDuration = notification.userInfo?[kSpotifySongDuration]! as? Float
+            let songArtworkURL = artworkURL(),
+        
+            let isPlaying = userInfo[kSpotifyPlayerState] as? String,
+            let songPlaybackPosition = userInfo[kSpotifySongPlaybackPosition] as? Float,
+            let songDuration = userInfo[kSpotifySongDuration] as? Float
+        else { return Song() }
         
         // Return the object
         return Song(
-            name: songName!,
-            artist: songArtist!,
-            album: songAlbum!,
+            name: songName,
+            artist: songArtist,
+            album: songAlbum,
             artworkURL: songArtworkURL,
-            isPlaying: isPlaying,
-            playbackPosition: songPlaybackPosition!,
-            duration: songDuration! / 1000
+            isPlaying: isPlaying == kSpotifyPlayerStatePlaying,
+            playbackPosition: songPlaybackPosition,
+            duration: songDuration / 1000
         )
     }
     

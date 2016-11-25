@@ -171,7 +171,9 @@ class WindowController: NSWindowController {
     
     func updateSongProgressSlider() {
         if (!isSliding) {
-            self.song.playbackPosition = spotifyHelper.currentPlaybackPosition()
+            guard let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() else { return }
+            
+            self.song.playbackPosition = currentPlaybackPosition
             songProgressSlider.floatValue = self.song.playbackPosition / self.song.duration
         }
     }
