@@ -28,7 +28,13 @@ let qSpotifyArtworkURL = "tell application \"Spotify\"\nartwork url of current t
 let qSpotifyPlaybackPosition = "tell application \"Spotify\"\nplayer position\nend tell"
 let qSpotifySetPlaybackPosition = ["tell application \"Spotify\"\nset player position to ","\nend tell"]
 
-class SpotifyHelper: NSObject {
+class SpotifyHelper {
+    
+    // Singleton constructor
+    static let sharedInstance = SpotifyHelper()
+    
+    // Make standard init private
+    private init() {}
     
     func togglePlayPause() {
         execAppleScript(qSpotifyTogglePlayPause)

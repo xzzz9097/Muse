@@ -9,7 +9,7 @@
 import Cocoa
 
 class WindowController: NSWindowController {
-    var spotifyHelper = SpotifyHelper()
+    var spotifyHelper = SpotifyHelper.sharedInstance
     
     var songTrackingTimer = Timer()
     
