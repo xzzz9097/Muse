@@ -7,15 +7,72 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
+		0C9A60C71DE75DCC0051CDC6 /* NSImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */; };
+		0C9A60D51DE79B1C0051CDC6 /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60D01DE79B1C0051CDC6 /* DDHotKeyCenter.m */; };
+		0C9A60D61DE79B1C0051CDC6 /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60D21DE79B1C0051CDC6 /* DDHotKeyTextField.m */; };
+		0C9A60D71DE79B1C0051CDC6 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60D41DE79B1C0051CDC6 /* DDHotKeyUtilities.m */; };
+		0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
 		0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466D1DE3826300A3BE8E /* Assets.xcassets */; };
 		0CFF46711DE3826300A3BE8E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466F1DE3826300A3BE8E /* Main.storyboard */; };
 		0CFF467C1DE3826300A3BE8E /* MuseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF467B1DE3826300A3BE8E /* MuseTests.swift */; };
 		0CFF46871DE3826300A3BE8E /* MuseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46861DE3826300A3BE8E /* MuseUITests.swift */; };
+		0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46941DE382BA00A3BE8E /* WindowController.swift */; };
+		0CFF46971DE383A300A3BE8E /* SpotifyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0CAD6FA11DE4B3CF00736B00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E4FEFDB19575BE100351305;
+			remoteInfo = "SwiftyJSON iOS";
+		};
+		0CAD6FA31DE4B3CF00736B00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E4FEFE619575BE100351305;
+			remoteInfo = "SwiftyJSON iOS Tests";
+		};
+		0CAD6FA51DE4B3CF00736B00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C7DFC5B1A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX";
+		};
+		0CAD6FA71DE4B3CF00736B00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9C7DFC651A9102BD005AA3F7;
+			remoteInfo = "SwiftyJSON OSX Tests";
+		};
+		0CAD6FA91DE4B3CF00736B00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4D7CCE81B9465A700EE7221;
+			remoteInfo = "SwiftyJSON watchOS";
+		};
+		0CAD6FAB1DE4B3CF00736B00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7236B4F61BAC14150020529B;
+			remoteInfo = "SwiftyJSON tvOS";
+		};
+		0CAD6FAD1DE4B3CF00736B00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A8580F741BCF5C5B00DA927B;
+			remoteInfo = "SwiftyJSON tvOS Tests";
+		};
 		0CFF46781DE3826300A3BE8E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0CFF465E1DE3826300A3BE8E /* Project object */;
@@ -33,6 +90,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C9A60BD1DE6071F0051CDC6 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImageView+Download.swift"; sourceTree = "<group>"; };
+		0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0C9A60CA1DE76F990051CDC6 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Muse-Bridging-Header.h"; sourceTree = "<group>"; };
+		0C9A60CF1DE79B1C0051CDC6 /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyCenter.h; path = ../../DDHotKey/DDHotKeyCenter.h; sourceTree = "<group>"; };
+		0C9A60D01DE79B1C0051CDC6 /* DDHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyCenter.m; path = ../../DDHotKey/DDHotKeyCenter.m; sourceTree = "<group>"; };
+		0C9A60D11DE79B1C0051CDC6 /* DDHotKeyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyTextField.h; path = ../../DDHotKey/DDHotKeyTextField.h; sourceTree = "<group>"; };
+		0C9A60D21DE79B1C0051CDC6 /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyTextField.m; path = ../../DDHotKey/DDHotKeyTextField.m; sourceTree = "<group>"; };
+		0C9A60D31DE79B1C0051CDC6 /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyUtilities.h; path = ../../DDHotKey/DDHotKeyUtilities.h; sourceTree = "<group>"; };
+		0C9A60D41DE79B1C0051CDC6 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyUtilities.m; path = ../../DDHotKey/DDHotKeyUtilities.m; sourceTree = "<group>"; };
+		0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CFF466B1DE3826300A3BE8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +115,8 @@
 		0CFF46821DE3826300A3BE8E /* MuseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MuseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46861DE3826300A3BE8E /* MuseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuseUITests.swift; sourceTree = "<group>"; };
 		0CFF46881DE3826300A3BE8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0CFF46941DE382BA00A3BE8E /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
+		0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +145,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C9A60CD1DE79AE50051CDC6 /* DDHotKey */ = {
+			isa = PBXGroup;
+			children = (
+				0C9A60CF1DE79B1C0051CDC6 /* DDHotKeyCenter.h */,
+				0C9A60D01DE79B1C0051CDC6 /* DDHotKeyCenter.m */,
+				0C9A60D11DE79B1C0051CDC6 /* DDHotKeyTextField.h */,
+				0C9A60D21DE79B1C0051CDC6 /* DDHotKeyTextField.m */,
+				0C9A60D31DE79B1C0051CDC6 /* DDHotKeyUtilities.h */,
+				0C9A60D41DE79B1C0051CDC6 /* DDHotKeyUtilities.m */,
+				0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */,
+			);
+			name = DDHotKey;
+			sourceTree = "<group>";
+		};
+		0CAD6F981DE4B3CF00736B00 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0CAD6FA21DE4B3CF00736B00 /* SwiftyJSON.framework */,
+				0CAD6FA41DE4B3CF00736B00 /* SwiftyJSON iOS Tests.xctest */,
+				0CAD6FA61DE4B3CF00736B00 /* SwiftyJSON.framework */,
+				0CAD6FA81DE4B3CF00736B00 /* SwiftyJSON OSX Tests.xctest */,
+				0CAD6FAA1DE4B3CF00736B00 /* SwiftyJSON.framework */,
+				0CAD6FAC1DE4B3CF00736B00 /* SwiftyJSON.framework */,
+				0CAD6FAE1DE4B3CF00736B00 /* SwiftyJSON tvOS Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0CFF465D1DE3826300A3BE8E = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +180,7 @@
 				0CFF467A1DE3826300A3BE8E /* MuseTests */,
 				0CFF46851DE3826300A3BE8E /* MuseUITests */,
 				0CFF46671DE3826300A3BE8E /* Products */,
+				7E9AA20CAC9772D1BED5DCE5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,8 +197,13 @@
 		0CFF46681DE3826300A3BE8E /* Muse */ = {
 			isa = PBXGroup;
 			children = (
+				0C9A60CD1DE79AE50051CDC6 /* DDHotKey */,
 				0CFF46691DE3826300A3BE8E /* AppDelegate.swift */,
+				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
+				0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */,
+				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
+				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
 				0CFF466D1DE3826300A3BE8E /* Assets.xcassets */,
 				0CFF466F1DE3826300A3BE8E /* Main.storyboard */,
 				0CFF46721DE3826300A3BE8E /* Info.plist */,
@@ -120,6 +227,17 @@
 				0CFF46881DE3826300A3BE8E /* Info.plist */,
 			);
 			path = MuseUITests;
+			sourceTree = "<group>";
+		};
+		7E9AA20CAC9772D1BED5DCE5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */,
+				0C9A60CA1DE76F990051CDC6 /* Quartz.framework */,
+				0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */,
+				0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,15 +308,18 @@
 				TargetAttributes = {
 					0CFF46651DE3826300A3BE8E = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
 					0CFF46761DE3826300A3BE8E = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 0CFF46651DE3826300A3BE8E;
 					};
 					0CFF46811DE3826300A3BE8E = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 0CFF46651DE3826300A3BE8E;
 					};
@@ -215,6 +336,12 @@
 			mainGroup = 0CFF465D1DE3826300A3BE8E;
 			productRefGroup = 0CFF46671DE3826300A3BE8E /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0CAD6F981DE4B3CF00736B00 /* Products */;
+					ProjectRef = 0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0CFF46651DE3826300A3BE8E /* Muse */,
@@ -223,6 +350,58 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0CAD6FA21DE4B3CF00736B00 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = 0CAD6FA11DE4B3CF00736B00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0CAD6FA41DE4B3CF00736B00 /* SwiftyJSON iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON iOS Tests.xctest";
+			remoteRef = 0CAD6FA31DE4B3CF00736B00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0CAD6FA61DE4B3CF00736B00 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = 0CAD6FA51DE4B3CF00736B00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0CAD6FA81DE4B3CF00736B00 /* SwiftyJSON OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON OSX Tests.xctest";
+			remoteRef = 0CAD6FA71DE4B3CF00736B00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0CAD6FAA1DE4B3CF00736B00 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = 0CAD6FA91DE4B3CF00736B00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0CAD6FAC1DE4B3CF00736B00 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = 0CAD6FAB1DE4B3CF00736B00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0CAD6FAE1DE4B3CF00736B00 /* SwiftyJSON tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SwiftyJSON tvOS Tests.xctest";
+			remoteRef = 0CAD6FAD1DE4B3CF00736B00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0CFF46641DE3826300A3BE8E /* Resources */ = {
@@ -255,7 +434,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C9A60D51DE79B1C0051CDC6 /* DDHotKeyCenter.m in Sources */,
+				0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */,
+				0C9A60D71DE79B1C0051CDC6 /* DDHotKeyUtilities.m in Sources */,
+				0CFF46971DE383A300A3BE8E /* SpotifyHelper.swift in Sources */,
+				0C9A60D61DE79B1C0051CDC6 /* DDHotKeyTextField.m in Sources */,
+				0C9A60C71DE75DCC0051CDC6 /* NSImageView+Download.swift in Sources */,
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
+				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
 				0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,11 +583,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Muse-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -410,11 +599,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Muse-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -496,6 +687,7 @@
 				0CFF468D1DE3826300A3BE8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0CFF468E1DE3826300A3BE8E /* Build configuration list for PBXNativeTarget "MuseTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +696,7 @@
 				0CFF46901DE3826300A3BE8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0CFF46911DE3826300A3BE8E /* Build configuration list for PBXNativeTarget "MuseUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +705,7 @@
 				0CFF46931DE3826300A3BE8E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
