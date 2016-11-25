@@ -88,6 +88,10 @@ class WindowController: NSWindowController {
         window.titleVisibility = NSWindowTitleVisibility.hidden;
         window.titlebarAppearsTransparent = true
         window.styleMask.update(with: NSWindowStyleMask.fullSizeContentView)
+        
+        // Set fixed window position (at the center of the screen)
+        window.center()
+        window.isMovable = false
     }
     
     func prepareAutoClose() {
