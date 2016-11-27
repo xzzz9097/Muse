@@ -95,6 +95,9 @@ class WindowController: NSWindowController {
         
         // Show on every workspace
         window.collectionBehavior = .canJoinAllSpaces
+        
+        // Hide after losing focus
+        window.hidesOnDeactivate = true
     }
     
     func prepareAutoClose() {
