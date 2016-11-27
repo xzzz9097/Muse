@@ -92,6 +92,9 @@ class WindowController: NSWindowController {
         // Set fixed window position (at the center of the screen)
         window.center()
         window.isMovable = false
+        
+        // Show on every workspace
+        window.collectionBehavior = .canJoinAllSpaces
     }
     
     func prepareAutoClose() {
