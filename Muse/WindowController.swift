@@ -35,8 +35,6 @@ class WindowController: NSWindowController {
         
         // Register our DDHotKey
         registerHotkey()
-        
-        prepareAutoClose()
     }
 
     // Outlets
@@ -101,11 +99,11 @@ class WindowController: NSWindowController {
     }
     
     func prepareAutoClose() {
+        // Timer for auto-close
         autoCloseTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
             timer in
             
             self.counter += 1
-            print(self.counter)
             
             if self.counter == 10 {
                 timer.invalidate()
