@@ -66,14 +66,14 @@ class WindowController: NSWindowController {
     
     @IBAction func progressSliderValueChanged(_ sender: Any) {
         if let slider = sender as? NSSlider {
-            let currentEvent = NSApplication.shared().currentEvent
+            guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
-            for _ in (currentEvent?.touches(matching: NSTouchPhase.began, in: slider))! {
+            for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
                 // Detected touch phase start
                 isSliding = true
             }
             
-            for _ in (currentEvent?.touches(matching: NSTouchPhase.ended, in: slider))! {
+            for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
                 // Detected touch phase end
                 isSliding = false
                 
@@ -165,7 +165,7 @@ class WindowController: NSWindowController {
             NSApp.hide(self)
         } else {
             // Show window if not
-            self.window?.makeKeyAndOrderFront(self)
+            window.makeKeyAndOrderFront(self)
             
             NSApp.activate(ignoringOtherApps: true)
         }
