@@ -35,6 +35,9 @@ class WindowController: NSWindowController {
         
         // Register our DDHotKey
         registerHotkey()
+        
+        // Load song at cold start
+        prepareSong()
     }
 
     // Outlets
@@ -113,6 +116,16 @@ class WindowController: NSWindowController {
         })
     }
     
+    func prepareSong() {
+        self.song = spotifyHelper.songFromAppleScriptQuery()
+        
+        if #available(OSX 10.12.1, *) {
+            updateUIAfterNotification()
+        }
+        
+        trackSongProgress()
+    }
+    
     @available(OSX 10.12.1, *)
     func prepareButtons() {
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarRewindTemplate), forSegment: 0)
@@ -174,6 +187,7 @@ class WindowController: NSWindowController {
             songTrackingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateSongProgressSlider), userInfo: nil, repeats: true)
         } else {
             songTrackingTimer.invalidate()
+            updateSongProgressSlider()
         }
     }
     
