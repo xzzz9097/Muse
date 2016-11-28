@@ -1,8 +1,11 @@
 ## Muse
 
-![Icon](Muse/Assets.xcassets/AppIcon.appiconset/icon-512@2x.png)
+<img src=Muse/Assets.xcassets/AppIcon.appiconset/icon-512@2x.png width="96">
 
 An open-source Spotify controller with TouchBar support.
+
+### Download
+[Beta 1](https://github.com/xzzz9097/Muse/releases/download/1.0b/Muse.app.zip)
 
 ### Usage
 Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
