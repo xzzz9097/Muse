@@ -56,10 +56,12 @@ class WindowController: NSWindowController {
         switch segmentedControl.selectedSegment {
         case 0:
             spotifyHelper.previousTrack()
+            updateSongProgressSlider()
         case 1:
             spotifyHelper.togglePlayPause()
         case 2:
             spotifyHelper.nextTrack()
+            updateSongProgressSlider()
         default:
             return
         }
