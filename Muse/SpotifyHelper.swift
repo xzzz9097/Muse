@@ -37,47 +37,50 @@ class SpotifyHelper {
     // Make standard init private
     private init() {}
     
+    // Acces the AppleScript bridge
+    let appleScriptBridge = AppleScriptBridge.shared
+    
     func togglePlayPause() {
-        execAppleScript(qSpotifyTogglePlayPause)
+        appleScriptBridge.execAppleScript(qSpotifyTogglePlayPause)
     }
     
     func nextTrack() {
-        execAppleScript(qSpotifyNextTrack)
+        appleScriptBridge.execAppleScript(qSpotifyNextTrack)
     }
     
     func previousTrack() {
-        execAppleScript(qSpotifyPreviousTrack)
+        appleScriptBridge.execAppleScript(qSpotifyPreviousTrack)
     }
     
     func currentPlaybackPosition() -> Float? {
-        guard let stringValue = execAppleScriptWithOutput(qSpotifyPlaybackPosition) else { return nil }
+        guard let stringValue = appleScriptBridge.execAppleScriptWithOutput(qSpotifyPlaybackPosition) else { return nil }
         
         return Float(stringValue)
     }
     
     func goTo(time: Float) {
-        setAppleScriptVariable(qSpotifySetPlaybackPosition, String(time))
+        appleScriptBridge.setAppleScriptVariable(qSpotifySetPlaybackPosition, String(time))
     }
     
     func artworkURL() -> String? {
-        return execAppleScriptWithOutput(qSpotifyArtworkURL)
+        return appleScriptBridge.execAppleScriptWithOutput(qSpotifyArtworkURL)
     }
     
     func songFromAppleScriptQuery() -> Song {
         guard
-            let playbackPosition = execAppleScriptWithOutput(qSpotifyPlaybackPosition),
-            let duration = execAppleScriptWithOutput(qSpotifySongDuration)
+            let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(qSpotifyPlaybackPosition),
+            let duration = appleScriptBridge.execAppleScriptWithOutput(qSpotifySongDuration)
         else { return Song() }
         
         
         guard
-            let songName = execAppleScriptWithOutput(qSpotifySongName),
-            let songArtist = execAppleScriptWithOutput(qSpotifySongArtist),
-            let songAlbum = execAppleScriptWithOutput(qSpotifySongAlbum),
+            let songName = appleScriptBridge.execAppleScriptWithOutput(qSpotifySongName),
+            let songArtist = appleScriptBridge.execAppleScriptWithOutput(qSpotifySongArtist),
+            let songAlbum = appleScriptBridge.execAppleScriptWithOutput(qSpotifySongAlbum),
         
             let songArtworkURL = artworkURL(),
         
-            let isPlaying = execAppleScriptWithOutput(qSpotifyPlayerState),
+            let isPlaying = appleScriptBridge.execAppleScriptWithOutput(qSpotifyPlayerState),
             let songPlaybackPosition = Float(playbackPosition),
             let songDuration = Float(duration)
         else { return Song() }
@@ -92,38 +95,6 @@ class SpotifyHelper {
             playbackPosition: songPlaybackPosition,
             duration: songDuration / 1000
         )
-    }
-
-    func execAppleScript(_ script: String) {
-        var error: NSDictionary?
-        
-        if let scriptObject = NSAppleScript(source: script) {
-            scriptObject.executeAndReturnError(&error)
-        }
-    }
-    
-    func setAppleScriptVariable(_ preScript: [String], _ value: String) {
-        var error: NSDictionary?
-        
-        let script = preScript[0] + value + preScript[1]
-        
-        if let scriptObject = NSAppleScript(source: script) {
-            scriptObject.executeAndReturnError(&error)
-        }
-    }
-    
-    func execAppleScriptWithOutput(_ script: String) -> String? {
-        var error: NSDictionary?
-        
-        if let scriptObject = NSAppleScript(source: script) {
-            let output: NSAppleEventDescriptor = scriptObject.executeAndReturnError(&error)
-            
-            if (output.stringValue != nil) {
-                return output.stringValue
-            }
-        }
-        
-        return nil
     }
     
 }
