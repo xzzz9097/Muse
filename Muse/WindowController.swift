@@ -151,7 +151,7 @@ class WindowController: NSWindowController {
         willChangeValue(forKey: kSong)
         
         // Retrieve new value from notification
-        self.song = spotifyHelper.songFromNotification(notification: notification)
+        self.song = spotifyHelper.songFromAppleScriptQuery()
         
         didChangeValue(forKey: kSong)
         

@@ -12,13 +12,7 @@ import Cocoa
 let spotifyNotificationID = "com.spotify.client.PlaybackStateChanged"
 
 // Constants for Spotify not. dispatches
-let kSpotifySongName = "Name"
-let kSpotifySongAlbum = "Album"
-let kSpotifySongArtist = "Artist"
-let kSpotifyPlayerState = "Player State"
 let kSpotifyPlayerStatePlaying = ["Playing", "kPSP"]
-let kSpotifySongPlaybackPosition = "Playback Position"
-let kSpotifySongDuration = "Duration"
 
 // Queries for Spotify's AppleScript actions
 let qSpotifyTogglePlayPause = "tell application \"Spotify\"\nplaypause\nend tell"
@@ -67,34 +61,6 @@ class SpotifyHelper {
     
     func artworkURL() -> String? {
         return execAppleScriptWithOutput(qSpotifyArtworkURL)
-    }
-    
-    func songFromNotification(notification: NSNotification) -> Song {
-        // Retrieve new value from notification
-        guard let userInfo = notification.userInfo else { return Song() }
-        
-        guard
-            let songName = userInfo[kSpotifySongName] as? String,
-            let songArtist = userInfo[kSpotifySongArtist] as? String,
-            let songAlbum = userInfo[kSpotifySongAlbum] as? String,
-        
-            let songArtworkURL = artworkURL(),
-        
-            let isPlaying = userInfo[kSpotifyPlayerState] as? String,
-            let songPlaybackPosition = userInfo[kSpotifySongPlaybackPosition] as? Float,
-            let songDuration = userInfo[kSpotifySongDuration] as? Float
-        else { return Song() }
-        
-        // Return the object
-        return Song(
-            name: songName,
-            artist: songArtist,
-            album: songAlbum,
-            artworkURL: songArtworkURL,
-            isPlaying: kSpotifyPlayerStatePlaying.contains(isPlaying),
-            playbackPosition: songPlaybackPosition,
-            duration: songDuration / 1000
-        )
     }
     
     func songFromAppleScriptQuery() -> Song {
