@@ -9,7 +9,7 @@
 import Cocoa
 
 class WindowController: NSWindowController {
-    var spotifyHelper = SpotifyHelper.sharedInstance
+    var spotifyHelper = SpotifyHelper.shared
     
     var songTrackingTimer = Timer()
     
@@ -144,7 +144,7 @@ class WindowController: NSWindowController {
     
     func initNotificationWatcher() {
         // Attach the NotificationObserver for Spotify notifications
-        DistributedNotificationCenter.default().addObserver(self, selector: #selector(hookNotification(notification:)), name: NSNotification.Name(rawValue: spotifyNotificationID), object: nil)
+        DistributedNotificationCenter.default().addObserver(self, selector: #selector(hookNotification(notification:)), name: NSNotification.Name(rawValue: spotifyHelper.notificationID), object: nil)
     }
     
     func hookNotification(notification: NSNotification) {

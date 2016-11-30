@@ -14,6 +14,7 @@
 		0C9A60D71DE79B1C0051CDC6 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60D41DE79B1C0051CDC6 /* DDHotKeyUtilities.m */; };
 		0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */; };
 		0CB0E04F1DEE00AB00B4DF17 /* AppleScriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E04E1DEE00AB00B4DF17 /* AppleScriptBridge.swift */; };
+		0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
 		0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466D1DE3826300A3BE8E /* Assets.xcassets */; };
@@ -105,6 +106,7 @@
 		0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		0CB0E04E1DEE00AB00B4DF17 /* AppleScriptBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleScriptBridge.swift; sourceTree = "<group>"; };
+		0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerHelper.swift; sourceTree = "<group>"; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CFF466B1DE3826300A3BE8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				0CFF46691DE3826300A3BE8E /* AppDelegate.swift */,
 				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
+				0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */,
 				0CB0E04E1DEE00AB00B4DF17 /* AppleScriptBridge.swift */,
 				0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */,
 				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
@@ -437,6 +440,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */,
 				0C9A60D51DE79B1C0051CDC6 /* DDHotKeyCenter.m in Sources */,
 				0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */,
 				0C9A60D71DE79B1C0051CDC6 /* DDHotKeyUtilities.m in Sources */,
