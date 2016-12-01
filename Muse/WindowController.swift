@@ -68,6 +68,19 @@ class WindowController: NSWindowController {
         }
     }
     
+    override func keyDown(with event: NSEvent) {
+        // Catch key events
+        switch Int(event.keyCode) {
+        case kVK_Escape:
+            guard let window = self.window else { return }
+            toggleWindow(window, visible: false)
+        case kVK_Space:
+            spotifyHelper.togglePlayPause()
+        default:
+            super.keyDown(with: event)
+        }
+    }
+    
     @IBAction func progressSliderValueChanged(_ sender: Any) {
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
@@ -225,16 +238,6 @@ class WindowController: NSWindowController {
                 viewController.fullSongArtworkView.loadImageFromURL(url: artworkURL)
                 viewController.fullSongArtworkView.imageScaling = .scaleAxesIndependently
             }
-        }
-    }
-    
-    override func keyDown(with event: NSEvent) {
-        switch Int(event.keyCode) {
-        case kVK_Escape:
-            guard let window = self.window else { return }
-            toggleWindow(window, visible: false)
-        default:
-            super.keyDown(with: event)
         }
     }
     
