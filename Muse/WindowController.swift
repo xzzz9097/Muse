@@ -67,6 +67,23 @@ class WindowController: NSWindowController {
         }
     }
     
+    @IBOutlet weak var modesSegmetedView: NSSegmentedControl!
+    
+    @IBAction func modesSegmentViewClicked(_ sender: Any) {
+        guard let segmentedControl = sender as? NSSegmentedControl else { return }
+        
+        switch segmentedControl.selectedSegment {
+        case 0:
+            spotifyHelper.toggleRepeating()
+        case 1:
+            spotifyHelper.toggleShuffle()
+        default:
+            return
+        }
+        
+        updateModesSegmentedView()
+    }
+    
     @IBAction func progressSliderValueChanged(_ sender: Any) {
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
@@ -133,6 +150,18 @@ class WindowController: NSWindowController {
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarRewindTemplate), forSegment: 0)
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarPlayPauseTemplate), forSegment: 1)
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarFastForwardTemplate), forSegment: 2)
+        
+        updateModesSegmentedView()
+    }
+    
+    func updateModesSegmentedView() {
+        guard
+            let isRepeating = spotifyHelper.repeating(),
+            let isShuffle = spotifyHelper.shuffle()
+        else { return }
+        
+        self.modesSegmetedView.setSelected(isRepeating, forSegment: 0)
+        self.modesSegmetedView.setSelected(isShuffle, forSegment: 1)
     }
     
     @available(OSX 10.12.1, *)
@@ -212,6 +241,8 @@ class WindowController: NSWindowController {
             NSImage(named: NSImageNameTouchBarPlayTemplate),
             forSegment: 1
         )
+        
+        updateModesSegmentedView()
         
         if let artworkURL = URL(string: self.song.artworkURL) {
             self.songArtworkView.loadImageFromURL(url: artworkURL)

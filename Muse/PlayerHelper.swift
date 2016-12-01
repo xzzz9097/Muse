@@ -23,10 +23,14 @@ class PlayerHelper {
     // Queries for AppleScript current track data
     let qSongName, qSongAlbum, qSongArtist, qSongDuration, qArtworkURL: String
     
+    // Repeating and shuffle controls
+    let qRepeating, qShuffle: String
+    let qSetRepeating, qSetShuffle: [String]
+    
     // Acces the AppleScript bridge
     let appleScriptBridge = AppleScriptBridge.shared
     
-    init(notificationID: String, kPlayerStatePlaying: [String], qTogglePlayPause: String, qNextTrack: String, qPreviousTrack: String, qPlayerState: String, qPlaybackPosition: String, qSetPlaybackPosition: [String], qSongName: String, qSongAlbum: String, qSongArtist: String, qSongDuration: String, qArtworkURL: String) {
+    init(notificationID: String, kPlayerStatePlaying: [String], qTogglePlayPause: String, qNextTrack: String, qPreviousTrack: String, qPlayerState: String, qPlaybackPosition: String, qSetPlaybackPosition: [String], qSongName: String, qSongAlbum: String, qSongArtist: String, qSongDuration: String, qArtworkURL: String, qRepeating: String, qShuffle: String, qSetRepeating: [String], qSetShuffle: [String]) {
         self.notificationID = notificationID
         self.kPlayerStatePlaying = kPlayerStatePlaying
         self.qTogglePlayPause = qTogglePlayPause
@@ -40,6 +44,10 @@ class PlayerHelper {
         self.qSongArtist = qSongArtist
         self.qSongDuration = qSongDuration
         self.qArtworkURL = qArtworkURL
+        self.qRepeating = qRepeating
+        self.qShuffle = qShuffle
+        self.qSetRepeating = qSetRepeating
+        self.qSetShuffle = qSetShuffle
     }
     
     func togglePlayPause() {
@@ -68,12 +76,35 @@ class PlayerHelper {
         return appleScriptBridge.execAppleScriptWithOutput(qArtworkURL)
     }
     
+    func repeating() -> Bool? {
+        guard let stringValue = appleScriptBridge.execAppleScriptWithOutput(qRepeating) else { return nil }
+        
+        return Bool(stringValue)
+    }
+    
+    func shuffle() -> Bool? {
+        guard let stringValue = appleScriptBridge.execAppleScriptWithOutput(qShuffle) else { return nil }
+        
+        return Bool(stringValue)
+    }
+    
+    func toggleRepeating() {
+        guard let isRepeating = repeating() else { return }
+        
+        appleScriptBridge.setAppleScriptVariable(qSetRepeating, String(!isRepeating))
+    }
+    
+    func toggleShuffle() {
+        guard let isShuffle = shuffle() else { return }
+        
+        appleScriptBridge.setAppleScriptVariable(qSetShuffle, String(!isShuffle))
+    }
+    
     func songFromAppleScriptQuery() -> Song {
         guard
             let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(qPlaybackPosition),
             let duration = appleScriptBridge.execAppleScriptWithOutput(qSongDuration)
         else { return Song() }
-        
         
         guard
             let songName = appleScriptBridge.execAppleScriptWithOutput(qSongName),

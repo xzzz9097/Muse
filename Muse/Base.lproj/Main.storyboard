@@ -708,7 +708,7 @@
                                     <sliderAccessoryBehavior key="behavior" id="a3m-32-dWW"/>
                                 </sliderAccessory>
                                 <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
-                                    <rect key="frame" x="0.0" y="0.0" width="689" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="610" height="30"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="4JH-E9-yW3"/>
                                     <connections>
                                         <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="f82-wD-WAe"/>
@@ -736,10 +736,29 @@
                                 </viewController>
                                 <size key="designTimeSize" width="143" height="22"/>
                             </touchBarItem>
+                            <touchBarItem id="XXl-oq-R86">
+                                <viewController key="viewController" id="yTV-qI-3tb">
+                                    <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NFd-oE-jxk">
+                                        <rect key="frame" x="0.0" y="-2" width="71" height="25"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="nMr-ql-LHQ">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment label="R" width="32"/>
+                                                <segment label="S" width="32" selected="YES" tag="1"/>
+                                            </segments>
+                                        </segmentedCell>
+                                        <connections>
+                                            <action selector="modesSegmentViewClicked:" target="B8D-0N-5wS" id="hIu-6X-zn5"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </viewController>
+                                <size key="designTimeSize" width="71" height="22"/>
+                            </touchBarItem>
                         </touchBarItems>
                     </touchBar>
                     <connections>
                         <outlet property="controlsSegmentedView" destination="7UV-La-mul" id="jf8-ML-WVq"/>
+                        <outlet property="modesSegmetedView" destination="NFd-oE-jxk" id="iF5-BW-vLx"/>
                         <outlet property="songArtworkView" destination="du9-Oq-XPf" id="NAc-sd-5ic"/>
                         <outlet property="songProgressSlider" destination="nBU-lt-UsN" id="Rdq-MF-VG7"/>
                         <outlet property="songTitleLabel" destination="21c-Cc-j9t" id="J8k-vt-zmx"/>

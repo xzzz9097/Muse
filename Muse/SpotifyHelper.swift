@@ -28,7 +28,11 @@ class SpotifyHelper : PlayerHelper {
             qSongAlbum: "tell application \"Spotify\"\nartist of current track\nend tell",
             qSongArtist: "tell application \"Spotify\"\nalbum of current track\nend tell",
             qSongDuration: "tell application \"Spotify\"\nduration of current track\nend tell",
-            qArtworkURL: "tell application \"Spotify\"\nartwork url of current track\nend tell"
+            qArtworkURL: "tell application \"Spotify\"\nartwork url of current track\nend tell",
+            qRepeating: "tell application \"Spotify\"\nrepeating\nend tell",
+            qShuffle: "tell application \"Spotify\"\nshuffling\nend tell",
+            qSetRepeating: ["tell application \"Spotify\"\nset repeating to ","\nend tell"],
+            qSetShuffle: ["tell application \"Spotify\"\nset shuffling to ","\nend tell"]
         )
     }
     
