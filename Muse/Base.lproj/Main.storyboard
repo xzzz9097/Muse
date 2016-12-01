@@ -691,7 +691,10 @@
                                 <viewController key="viewController" id="Z86-4V-pAC">
                                     <textField key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="21c-Cc-j9t">
                                         <rect key="frame" x="0.0" y="0.0" width="74" height="22"/>
-                                        <textFieldCell key="cell" borderStyle="bezel" alignment="center" drawsBackground="YES" id="e6G-sj-zge">
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="oZN-lR-K5V"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" borderStyle="bezel" alignment="center" drawsBackground="YES" id="e6G-sj-zge">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
