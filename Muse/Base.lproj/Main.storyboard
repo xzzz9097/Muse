@@ -709,7 +709,7 @@
                                 </sliderAccessory>
                                 <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
                                     <rect key="frame" x="0.0" y="0.0" width="689" height="30"/>
-                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="4JH-E9-yW3"/>
+                                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="4JH-E9-yW3" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                     <connections>
                                         <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="f82-wD-WAe"/>
                                     </connections>

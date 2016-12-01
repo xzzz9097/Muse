@@ -15,6 +15,7 @@
 		0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */; };
 		0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27631DF01F440039ACDC /* DDHotKeyTextField.m */; };
 		0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */; };
+		0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDD1ADA1DF04B560027661A /* SliderCell.swift */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
 		0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466D1DE3826300A3BE8E /* Assets.xcassets */; };
@@ -107,6 +108,7 @@
 		0CCD27631DF01F440039ACDC /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyTextField.m; sourceTree = "<group>"; };
 		0CCD27641DF01F440039ACDC /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
 		0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
+		0CDD1ADA1DF04B560027661A /* SliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CFF466B1DE3826300A3BE8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
 				0CFF466D1DE3826300A3BE8E /* Assets.xcassets */,
 				0CFF466F1DE3826300A3BE8E /* Main.storyboard */,
+				0CDD1ADA1DF04B560027661A /* SliderCell.swift */,
 				0CFF46721DE3826300A3BE8E /* Info.plist */,
 			);
 			path = Muse;
@@ -450,6 +453,7 @@
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
 				0CB0E04F1DEE00AB00B4DF17 /* AppleScriptBridge.swift in Sources */,
+				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
 				0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
