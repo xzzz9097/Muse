@@ -101,6 +101,8 @@ class WindowController: NSWindowController {
         
         // Hide after losing focus
         window.hidesOnDeactivate = true
+        
+        window.makeFirstResponder(self)
     }
     
     func prepareAutoClose() {
@@ -171,16 +173,17 @@ class WindowController: NSWindowController {
     func hotkeyAction() {
         guard let window = self.window else { return }
         
-        if (window.isKeyWindow) {
-            // Hide window if focused
-            window.orderOut(self)
-            
-            NSApp.hide(self)
-        } else {
-            // Show window if not
+        // Hide window if focused, show if not
+        toggleWindow(window, visible: !window.isKeyWindow)
+    }
+    
+    func toggleWindow(_ window: NSWindow, visible: Bool) {
+        if (visible) {
             window.makeKeyAndOrderFront(self)
-            
             NSApp.activate(ignoringOtherApps: true)
+        } else {
+            window.orderOut(self)
+            NSApp.hide(self)
         }
     }
     
