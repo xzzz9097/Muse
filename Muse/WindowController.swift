@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Carbon.HIToolbox
 
 class WindowController: NSWindowController {
     var spotifyHelper = SpotifyHelper.shared
@@ -224,6 +225,16 @@ class WindowController: NSWindowController {
                 viewController.fullSongArtworkView.loadImageFromURL(url: artworkURL)
                 viewController.fullSongArtworkView.imageScaling = .scaleAxesIndependently
             }
+        }
+    }
+    
+    override func keyDown(with event: NSEvent) {
+        switch Int(event.keyCode) {
+        case kVK_Escape:
+            guard let window = self.window else { return }
+            toggleWindow(window, visible: false)
+        default:
+            super.keyDown(with: event)
         }
     }
     
