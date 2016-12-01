@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
 		0C9A60C71DE75DCC0051CDC6 /* NSImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */; };
-		0C9A60D51DE79B1C0051CDC6 /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60D01DE79B1C0051CDC6 /* DDHotKeyCenter.m */; };
-		0C9A60D61DE79B1C0051CDC6 /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60D21DE79B1C0051CDC6 /* DDHotKeyTextField.m */; };
-		0C9A60D71DE79B1C0051CDC6 /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60D41DE79B1C0051CDC6 /* DDHotKeyUtilities.m */; };
 		0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */; };
 		0CB0E04F1DEE00AB00B4DF17 /* AppleScriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E04E1DEE00AB00B4DF17 /* AppleScriptBridge.swift */; };
 		0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */; };
+		0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */; };
+		0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27631DF01F440039ACDC /* DDHotKeyTextField.m */; };
+		0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
 		0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466D1DE3826300A3BE8E /* Assets.xcassets */; };
@@ -97,16 +97,16 @@
 		0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0C9A60CA1DE76F990051CDC6 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Muse-Bridging-Header.h"; sourceTree = "<group>"; };
-		0C9A60CF1DE79B1C0051CDC6 /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyCenter.h; path = ../../DDHotKey/DDHotKeyCenter.h; sourceTree = "<group>"; };
-		0C9A60D01DE79B1C0051CDC6 /* DDHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyCenter.m; path = ../../DDHotKey/DDHotKeyCenter.m; sourceTree = "<group>"; };
-		0C9A60D11DE79B1C0051CDC6 /* DDHotKeyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyTextField.h; path = ../../DDHotKey/DDHotKeyTextField.h; sourceTree = "<group>"; };
-		0C9A60D21DE79B1C0051CDC6 /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyTextField.m; path = ../../DDHotKey/DDHotKeyTextField.m; sourceTree = "<group>"; };
-		0C9A60D31DE79B1C0051CDC6 /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDHotKeyUtilities.h; path = ../../DDHotKey/DDHotKeyUtilities.h; sourceTree = "<group>"; };
-		0C9A60D41DE79B1C0051CDC6 /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDHotKeyUtilities.m; path = ../../DDHotKey/DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		0CB0E04E1DEE00AB00B4DF17 /* AppleScriptBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppleScriptBridge.swift; sourceTree = "<group>"; };
 		0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerHelper.swift; sourceTree = "<group>"; };
+		0CCD27601DF01F440039ACDC /* DDHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyCenter.h; sourceTree = "<group>"; };
+		0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyCenter.m; sourceTree = "<group>"; };
+		0CCD27621DF01F440039ACDC /* DDHotKeyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyTextField.h; sourceTree = "<group>"; };
+		0CCD27631DF01F440039ACDC /* DDHotKeyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyTextField.m; sourceTree = "<group>"; };
+		0CCD27641DF01F440039ACDC /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
+		0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CFF466B1DE3826300A3BE8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -152,12 +152,12 @@
 		0C9A60CD1DE79AE50051CDC6 /* DDHotKey */ = {
 			isa = PBXGroup;
 			children = (
-				0C9A60CF1DE79B1C0051CDC6 /* DDHotKeyCenter.h */,
-				0C9A60D01DE79B1C0051CDC6 /* DDHotKeyCenter.m */,
-				0C9A60D11DE79B1C0051CDC6 /* DDHotKeyTextField.h */,
-				0C9A60D21DE79B1C0051CDC6 /* DDHotKeyTextField.m */,
-				0C9A60D31DE79B1C0051CDC6 /* DDHotKeyUtilities.h */,
-				0C9A60D41DE79B1C0051CDC6 /* DDHotKeyUtilities.m */,
+				0CCD27601DF01F440039ACDC /* DDHotKeyCenter.h */,
+				0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */,
+				0CCD27621DF01F440039ACDC /* DDHotKeyTextField.h */,
+				0CCD27631DF01F440039ACDC /* DDHotKeyTextField.m */,
+				0CCD27641DF01F440039ACDC /* DDHotKeyUtilities.h */,
+				0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */,
 				0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */,
 			);
 			name = DDHotKey;
@@ -441,11 +441,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */,
-				0C9A60D51DE79B1C0051CDC6 /* DDHotKeyCenter.m in Sources */,
+				0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */,
 				0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */,
-				0C9A60D71DE79B1C0051CDC6 /* DDHotKeyUtilities.m in Sources */,
+				0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */,
+				0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */,
 				0CFF46971DE383A300A3BE8E /* SpotifyHelper.swift in Sources */,
-				0C9A60D61DE79B1C0051CDC6 /* DDHotKeyTextField.m in Sources */,
 				0C9A60C71DE75DCC0051CDC6 /* NSImageView+Download.swift in Sources */,
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
