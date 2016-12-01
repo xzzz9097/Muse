@@ -97,7 +97,7 @@ class WindowController: NSWindowController {
         window.isMovable = false
         
         // Show on every workspace
-        window.collectionBehavior = .canJoinAllSpaces
+        window.collectionBehavior = .transient
         
         // Hide after losing focus
         window.hidesOnDeactivate = true
