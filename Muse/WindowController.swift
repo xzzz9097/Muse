@@ -168,7 +168,7 @@ class WindowController: NSWindowController {
     func registerHotkey() {
         let modifiers: UInt = NSEventModifierFlags.control.rawValue | NSEventModifierFlags.command.rawValue
         
-        DDHotKeyCenter.shared().registerHotKey(withKeyCode: 1, modifierFlags: modifiers, target: self, action: #selector(hotkeyAction), object: nil)
+        DDHotKeyCenter.shared().registerHotKey(withKeyCode: UInt16(kVK_ANSI_S), modifierFlags: modifiers, target: self, action: #selector(hotkeyAction), object: nil)
     }
     
     func hotkeyAction() {
