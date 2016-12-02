@@ -74,8 +74,14 @@ class WindowController: NSWindowController {
         case kVK_Escape:
             guard let window = self.window else { return }
             toggleWindow(window, visible: false)
+        case kVK_LeftArrow:
+            spotifyHelper.previousTrack()
+            updateSongProgressSlider()
         case kVK_Space:
             spotifyHelper.togglePlayPause()
+        case kVK_RightArrow:
+            spotifyHelper.nextTrack()
+            updateSongProgressSlider()
         default:
             super.keyDown(with: event)
         }
