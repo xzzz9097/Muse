@@ -8,7 +8,10 @@
 
 import Cocoa
 import Carbon.HIToolbox
+import MediaPlayer
+import AVKit
 
+@available(OSX 10.12.1, *)
 class WindowController: NSWindowController {
     var spotifyHelper = SpotifyHelper.shared
     
@@ -16,6 +19,11 @@ class WindowController: NSWindowController {
     
     var autoCloseTimer = Timer()
     var counter = 0
+    
+    // Needed for media playback controls on the TouchBar
+    let avPlayer = AVPlayer.init()
+    let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+    let remoteCommandCenter = MPRemoteCommandCenter.shared()
     
     var song = Song()
     let kSong = "song"
@@ -36,6 +44,9 @@ class WindowController: NSWindowController {
         
         // Register our DDHotKey
         registerHotkey()
+        
+        // Prepare system-wide controls
+        prepareRemoteCommandCenter()
         
         // Load song at cold start
         prepareSong()
@@ -100,7 +111,8 @@ class WindowController: NSWindowController {
                 // Detected touch phase end
                 isSliding = false
                 
-                spotifyHelper.goTo(time: slider.floatValue * self.song.duration)
+                self.song.playbackPosition = slider.floatValue * self.song.duration
+                spotifyHelper.goTo(time: self.song.playbackPosition)
             }
         }
     }
@@ -245,6 +257,8 @@ class WindowController: NSWindowController {
                 viewController.fullSongArtworkView.imageScaling = .scaleAxesIndependently
             }
         }
+        
+        updateNowPlayingInfo()
     }
     
 }

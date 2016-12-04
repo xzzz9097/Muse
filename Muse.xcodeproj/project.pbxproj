@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C676BD71DF443C900B75164 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C676BD61DF443C900B75164 /* AVKit.framework */; };
+		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
 		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
 		0C9A60C71DE75DCC0051CDC6 /* NSImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */; };
 		0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */; };
@@ -16,6 +18,7 @@
 		0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27631DF01F440039ACDC /* DDHotKeyTextField.m */; };
 		0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */; };
 		0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDD1ADA1DF04B560027661A /* SliderCell.swift */; };
+		0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
 		0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466D1DE3826300A3BE8E /* Assets.xcassets */; };
@@ -93,6 +96,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C676BD41DF443AD00B75164 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0C676BD61DF443C900B75164 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WindowController+RemoteCommandCenter.swift"; sourceTree = "<group>"; };
 		0C9A60BD1DE6071F0051CDC6 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImageView+Download.swift"; sourceTree = "<group>"; };
 		0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -109,6 +115,7 @@
 		0CCD27641DF01F440039ACDC /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
 		0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		0CDD1ADA1DF04B560027661A /* SliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
+		0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CFF466B1DE3826300A3BE8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +137,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C676BD71DF443C900B75164 /* AVKit.framework in Frameworks */,
+				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +221,7 @@
 				0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */,
 				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
 				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
+				0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */,
 				0CFF466D1DE3826300A3BE8E /* Assets.xcassets */,
 				0CFF466F1DE3826300A3BE8E /* Main.storyboard */,
 				0CDD1ADA1DF04B560027661A /* SliderCell.swift */,
@@ -241,6 +251,9 @@
 		7E9AA20CAC9772D1BED5DCE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0C676BD61DF443C900B75164 /* AVKit.framework */,
+				0C676BD41DF443AD00B75164 /* AVFoundation.framework */,
+				0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */,
 				0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */,
 				0C9A60CA1DE76F990051CDC6 /* Quartz.framework */,
 				0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */,
@@ -453,6 +466,7 @@
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
 				0CB0E04F1DEE00AB00B4DF17 /* AppleScriptBridge.swift in Sources */,
+				0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */,
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
 				0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */,
 			);
