@@ -5,7 +5,7 @@
 An open-source Spotify controller with TouchBar support.
 
 ### Download
-[Beta 1](https://github.com/xzzz9097/Muse/releases/download/1.0b/Muse.app.zip)
+[Beta 2](https://github.com/xzzz9097/Muse/releases/tag/v1.0-beta.2)
 
 ### Usage
 Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
