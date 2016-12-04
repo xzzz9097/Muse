@@ -74,16 +74,16 @@ NSString *DDStringFromKeyCode(unsigned short keyCode, NSUInteger modifiers) {
     NSMutableString *final = [NSMutableString stringWithString:@""];
     NSDictionary *characterMap = _DDKeyCodeToCharacterMap();
     
-    if (modifiers & NSControlKeyMask) {
+    if (modifiers & NSEventModifierFlagControl) {
         [final appendString:[characterMap objectForKey:@(kVK_Control)]];
     }
-    if (modifiers & NSAlternateKeyMask) {
+    if (modifiers & NSEventModifierFlagOption) {
         [final appendString:[characterMap objectForKey:@(kVK_Option)]];
     }
-    if (modifiers & NSShiftKeyMask) {
+    if (modifiers & NSEventModifierFlagShift) {
         [final appendString:[characterMap objectForKey:@(kVK_Shift)]];
     }
-    if (modifiers & NSCommandKeyMask) {
+    if (modifiers & NSEventModifierFlagCommand) {
         [final appendString:[characterMap objectForKey:@(kVK_Command)]];
     }
     
@@ -136,10 +136,10 @@ NSString *DDStringFromKeyCode(unsigned short keyCode, NSUInteger modifiers) {
 
 UInt32 DDCarbonModifierFlagsFromCocoaModifiers(NSUInteger flags) {
     UInt32 newFlags = 0;
-    if ((flags & NSControlKeyMask) > 0) { newFlags |= controlKey; }
-    if ((flags & NSCommandKeyMask) > 0) { newFlags |= cmdKey; }
-    if ((flags & NSShiftKeyMask) > 0) { newFlags |= shiftKey; }
-    if ((flags & NSAlternateKeyMask) > 0) { newFlags |= optionKey; }
-    if ((flags & NSAlphaShiftKeyMask) > 0) { newFlags |= alphaLock; }
+    if ((flags & NSEventModifierFlagControl) > 0) { newFlags |= controlKey; }
+    if ((flags & NSEventModifierFlagCommand) > 0) { newFlags |= cmdKey; }
+    if ((flags & NSEventModifierFlagShift) > 0) { newFlags |= shiftKey; }
+    if ((flags & NSEventModifierFlagOption) > 0) { newFlags |= optionKey; }
+    if ((flags & NSEventModifierFlagCapsLock) > 0) { newFlags |= alphaLock; }
     return newFlags;
 }

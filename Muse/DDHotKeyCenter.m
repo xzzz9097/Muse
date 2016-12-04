@@ -65,10 +65,10 @@ OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, vo
 
 - (NSString *)description {
     NSMutableArray *bits = [NSMutableArray array];
-    if ((_modifierFlags & NSControlKeyMask) > 0) { [bits addObject:@"NSControlKeyMask"]; }
-    if ((_modifierFlags & NSCommandKeyMask) > 0) { [bits addObject:@"NSCommandKeyMask"]; }
-    if ((_modifierFlags & NSShiftKeyMask) > 0) { [bits addObject:@"NSShiftKeyMask"]; }
-    if ((_modifierFlags & NSAlternateKeyMask) > 0) { [bits addObject:@"NSAlternateKeyMask"]; }
+    if ((_modifierFlags & NSEventModifierFlagControl) > 0) { [bits addObject:@"NSControlKeyMask"]; }
+    if ((_modifierFlags & NSEventModifierFlagCommand) > 0) { [bits addObject:@"NSCommandKeyMask"]; }
+    if ((_modifierFlags & NSEventModifierFlagShift) > 0) { [bits addObject:@"NSShiftKeyMask"]; }
+    if ((_modifierFlags & NSEventModifierFlagOption) > 0) { [bits addObject:@"NSAlternateKeyMask"]; }
     
     NSString *flags = [NSString stringWithFormat:@"(%@)", [bits componentsJoinedByString:@" | "]];
     NSString *invokes = @"(block)";
@@ -266,7 +266,7 @@ OSStatus dd_hotKeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, vo
         DDHotKey *matchingHotKey = [matchingHotKeys anyObject];
         
         NSEvent *event = [NSEvent eventWithEventRef:theEvent];
-        NSEvent *keyEvent = [NSEvent keyEventWithType:NSKeyUp
+        NSEvent *keyEvent = [NSEvent keyEventWithType:NSEventTypeKeyUp
                                              location:[event locationInWindow]
                                         modifierFlags:[event modifierFlags]
                                             timestamp:[event timestamp]

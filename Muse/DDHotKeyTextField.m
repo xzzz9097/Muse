@@ -82,9 +82,9 @@ static DDHotKeyTextFieldEditor *DDFieldEditor(void) {
 
 - (void)processHotkeyEvent:(NSEvent *)event {
     NSUInteger flags = event.modifierFlags;
-    BOOL hasModifier = (flags & (NSCommandKeyMask | NSAlternateKeyMask | NSControlKeyMask | NSShiftKeyMask | NSFunctionKeyMask)) > 0;
+    BOOL hasModifier = (flags & (NSEventModifierFlagCommand | NSEventModifierFlagOption | NSEventModifierFlagControl | NSEventModifierFlagShift | NSEventModifierFlagFunction)) > 0;
     
-    if (event.type == NSKeyDown) {
+    if (event.type == NSEventTypeKeyDown) {
         _hasSeenKeyDown = YES;
         unichar character = [event.charactersIgnoringModifiers characterAtIndex:0];
         
@@ -102,7 +102,7 @@ static DDHotKeyTextFieldEditor *DDFieldEditor(void) {
         }
     }
     
-    if ((event.type == NSKeyDown || (event.type == NSFlagsChanged && _hasSeenKeyDown == NO)) && hasModifier) {
+    if ((event.type == NSEventTypeKeyDown || (event.type == NSEventTypeFlagsChanged && _hasSeenKeyDown == NO)) && hasModifier) {
         self.hotKeyField.hotKey = [DDHotKey hotKeyWithKeyCode:event.keyCode modifierFlags:flags task:_originalHotKey.task];
         NSString *str = DDStringFromKeyCode(event.keyCode, flags);
         [self.textStorage.mutableString setString:[str uppercaseString]];
@@ -114,7 +114,7 @@ static DDHotKeyTextFieldEditor *DDFieldEditor(void) {
     BOOL ok = [super becomeFirstResponder];
     if (ok) {
         _hasSeenKeyDown = NO;
-        _globalMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSKeyDownMask | NSFlagsChangedMask) handler:^NSEvent*(NSEvent *event){
+        _globalMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskKeyDown | NSEventMaskFlagsChanged) handler:^NSEvent*(NSEvent *event){
             [self processHotkeyEvent:event];
             return nil;
         }];
