@@ -48,9 +48,9 @@ extension WindowController {
     func updateNowPlayingInfo() {
         // Required to make TouchBar system-wide controls available
         if (self.song.isPlaying) {
-            AVPlayer.init().play()
+            avPlayer.play()
         } else {
-            AVPlayer.init().pause()
+            avPlayer.pause()
         }
         
         // MediaPlayer nowPlayingInfo

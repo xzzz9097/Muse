@@ -37,10 +37,8 @@ class WindowController: NSWindowController {
         // Set custom window attributes
         prepareWindow()
         
-        if #available(OSX 10.12.1, *) {
-            prepareButtons()
-            prepareImageView()
-        }
+        prepareButtons()
+        prepareImageView()
         
         // Register our DDHotKey
         registerHotkey()
@@ -155,9 +153,7 @@ class WindowController: NSWindowController {
     func prepareSong() {
         self.song = spotifyHelper.songFromAppleScriptQuery()
         
-        if #available(OSX 10.12.1, *) {
-            updateUIAfterNotification()
-        }
+        updateUIAfterNotification()
         
         trackSongProgress()
     }
@@ -189,9 +185,7 @@ class WindowController: NSWindowController {
         
         didChangeValue(forKey: kSong)
         
-        if #available(OSX 10.12.1, *) {
-            updateUIAfterNotification()
-        }
+        updateUIAfterNotification()
         
         trackSongProgress()
     }
