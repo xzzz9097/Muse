@@ -77,9 +77,9 @@ extension WindowController {
         // Previous/next track toggle
         // TODO: Why don't these show up??
         remoteCommandCenter.previousTrackCommand.isEnabled = true
-        remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(togglePlayPause(event:)))
+        remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
         remoteCommandCenter.nextTrackCommand.isEnabled = true
-        remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(togglePlayPause(event:)))
+        remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack(event:)))
         
         // Scrub bar control
         remoteCommandCenter.changePlaybackPositionCommand.isEnabled = true
