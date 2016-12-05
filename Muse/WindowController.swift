@@ -9,7 +9,6 @@
 import Cocoa
 import Carbon.HIToolbox
 import MediaPlayer
-import AVKit
 
 @available(OSX 10.12.1, *)
 class WindowController: NSWindowController {
@@ -21,7 +20,6 @@ class WindowController: NSWindowController {
     var counter = 0
     
     // Needed for media playback controls on the TouchBar
-    let avPlayer = AVPlayer.init()
     let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     let remoteCommandCenter = MPRemoteCommandCenter.shared()
     

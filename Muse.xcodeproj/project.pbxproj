@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C676BD71DF443C900B75164 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C676BD61DF443C900B75164 /* AVKit.framework */; };
 		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
 		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
 		0C9A60C71DE75DCC0051CDC6 /* NSImageView+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */; };
@@ -137,7 +136,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C676BD71DF443C900B75164 /* AVKit.framework in Frameworks */,
 				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
 			);

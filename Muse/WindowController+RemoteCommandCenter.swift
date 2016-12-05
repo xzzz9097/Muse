@@ -48,13 +48,6 @@ extension WindowController {
     }
     
     func updateNowPlayingInfo() {
-        // Required to make TouchBar system-wide controls available
-        if (self.song.isPlaying) {
-            avPlayer.play()
-        } else {
-            avPlayer.pause()
-        }
-        
         // MediaPlayer nowPlayingInfo
         nowPlayingInfoCenter.nowPlayingInfo = [
             MPMediaItemPropertyTitle: self.song.name,
