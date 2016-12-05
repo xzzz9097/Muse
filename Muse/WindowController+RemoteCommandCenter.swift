@@ -30,6 +30,7 @@ extension WindowController {
     }
     
     func previousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        self.song.playbackPosition = 0
         spotifyHelper.previousTrack()
         
         updateNowPlayingInfo()
@@ -38,6 +39,7 @@ extension WindowController {
     }
     
     func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        self.song.playbackPosition = 0
         spotifyHelper.nextTrack()
         
         updateNowPlayingInfo()
@@ -75,7 +77,7 @@ extension WindowController {
         remoteCommandCenter.pauseCommand.addTarget(self, action: #selector(togglePlayPause(event:)))
         
         // Previous/next track toggle
-        // TODO: Why don't these show up??
+        // Apparently these work only on 10.12.2+
         remoteCommandCenter.previousTrackCommand.isEnabled = true
         remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
         remoteCommandCenter.nextTrackCommand.isEnabled = true
