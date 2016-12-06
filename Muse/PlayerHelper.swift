@@ -18,6 +18,9 @@ class PlayerHelper {
         case playerState
         case playbackPosition
         
+        // Playback position set query
+        case setPlaybackPosition
+        
         // Queries for AppleScript current track data
         case songName
         case songAlbum
@@ -33,16 +36,15 @@ class PlayerHelper {
     // Constants for not. dispatches
     let kPlayerStatePlaying: [String]
     
-    // Playback position set query
-    let qSetPlaybackPosition: [String]
+    // Playback position query field
+    static let pField = "[position]"
     
     // Acces the AppleScript bridge
     let appleScriptBridge = AppleScriptBridge.shared
     
-    init(notificationID: String, kPlayerStatePlaying: [String], qSetPlaybackPosition: [String], queries: [PHQuery : String]) {
+    init(notificationID: String, kPlayerStatePlaying: [String], queries: [PHQuery : String]) {
         self.notificationID = notificationID
         self.kPlayerStatePlaying = kPlayerStatePlaying
-        self.qSetPlaybackPosition = qSetPlaybackPosition
         self.queries = queries
     }
     
@@ -65,7 +67,7 @@ class PlayerHelper {
     }
     
     func goTo(time: Float) {
-        appleScriptBridge.setAppleScriptVariable(qSetPlaybackPosition, String(time))
+        appleScriptBridge.execAppleScript(queries[.setPlaybackPosition]!.replacingOccurrences(of: PlayerHelper.pField, with: String(time)))
     }
     
     func songFromAppleScriptQuery() -> Song {
