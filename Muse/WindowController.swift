@@ -12,6 +12,7 @@ import MediaPlayer
 
 @available(OSX 10.12.1, *)
 class WindowController: NSWindowController {
+    
     var spotifyHelper = SpotifyHelper.shared
     
     var songTrackingTimer = Timer()
@@ -22,6 +23,9 @@ class WindowController: NSWindowController {
     // Needed for media playback controls on the TouchBar
     let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     let remoteCommandCenter = MPRemoteCommandCenter.shared()
+    
+    // Store now playing info, creating an empty dictionary
+    var nowPlayingInfo: [String : Any] = [:]
     
     var song = Song()
     let kSong = "song"
@@ -221,11 +225,15 @@ class WindowController: NSWindowController {
     }
     
     func updateSongProgressSlider() {
-        if (!isSliding) {
+        if !isSliding {
             guard let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() else { return }
             
             self.song.playbackPosition = currentPlaybackPosition
+            
             songProgressSlider.floatValue = self.song.playbackPosition / self.song.duration
+            
+            // Also update native touchbar scrubber
+            updateNowPlayingInfoElapsedPlaybackTime()
         }
     }
     

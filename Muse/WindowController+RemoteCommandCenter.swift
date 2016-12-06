@@ -22,6 +22,8 @@ extension WindowController {
     
     func changePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
         self.song.playbackPosition = Float(event.positionTime.rounded())
+        updateNowPlayingInfoElapsedPlaybackTime()
+        
         spotifyHelper.goTo(time: self.song.playbackPosition)
         
         updateNowPlayingInfo()
@@ -31,6 +33,8 @@ extension WindowController {
     
     func previousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         self.song.playbackPosition = 0
+        updateNowPlayingInfoElapsedPlaybackTime()
+        
         spotifyHelper.previousTrack()
         
         updateNowPlayingInfo()
@@ -40,6 +44,8 @@ extension WindowController {
     
     func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         self.song.playbackPosition = 0
+        updateNowPlayingInfoElapsedPlaybackTime()
+        
         spotifyHelper.nextTrack()
         
         updateNowPlayingInfo()
@@ -48,8 +54,7 @@ extension WindowController {
     }
     
     func updateNowPlayingInfo() {
-        // MediaPlayer nowPlayingInfo
-        nowPlayingInfoCenter.nowPlayingInfo = [
+        self.nowPlayingInfo = [
             MPMediaItemPropertyTitle: self.song.name,
             MPMediaItemPropertyArtist: self.song.artist,
             MPMediaItemPropertyAlbumTitle: self.song.album,
@@ -58,8 +63,17 @@ extension WindowController {
             MPNowPlayingInfoPropertyMediaType: MPNowPlayingInfoMediaType.audio.rawValue
         ]
         
+        // MediaPlayer nowPlayingInfo
+        nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
+        
         // Update playbackState accordingly
         nowPlayingInfoCenter.playbackState = self.song.isPlaying ? .playing : .paused
+    }
+    
+    func updateNowPlayingInfoElapsedPlaybackTime() {
+        self.nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.song.playbackPosition
+        
+        nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
     }
     
     func prepareRemoteCommandCenter() {
