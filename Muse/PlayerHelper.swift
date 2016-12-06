@@ -21,12 +21,12 @@ class PlayerHelper {
     let qSetPlaybackPosition: [String]
     
     // Queries for AppleScript current track data
-    let qSongName, qSongAlbum, qSongArtist, qSongDuration, qArtworkURL: String
+    let qSongName, qSongAlbum, qSongArtist, qSongDuration: String
     
     // Acces the AppleScript bridge
     let appleScriptBridge = AppleScriptBridge.shared
     
-    init(notificationID: String, kPlayerStatePlaying: [String], qTogglePlayPause: String, qNextTrack: String, qPreviousTrack: String, qPlayerState: String, qPlaybackPosition: String, qSetPlaybackPosition: [String], qSongName: String, qSongAlbum: String, qSongArtist: String, qSongDuration: String, qArtworkURL: String) {
+    init(notificationID: String, kPlayerStatePlaying: [String], qTogglePlayPause: String, qNextTrack: String, qPreviousTrack: String, qPlayerState: String, qPlaybackPosition: String, qSetPlaybackPosition: [String], qSongName: String, qSongAlbum: String, qSongArtist: String, qSongDuration: String) {
         self.notificationID = notificationID
         self.kPlayerStatePlaying = kPlayerStatePlaying
         self.qTogglePlayPause = qTogglePlayPause
@@ -39,7 +39,6 @@ class PlayerHelper {
         self.qSongAlbum = qSongAlbum
         self.qSongArtist = qSongArtist
         self.qSongDuration = qSongDuration
-        self.qArtworkURL = qArtworkURL
     }
     
     func togglePlayPause() {
@@ -64,10 +63,6 @@ class PlayerHelper {
         appleScriptBridge.setAppleScriptVariable(qSetPlaybackPosition, String(time))
     }
     
-    func artworkURL() -> String? {
-        return appleScriptBridge.execAppleScriptWithOutput(qArtworkURL)
-    }
-    
     func songFromAppleScriptQuery() -> Song {
         guard
             let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(qPlaybackPosition),
@@ -80,8 +75,6 @@ class PlayerHelper {
             let songArtist = appleScriptBridge.execAppleScriptWithOutput(qSongArtist),
             let songAlbum = appleScriptBridge.execAppleScriptWithOutput(qSongAlbum),
             
-            let songArtworkURL = artworkURL(),
-            
             let isPlaying = appleScriptBridge.execAppleScriptWithOutput(qPlayerState),
             let songPlaybackPosition = Float(playbackPosition),
             let songDuration = Float(duration)
@@ -92,7 +85,6 @@ class PlayerHelper {
             name: songName,
             artist: songArtist,
             album: songAlbum,
-            artworkURL: songArtworkURL,
             isPlaying: kPlayerStatePlaying.contains(isPlaying),
             playbackPosition: songPlaybackPosition,
             duration: songDuration / 1000

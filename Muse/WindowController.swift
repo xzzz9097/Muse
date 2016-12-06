@@ -247,7 +247,8 @@ class WindowController: NSWindowController {
             forSegment: 1
         )
         
-        if let artworkURL = URL(string: self.song.artworkURL) {
+        if  let stringURL = spotifyHelper.artworkURL,
+            let artworkURL = URL(string: stringURL) {
             self.songArtworkView.loadImageFromURL(url: artworkURL)
             
             if let viewController = self.contentViewController as? ViewController {

@@ -13,6 +13,13 @@ class SpotifyHelper : PlayerHelper {
     // Singleton constructor
     static let shared = SpotifyHelper()
     
+    // Artwork code
+    let qArtworkURL = "tell application \"Spotify\"\nartwork url of current track\nend tell"
+    
+    var artworkURL: String? {
+        return appleScriptBridge.execAppleScriptWithOutput(qArtworkURL)
+    }
+    
     // Make standard init private
     private init() {
         super.init(
@@ -27,8 +34,7 @@ class SpotifyHelper : PlayerHelper {
             qSongName: "tell application \"Spotify\"\nname of current track\nend tell",
             qSongAlbum: "tell application \"Spotify\"\nartist of current track\nend tell",
             qSongArtist: "tell application \"Spotify\"\nalbum of current track\nend tell",
-            qSongDuration: "tell application \"Spotify\"\nduration of current track\nend tell",
-            qArtworkURL: "tell application \"Spotify\"\nartwork url of current track\nend tell"
+            qSongDuration: "tell application \"Spotify\"\nduration of current track\nend tell"
         )
     }
     
