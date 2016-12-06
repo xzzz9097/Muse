@@ -78,21 +78,16 @@ extension WindowController {
     
     func prepareRemoteCommandCenter() {
         // Play/pause toggle
-        remoteCommandCenter.playCommand.isEnabled = true
-        remoteCommandCenter.playCommand.addTarget(self, action: #selector(togglePlayPause(event:)))
-        remoteCommandCenter.pauseCommand.isEnabled = true
-        remoteCommandCenter.pauseCommand.addTarget(self, action: #selector(togglePlayPause(event:)))
+        remoteCommandCenter.playCommand.activate(self, action: #selector(togglePlayPause(event:)))
+        remoteCommandCenter.pauseCommand.activate(self, action: #selector(togglePlayPause(event:)))
         
         // Previous/next track toggle
         // Apparently these work only on 10.12.2+
-        remoteCommandCenter.previousTrackCommand.isEnabled = true
-        remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack(event:)))
-        remoteCommandCenter.nextTrackCommand.isEnabled = true
-        remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack(event:)))
+        remoteCommandCenter.previousTrackCommand.activate(self, action: #selector(previousTrack(event:)))
+        remoteCommandCenter.nextTrackCommand.activate(self, action: #selector(nextTrack(event:)))
         
         // Scrub bar control
-        remoteCommandCenter.changePlaybackPositionCommand.isEnabled = true
-        remoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(changePlaybackPosition(event:)))
+        remoteCommandCenter.changePlaybackPositionCommand.activate(self, action: #selector(changePlaybackPosition(event:)))
     }
     
 }
