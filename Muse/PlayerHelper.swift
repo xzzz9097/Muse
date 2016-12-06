@@ -64,20 +64,17 @@ class PlayerHelper {
     }
     
     func songFromAppleScriptQuery() -> Song {
-        guard
-            let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(qPlaybackPosition),
-            let duration = appleScriptBridge.execAppleScriptWithOutput(qSongDuration)
+        guard   let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(qPlaybackPosition),
+                let duration = appleScriptBridge.execAppleScriptWithOutput(qSongDuration)
         else { return Song() }
         
-        
-        guard
-            let songName = appleScriptBridge.execAppleScriptWithOutput(qSongName),
-            let songArtist = appleScriptBridge.execAppleScriptWithOutput(qSongArtist),
-            let songAlbum = appleScriptBridge.execAppleScriptWithOutput(qSongAlbum),
+        guard   let songName = appleScriptBridge.execAppleScriptWithOutput(qSongName),
+                let songArtist = appleScriptBridge.execAppleScriptWithOutput(qSongArtist),
+                let songAlbum = appleScriptBridge.execAppleScriptWithOutput(qSongAlbum),
             
-            let isPlaying = appleScriptBridge.execAppleScriptWithOutput(qPlayerState),
-            let songPlaybackPosition = Float(playbackPosition),
-            let songDuration = Float(duration)
+                let isPlaying = appleScriptBridge.execAppleScriptWithOutput(qPlayerState),
+                let songPlaybackPosition = Float(playbackPosition),
+                let songDuration = Float(duration)
         else { return Song() }
         
         // Return the object
