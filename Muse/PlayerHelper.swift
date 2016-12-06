@@ -10,51 +10,56 @@ import Foundation
 
 class PlayerHelper {
     
+    enum PHQuery {
+        // Queries for AppleScript actions
+        case togglePlayPause
+        case nextTrack
+        case previousTrack
+        case playerState
+        case playbackPosition
+        
+        // Queries for AppleScript current track data
+        case songName
+        case songAlbum
+        case songArtist
+        case songDuration
+    }
+    
+    var queries: [PHQuery : String] = [:]
+    
     // Notification ID
     let notificationID: String
     
     // Constants for not. dispatches
     let kPlayerStatePlaying: [String]
     
-    // Queries for AppleScript actions
-    let qTogglePlayPause, qNextTrack, qPreviousTrack, qPlayerState, qPlaybackPosition: String
+    // Playback position set query
     let qSetPlaybackPosition: [String]
-    
-    // Queries for AppleScript current track data
-    let qSongName, qSongAlbum, qSongArtist, qSongDuration: String
     
     // Acces the AppleScript bridge
     let appleScriptBridge = AppleScriptBridge.shared
     
-    init(notificationID: String, kPlayerStatePlaying: [String], qTogglePlayPause: String, qNextTrack: String, qPreviousTrack: String, qPlayerState: String, qPlaybackPosition: String, qSetPlaybackPosition: [String], qSongName: String, qSongAlbum: String, qSongArtist: String, qSongDuration: String) {
+    init(notificationID: String, kPlayerStatePlaying: [String], qSetPlaybackPosition: [String], queries: [PHQuery : String]) {
         self.notificationID = notificationID
         self.kPlayerStatePlaying = kPlayerStatePlaying
-        self.qTogglePlayPause = qTogglePlayPause
-        self.qNextTrack = qNextTrack
-        self.qPreviousTrack = qPreviousTrack
-        self.qPlayerState = qPlayerState
-        self.qPlaybackPosition = qPlaybackPosition
         self.qSetPlaybackPosition = qSetPlaybackPosition
-        self.qSongName = qSongName
-        self.qSongAlbum = qSongAlbum
-        self.qSongArtist = qSongArtist
-        self.qSongDuration = qSongDuration
+        self.queries = queries
     }
     
     func togglePlayPause() {
-        appleScriptBridge.execAppleScript(qTogglePlayPause)
+        appleScriptBridge.execAppleScript(queries[.togglePlayPause]!)
     }
     
     func nextTrack() {
-        appleScriptBridge.execAppleScript(qNextTrack)
+        appleScriptBridge.execAppleScript(queries[.nextTrack]!)
     }
     
     func previousTrack() {
-        appleScriptBridge.execAppleScript(qPreviousTrack)
+        appleScriptBridge.execAppleScript(queries[.previousTrack]!)
     }
     
     func currentPlaybackPosition() -> Float? {
-        guard let stringValue = appleScriptBridge.execAppleScriptWithOutput(qPlaybackPosition) else { return nil }
+        guard let stringValue = appleScriptBridge.execAppleScriptWithOutput(queries[.playbackPosition]!) else { return nil }
         
         return Float(stringValue)
     }
@@ -64,15 +69,15 @@ class PlayerHelper {
     }
     
     func songFromAppleScriptQuery() -> Song {
-        guard   let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(qPlaybackPosition),
-                let duration = appleScriptBridge.execAppleScriptWithOutput(qSongDuration)
+        guard   let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(queries[.playbackPosition]!),
+                let duration = appleScriptBridge.execAppleScriptWithOutput(queries[.songDuration]!)
         else { return Song() }
         
-        guard   let songName = appleScriptBridge.execAppleScriptWithOutput(qSongName),
-                let songArtist = appleScriptBridge.execAppleScriptWithOutput(qSongArtist),
-                let songAlbum = appleScriptBridge.execAppleScriptWithOutput(qSongAlbum),
+        guard   let songName = appleScriptBridge.execAppleScriptWithOutput(queries[.songName]!),
+                let songArtist = appleScriptBridge.execAppleScriptWithOutput(queries[.songArtist]!),
+                let songAlbum = appleScriptBridge.execAppleScriptWithOutput(queries[.songAlbum]!),
             
-                let isPlaying = appleScriptBridge.execAppleScriptWithOutput(qPlayerState),
+                let isPlaying = appleScriptBridge.execAppleScriptWithOutput(queries[.playerState]!),
                 let songPlaybackPosition = Float(playbackPosition),
                 let songDuration = Float(duration)
         else { return Song() }

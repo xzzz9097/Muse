@@ -25,16 +25,16 @@ class SpotifyHelper : PlayerHelper {
         super.init(
             notificationID: "com.spotify.client.PlaybackStateChanged",
             kPlayerStatePlaying: ["Playing", "kPSP"],
-            qTogglePlayPause: "tell application \"Spotify\"\nplaypause\nend tell",
-            qNextTrack: "tell application \"Spotify\"\nnext track\nend tell",
-            qPreviousTrack: "tell application \"Spotify\"\nprevious track\nend tell",
-            qPlayerState: "tell application \"Spotify\"\nplayer state\nend tell",
-            qPlaybackPosition: "tell application \"Spotify\"\nplayer position\nend tell",
             qSetPlaybackPosition: ["tell application \"Spotify\"\nset player position to ","\nend tell"],
-            qSongName: "tell application \"Spotify\"\nname of current track\nend tell",
-            qSongAlbum: "tell application \"Spotify\"\nartist of current track\nend tell",
-            qSongArtist: "tell application \"Spotify\"\nalbum of current track\nend tell",
-            qSongDuration: "tell application \"Spotify\"\nduration of current track\nend tell"
+            queries: [.togglePlayPause: "tell application \"Spotify\"\nplaypause\nend tell",
+                      .nextTrack: "tell application \"Spotify\"\nnext track\nend tell",
+                      .previousTrack: "tell application \"Spotify\"\nprevious track\nend tell",
+                      .playerState: "tell application \"Spotify\"\nplayer state\nend tell",
+                      .playbackPosition: "tell application \"Spotify\"\nplayer position\nend tell",
+                      .songName: "tell application \"Spotify\"\nname of current track\nend tell",
+                      .songArtist: "tell application \"Spotify\"\nartist of current track\nend tell",
+                      .songAlbum: "tell application \"Spotify\"\nalbum of current track\nend tell",
+                      .songDuration: "tell application \"Spotify\"\nduration of current track\nend tell"]
         )
     }
     
