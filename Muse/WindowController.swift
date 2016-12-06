@@ -210,7 +210,6 @@ class WindowController: NSWindowController {
             window.makeKeyAndOrderFront(self)
             NSApp.activate(ignoringOtherApps: true)
         } else {
-            window.orderOut(self)
             NSApp.hide(self)
         }
     }
