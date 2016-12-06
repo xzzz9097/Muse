@@ -12,10 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Enable touchbar if on eligible macOS release
-        if #available(OSX 10.12.1, *) {
-            NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
-        }
+        NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

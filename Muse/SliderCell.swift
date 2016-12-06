@@ -10,7 +10,6 @@
 
 import Cocoa
 
-@available(OSX 10.12.1, *)
 class SliderCell: NSSliderCell {
     
     let knobImage = NSImage(named: NSImageNameTouchBarPlayheadTemplate)

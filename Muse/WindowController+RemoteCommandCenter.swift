@@ -9,7 +9,6 @@
 import Foundation
 import MediaPlayer
 
-@available(OSX 10.12.1, *)
 extension WindowController {
     
     func togglePlayPause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {

@@ -10,7 +10,6 @@ import Cocoa
 import Carbon.HIToolbox
 import MediaPlayer
 
-@available(OSX 10.12.1, *)
 class WindowController: NSWindowController {
     
     var spotifyHelper = SpotifyHelper.shared
@@ -160,14 +159,12 @@ class WindowController: NSWindowController {
         trackSongProgress()
     }
     
-    @available(OSX 10.12.1, *)
     func prepareButtons() {
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarRewindTemplate), forSegment: 0)
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarPlayPauseTemplate), forSegment: 1)
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarFastForwardTemplate), forSegment: 2)
     }
     
-    @available(OSX 10.12.1, *)
     func prepareImageView() {
         self.songArtworkView.wantsLayer = true
         self.songArtworkView.layer?.cornerRadius = 4.0
@@ -236,7 +233,6 @@ class WindowController: NSWindowController {
         }
     }
     
-    @available(OSX 10.12.1, *)
     func updateUIAfterNotification() {
         self.songTitleLabel.stringValue = self.song.name
         
