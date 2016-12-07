@@ -111,8 +111,8 @@ class WindowController: NSWindowController {
                 // Detected touch phase end
                 isSliding = false
                 
-                self.song.playbackPosition = slider.floatValue * self.song.duration
-                spotifyHelper.goTo(time: self.song.playbackPosition)
+                self.song.playbackPosition = slider.doubleValue * self.song.duration
+                spotifyHelper.goTo(time: Double(self.song.playbackPosition))
             }
         }
     }
@@ -153,7 +153,7 @@ class WindowController: NSWindowController {
     }
     
     func prepareSong() {
-        self.song = spotifyHelper.songFromAppleScriptQuery()
+        self.song = spotifyHelper.song
         
         updateUIAfterNotification()
         
@@ -183,7 +183,7 @@ class WindowController: NSWindowController {
         willChangeValue(forKey: kSong)
         
         // Retrieve new value from notification
-        self.song = spotifyHelper.songFromAppleScriptQuery()
+        self.song = spotifyHelper.song
         
         didChangeValue(forKey: kSong)
         
@@ -229,7 +229,7 @@ class WindowController: NSWindowController {
             
             self.song.playbackPosition = currentPlaybackPosition
             
-            songProgressSlider.floatValue = self.song.playbackPosition / self.song.duration
+            songProgressSlider.doubleValue = self.song.playbackPosition / self.song.duration
             
             // Also update native touchbar scrubber
             updateNowPlayingInfoElapsedPlaybackTime()
@@ -247,7 +247,7 @@ class WindowController: NSWindowController {
             forSegment: 1
         )
         
-        if  let stringURL = spotifyHelper.artworkURL,
+        if  let stringURL = spotifyHelper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
             self.songArtworkView.loadImageFromURL(url: artworkURL)
             

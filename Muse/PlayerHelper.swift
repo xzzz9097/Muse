@@ -6,93 +6,27 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
-import Foundation
-
-class PlayerHelper {
+protocol PlayerHelper: class {
     
-    enum PHQuery {
-        // Queries for AppleScript actions
-        case togglePlayPause
-        case nextTrack
-        case previousTrack
-        case playerState
-        case playbackPosition
-        
-        // Playback position set query
-        case setPlaybackPosition
-        
-        // Queries for AppleScript current track data
-        case songName
-        case songAlbum
-        case songArtist
-        case songDuration
-    }
+    // Create song data
+    var song: Song { get }
     
-    private var queries: [PHQuery : String] = [:]
+    /* Control functions */
+    func togglePlayPause()
+    func nextTrack()
+    func previousTrack()
     
-    // Notification ID
-    let notificationID: String
+    /* Playback status functions */
+    func currentPlaybackPosition() -> Double?
+    func goTo(time: Double)
     
-    // Constants for not. dispatches
-    private let kPlayerStatePlaying: [String]
+    /* Artwork */
+    func artwork() -> Any?
     
-    // Playback position query field
-    static let pField = "[position]"
+    // The application identifier for the player
+    static var bundleIdentifier: String { get }
     
-    // Acces the AppleScript bridge
-    let appleScriptBridge = AppleScriptBridge.shared
-    
-    init(notificationID: String, kPlayerStatePlaying: [String], queries: [PHQuery : String]) {
-        self.notificationID = notificationID
-        self.kPlayerStatePlaying = kPlayerStatePlaying
-        self.queries = queries
-    }
-    
-    func togglePlayPause() {
-        appleScriptBridge.execAppleScript(queries[.togglePlayPause]!)
-    }
-    
-    func nextTrack() {
-        appleScriptBridge.execAppleScript(queries[.nextTrack]!)
-    }
-    
-    func previousTrack() {
-        appleScriptBridge.execAppleScript(queries[.previousTrack]!)
-    }
-    
-    func currentPlaybackPosition() -> Float? {
-        guard let stringValue = appleScriptBridge.execAppleScriptWithOutput(queries[.playbackPosition]!) else { return nil }
-        
-        return Float(stringValue)
-    }
-    
-    func goTo(time: Float) {
-        appleScriptBridge.execAppleScript(queries[.setPlaybackPosition]!.replacingOccurrences(of: PlayerHelper.pField, with: String(time)))
-    }
-    
-    func songFromAppleScriptQuery() -> Song {
-        guard   let playbackPosition = appleScriptBridge.execAppleScriptWithOutput(queries[.playbackPosition]!),
-                let duration = appleScriptBridge.execAppleScriptWithOutput(queries[.songDuration]!)
-        else { return Song() }
-        
-        guard   let songName = appleScriptBridge.execAppleScriptWithOutput(queries[.songName]!),
-                let songArtist = appleScriptBridge.execAppleScriptWithOutput(queries[.songArtist]!),
-                let songAlbum = appleScriptBridge.execAppleScriptWithOutput(queries[.songAlbum]!),
-            
-                let isPlaying = appleScriptBridge.execAppleScriptWithOutput(queries[.playerState]!),
-                let songPlaybackPosition = Float(playbackPosition),
-                let songDuration = Float(duration)
-        else { return Song() }
-        
-        // Return the object
-        return Song(
-            name: songName,
-            artist: songArtist,
-            album: songAlbum,
-            isPlaying: kPlayerStatePlaying.contains(isPlaying),
-            playbackPosition: songPlaybackPosition,
-            duration: songDuration / 1000
-        )
-    }
+    // ID for notification watcher
+    var notificationID: String { get }
     
 }
