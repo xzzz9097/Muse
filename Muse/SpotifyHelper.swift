@@ -14,7 +14,7 @@ class SpotifyHelper : PlayerHelper {
     static let shared = SpotifyHelper()
     
     // Artwork code
-    let qArtworkURL = "tell application \"Spotify\"\nartwork url of current track\nend tell"
+    private let qArtworkURL = "tell application \"Spotify\"\nartwork url of current track\nend tell"
     
     var artworkURL: String? {
         return appleScriptBridge.execAppleScriptWithOutput(qArtworkURL)

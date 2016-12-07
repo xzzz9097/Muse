@@ -28,13 +28,13 @@ class PlayerHelper {
         case songDuration
     }
     
-    var queries: [PHQuery : String] = [:]
+    private var queries: [PHQuery : String] = [:]
     
     // Notification ID
     let notificationID: String
     
     // Constants for not. dispatches
-    let kPlayerStatePlaying: [String]
+    private let kPlayerStatePlaying: [String]
     
     // Playback position query field
     static let pField = "[position]"
