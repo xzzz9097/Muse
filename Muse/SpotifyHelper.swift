@@ -6,30 +6,85 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
-import Cocoa
+import ScriptingBridge
 
-class SpotifyHelper : PlayerHelper {
+// Protocol for Spotify application queries
+// These props. and funcs. are set to optional in order
+// to be overridded and implemented by the bridge itself
+@objc protocol SpotifyApplication: class {
+    @objc optional var currentTrack: SpotifyTrack { get }
+    @objc optional var playerPosition: Double { get }
+    @objc optional var playerState: SpotifyPlayerState { get }
+    
+    @objc optional func playpause()
+    @objc optional func nextTrack()
+    @objc optional func previousTrack()
+    
+    @objc optional func setPlayerPosition(_ position: Double)
+}
+
+// Protocol for Spotify track object
+@objc protocol SpotifyTrack {
+    @objc optional var name: String { get }
+    @objc optional var artist: String { get }
+    @objc optional var album: String { get }
+    @objc optional var duration: Int { get }
+    @objc optional var artworkUrl: String { get }
+}
+
+// Protocols will implemented and populated through here
+extension SBApplication: SpotifyApplication { }
+
+class SpotifyHelper: PlayerHelper {
     
     // Singleton constructor
     static let shared = SpotifyHelper()
     
-    // Make standard init private
-    private init() {
-        super.init(
-            notificationID: "com.spotify.client.PlaybackStateChanged",
-            kPlayerStatePlaying: ["Playing", "kPSP"],
-            qTogglePlayPause: "tell application \"Spotify\"\nplaypause\nend tell",
-            qNextTrack: "tell application \"Spotify\"\nnext track\nend tell",
-            qPreviousTrack: "tell application \"Spotify\"\nprevious track\nend tell",
-            qPlayerState: "tell application \"Spotify\"\nplayer state\nend tell",
-            qPlaybackPosition: "tell application \"Spotify\"\nplayer position\nend tell",
-            qSetPlaybackPosition: ["tell application \"Spotify\"\nset player position to ","\nend tell"],
-            qSongName: "tell application \"Spotify\"\nname of current track\nend tell",
-            qSongAlbum: "tell application \"Spotify\"\nartist of current track\nend tell",
-            qSongArtist: "tell application \"Spotify\"\nalbum of current track\nend tell",
-            qSongDuration: "tell application \"Spotify\"\nduration of current track\nend tell",
-            qArtworkURL: "tell application \"Spotify\"\nartwork url of current track\nend tell"
-        )
+    // The SBApplication object buond to the helper class
+    // TODO: implement check for app running status
+    private var application: SpotifyApplication = SBApplication.init(bundleIdentifier: bundleIdentifier)!
+    
+    var song: Song {
+        guard let currentTrack = application.currentTrack else { return Song() }
+        
+        return Song(name: currentTrack.name!,
+                    artist: currentTrack.artist!,
+                    album: currentTrack.album!,
+                    isPlaying: (application.playerState == SpotifyPlayerStatePlaying),
+                    playbackPosition: currentPlaybackPosition()!,
+                    duration: Double(currentTrack.duration!) / 1000)
+    }
+    
+    func togglePlayPause() {
+        application.playpause!()
+    }
+    
+    func nextTrack() {
+        application.nextTrack!()
+    }
+    
+    func previousTrack() {
+        application.previousTrack!()
+    }
+    
+    func currentPlaybackPosition() -> Double? {
+        return application.playerPosition
+    }
+    
+    func goTo(time: Double) {
+        application.setPlayerPosition!(time)
+    }
+    
+    func artwork() -> Any? {
+        return application.currentTrack?.artworkUrl
+    }
+    
+    static var bundleIdentifier: String {
+        return "com.spotify.client"
+    }
+    
+    var notificationID: String {
+        return "com.spotify.client.PlaybackStateChanged"
     }
     
 }

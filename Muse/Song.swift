@@ -15,25 +15,20 @@ struct Song {
     var artist: String
     var album: String
     
-    // Artwork
-    var artworkURL: String
-    
     // Playing attributes
     var isPlaying: Bool
-    var playbackPosition: Float // In milliseconds
-    var duration: Float
+    var playbackPosition: Double // In milliseconds
+    var duration: Double
     
     /* Initializers */
     init() {
-        self.init(name: "", artist: "", album: "", artworkURL: "", isPlaying: false, playbackPosition: 0, duration: 0)
+        self.init(name: "", artist: "", album: "", isPlaying: false, playbackPosition: 0, duration: 0)
     }
     
-    init(name: String, artist: String, album: String, artworkURL: String, isPlaying: Bool, playbackPosition: Float, duration: Float) {
+    init(name: String, artist: String, album: String, isPlaying: Bool, playbackPosition: Double, duration: Double) {
         self.name = name
         self.artist = artist
         self.album = album
-        
-        self.artworkURL = artworkURL
         
         self.isPlaying = isPlaying
         
