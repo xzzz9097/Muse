@@ -17,6 +17,7 @@
 		0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27631DF01F440039ACDC /* DDHotKeyTextField.m */; };
 		0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */; };
 		0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDD1ADA1DF04B560027661A /* SliderCell.swift */; };
+		0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B7E31DF9772900CDD130 /* ImageView.swift */; };
 		0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
@@ -115,6 +116,7 @@
 		0CCD27641DF01F440039ACDC /* DDHotKeyUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDHotKeyUtilities.h; sourceTree = "<group>"; };
 		0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		0CDD1ADA1DF04B560027661A /* SliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
+		0CF8B7E31DF9772900CDD130 /* ImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
 				0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */,
 				0C9A60C61DE75DCC0051CDC6 /* NSImageView+Download.swift */,
+				0CF8B7E31DF9772900CDD130 /* ImageView.swift */,
 				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
 				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
 				0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */,
@@ -468,6 +471,7 @@
 				0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */,
 				0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */,
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
+				0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */,
 				0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

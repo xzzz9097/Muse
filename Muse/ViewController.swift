@@ -10,7 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-    @IBOutlet weak var fullSongArtworkView: NSImageView!
+    @IBOutlet weak var fullSongArtworkView: ImageView!
     
     @IBOutlet weak var titleLabelView: NSTextField!
     @IBOutlet weak var albumArtistLabelView: NSTextField!
@@ -27,6 +27,8 @@ class ViewController: NSViewController {
     
     override func viewWillAppear() {
         setBackgroundAndShadowForSuperView(titleAlbumArtistSuperview)
+        
+        prepareFullSongArtworkView()
     }
 
     override var representedObject: Any? {
@@ -52,10 +54,19 @@ class ViewController: NSViewController {
         layer.shadowOpacity = 0.25
     }
     
+    func prepareFullSongArtworkView() {
+        // Set image scaling
+        fullSongArtworkView.imageScaling = .scaleAxesIndependently
+        
+        // Add callback to show/hide views when hovering (animating)
+        fullSongArtworkView.mouseHandler = {
+            (mouseHovering: Bool) -> Void in
+                self.titleAlbumArtistSuperview.animator().isHidden = !mouseHovering
+        }
+    }
+    
     func updateFullSongArtworkViewForUrl(_ url: URL) {
         fullSongArtworkView.loadImageFromURL(url: url)
-        
-        fullSongArtworkView.imageScaling = .scaleAxesIndependently
     }
     
     func updateTitleAlbumArtistViewForSong(_ song: Song) {

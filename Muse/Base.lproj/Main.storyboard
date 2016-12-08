@@ -761,7 +761,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FL1-mx-O2f">
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FL1-mx-O2f" customClass="ImageView" customModule="Muse" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="Hlj-tU-niT"/>
@@ -769,7 +769,7 @@
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="MEf-4T-602"/>
                             </imageView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
                                 <rect key="frame" x="0.0" y="154" width="200" height="46"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
@@ -779,7 +779,7 @@
                                             <constraint firstAttribute="height" constant="20" id="xpX-Vc-8U3"/>
                                         </constraints>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" usesSingleLineMode="YES" id="ztu-5B-mTQ">
-                                            <font key="font" metaFont="system" size="12"/>
+                                            <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
