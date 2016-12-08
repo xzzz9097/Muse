@@ -238,27 +238,40 @@ class WindowController: NSWindowController {
     
     @available(OSX 10.12.1, *)
     func updateUIAfterNotification() {
+        updateTouchBarUI()
+        
+        updateViewUI()
+        
+        updateNowPlayingInfo()
+    }
+    
+    func updateTouchBarUI() {
         self.songTitleLabel.stringValue = self.song.name
         
         self.controlsSegmentedView.setImage(
             self.song.isPlaying ?
-            NSImage(named: NSImageNameTouchBarPauseTemplate) :
-            NSImage(named: NSImageNameTouchBarPlayTemplate),
+                NSImage(named: NSImageNameTouchBarPauseTemplate) :
+                NSImage(named: NSImageNameTouchBarPlayTemplate),
             forSegment: 1
         )
         
-        if  let stringURL = spotifyHelper.artwork() as? String,
-            let artworkURL = URL(string: stringURL) {
-            self.songArtworkView.loadImageFromURL(url: artworkURL)
-            
-            if let viewController = self.contentViewController as? ViewController {
-                // Also update cover art in ViewController
-                viewController.fullSongArtworkView.loadImageFromURL(url: artworkURL)
-                viewController.fullSongArtworkView.imageScaling = .scaleAxesIndependently
-            }
-        }
+        guard   let stringURL = spotifyHelper.artwork() as? String,
+                let artworkURL = URL(string: stringURL)
+        else { return }
         
-        updateNowPlayingInfo()
+        self.songArtworkView.loadImageFromURL(url: artworkURL)
+    }
+    
+    func updateViewUI() {
+        guard let viewController = self.contentViewController as? ViewController else { return }
+        
+        viewController.updateTitleAlbumArtistViewForSong(self.song)
+        
+        guard   let stringURL = spotifyHelper.artwork() as? String,
+                let artworkURL = URL(string: stringURL)
+        else { return }
+        
+        viewController.updateFullSongArtworkViewForUrl(artworkURL)
     }
     
 }
