@@ -12,8 +12,8 @@ class ViewController: NSViewController {
 
     @IBOutlet weak var fullSongArtworkView: ImageView!
     
-    @IBOutlet weak var titleLabelView: NSTextField!
-    @IBOutlet weak var albumArtistLabelView: NSTextField!
+    @IBOutlet weak var titleLabelView: MarqueeTextView!
+    @IBOutlet weak var albumArtistLabelView: MarqueeTextView!
     
     var titleAlbumArtistSuperview: NSView!
     
@@ -70,8 +70,10 @@ class ViewController: NSViewController {
     }
     
     func updateTitleAlbumArtistViewForSong(_ song: Song) {
+        titleLabelView.speed = 1/25
         titleLabelView.stringValue = song.name
         
+        albumArtistLabelView.speed = 1/25
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
     }
     

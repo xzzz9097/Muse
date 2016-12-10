@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C60b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C63a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="7104"/>
@@ -769,60 +769,51 @@
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="MEf-4T-602"/>
                             </imageView>
-                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
-                                <rect key="frame" x="0.0" y="174" width="220" height="46"/>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="hLy-5e-jUy">
+                                <rect key="frame" x="0.0" y="170" width="220" height="50"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
-                                        <rect key="frame" x="33" y="20" width="154" height="20"/>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="dEv-Nc-3TL" customClass="MarqueeTextView" customModule="Muse" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="22" width="220" height="20"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="o7i-xN-VRJ"/>
-                                            <constraint firstAttribute="height" constant="20" id="xpX-Vc-8U3"/>
+                                            <constraint firstAttribute="height" constant="20" id="I9O-VC-29K"/>
+                                            <constraint firstAttribute="width" constant="220" id="UKX-Hb-La2"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" usesSingleLineMode="YES" id="ztu-5B-mTQ">
-                                            <font key="font" metaFont="cellTitle"/>
-                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OP7-ud-xJg">
-                                        <rect key="frame" x="33" y="4" width="154" height="16"/>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="k4D-Lv-DLr" customClass="MarqueeTextView" customModule="Muse" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="6" width="220" height="16"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="150" id="R8P-l1-2gG"/>
-                                            <constraint firstAttribute="height" constant="16" id="yrl-dt-D55"/>
+                                            <constraint firstAttribute="width" constant="220" id="5e5-1F-RAQ"/>
+                                            <constraint firstAttribute="height" constant="16" id="YhL-RS-Z4f"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" usesSingleLineMode="YES" id="uIl-wJ-4Cw">
-                                            <font key="font" metaFont="system" size="10"/>
-                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
+                                    </customView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="OP7-ud-xJg" firstAttribute="top" secondItem="jg9-tH-5t7" secondAttribute="bottom" id="6uu-k4-aP7"/>
-                                    <constraint firstItem="OP7-ud-xJg" firstAttribute="top" secondItem="jg9-tH-5t7" secondAttribute="bottom" id="7eg-2x-eqe"/>
-                                    <constraint firstAttribute="trailing" secondItem="jg9-tH-5t7" secondAttribute="trailing" constant="35" id="QeF-iX-qv4"/>
-                                    <constraint firstAttribute="bottom" secondItem="OP7-ud-xJg" secondAttribute="bottom" constant="4" id="YZo-YZ-aPD"/>
-                                    <constraint firstItem="OP7-ud-xJg" firstAttribute="leading" secondItem="mIG-iE-c3d" secondAttribute="leading" constant="35" id="cfe-Sc-CwN"/>
-                                    <constraint firstItem="jg9-tH-5t7" firstAttribute="leading" secondItem="mIG-iE-c3d" secondAttribute="leading" constant="35" id="hDe-eT-tuV"/>
-                                    <constraint firstItem="jg9-tH-5t7" firstAttribute="top" secondItem="mIG-iE-c3d" secondAttribute="top" constant="6" id="siZ-Ba-EzM"/>
-                                    <constraint firstAttribute="trailing" secondItem="OP7-ud-xJg" secondAttribute="trailing" constant="35" id="smo-dz-dJ2"/>
+                                    <constraint firstItem="k4D-Lv-DLr" firstAttribute="leading" secondItem="hLy-5e-jUy" secondAttribute="leading" id="4o6-ed-SVp"/>
+                                    <constraint firstAttribute="height" constant="50" id="AvI-L4-be1"/>
+                                    <constraint firstItem="k4D-Lv-DLr" firstAttribute="top" secondItem="dEv-Nc-3TL" secondAttribute="bottom" id="FGh-fL-8t8"/>
+                                    <constraint firstAttribute="width" constant="220" id="MCP-mU-bhm"/>
+                                    <constraint firstItem="dEv-Nc-3TL" firstAttribute="top" secondItem="hLy-5e-jUy" secondAttribute="top" constant="8" id="ThM-6b-a4b"/>
+                                    <constraint firstAttribute="trailing" secondItem="k4D-Lv-DLr" secondAttribute="trailing" id="Yyr-2a-JFw"/>
+                                    <constraint firstAttribute="bottom" secondItem="k4D-Lv-DLr" secondAttribute="bottom" constant="6" id="drv-Rd-dU1"/>
+                                    <constraint firstAttribute="trailing" secondItem="dEv-Nc-3TL" secondAttribute="trailing" id="l38-6B-Tau"/>
+                                    <constraint firstItem="dEv-Nc-3TL" firstAttribute="leading" secondItem="hLy-5e-jUy" secondAttribute="leading" id="xeZ-6H-bVf"/>
                                 </constraints>
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="mIG-iE-c3d" secondAttribute="trailing" id="Mwp-ft-xJI"/>
+                            <constraint firstItem="hLy-5e-jUy" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="4Ge-6J-mN0"/>
+                            <constraint firstItem="hLy-5e-jUy" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="OgK-Er-P5u"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
-                            <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
+                            <constraint firstAttribute="trailing" secondItem="hLy-5e-jUy" secondAttribute="trailing" id="Rht-CN-4Jc"/>
                             <constraint firstAttribute="trailing" secondItem="FL1-mx-O2f" secondAttribute="trailing" id="dyY-ER-2vM"/>
-                            <constraint firstItem="mIG-iE-c3d" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="e93-MX-3cq"/>
-                            <constraint firstItem="mIG-iE-c3d" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="oXe-vP-81L"/>
                             <constraint firstAttribute="bottom" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="rxH-43-xhF"/>
+                            <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="uTV-cI-w2F"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>
+                        <outlet property="albumArtistLabelView" destination="k4D-Lv-DLr" id="Ey9-Q7-PRz"/>
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>
-                        <outlet property="titleLabelView" destination="jg9-tH-5t7" id="94d-SB-9OY"/>
+                        <outlet property="titleLabelView" destination="dEv-Nc-3TL" id="pHL-by-WZW"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
