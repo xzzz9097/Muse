@@ -99,21 +99,32 @@ class WindowController: NSWindowController {
         }
     }
     
+    var sliderValueChangedHandler: (Bool, Double?) -> () {
+        // Closure for slider value changed
+        // Also used in ViewController
+        return { touching, doubleValue in
+            self.isSliding = touching
+            
+            guard !self.isSliding, let value = doubleValue else { return }
+            
+            self.song.playbackPosition = value * self.song.duration
+            self.spotifyHelper.goTo(time: self.song.playbackPosition)
+        }
+    }
+    
     @IBAction func progressSliderValueChanged(_ sender: Any) {
+        // Track progress slider changes
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
                 // Detected touch phase start
-                isSliding = true
+                sliderValueChangedHandler(true, nil)
             }
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
                 // Detected touch phase end
-                isSliding = false
-                
-                self.song.playbackPosition = slider.doubleValue * self.song.duration
-                spotifyHelper.goTo(time: Double(self.song.playbackPosition))
+                sliderValueChangedHandler(false, slider.doubleValue)
             }
         }
     }
@@ -172,7 +183,7 @@ class WindowController: NSWindowController {
     func prepareSongProgressSlider() {
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
-        cell.knobImage = NSImage(named: NSImageNameTouchBarPlayheadTemplate)        
+        cell.knobImage = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
     }
     
     @available(OSX 10.12.1, *)

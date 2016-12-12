@@ -39,6 +39,25 @@ class ViewController: NSViewController {
         spotifyHelper.nextTrack()
     }
     
+    @IBAction func songProgressSliderValueChanged(_ sender: Any) {
+        // Track progress slider changes
+        if let slider = sender as? NSSlider {
+            guard   let currentEvent = NSApplication.shared().currentEvent,
+                    let windowController = self.view.window?.windowController as? WindowController
+            else { return }
+            
+            if (currentEvent.type == .leftMouseDown) {
+                // Detected mouse down
+                windowController.sliderValueChangedHandler(true, nil)
+            }
+            
+            if (currentEvent.type == .leftMouseUp) {
+                // Detected mouse up
+                windowController.sliderValueChangedHandler(false, slider.doubleValue)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

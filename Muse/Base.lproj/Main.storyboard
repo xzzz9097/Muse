@@ -847,6 +847,9 @@
                                         <rect key="frame" x="30" y="1" width="160" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
+                                        <connections>
+                                            <action selector="songProgressSliderValueChanged:" target="XfG-lQ-9wD" id="Lsh-Jn-Pla"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                             </customView>
