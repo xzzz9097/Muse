@@ -265,13 +265,15 @@ class WindowController: NSWindowController {
     func updateViewUI() {
         guard let viewController = self.contentViewController as? ViewController else { return }
         
-        viewController.updateTitleAlbumArtistViewForSong(self.song)
+        viewController.updateTitleAlbumArtistView(for: self.song)
+        
+        viewController.updateButtons(for: self.song)
         
         guard   let stringURL = spotifyHelper.artwork() as? String,
                 let artworkURL = URL(string: stringURL)
         else { return }
         
-        viewController.updateFullSongArtworkViewForUrl(artworkURL)
+        viewController.updateFullSongArtworkView(for: artworkURL)
     }
     
 }

@@ -8,14 +8,34 @@
 
 import Cocoa
 
+@available(OSX 10.12.1, *)
 class ViewController: NSViewController {
+    
+    let spotifyHelper = SpotifyHelper.shared
 
     @IBOutlet weak var fullSongArtworkView: ImageView!
     
     @IBOutlet weak var titleLabelView: NSTextField!
     @IBOutlet weak var albumArtistLabelView: NSTextField!
     
+    @IBOutlet weak var previousTrackButton: NSButton!
+    @IBOutlet weak var togglePlayPauseButton: NSButton!
+    @IBOutlet weak var nextTrackButton: NSButton!
+    
     var titleAlbumArtistSuperview: NSView!
+    var controlsSuperview: NSView!
+    
+    @IBAction func previousTrackButtonClicked(_ sender: Any) {
+        spotifyHelper.previousTrack()
+    }
+    
+    @IBAction func togglePlayPauseButtonClicked(_ sender: Any) {
+        spotifyHelper.togglePlayPause()
+    }
+    
+    @IBAction func nextTrackButtonClicked(_ sender: Any) {
+        spotifyHelper.nextTrack()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,11 +43,15 @@ class ViewController: NSViewController {
         titleAlbumArtistSuperview = titleLabelView.superview
         
         titleAlbumArtistSuperview.wantsLayer = true
+        
+        controlsSuperview = togglePlayPauseButton.superview
     }
     
     override func viewWillAppear() {
         setBackgroundAndShadowForSuperView(titleAlbumArtistSuperview)
         
+        setBackgroundAndShadowForSuperView(controlsSuperview)
+                
         prepareFullSongArtworkView()
     }
 
@@ -54,6 +78,14 @@ class ViewController: NSViewController {
         layer.shadowOpacity = 0.25
     }
     
+    func updateButtons(for song: Song) {
+        // Initialize playback control buttons
+        previousTrackButton.image = NSImage(named: NSImageNameTouchBarRewindTemplate)
+        togglePlayPauseButton.image = song.isPlaying ? NSImage(named: NSImageNameTouchBarPauseTemplate) :
+                                                       NSImage(named: NSImageNameTouchBarPlayTemplate)
+        nextTrackButton.image = NSImage(named: NSImageNameTouchBarFastForwardTemplate)
+    }
+    
     func prepareFullSongArtworkView() {
         // Set image scaling
         fullSongArtworkView.imageScaling = .scaleAxesIndependently
@@ -62,14 +94,15 @@ class ViewController: NSViewController {
         fullSongArtworkView.mouseHandler = {
             (mouseHovering: Bool) -> Void in
                 self.titleAlbumArtistSuperview.animator().isHidden = !mouseHovering
+                self.controlsSuperview.animator().isHidden = !mouseHovering
         }
     }
     
-    func updateFullSongArtworkViewForUrl(_ url: URL) {
+    func updateFullSongArtworkView(for url: URL) {
         fullSongArtworkView.loadImageFromURL(url: url)
     }
     
-    func updateTitleAlbumArtistViewForSong(_ song: Song) {
+    func updateTitleAlbumArtistView(for song: Song) {
         titleLabelView.stringValue = song.name
         
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
