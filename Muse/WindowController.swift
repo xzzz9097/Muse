@@ -233,6 +233,11 @@ class WindowController: NSWindowController {
             
             // Also update native touchbar scrubber
             updateNowPlayingInfoElapsedPlaybackTime()
+            
+            // And the View's slider
+            guard let viewController = self.contentViewController as? ViewController else { return }
+            
+            viewController.updateSongProgressSlider(for: self.song)
         }
     }
     

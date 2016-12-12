@@ -22,6 +22,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var togglePlayPauseButton: NSButton!
     @IBOutlet weak var nextTrackButton: NSButton!
     
+    @IBOutlet weak var songProgressSlider: NSSliderCell!
+    
     var titleAlbumArtistSuperview: NSView!
     var controlsSuperview: NSView!
     
@@ -107,6 +109,10 @@ class ViewController: NSViewController {
         titleLabelView.stringValue = song.name
         
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
+    }
+    
+    func updateSongProgressSlider(for song: Song) {
+        songProgressSlider.doubleValue = song.playbackPosition / song.duration
     }
     
 }
