@@ -811,7 +811,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">
-                                        <rect key="frame" x="98" y="20" width="24" height="24"/>
+                                        <rect key="frame" x="98" y="19" width="24" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="cbA-HT-gnS">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -822,7 +822,7 @@
                                         </connections>
                                     </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3h-iT-7mg">
-                                        <rect key="frame" x="64" y="20" width="24" height="24"/>
+                                        <rect key="frame" x="64" y="19" width="24" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="teq-xq-rom">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -833,7 +833,7 @@
                                         </connections>
                                     </button>
                                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1xW-XK-zSM">
-                                        <rect key="frame" x="132" y="20" width="24" height="24"/>
+                                        <rect key="frame" x="132" y="19" width="24" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="A2w-kM-Ukz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -844,7 +844,7 @@
                                         </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gf1-O0-WCI">
-                                        <rect key="frame" x="30" y="3" width="160" height="19"/>
+                                        <rect key="frame" x="30" y="1" width="160" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                     </slider>
