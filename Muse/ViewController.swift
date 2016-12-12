@@ -50,8 +50,8 @@ class ViewController: NSViewController {
     override func viewWillAppear() {
         setBackgroundAndShadowForSuperView(titleAlbumArtistSuperview)
         
-        setBackgroundAndShadowForSuperView(controlsSuperview)
-                
+        setBackgroundAndShadowForSuperView(controlsSuperview, facingUp: true)
+        
         prepareFullSongArtworkView()
     }
 
@@ -61,7 +61,7 @@ class ViewController: NSViewController {
         }
     }
     
-    func setBackgroundAndShadowForSuperView(_ superview: NSView!) {
+    func setBackgroundAndShadowForSuperView(_ superview: NSView!, facingUp: Bool = false) {
         guard let layer = superview.layer else { return }
         
         // Set background color
@@ -72,10 +72,11 @@ class ViewController: NSViewController {
         
         // Create shadow
         superview.shadow = NSShadow()
-        layer.shadowColor = NSColor.shadowColor.cgColor
-        layer.shadowRadius = 5.0
-        layer.shadowOffset = NSMakeSize(0, -2.0)
-        layer.shadowOpacity = 0.25
+        layer.shadowColor = NSColor.controlShadowColor.cgColor
+        layer.shadowRadius = 2.25
+        layer.shadowOffset = facingUp ? NSMakeSize(0, 2.0) :
+                                        NSMakeSize(0, -2.0)
+        layer.shadowOpacity = 0.3
     }
     
     func updateButtons(for song: Song) {
