@@ -22,7 +22,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var togglePlayPauseButton: NSButton!
     @IBOutlet weak var nextTrackButton: NSButton!
     
-    @IBOutlet weak var songProgressSlider: NSSliderCell!
+    @IBOutlet weak var songProgressSlider: NSSlider!
     
     var titleAlbumArtistSuperview: NSView!
     var controlsSuperview: NSView!
@@ -53,6 +53,8 @@ class ViewController: NSViewController {
         setBackgroundAndShadowForSuperView(titleAlbumArtistSuperview)
         
         setBackgroundAndShadowForSuperView(controlsSuperview, facingUp: true)
+        
+        prepareSongProgressSlider()
         
         prepareFullSongArtworkView()
     }
@@ -87,6 +89,14 @@ class ViewController: NSViewController {
         togglePlayPauseButton.image = song.isPlaying ? NSImage(named: NSImageNameTouchBarPauseTemplate) :
                                                        NSImage(named: NSImageNameTouchBarPlayTemplate)
         nextTrackButton.image = NSImage(named: NSImageNameTouchBarFastForwardTemplate)
+    }
+    
+    func prepareSongProgressSlider() {
+        guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
+        
+        // Hide slider thumb
+        cell.knobImage = NSImage()
+        cell.knobVisible = false
     }
     
     func prepareFullSongArtworkView() {

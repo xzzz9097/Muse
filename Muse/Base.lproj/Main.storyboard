@@ -710,9 +710,8 @@
                                 <sliderAccessory key="maximumValueAccessory" id="mzI-zH-CX2">
                                     <sliderAccessoryBehavior key="behavior" id="a3m-32-dWW"/>
                                 </sliderAccessory>
-                                <slider key="slider" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
-                                    <rect key="frame" x="0.0" y="0.0" width="689" height="19"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
+                                    <rect key="frame" x="0.0" y="0.0" width="689" height="30"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="4JH-E9-yW3" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                     <connections>
                                         <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="f82-wD-WAe"/>
@@ -722,8 +721,7 @@
                             <touchBarItem id="qeI-1V-kBR">
                                 <viewController key="viewController" id="I3D-jY-SvG">
                                     <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
-                                        <rect key="frame" x="0.0" y="-2" width="143" height="33"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="0.0" y="-2" width="143" height="25"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -848,7 +846,7 @@
                                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gf1-O0-WCI">
                                         <rect key="frame" x="30" y="3" width="160" height="19"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9"/>
+                                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                     </slider>
                                 </subviews>
                             </customView>
@@ -868,7 +866,7 @@
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>
                         <outlet property="nextTrackButton" destination="1xW-XK-zSM" id="CbI-95-0cP"/>
                         <outlet property="previousTrackButton" destination="l3h-iT-7mg" id="r1D-gC-p5A"/>
-                        <outlet property="songProgressSlider" destination="n9c-pa-Xr9" id="0xb-dC-Avn"/>
+                        <outlet property="songProgressSlider" destination="Gf1-O0-WCI" id="hoa-yG-Fmh"/>
                         <outlet property="titleLabelView" destination="jg9-tH-5t7" id="94d-SB-9OY"/>
                         <outlet property="togglePlayPauseButton" destination="6Z3-b0-ujX" id="EAd-Yj-C4m"/>
                     </connections>

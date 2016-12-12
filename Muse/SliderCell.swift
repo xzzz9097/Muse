@@ -13,22 +13,35 @@ import Cocoa
 @available(OSX 10.12.1, *)
 class SliderCell: NSSliderCell {
     
-    let knobImage = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
+    // The NSImage resource for the knob
+    var knobImage: NSImage!
     
+    // The knob's visibility
+    var knobVisible: Bool = true
+    
+    /*
+     Draw the knob
+     */
     override func drawKnob(_ knobRect: NSRect) {
-        // Draw the knob
-        guard let image = self.knobImage, let flipped = self.controlView?.isFlipped else {
+        guard   let image = self.knobImage,
+                let flipped = self.controlView?.isFlipped
+        else {
             super.drawKnob(knobRect)
             return
         }
         
         let rect = self.knobRect(flipped: flipped)
         
-        image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: 1.0)
+        // Determine wheter the knob will be visible
+        let fraction: CGFloat = knobVisible ? 1.0 : 0.0
+        
+        image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
     }
     
+    /*
+     Build the rect for our knob image
+     */
     override func knobRect(flipped: Bool) -> NSRect {
-        // Build the rect for our knob image
         guard let image = self.knobImage, var bounds = self.controlView?.bounds else {
             return super.knobRect(flipped: flipped)
         }
@@ -46,8 +59,10 @@ class SliderCell: NSSliderCell {
         return rect
     }
     
+    /*
+     Return current knob position %
+     */
     func relativeKnobPosition() -> CGFloat {
-        // Return current knob position %
         return CGFloat((self.doubleValue - self.minValue) / (self.maxValue - self.minValue))
     }
     
