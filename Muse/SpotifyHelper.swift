@@ -52,7 +52,7 @@ class SpotifyHelper: PlayerHelper {
                     album: currentTrack.album!,
                     isPlaying: (application.playerState == SpotifyPlayerStatePlaying),
                     playbackPosition: currentPlaybackPosition()!,
-                    duration: Double(currentTrack.duration!) / 1000)
+                    duration: trackDuration()!)
     }
     
     func togglePlayPause() {
