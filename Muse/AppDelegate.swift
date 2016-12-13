@@ -13,7 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Enable touchbar if on eligible macOS release
-        if #available(OSX 10.12.1, *) {
+        if #available(OSX 10.12.2, *) {
             NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
         }
     }

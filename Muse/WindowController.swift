@@ -10,7 +10,7 @@ import Cocoa
 import Carbon.HIToolbox
 import MediaPlayer
 
-@available(OSX 10.12.1, *)
+@available(OSX 10.12.2, *)
 class WindowController: NSWindowController {
     
     var spotifyHelper = SpotifyHelper.shared

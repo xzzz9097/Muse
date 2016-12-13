@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@available(OSX 10.12.1, *)
+@available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
     let spotifyHelper = SpotifyHelper.shared
