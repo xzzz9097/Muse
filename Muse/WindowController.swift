@@ -240,10 +240,10 @@ class WindowController: NSWindowController {
     
     func trackSongProgress() {
         if song.isPlaying {
-            songTrackingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateSongProgressSlider), userInfo: nil, repeats: true)
+            songTrackingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateSongProgressSlider(loadTime:)), userInfo: nil, repeats: true)
         } else {
             songTrackingTimer.invalidate()
-            updateSongProgressSlider()
+            updateSongProgressSlider(loadTime: true)
         }
     }
     
