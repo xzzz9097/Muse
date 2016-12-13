@@ -18,10 +18,15 @@ protocol PlayerHelper: class {
     
     /* Playback status functions */
     func currentPlaybackPosition() -> Double?
-    func goTo(time: Double)
+    func trackDuration() -> Double?
+    func goTo(touching: Bool, doubleValue: Double?)
     
     /* Artwork */
     func artwork() -> Any?
+    
+    /* Callbacks */
+    var trackChangedHandler: () -> () { set get }
+    var timeChangedHandler: (Bool, Double?) -> () { set get }
     
     // The application identifier for the player
     static var bundleIdentifier: String { get }

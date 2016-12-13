@@ -43,6 +43,9 @@ class WindowController: NSWindowController {
         prepareSongProgressSlider()
         prepareImageView()
         
+        // Register callbacks for PlayerHelper
+        registerCallbacks()
+        
         // Register our DDHotKey
         registerHotkey()
         
@@ -69,12 +72,10 @@ class WindowController: NSWindowController {
         switch segmentedControl.selectedSegment {
         case 0:
             spotifyHelper.previousTrack()
-            updateSongProgressSlider()
         case 1:
             spotifyHelper.togglePlayPause()
         case 2:
             spotifyHelper.nextTrack()
-            updateSongProgressSlider()
         default:
             return
         }
@@ -88,27 +89,34 @@ class WindowController: NSWindowController {
             toggleWindow(window, visible: false)
         case kVK_LeftArrow:
             spotifyHelper.previousTrack()
-            updateSongProgressSlider()
         case kVK_Space:
             spotifyHelper.togglePlayPause()
         case kVK_RightArrow:
             spotifyHelper.nextTrack()
-            updateSongProgressSlider()
         default:
             super.keyDown(with: event)
         }
     }
     
-    var sliderValueChangedHandler: (Bool, Double?) -> () {
-        // Closure for slider value changed
-        // Also used in ViewController
-        return { touching, doubleValue in
+    func registerCallbacks() {
+        // Callback for PlayerHelper's nextTrack() and previousTrack()
+        spotifyHelper.trackChangedHandler = {
+            self.song.playbackPosition = 0
+            
+            self.updateSongProgressSlider(loadTime: false)
+            
+            self.updateNowPlayingInfo()
+        }
+        
+        // Callback for PlayerHelper's goTo(Bool, Double?)
+        spotifyHelper.timeChangedHandler  = { touching, doubleValue in
             self.isSliding = touching
             
             guard !self.isSliding, let value = doubleValue else { return }
             
             self.song.playbackPosition = value * self.song.duration
-            self.spotifyHelper.goTo(time: self.song.playbackPosition)
+            
+            self.updateSongProgressSlider(loadTime: false)
         }
     }
     
@@ -119,12 +127,12 @@ class WindowController: NSWindowController {
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
                 // Detected touch phase start
-                sliderValueChangedHandler(true, nil)
+                spotifyHelper.goTo(touching: true)
             }
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
                 // Detected touch phase end
-                sliderValueChangedHandler(false, slider.doubleValue)
+                spotifyHelper.goTo(doubleValue: slider.doubleValue)
             }
         }
     }
@@ -242,11 +250,11 @@ class WindowController: NSWindowController {
         }
     }
     
-    func updateSongProgressSlider() {
+    func updateSongProgressSlider(loadTime: Bool = true) {
         if !isSliding {
-            guard let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() else { return }
-            
-            self.song.playbackPosition = currentPlaybackPosition
+            if loadTime, let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() {
+                self.song.playbackPosition = currentPlaybackPosition
+            }
             
             songProgressSlider.doubleValue = self.song.playbackPosition / self.song.duration
             

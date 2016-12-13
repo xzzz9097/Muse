@@ -61,23 +61,41 @@ class SpotifyHelper: PlayerHelper {
     
     func nextTrack() {
         application.nextTrack!()
+        
+        trackChangedHandler()
     }
     
     func previousTrack() {
         application.previousTrack!()
+        
+        trackChangedHandler()
     }
     
     func currentPlaybackPosition() -> Double? {
         return application.playerPosition
     }
     
-    func goTo(time: Double) {
-        application.setPlayerPosition!(time)
+    func trackDuration() -> Double? {
+        guard let currentTrack = application.currentTrack else { return 0 }
+        
+        return Double(currentTrack.duration!) / 1000
+    }
+    
+    func goTo(touching: Bool = false, doubleValue: Double? = nil) {
+        if !touching, let value = doubleValue {
+            application.setPlayerPosition!(value * trackDuration()!)
+        }
+        
+        timeChangedHandler(touching, doubleValue)
     }
     
     func artwork() -> Any? {
         return application.currentTrack?.artworkUrl
     }
+    
+    var trackChangedHandler: () -> () = { }
+    
+    var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
     static var bundleIdentifier: String {
         return "com.spotify.client"

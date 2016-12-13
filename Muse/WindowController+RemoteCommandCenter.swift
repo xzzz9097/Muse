@@ -15,40 +15,23 @@ extension WindowController {
     func togglePlayPause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         spotifyHelper.togglePlayPause()
         
-        updateNowPlayingInfo()
-        
         return .success
     }
     
     func changePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        self.song.playbackPosition = event.positionTime.rounded()
-        updateNowPlayingInfoElapsedPlaybackTime()
-        
-        spotifyHelper.goTo(time: Double(self.song.playbackPosition))
-        
-        updateNowPlayingInfo()
+        spotifyHelper.goTo(doubleValue: event.positionTime.rounded() / self.song.duration)
         
         return .success
     }
     
     func previousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        self.song.playbackPosition = 0
-        updateNowPlayingInfoElapsedPlaybackTime()
-        
         spotifyHelper.previousTrack()
-        
-        updateNowPlayingInfo()
         
         return .success
     }
     
     func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        self.song.playbackPosition = 0
-        updateNowPlayingInfoElapsedPlaybackTime()
-        
         spotifyHelper.nextTrack()
-        
-        updateNowPlayingInfo()
         
         return .success
     }
