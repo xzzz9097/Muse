@@ -180,21 +180,18 @@ class WindowController: NSWindowController {
         trackSongProgress()
     }
     
-    @available(OSX 10.12.1, *)
     func prepareButtons() {
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarRewindTemplate), forSegment: 0)
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarPlayPauseTemplate), forSegment: 1)
         self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarFastForwardTemplate), forSegment: 2)
     }
     
-    @available(OSX 10.12.1, *)
     func prepareSongProgressSlider() {
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
         cell.knobImage = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
     }
     
-    @available(OSX 10.12.1, *)
     func prepareImageView() {
         self.songArtworkView.wantsLayer = true
         self.songArtworkView.layer?.cornerRadius = 4.0
@@ -268,7 +265,6 @@ class WindowController: NSWindowController {
         }
     }
     
-    @available(OSX 10.12.1, *)
     func updateUIAfterNotification() {
         updateTouchBarUI()
         
