@@ -69,7 +69,7 @@ class ViewController: NSViewController {
     override func viewWillAppear() {
         setBackgroundAndShadowForSuperView(titleAlbumArtistSuperview)
         
-        setBackgroundAndShadowForSuperView(controlsSuperview, facingUp: true)
+        setBackgroundAndShadowForSuperView(controlsSuperview)
         
         prepareSongProgressSlider()
         
@@ -82,7 +82,7 @@ class ViewController: NSViewController {
         }
     }
     
-    func setBackgroundAndShadowForSuperView(_ superview: NSView!, facingUp: Bool = false) {
+    func setBackgroundAndShadowForSuperView(_ superview: NSView!) {
         guard let layer = superview.layer else { return }
         
         // Set background color
@@ -94,10 +94,8 @@ class ViewController: NSViewController {
         // Create shadow
         superview.shadow = NSShadow()
         layer.shadowColor = NSColor.controlShadowColor.cgColor
-        layer.shadowRadius = 2.25
-        layer.shadowOffset = facingUp ? NSMakeSize(0, 2.0) :
-                                        NSMakeSize(0, -2.0)
-        layer.shadowOpacity = 0.3
+        layer.shadowRadius = 0.5
+        layer.shadowOpacity = 1
     }
     
     func updateButtons(for song: Song) {
