@@ -13,21 +13,21 @@ import MediaPlayer
 @available(OSX 10.12.2, *)
 class WindowController: NSWindowController {
     
-    var spotifyHelper = SpotifyHelper.shared
-    
-    var songTrackingTimer = Timer()
-    
-    var autoCloseTimer = Timer()
-    var counter = 0
-    
-    // Needed for media playback controls on the TouchBar
+    // Helpers (playback & TouchBar controls
+    var spotifyHelper        = SpotifyHelper.shared
     let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-    let remoteCommandCenter = MPRemoteCommandCenter.shared()
+    let remoteCommandCenter  = MPRemoteCommandCenter.shared()
     
-    // Store now playing info, creating an empty dictionary
+    // Properties to store during runtime
+    var song                           = Song()
     var nowPlayingInfo: [String : Any] = [:]
+    var autoCloseCounter               = 0
     
-    var song = Song()
+    // Timers
+    var songTrackingTimer = Timer()
+    var autoCloseTimer    = Timer()
+    
+    // Keys
     let kSong = "song"
 
     override func windowDidLoad() {
@@ -162,12 +162,12 @@ class WindowController: NSWindowController {
         autoCloseTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
             timer in
             
-            self.counter += 1
+            self.autoCloseCounter += 1
             
-            if self.counter == 10 {
+            if self.autoCloseCounter == 10 {
                 timer.invalidate()
                 
-                self.counter = 0
+                self.autoCloseCounter = 0
             }
         })
     }
