@@ -89,7 +89,7 @@ class ViewController: NSViewController {
         layer.backgroundColor = NSColor.controlColor.cgColor
         
         // Set transparency
-        layer.opacity = 0.95
+        layer.opacity = 0.97
         
         // Create shadow
         superview.shadow = NSShadow()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16C63a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="7104"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.1" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
@@ -710,8 +710,9 @@
                                 <sliderAccessory key="maximumValueAccessory" id="mzI-zH-CX2">
                                     <sliderAccessoryBehavior key="behavior" id="a3m-32-dWW"/>
                                 </sliderAccessory>
-                                <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
-                                    <rect key="frame" x="0.0" y="0.0" width="689" height="30"/>
+                                <slider key="slider" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
+                                    <rect key="frame" x="0.0" y="0.0" width="689" height="19"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="4JH-E9-yW3" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                     <connections>
                                         <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="f82-wD-WAe"/>
@@ -721,7 +722,8 @@
                             <touchBarItem id="qeI-1V-kBR">
                                 <viewController key="viewController" id="I3D-jY-SvG">
                                     <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
-                                        <rect key="frame" x="0.0" y="-2" width="143" height="25"/>
+                                        <rect key="frame" x="0.0" y="-2" width="143" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -806,13 +808,15 @@
                                     <constraint firstAttribute="trailing" secondItem="OP7-ud-xJg" secondAttribute="trailing" constant="10" id="smo-dz-dJ2"/>
                                 </constraints>
                             </customView>
-                            <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
-                                <rect key="frame" x="0.0" y="0.0" width="220" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
+                                <rect key="frame" x="0.0" y="0.0" width="220" height="46"/>
                                 <subviews>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">
-                                        <rect key="frame" x="98" y="19" width="24" height="24"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">
+                                        <rect key="frame" x="98" y="16" width="24" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="26" id="1sQ-Kh-34t"/>
+                                            <constraint firstAttribute="width" constant="24" id="sVY-Ju-ZW9"/>
+                                        </constraints>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="cbA-HT-gnS">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -821,9 +825,11 @@
                                             <action selector="togglePlayPauseButtonClicked:" target="XfG-lQ-9wD" id="aU3-47-vzg"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l3h-iT-7mg">
-                                        <rect key="frame" x="64" y="19" width="24" height="24"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="l3h-iT-7mg">
+                                        <rect key="frame" x="59" y="16" width="24" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="IQq-hX-RaA"/>
+                                        </constraints>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="teq-xq-rom">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -832,9 +838,11 @@
                                             <action selector="previousTrackButtonClicked:" target="XfG-lQ-9wD" id="t39-zb-zM0"/>
                                         </connections>
                                     </button>
-                                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1xW-XK-zSM">
-                                        <rect key="frame" x="132" y="19" width="24" height="24"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="1xW-XK-zSM">
+                                        <rect key="frame" x="137" y="16" width="24" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="Hp2-PB-jJ6"/>
+                                        </constraints>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="A2w-kM-Ukz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -843,24 +851,40 @@
                                             <action selector="nextTrackButtonClicked:" target="XfG-lQ-9wD" id="OrJ-y9-uW6"/>
                                         </connections>
                                     </button>
-                                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gf1-O0-WCI">
+                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gf1-O0-WCI">
                                         <rect key="frame" x="30" y="1" width="160" height="19"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                         <connections>
                                             <action selector="songProgressSliderValueChanged:" target="XfG-lQ-9wD" id="Lsh-Jn-Pla"/>
                                         </connections>
                                     </slider>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="6Z3-b0-ujX" firstAttribute="centerX" secondItem="8rY-c5-W6v" secondAttribute="centerX" id="3dl-uO-xHy"/>
+                                    <constraint firstItem="6Z3-b0-ujX" firstAttribute="leading" secondItem="l3h-iT-7mg" secondAttribute="trailing" constant="15" id="6tb-JP-6sB"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gf1-O0-WCI" secondAttribute="bottom" constant="3" id="C9k-0C-Ma7"/>
+                                    <constraint firstItem="Gf1-O0-WCI" firstAttribute="leading" secondItem="8rY-c5-W6v" secondAttribute="leading" constant="32" id="IlI-Qt-ofR"/>
+                                    <constraint firstItem="l3h-iT-7mg" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="4" id="Kcn-R0-bB7"/>
+                                    <constraint firstItem="1xW-XK-zSM" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="4" id="f76-pA-Cir"/>
+                                    <constraint firstItem="6Z3-b0-ujX" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="4" id="gd3-Ds-iK2"/>
+                                    <constraint firstAttribute="trailing" secondItem="Gf1-O0-WCI" secondAttribute="trailing" constant="32" id="pcE-BJ-F2d"/>
+                                    <constraint firstAttribute="bottom" secondItem="l3h-iT-7mg" secondAttribute="bottom" constant="16" id="s23-WQ-Qdr"/>
+                                    <constraint firstAttribute="bottom" secondItem="6Z3-b0-ujX" secondAttribute="bottom" constant="16" id="th2-tF-Zm9"/>
+                                    <constraint firstAttribute="bottom" secondItem="1xW-XK-zSM" secondAttribute="bottom" constant="16" id="thF-vI-NGm"/>
+                                    <constraint firstItem="1xW-XK-zSM" firstAttribute="leading" secondItem="6Z3-b0-ujX" secondAttribute="trailing" constant="15" id="vQk-i9-5mg"/>
+                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mIG-iE-c3d" secondAttribute="trailing" id="Mwp-ft-xJI"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
+                            <constraint firstItem="8rY-c5-W6v" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cr5-PS-soL"/>
                             <constraint firstAttribute="trailing" secondItem="FL1-mx-O2f" secondAttribute="trailing" id="dyY-ER-2vM"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="e93-MX-3cq"/>
+                            <constraint firstAttribute="bottom" secondItem="8rY-c5-W6v" secondAttribute="bottom" id="oMd-Mq-LxE"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="oXe-vP-81L"/>
+                            <constraint firstAttribute="trailing" secondItem="8rY-c5-W6v" secondAttribute="trailing" id="q1z-pb-Dqu"/>
                             <constraint firstAttribute="bottom" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="rxH-43-xhF"/>
                         </constraints>
                     </view>
