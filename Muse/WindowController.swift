@@ -239,15 +239,16 @@ class WindowController: NSWindowController {
     }
     
     func trackSongProgress() {
+        if songTrackingTimer.isValid { songTrackingTimer.invalidate() }
+        
         if song.isPlaying {
-            songTrackingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateSongProgressSlider(loadTime:)), userInfo: nil, repeats: true)
+            songTrackingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(syncSongProgressSlider), userInfo: nil, repeats: true)
         } else {
-            songTrackingTimer.invalidate()
-            updateSongProgressSlider(loadTime: true)
+            syncSongProgressSlider()
         }
     }
     
-    func updateSongProgressSlider(loadTime: Bool = true) {
+    func updateSongProgressSlider(loadTime: Bool) {
         if !isSliding {
             if loadTime, let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() {
                 self.song.playbackPosition = currentPlaybackPosition
@@ -263,6 +264,11 @@ class WindowController: NSWindowController {
             
             viewController.updateSongProgressSlider(for: self.song)
         }
+    }
+    
+    func syncSongProgressSlider() {
+        // Convenience call for updating the progress slider during playback
+        updateSongProgressSlider(loadTime: true)
     }
     
     func updateUIAfterNotification() {
