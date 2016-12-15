@@ -3,6 +3,7 @@
 <img src=Muse/Assets.xcassets/AppIcon.appiconset/icon-512@2x.png width="96">
 
 An open-source Spotify controller with TouchBar support and system-wide TouchBar controls (à la iTunes).
+[Demo video](https://www.youtube.com/watch?v=1hxwfGBvghg)
 
 ### Download
 [Beta 4](https://github.com/xzzz9097/Muse/releases/tag/v1.0-beta.4)
