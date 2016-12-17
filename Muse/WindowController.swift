@@ -87,11 +87,11 @@ class WindowController: NSWindowController {
         case kVK_Escape:
             guard let window = self.window else { return }
             toggleWindow(window, visible: false)
-        case kVK_LeftArrow:
+        case kVK_LeftArrow, kVK_ANSI_A:
             spotifyHelper.previousTrack()
-        case kVK_Space:
+        case kVK_Space, kVK_ANSI_S:
             spotifyHelper.togglePlayPause()
-        case kVK_RightArrow:
+        case kVK_RightArrow, kVK_ANSI_D:
             spotifyHelper.nextTrack()
         default:
             super.keyDown(with: event)
