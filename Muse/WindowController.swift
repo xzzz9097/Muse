@@ -252,6 +252,11 @@ class WindowController: NSWindowController {
         if !isSliding {
             if loadTime, let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() {
                 self.song.playbackPosition = currentPlaybackPosition
+                
+                if self.song.playbackPosition > self.song.duration && self.song.duration == 0 {
+                    // Hotfix for occasional song loading errors
+                    self.song = spotifyHelper.song
+                }
             }
             
             songProgressSlider.doubleValue = self.song.playbackPosition / self.song.duration
