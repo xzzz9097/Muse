@@ -46,12 +46,12 @@ class ViewController: NSViewController {
             
             if (currentEvent.type == .leftMouseDown) {
                 // Detected mouse down
-                spotifyHelper.goTo(touching: true)
+                spotifyHelper.scrub(touching: true)
             }
             
             if (currentEvent.type == .leftMouseUp) {
                 // Detected mouse up
-                spotifyHelper.goTo(doubleValue: slider.doubleValue)
+                spotifyHelper.scrub(to: slider.doubleValue)
             }
         }
     }

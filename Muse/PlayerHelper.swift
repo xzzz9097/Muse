@@ -19,7 +19,7 @@ protocol PlayerHelper: class {
     /* Playback status functions */
     func currentPlaybackPosition() -> Double?
     func trackDuration() -> Double?
-    func goTo(touching: Bool, doubleValue: Double?)
+    func scrub(to doubleValue: Double?, touching: Bool)
     
     /* Artwork */
     func artwork() -> Any?

@@ -19,7 +19,7 @@ extension WindowController {
     }
     
     func changePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        spotifyHelper.goTo(doubleValue: event.positionTime.rounded() / self.song.duration)
+        spotifyHelper.scrub(to: event.positionTime.rounded() / self.song.duration)
         
         return .success
     }

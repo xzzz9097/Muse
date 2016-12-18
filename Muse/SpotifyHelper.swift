@@ -81,7 +81,7 @@ class SpotifyHelper: PlayerHelper {
         return Double(currentTrack.duration!) / 1000
     }
     
-    func goTo(touching: Bool = false, doubleValue: Double? = nil) {
+    func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
         if !touching, let value = doubleValue {
             application.setPlayerPosition!(value * trackDuration()!)
         }

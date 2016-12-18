@@ -127,12 +127,12 @@ class WindowController: NSWindowController {
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
                 // Detected touch phase start
-                spotifyHelper.goTo(touching: true)
+                spotifyHelper.scrub(touching: true)
             }
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
                 // Detected touch phase end
-                spotifyHelper.goTo(doubleValue: slider.doubleValue)
+                spotifyHelper.scrub(to: slider.doubleValue)
             }
         }
     }
