@@ -44,6 +44,8 @@ class SpotifyHelper: PlayerHelper {
     // TODO: implement check for app running status
     private var application: SpotifyApplication = SBApplication.init(bundleIdentifier: bundleIdentifier)!
     
+    // MARK: Song data
+    
     var song: Song {
         guard let currentTrack = application.currentTrack else { return Song() }
         
@@ -54,6 +56,8 @@ class SpotifyHelper: PlayerHelper {
                     playbackPosition: currentPlaybackPosition()!,
                     duration: trackDuration()!)
     }
+    
+    // MARK: Playback controls
     
     func togglePlayPause() {
         application.playpause!()
@@ -70,6 +74,8 @@ class SpotifyHelper: PlayerHelper {
         
         trackChangedHandler()
     }
+    
+    // MARK: Playback status
     
     func currentPlaybackPosition() -> Double? {
         return application.playerPosition
@@ -89,17 +95,25 @@ class SpotifyHelper: PlayerHelper {
         timeChangedHandler(touching, doubleValue)
     }
     
+    // MARK: Artwork
+    
     func artwork() -> Any? {
         return application.currentTrack?.artworkUrl
     }
+    
+    // MARK: Callbacks
     
     var trackChangedHandler: () -> () = { }
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
+    // MARK: Application identifier
+    
     static var bundleIdentifier: String {
         return "com.spotify.client"
     }
+    
+    // MARK: Notification ID
     
     var notificationID: String {
         return "com.spotify.client.PlaybackStateChanged"

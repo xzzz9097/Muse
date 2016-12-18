@@ -13,50 +13,25 @@ import MediaPlayer
 @available(OSX 10.12.2, *)
 class WindowController: NSWindowController {
     
-    // Helpers (playback & TouchBar controls
+    // MARK: Helpers
     var spotifyHelper        = SpotifyHelper.shared
     let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     let remoteCommandCenter  = MPRemoteCommandCenter.shared()
     
-    // Properties to store during runtime
+    // MARK: Runtime properties
     var song                           = Song()
     var nowPlayingInfo: [String : Any] = [:]
     var autoCloseCounter               = 0
     
-    // Timers
+    // MARK: Timers
     var songTrackingTimer = Timer()
     var autoCloseTimer    = Timer()
     
-    // Keys
+    // MARK: Keys
     let kSong = "song"
 
-    override func windowDidLoad() {
-        super.windowDidLoad()
-
-        // Initialize our watcher
-        initNotificationWatcher()
-        
-        // Set custom window attributes
-        prepareWindow()
-        
-        prepareButtons()
-        prepareSongProgressSlider()
-        prepareImageView()
-        
-        // Register callbacks for PlayerHelper
-        registerCallbacks()
-        
-        // Register our DDHotKey
-        registerHotkey()
-        
-        // Prepare system-wide controls
-        prepareRemoteCommandCenter()
-        
-        // Load song at cold start
-        prepareSong()
-    }
-
-    // Outlets
+    // MARK: Outlets
+    
     @IBOutlet weak var songArtworkView: NSImageView!
     @IBOutlet weak var songTitleLabel: NSTextField!
     @IBOutlet weak var songProgressSlider: NSSlider!
@@ -65,7 +40,8 @@ class WindowController: NSWindowController {
     
     var isSliding = false
     
-    // Actions
+    // MARK: Actions
+    
     @IBAction func controlsSegmentedViewClicked(_ sender: Any) {
         guard let segmentedControl = sender as? NSSegmentedControl else { return }
         
@@ -80,6 +56,25 @@ class WindowController: NSWindowController {
             return
         }
     }
+    
+    @IBAction func progressSliderValueChanged(_ sender: Any) {
+        // Track progress slider changes
+        if let slider = sender as? NSSlider {
+            guard let currentEvent = NSApplication.shared().currentEvent else { return }
+            
+            for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
+                // Detected touch phase start
+                spotifyHelper.scrub(touching: true)
+            }
+            
+            for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
+                // Detected touch phase end
+                spotifyHelper.scrub(to: slider.doubleValue)
+            }
+        }
+    }
+    
+    // MARK: Key handlers
     
     override func keyDown(with event: NSEvent) {
         // Catch key events
@@ -97,6 +92,39 @@ class WindowController: NSWindowController {
             super.keyDown(with: event)
         }
     }
+    
+    func registerHotkey() {
+        guard let hotkeyCenter = DDHotKeyCenter.shared() else { return }
+        
+        let modifiers: UInt = NSEventModifierFlags.control.rawValue | NSEventModifierFlags.command.rawValue
+        
+        // Register system-wide summon hotkey
+        hotkeyCenter.registerHotKey(withKeyCode: UInt16(kVK_ANSI_S),
+                                    modifierFlags: modifiers,
+                                    target: self,
+                                    action: #selector(hotkeyAction),
+                                    object: nil)
+    }
+    
+    func hotkeyAction() {
+        guard let window = self.window else { return }
+        
+        // Hide window if focused, show if not
+        toggleWindow(window, visible: !window.isKeyWindow)
+    }
+    
+    func toggleWindow(_ window: NSWindow, visible: Bool) {
+        // Toggles window visibility
+        // Bringing the older app on top if necessary
+        if (visible) {
+            window.makeKeyAndOrderFront(self)
+            NSApp.activate(ignoringOtherApps: true)
+        } else {
+            NSApp.hide(self)
+        }
+    }
+    
+    // MARK: Callbacks
     
     func registerCallbacks() {
         // Callback for PlayerHelper's nextTrack() and previousTrack()
@@ -120,21 +148,32 @@ class WindowController: NSWindowController {
         }
     }
     
-    @IBAction func progressSliderValueChanged(_ sender: Any) {
-        // Track progress slider changes
-        if let slider = sender as? NSSlider {
-            guard let currentEvent = NSApplication.shared().currentEvent else { return }
-            
-            for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
-                // Detected touch phase start
-                spotifyHelper.scrub(touching: true)
-            }
-            
-            for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
-                // Detected touch phase end
-                spotifyHelper.scrub(to: slider.doubleValue)
-            }
-        }
+    // MARK: UI preparation
+    
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        
+        // Initialize our watcher
+        initNotificationWatcher()
+        
+        // Set custom window attributes
+        prepareWindow()
+        
+        prepareButtons()
+        prepareSongProgressSlider()
+        prepareImageView()
+        
+        // Register callbacks for PlayerHelper
+        registerCallbacks()
+        
+        // Register our DDHotKey
+        registerHotkey()
+        
+        // Prepare system-wide controls
+        prepareRemoteCommandCenter()
+        
+        // Load song at cold start
+        prepareSong()
     }
     
     func prepareWindow() {
@@ -198,6 +237,8 @@ class WindowController: NSWindowController {
         self.songArtworkView.layer?.masksToBounds = true
     }
     
+    // MARK: Notification handling
+    
     func initNotificationWatcher() {
         let notificationCenter = DistributedNotificationCenter.default()
         
@@ -221,34 +262,7 @@ class WindowController: NSWindowController {
         trackSongProgress()
     }
     
-    func registerHotkey() {
-        guard let hotkeyCenter = DDHotKeyCenter.shared() else { return }
-        
-        let modifiers: UInt = NSEventModifierFlags.control.rawValue | NSEventModifierFlags.command.rawValue
-        
-        // Register system-wide summon hotkey
-        hotkeyCenter.registerHotKey(withKeyCode: UInt16(kVK_ANSI_S),
-                                    modifierFlags: modifiers,
-                                    target: self,
-                                    action: #selector(hotkeyAction),
-                                    object: nil)
-    }
-    
-    func hotkeyAction() {
-        guard let window = self.window else { return }
-        
-        // Hide window if focused, show if not
-        toggleWindow(window, visible: !window.isKeyWindow)
-    }
-    
-    func toggleWindow(_ window: NSWindow, visible: Bool) {
-        if (visible) {
-            window.makeKeyAndOrderFront(self)
-            NSApp.activate(ignoringOtherApps: true)
-        } else {
-            NSApp.hide(self)
-        }
-    }
+    // MARK: Playback progress handling
     
     func trackSongProgress() {
         if songTrackingTimer.isValid { songTrackingTimer.invalidate() }
@@ -291,6 +305,8 @@ class WindowController: NSWindowController {
         // Convenience call for updating the progress slider during playback
         updateSongProgressSlider(loadTime: true)
     }
+    
+    // MARK: UI refresh
     
     func updateUIAfterNotification() {
         updateTouchBarUI()

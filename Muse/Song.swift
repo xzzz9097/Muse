@@ -10,22 +10,34 @@ import Foundation
 
 struct Song {
     
-    // Basic song attributes
+    // MARK: Song attributes
     var name: String
     var artist: String
     var album: String
     
-    // Playing attributes
+    
+    // MARK: Playing attributes
     var isPlaying: Bool
     var playbackPosition: Double // In milliseconds
     var duration: Double
     
-    /* Initializers */
+    // MARK: Initializers
+    
     init() {
-        self.init(name: "", artist: "", album: "", isPlaying: false, playbackPosition: 0, duration: 0)
+        self.init(name: "",
+                  artist: "",
+                  album: "",
+                  isPlaying: false,
+                  playbackPosition: 0,
+                  duration: 0)
     }
     
-    init(name: String, artist: String, album: String, isPlaying: Bool, playbackPosition: Double, duration: Double) {
+    init(name: String,
+         artist: String,
+         album: String,
+         isPlaying: Bool,
+         playbackPosition: Double,
+         duration: Double) {
         self.name = name
         self.artist = artist
         self.album = album

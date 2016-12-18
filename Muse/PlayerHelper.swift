@@ -8,30 +8,42 @@
 
 protocol PlayerHelper: class {
     
-    // Create song data
+    // MARK: Song data
+    
     var song: Song { get }
     
-    /* Control functions */
+    // MARK: Playback controls
+    
     func togglePlayPause()
+    
     func nextTrack()
+    
     func previousTrack()
     
-    /* Playback status functions */
+    // MARK: Playback status
+    
     func currentPlaybackPosition() -> Double?
+    
     func trackDuration() -> Double?
+    
     func scrub(to doubleValue: Double?, touching: Bool)
     
-    /* Artwork */
+    // MARK: Artwork
+    
     func artwork() -> Any?
     
-    /* Callbacks */
+    // MARK: Callbacks
+    
     var trackChangedHandler: () -> () { set get }
+    
     var timeChangedHandler: (Bool, Double?) -> () { set get }
     
-    // The application identifier for the player
+    // MARK: Application identifier
+    
     static var bundleIdentifier: String { get }
     
-    // ID for notification watcher
+    // MARK: Notification ID
+    
     var notificationID: String { get }
     
 }

@@ -11,7 +11,10 @@ import Cocoa
 @available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
+    // MARK: Helpers
     let spotifyHelper = SpotifyHelper.shared
+    
+    // MARK: Outlets
 
     @IBOutlet weak var fullSongArtworkView: ImageView!
     
@@ -24,8 +27,12 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var songProgressSlider: NSSlider!
     
+    // MARK: Superviews
+    
     var titleAlbumArtistSuperview: NSView!
     var controlsSuperview: NSView!
+    
+    // MARK: Actions
     
     @IBAction func previousTrackButtonClicked(_ sender: Any) {
         spotifyHelper.previousTrack()
@@ -55,6 +62,8 @@ class ViewController: NSViewController {
             }
         }
     }
+    
+    // MARK: UI preparation
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,14 +107,6 @@ class ViewController: NSViewController {
         layer.shadowOpacity = 1
     }
     
-    func updateButtons(for song: Song) {
-        // Initialize playback control buttons
-        previousTrackButton.image = NSImage(named: NSImageNameTouchBarRewindTemplate)
-        togglePlayPauseButton.image = song.isPlaying ? NSImage(named: NSImageNameTouchBarPauseTemplate) :
-                                                       NSImage(named: NSImageNameTouchBarPlayTemplate)
-        nextTrackButton.image = NSImage(named: NSImageNameTouchBarFastForwardTemplate)
-    }
-    
     func prepareSongProgressSlider() {
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
@@ -121,9 +122,19 @@ class ViewController: NSViewController {
         // Add callback to show/hide views when hovering (animating)
         fullSongArtworkView.mouseHandler = {
             (mouseHovering: Bool) -> Void in
-                self.titleAlbumArtistSuperview.animator().isHidden = !mouseHovering
-                self.controlsSuperview.animator().isHidden = !mouseHovering
+            self.titleAlbumArtistSuperview.animator().isHidden = !mouseHovering
+            self.controlsSuperview.animator().isHidden = !mouseHovering
         }
+    }
+    
+    // MARK: UI refresh
+    
+    func updateButtons(for song: Song) {
+        // Initialize playback control buttons
+        previousTrackButton.image = NSImage(named: NSImageNameTouchBarRewindTemplate)
+        togglePlayPauseButton.image = song.isPlaying ? NSImage(named: NSImageNameTouchBarPauseTemplate) :
+                                                       NSImage(named: NSImageNameTouchBarPlayTemplate)
+        nextTrackButton.image = NSImage(named: NSImageNameTouchBarFastForwardTemplate)
     }
     
     func updateFullSongArtworkView(for url: URL) {
