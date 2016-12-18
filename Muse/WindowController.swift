@@ -146,7 +146,7 @@ class WindowController: NSWindowController {
         spotifyHelper.trackChangedHandler = {
             self.song.playbackPosition = 0
             
-            self.updateSongProgressSlider(loadTime: false)
+            self.updateSongProgressSlider(shouldLoadTime: false)
             
             self.updateNowPlayingInfo()
         }
@@ -159,7 +159,7 @@ class WindowController: NSWindowController {
             
             self.song.playbackPosition = value * self.song.duration
             
-            self.updateSongProgressSlider(loadTime: false)
+            self.updateSongProgressSlider(shouldLoadTime: false)
         }
     }
     
@@ -293,9 +293,9 @@ class WindowController: NSWindowController {
         }
     }
     
-    func updateSongProgressSlider(loadTime: Bool) {
+    func updateSongProgressSlider(shouldLoadTime: Bool) {
         if !isSliding {
-            if loadTime, let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() {
+            if shouldLoadTime, let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() {
                 self.song.playbackPosition = currentPlaybackPosition
                 
                 if self.song.playbackPosition > self.song.duration && self.song.duration == 0 {
@@ -318,7 +318,7 @@ class WindowController: NSWindowController {
     
     func syncSongProgressSlider() {
         // Convenience call for updating the progress slider during playback
-        updateSongProgressSlider(loadTime: true)
+        updateSongProgressSlider(shouldLoadTime: true)
     }
     
     // MARK: UI refresh
