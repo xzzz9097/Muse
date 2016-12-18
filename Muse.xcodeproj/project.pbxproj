@@ -172,7 +172,8 @@
 				0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */,
 			);
 			name = DDHotKey;
-			sourceTree = "<group>";
+			path = Muse/DDHotKey;
+			sourceTree = SOURCE_ROOT;
 		};
 		0CAD6F981DE4B3CF00736B00 /* Products */ = {
 			isa = PBXGroup;
