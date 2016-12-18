@@ -710,9 +710,8 @@
                                 <sliderAccessory key="maximumValueAccessory" id="mzI-zH-CX2">
                                     <sliderAccessoryBehavior key="behavior" id="a3m-32-dWW"/>
                                 </sliderAccessory>
-                                <slider key="slider" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
-                                    <rect key="frame" x="0.0" y="0.0" width="689" height="19"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="30"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="4JH-E9-yW3" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                     <connections>
                                         <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="f82-wD-WAe"/>
@@ -722,8 +721,7 @@
                             <touchBarItem id="qeI-1V-kBR">
                                 <viewController key="viewController" id="I3D-jY-SvG">
                                     <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
-                                        <rect key="frame" x="0.0" y="-2" width="143" height="33"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="0.0" y="-2" width="143" height="25"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -826,7 +824,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="l3h-iT-7mg">
-                                        <rect key="frame" x="59" y="16" width="24" height="26"/>
+                                        <rect key="frame" x="69" y="16" width="24" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="IQq-hX-RaA"/>
                                         </constraints>
@@ -839,7 +837,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="1xW-XK-zSM">
-                                        <rect key="frame" x="137" y="16" width="24" height="26"/>
+                                        <rect key="frame" x="127" y="16" width="24" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="24" id="Hp2-PB-jJ6"/>
                                         </constraints>
@@ -861,7 +859,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="6Z3-b0-ujX" firstAttribute="centerX" secondItem="8rY-c5-W6v" secondAttribute="centerX" id="3dl-uO-xHy"/>
-                                    <constraint firstItem="6Z3-b0-ujX" firstAttribute="leading" secondItem="l3h-iT-7mg" secondAttribute="trailing" constant="15" id="6tb-JP-6sB"/>
+                                    <constraint firstItem="6Z3-b0-ujX" firstAttribute="leading" secondItem="l3h-iT-7mg" secondAttribute="trailing" constant="5" id="6tb-JP-6sB"/>
                                     <constraint firstAttribute="bottom" secondItem="Gf1-O0-WCI" secondAttribute="bottom" constant="3" id="C9k-0C-Ma7"/>
                                     <constraint firstItem="Gf1-O0-WCI" firstAttribute="leading" secondItem="8rY-c5-W6v" secondAttribute="leading" constant="32" id="IlI-Qt-ofR"/>
                                     <constraint firstItem="l3h-iT-7mg" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="4" id="Kcn-R0-bB7"/>
@@ -871,7 +869,7 @@
                                     <constraint firstAttribute="bottom" secondItem="l3h-iT-7mg" secondAttribute="bottom" constant="16" id="s23-WQ-Qdr"/>
                                     <constraint firstAttribute="bottom" secondItem="6Z3-b0-ujX" secondAttribute="bottom" constant="16" id="th2-tF-Zm9"/>
                                     <constraint firstAttribute="bottom" secondItem="1xW-XK-zSM" secondAttribute="bottom" constant="16" id="thF-vI-NGm"/>
-                                    <constraint firstItem="1xW-XK-zSM" firstAttribute="leading" secondItem="6Z3-b0-ujX" secondAttribute="trailing" constant="15" id="vQk-i9-5mg"/>
+                                    <constraint firstItem="1xW-XK-zSM" firstAttribute="leading" secondItem="6Z3-b0-ujX" secondAttribute="trailing" constant="5" id="vQk-i9-5mg"/>
                                 </constraints>
                             </customView>
                         </subviews>
