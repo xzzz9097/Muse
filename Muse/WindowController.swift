@@ -199,8 +199,13 @@ class WindowController: NSWindowController {
     }
     
     func initNotificationWatcher() {
+        let notificationCenter = DistributedNotificationCenter.default()
+        
         // Attach the NotificationObserver for Spotify notifications
-        DistributedNotificationCenter.default().addObserver(self, selector: #selector(hookNotification(notification:)), name: NSNotification.Name(rawValue: spotifyHelper.notificationID), object: nil)
+        notificationCenter.addObserver(self,
+                                       selector: #selector(hookNotification(notification:)),
+                                       name: NSNotification.Name(rawValue: spotifyHelper.notificationID),
+                                       object: nil)
     }
     
     func hookNotification(notification: NSNotification) {
@@ -217,9 +222,16 @@ class WindowController: NSWindowController {
     }
     
     func registerHotkey() {
+        guard let hotkeyCenter = DDHotKeyCenter.shared() else { return }
+        
         let modifiers: UInt = NSEventModifierFlags.control.rawValue | NSEventModifierFlags.command.rawValue
         
-        DDHotKeyCenter.shared().registerHotKey(withKeyCode: UInt16(kVK_ANSI_S), modifierFlags: modifiers, target: self, action: #selector(hotkeyAction), object: nil)
+        // Register system-wide summon hotkey
+        hotkeyCenter.registerHotKey(withKeyCode: UInt16(kVK_ANSI_S),
+                                    modifierFlags: modifiers,
+                                    target: self,
+                                    action: #selector(hotkeyAction),
+                                    object: nil)
     }
     
     func hotkeyAction() {
@@ -242,7 +254,11 @@ class WindowController: NSWindowController {
         if songTrackingTimer.isValid { songTrackingTimer.invalidate() }
         
         if song.isPlaying {
-            songTrackingTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(syncSongProgressSlider), userInfo: nil, repeats: true)
+            songTrackingTimer = Timer.scheduledTimer(timeInterval: 1,
+                                                     target: self,
+                                                     selector: #selector(syncSongProgressSlider),
+                                                     userInfo: nil,
+                                                     repeats: true)
         } else {
             syncSongProgressSlider()
         }
