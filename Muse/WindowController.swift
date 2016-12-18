@@ -14,20 +14,24 @@ import MediaPlayer
 class WindowController: NSWindowController {
     
     // MARK: Helpers
+    
     var spotifyHelper        = SpotifyHelper.shared
     let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     let remoteCommandCenter  = MPRemoteCommandCenter.shared()
     
     // MARK: Runtime properties
+    
     var song                           = Song()
     var nowPlayingInfo: [String : Any] = [:]
     var autoCloseCounter               = 0
     
     // MARK: Timers
+    
     var songTrackingTimer = Timer()
     var autoCloseTimer    = Timer()
     
     // MARK: Keys
+    
     let kSong = "song"
 
     // MARK: Outlets

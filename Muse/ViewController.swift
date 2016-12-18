@@ -12,6 +12,7 @@ import Cocoa
 class ViewController: NSViewController {
     
     // MARK: Helpers
+    
     let spotifyHelper = SpotifyHelper.shared
     
     // MARK: Outlets
