@@ -11,12 +11,14 @@ import Foundation
 struct Song {
     
     // MARK: Song attributes
+    
     var name: String
     var artist: String
     var album: String
     
     
     // MARK: Playing attributes
+    
     var isPlaying: Bool
     var playbackPosition: Double // In milliseconds
     var duration: Double

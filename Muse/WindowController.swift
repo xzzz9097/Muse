@@ -92,6 +92,8 @@ class WindowController: NSWindowController {
             spotifyHelper.togglePlayPause()
         case kVK_RightArrow, kVK_ANSI_D:
             spotifyHelper.nextTrack()
+        case kVK_Return, kVK_ANSI_W:
+            showPlayer()
         default:
             super.keyDown(with: event)
         }
@@ -126,6 +128,15 @@ class WindowController: NSWindowController {
         } else {
             NSApp.hide(self)
         }
+    }
+    
+    func showPlayer() {
+        let player = NSRunningApplication.runningApplications(
+            withBundleIdentifier: SpotifyHelper.bundleIdentifier
+            )[0]
+        
+        // Takes to the player window
+        player.activate(options: .activateIgnoringOtherApps)
     }
     
     // MARK: Callbacks
