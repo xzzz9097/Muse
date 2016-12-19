@@ -1,5 +1,5 @@
 //
-//  NSImageView+Download.swift
+//  Imageable+Download.swift
 //  Muse
 //
 //  Created by Marco Albera on 24/11/16.
@@ -8,8 +8,24 @@
 
 import Cocoa
 
-extension NSImageView {
+// MARK: Imageable protocol
 
+// Protocol for every object that can set and get an NSImage
+protocol Imageable: class {
+    
+    // The image open var
+    // Every view that can set and get and set an image
+    // has this variable, thus conforms to ImageDownload
+    var image: NSImage? { get set }
+    
+    // Loading function declaration
+    func loadImageFromURL(url: URL)
+    
+}
+
+extension Imageable {
+    
+    // Loading function implementation
     func loadImageFromURL(url: URL) {
         let session = URLSession.shared
         
@@ -21,6 +37,8 @@ extension NSImageView {
                     if let image = NSImage(data: data as Data) {
                         DispatchQueue.main.async(execute: {
                             
+                            // Self conforms to 'Imageable'
+                            // so it can set an image
                             if let strongSelf = self {
                                 strongSelf.image = image
                             }
@@ -34,3 +52,11 @@ extension NSImageView {
     }
     
 }
+
+// MARK: AppKit extensions
+
+// Append to ImageView
+extension NSImageView: Imageable { }
+
+// Append to NSButton
+extension NSButton: Imageable { }

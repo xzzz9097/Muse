@@ -36,7 +36,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
 
     // MARK: Outlets
     
-    @IBOutlet weak var songArtworkView: NSImageView!
+    @IBOutlet weak var songArtworkView: NSButton!
     @IBOutlet weak var songTitleLabel: NSTextField!
     @IBOutlet weak var songProgressSlider: NSSlider!
     
@@ -76,6 +76,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 spotifyHelper.scrub(to: slider.doubleValue)
             }
         }
+    }
+    
+    @IBAction func songArtworkViewClicked(_ sender: Any) {
+        // Jump to player when the artwork on the TouchBar is tapped
+        showPlayer()
     }
     
     // MARK: Key handlers
