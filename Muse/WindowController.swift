@@ -11,7 +11,7 @@ import Carbon.HIToolbox
 import MediaPlayer
 
 @available(OSX 10.12.2, *)
-class WindowController: NSWindowController {
+class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: Helpers
     
@@ -208,6 +208,9 @@ class WindowController: NSWindowController {
         // Hide after losing focus
         window.hidesOnDeactivate = true
         
+        // Set the delegate
+        window.delegate = self
+        
         window.makeFirstResponder(self)
     }
     
@@ -255,13 +258,18 @@ class WindowController: NSWindowController {
     // MARK: Notification handling
     
     func initNotificationWatcher() {
-        let notificationCenter = DistributedNotificationCenter.default()
-        
         // Attach the NotificationObserver for Spotify notifications
-        notificationCenter.addObserver(self,
+        DistributedNotificationCenter.default().addObserver(self,
                                        selector: #selector(hookNotification(notification:)),
                                        name: NSNotification.Name(rawValue: spotifyHelper.notificationID),
                                        object: nil)
+    }
+    
+    func deinitNotificationWatcher() {
+        // Remove the NotificationObserver
+        DistributedNotificationCenter.default().removeObserver(self,
+                                          name: NSNotification.Name(rawValue: spotifyHelper.notificationID),
+                                          object: nil)
     }
     
     func hookNotification(notification: NSNotification) {
@@ -280,7 +288,7 @@ class WindowController: NSWindowController {
     // MARK: Playback progress handling
     
     func trackSongProgress() {
-        if songTrackingTimer.isValid { songTrackingTimer.invalidate() }
+        if songTrackingTimer.isValid { deinitSongTrackingTimer() }
         
         if song.isPlaying {
             songTrackingTimer = Timer.scheduledTimer(timeInterval: 1,
@@ -291,6 +299,12 @@ class WindowController: NSWindowController {
         } else {
             syncSongProgressSlider()
         }
+    }
+    
+    func deinitSongTrackingTimer() {
+        // Invalidates the progress timer
+        // e.g. when switching to a different song or on app close
+        songTrackingTimer.invalidate()
     }
     
     func updateSongProgressSlider(shouldLoadTime: Bool) {
@@ -319,6 +333,16 @@ class WindowController: NSWindowController {
     func syncSongProgressSlider() {
         // Convenience call for updating the progress slider during playback
         updateSongProgressSlider(shouldLoadTime: true)
+    }
+    
+    // MARK: Deinitialization
+    
+    func windowWillClose(_ notification: Notification) {
+        // Remove the observer when window is closed
+        deinitNotificationWatcher()
+        
+        // Invalidate progress timer
+        deinitSongTrackingTimer()
     }
     
     // MARK: UI refresh
