@@ -19,14 +19,16 @@ protocol Imageable: class {
     var image: NSImage? { get set }
     
     // Loading function declaration
-    func loadImageFromURL(url: URL)
+    func loadImageFromURL(url: URL, callback: @escaping (NSImage) -> ())
     
 }
 
 extension Imageable {
     
     // Loading function implementation
-    func loadImageFromURL(url: URL) {
+    // Also receives and @escaping (run after func returns) closure
+    // to update UI after download has finished
+    func loadImageFromURL(url: URL, callback: @escaping (NSImage) -> ()) {
         let session = URLSession.shared
         
         let downloadTask = session.downloadTask(with: url, completionHandler: {
@@ -40,7 +42,11 @@ extension Imageable {
                             // Self conforms to 'Imageable'
                             // so it can set an image
                             if let strongSelf = self {
+                                // Set the image on the view
                                 strongSelf.image = image
+                                
+                                // Run the provided callback
+                                callback(image)
                             }
                         })
                     }

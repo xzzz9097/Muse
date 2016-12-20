@@ -374,7 +374,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 let artworkURL = URL(string: stringURL)
         else { return }
         
-        self.songArtworkView.loadImageFromURL(url: artworkURL)
+        self.songArtworkView.loadImageFromURL(url: artworkURL, callback: { image in
+            if let viewController = self.contentViewController as? ViewController {
+                // Also set image on VC's ImageView after download
+                // Faster and more efficient
+                viewController.updateFullSongArtworkView(with: image)
+            }
+        })
     }
     
     func updateViewUI() {
@@ -383,12 +389,6 @@ class WindowController: NSWindowController, NSWindowDelegate {
         viewController.updateTitleAlbumArtistView(for: self.song)
         
         viewController.updateButtons(for: self.song)
-        
-        guard   let stringURL = spotifyHelper.artwork() as? String,
-                let artworkURL = URL(string: stringURL)
-        else { return }
-        
-        viewController.updateFullSongArtworkView(for: artworkURL)
     }
     
 }
