@@ -374,7 +374,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 let artworkURL = URL(string: stringURL)
         else { return }
         
-        self.songArtworkView.loadImageFromURL(url: artworkURL, callback: { image in
+        self.songArtworkView.loadImage(from: artworkURL, callback: { image in
             if let viewController = self.contentViewController as? ViewController {
                 // Also set image on VC's ImageView after download
                 // Faster and more efficient
