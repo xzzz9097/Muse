@@ -816,7 +816,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="220" height="46"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">
-                                        <rect key="frame" x="95" y="14" width="30" height="30"/>
+                                        <rect key="frame" x="95" y="13" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="1sQ-Kh-34t"/>
                                             <constraint firstAttribute="width" constant="30" id="sVY-Ju-ZW9"/>
@@ -830,7 +830,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="l3h-iT-7mg">
-                                        <rect key="frame" x="60" y="14" width="30" height="30"/>
+                                        <rect key="frame" x="60" y="13" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="IQq-hX-RaA"/>
                                         </constraints>
@@ -843,7 +843,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="1xW-XK-zSM">
-                                        <rect key="frame" x="130" y="14" width="30" height="30"/>
+                                        <rect key="frame" x="130" y="13" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="Hp2-PB-jJ6"/>
                                         </constraints>
@@ -868,13 +868,13 @@
                                     <constraint firstItem="6Z3-b0-ujX" firstAttribute="leading" secondItem="l3h-iT-7mg" secondAttribute="trailing" constant="5" id="6tb-JP-6sB"/>
                                     <constraint firstAttribute="bottom" secondItem="Gf1-O0-WCI" secondAttribute="bottom" constant="3" id="C9k-0C-Ma7"/>
                                     <constraint firstItem="Gf1-O0-WCI" firstAttribute="leading" secondItem="8rY-c5-W6v" secondAttribute="leading" constant="32" id="IlI-Qt-ofR"/>
-                                    <constraint firstItem="l3h-iT-7mg" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="2" id="Kcn-R0-bB7"/>
-                                    <constraint firstItem="1xW-XK-zSM" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="2" id="f76-pA-Cir"/>
-                                    <constraint firstItem="6Z3-b0-ujX" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="2" id="gd3-Ds-iK2"/>
+                                    <constraint firstItem="l3h-iT-7mg" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="3" id="Kcn-R0-bB7"/>
+                                    <constraint firstItem="1xW-XK-zSM" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="3" id="f76-pA-Cir"/>
+                                    <constraint firstItem="6Z3-b0-ujX" firstAttribute="top" secondItem="8rY-c5-W6v" secondAttribute="top" constant="3" id="gd3-Ds-iK2"/>
                                     <constraint firstAttribute="trailing" secondItem="Gf1-O0-WCI" secondAttribute="trailing" constant="32" id="pcE-BJ-F2d"/>
-                                    <constraint firstAttribute="bottom" secondItem="l3h-iT-7mg" secondAttribute="bottom" constant="14" id="s23-WQ-Qdr"/>
-                                    <constraint firstAttribute="bottom" secondItem="6Z3-b0-ujX" secondAttribute="bottom" constant="14" id="th2-tF-Zm9"/>
-                                    <constraint firstAttribute="bottom" secondItem="1xW-XK-zSM" secondAttribute="bottom" constant="14" id="thF-vI-NGm"/>
+                                    <constraint firstAttribute="bottom" secondItem="l3h-iT-7mg" secondAttribute="bottom" constant="13" id="s23-WQ-Qdr"/>
+                                    <constraint firstAttribute="bottom" secondItem="6Z3-b0-ujX" secondAttribute="bottom" constant="13" id="th2-tF-Zm9"/>
+                                    <constraint firstAttribute="bottom" secondItem="1xW-XK-zSM" secondAttribute="bottom" constant="13" id="thF-vI-NGm"/>
                                     <constraint firstItem="1xW-XK-zSM" firstAttribute="leading" secondItem="6Z3-b0-ujX" secondAttribute="trailing" constant="5" id="vQk-i9-5mg"/>
                                 </constraints>
                             </customView>
