@@ -277,10 +277,32 @@ class WindowController: NSWindowController, NSWindowDelegate {
                                           object: nil)
     }
     
+    func isClosing(with notification: NSNotification) -> Bool {
+        guard let userInfo = notification.userInfo else { return true }
+        
+        // If the notification has only one item
+        // that's the PlayerStateStopped -> player is closing
+        return userInfo.count < 2
+    }
+    
     func hookNotification(notification: NSNotification) {
+        // When Spotify is quitted, it sends an NSNotification
+        // with only PlayerStateStopped, that causes it to 
+        // reopen for being polled by Muse
+        // So we detect if the notification is a closing one
+        guard !isClosing(with: notification) else {
+            // Set placeholder value
+            // TODO: update artwork with some blank
+            self.song = Song()
+            
+            updateUIAfterNotification()
+            
+            return
+        }
+        
         willChangeValue(forKey: kSong)
         
-        // Retrieve new value from notification
+        // Retrieve new value
         self.song = spotifyHelper.song
         
         didChangeValue(forKey: kSong)

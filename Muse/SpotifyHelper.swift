@@ -41,8 +41,7 @@ class SpotifyHelper: PlayerHelper {
     static let shared = SpotifyHelper()
     
     // The SBApplication object buond to the helper class
-    // TODO: implement check for app running status
-    private var application: SpotifyApplication = SBApplication.init(bundleIdentifier: bundleIdentifier)!
+    private let application: SpotifyApplication = SBApplication.init(bundleIdentifier: bundleIdentifier)!
     
     // MARK: Song data
     
