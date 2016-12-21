@@ -295,7 +295,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
             // TODO: update artwork with some blank
             self.song = Song()
             
+            // This avoids reopening while playing too
+            deinitSongTrackingTimer()
+            
             updateUIAfterNotification()
+            
+            updateSongProgressSlider(shouldLoadTime: false)
             
             return
         }
