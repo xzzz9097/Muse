@@ -22,9 +22,9 @@ protocol PlayerHelper: class {
     
     // MARK: Playback status
     
-    func currentPlaybackPosition() -> Double?
+    var playbackPosition: Double { set get }
     
-    func trackDuration() -> Double?
+    var trackDuration: Double { get }
     
     func scrub(to doubleValue: Double?, touching: Bool)
     

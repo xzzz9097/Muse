@@ -371,8 +371,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func updateSongProgressSlider(shouldLoadTime: Bool) {
         if !isSliding {
-            if shouldLoadTime, let currentPlaybackPosition = spotifyHelper.currentPlaybackPosition() {
-                self.song.playbackPosition = currentPlaybackPosition
+            if shouldLoadTime {
+                self.song.playbackPosition = spotifyHelper.playbackPosition
                 
                 if self.song.playbackPosition > self.song.duration && self.song.duration == 0 {
                     // Hotfix for occasional song loading errors

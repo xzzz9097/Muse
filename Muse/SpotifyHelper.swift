@@ -54,8 +54,8 @@ class SpotifyHelper: PlayerHelper {
                     artist: currentTrack.artist!,
                     album: currentTrack.album!,
                     isPlaying: (application.playerState == SpotifyPlayerStatePlaying),
-                    playbackPosition: currentPlaybackPosition()!,
-                    duration: trackDuration()!)
+                    playbackPosition: playbackPosition,
+                    duration: trackDuration)
     }
     
     // MARK: Playback controls
@@ -78,21 +78,33 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Playback status
     
-    func currentPlaybackPosition() -> Double? {
-        return application.playerPosition
+    var playbackPosition: Double {
+        set {
+            // Set the position on the player
+            application.setPlayerPosition!(newValue)
+        }
+        
+        get {
+            guard let playbackPosition = application.playerPosition else { return 0 }
+            
+            // Return current playback position
+            return playbackPosition
+        }
     }
     
-    // TODO: Create a var for trackDuration playbackPosition
-    
-    func trackDuration() -> Double? {
-        guard let currentTrack = application.currentTrack else { return 0 }
+    var trackDuration: Double {
+        guard   let currentTrack = application.currentTrack,
+                let trackDuration = currentTrack.duration
+        else { return 0 }
         
-        return Double(currentTrack.duration!) / 1000
+        // Return current track duration
+        // It needs a cast because 'duration' from ScriptingBridge is Int
+        return Double(trackDuration) / 1000
     }
     
     func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
         if !touching, let value = doubleValue {
-            application.setPlayerPosition!(value * trackDuration()!)
+            playbackPosition = value * trackDuration
         }
         
         timeChangedHandler(touching, doubleValue)
