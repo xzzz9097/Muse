@@ -15,16 +15,18 @@ import ScriptingBridge
     @objc optional var currentTrack: SpotifyTrack { get }
     @objc optional var playerPosition: Double { get }
     @objc optional var playerState: SpotifyPlayerState { get }
+    @objc optional var soundVolume: Int { get }
     
     @objc optional func playpause()
     @objc optional func nextTrack()
     @objc optional func previousTrack()
     
     @objc optional func setPlayerPosition(_ position: Double)
+    @objc optional func setSoundVolume(_ volume: Int)
 }
 
 // Protocol for Spotify track object
-@objc protocol SpotifyTrack {
+@objc protocol SpotifyTrack: class {
     @objc optional var name: String { get }
     @objc optional var artist: String { get }
     @objc optional var album: String { get }
