@@ -23,6 +23,14 @@ struct Song {
     var playbackPosition: Double // In milliseconds
     var duration: Double
     
+    // MARK: Validation
+    
+    var isValid: Bool {
+        // If the song has empty title
+        // it should be invalidated
+        return name != ""
+    }
+    
     // MARK: Initializers
     
     init() {

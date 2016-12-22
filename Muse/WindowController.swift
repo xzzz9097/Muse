@@ -196,6 +196,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
         prepareSong()
     }
     
+    func windowDidBecomeKey(_ notification: Notification) {
+        // Sync progress slider if song is not playing
+        if !self.song.isPlaying { syncSongProgressSlider() }
+    }
+    
     func prepareWindow() {
         guard let window = self.window else { return }
         
