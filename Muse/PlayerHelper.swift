@@ -28,6 +28,10 @@ protocol PlayerHelper: class {
     
     func scrub(to doubleValue: Double?, touching: Bool)
     
+    // MARK: Playback options
+    
+    var volume: Int { set get }
+    
     // MARK: Artwork
     
     func artwork() -> Any?

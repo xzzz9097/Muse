@@ -82,6 +82,8 @@ class SpotifyHelper: PlayerHelper {
         return application.playerPosition
     }
     
+    // TODO: Create a var for trackDuration playbackPosition
+    
     func trackDuration() -> Double? {
         guard let currentTrack = application.currentTrack else { return 0 }
         
@@ -94,6 +96,22 @@ class SpotifyHelper: PlayerHelper {
         }
         
         timeChangedHandler(touching, doubleValue)
+    }
+    
+    // MARK: Playback options
+    
+    var volume: Int {
+        set {
+            // Set the volume on the player
+            application.setSoundVolume!(newValue)
+        }
+        
+        get {
+            guard let volume = application.soundVolume else { return 0 }
+            
+            // Get current volume
+            return volume
+        }
     }
     
     // MARK: Artwork

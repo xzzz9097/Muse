@@ -42,6 +42,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     @IBOutlet weak var controlsSegmentedView: NSSegmentedControl!
     
+    @IBOutlet weak var soundPopoverButton: NSPopoverTouchBarItem!
+    
+    @IBOutlet weak var soundSlider: NSSliderTouchBarItem!
+    
     var isSliding = false
     
     // MARK: Actions
@@ -76,6 +80,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 spotifyHelper.scrub(to: slider.doubleValue)
             }
         }
+    }
+    
+    @IBAction func soundSliderValueChanged(_ sender: Any) {
+        guard let slider = sender as? NSSlider else { return }
+        
+        // Set the volume on the player
+        spotifyHelper.volume = slider.integerValue
     }
     
     @IBAction func songArtworkViewClicked(_ sender: Any) {
@@ -199,6 +210,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func windowDidBecomeKey(_ notification: Notification) {
         // Sync progress slider if song is not playing
         if !self.song.isPlaying { syncSongProgressSlider() }
+        
+        // Sync the sound slider and button
+        prepareSoundSlider()
     }
     
     func prepareWindow() {
@@ -257,6 +271,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
         cell.knobImage = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
+    }
+    
+    func prepareSoundSlider() {
+        let volume = spotifyHelper.volume
+        
+        // Set the player volume on the slider
+        soundSlider.slider.integerValue = volume
     }
     
     func prepareImageView() {
