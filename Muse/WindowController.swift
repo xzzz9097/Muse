@@ -83,10 +83,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func soundSliderValueChanged(_ sender: Any) {
-        guard let slider = sender as? NSSlider else { return }
+        guard let sliderItem = sender as? NSSliderTouchBarItem else { return }
         
         // Set the volume on the player
-        spotifyHelper.volume = slider.integerValue
+        spotifyHelper.volume = sliderItem.slider.integerValue
         
         updateSoundPopoverButton(for: spotifyHelper.volume)
     }

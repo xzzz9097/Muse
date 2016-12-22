@@ -717,7 +717,7 @@
                                     <sliderAccessoryBehavior key="behavior" id="a3m-32-dWW"/>
                                 </sliderAccessory>
                                 <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBU-lt-UsN">
-                                    <rect key="frame" x="0.0" y="0.0" width="244" height="30"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="334" height="30"/>
                                     <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="4JH-E9-yW3" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                     <connections>
                                         <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="f82-wD-WAe"/>
@@ -761,10 +761,10 @@
                                                     <constraint firstAttribute="width" constant="350" id="frZ-X1-cv6"/>
                                                 </constraints>
                                                 <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="2Em-Jg-2oK"/>
-                                                <connections>
-                                                    <action selector="soundSliderValueChanged:" target="B8D-0N-5wS" id="5li-vH-lV7"/>
-                                                </connections>
                                             </slider>
+                                            <connections>
+                                                <action selector="soundSliderValueChanged:" target="B8D-0N-5wS" id="di4-Ai-SsL"/>
+                                            </connections>
                                         </sliderTouchBarItem>
                                     </touchBarItems>
                                 </touchBar>
@@ -934,7 +934,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSTouchBarAudioOutputVolumeHighTemplate" width="128" height="128"/>
-        <image name="NSTouchBarAudioOutputVolumeLowTemplate" width="128" height="128"/>
+        <image name="NSTouchBarAudioOutputVolumeHighTemplate" width="23" height="30"/>
+        <image name="NSTouchBarAudioOutputVolumeLowTemplate" width="23" height="30"/>
     </resources>
 </document>
