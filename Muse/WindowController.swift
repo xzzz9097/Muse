@@ -87,6 +87,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Set the volume on the player
         spotifyHelper.volume = slider.integerValue
+        
+        updateSoundPopoverButton(for: spotifyHelper.volume)
     }
     
     @IBAction func songArtworkViewClicked(_ sender: Any) {
@@ -276,6 +278,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func prepareSoundSlider() {
         let volume = spotifyHelper.volume
         
+        updateSoundPopoverButton(for: volume)
+        
         // Set the player volume on the slider
         soundSlider.slider.integerValue = volume
     }
@@ -391,6 +395,20 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func syncSongProgressSlider() {
         // Convenience call for updating the progress slider during playback
         updateSongProgressSlider(shouldLoadTime: true)
+    }
+    
+    func updateSoundPopoverButton(for volume: Int) {
+        // Change the popover icon based on current volume
+        if (volume > 70) {
+            soundPopoverButton.collapsedRepresentationImage =
+                NSImage(named: NSImageNameTouchBarAudioOutputVolumeHighTemplate)
+        } else if (volume > 30) {
+            soundPopoverButton.collapsedRepresentationImage =
+                NSImage(named: NSImageNameTouchBarAudioOutputVolumeMediumTemplate)
+        } else {
+            soundPopoverButton.collapsedRepresentationImage =
+                NSImage(named: NSImageNameTouchBarAudioOutputVolumeLowTemplate)
+        }
     }
     
     // MARK: Deinitialization
