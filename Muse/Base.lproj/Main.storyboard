@@ -748,6 +748,24 @@
                             <touchBarPopoverItem collapsedRepresentationImage="NSTouchBarAudioOutputVolumeHighTemplate" collapsedRepresentationLabel="" supportsPressAndHold="YES" id="q5X-bl-SZL">
                                 <touchBar key="popoverTouchBar" id="hIg-FD-Eei">
                                     <touchBarItems>
+                                        <touchBarItem id="DmD-M5-F0o">
+                                            <viewController key="viewController" id="Dyt-zM-9FW">
+                                                <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
+                                                    <rect key="frame" x="0.0" y="-2" width="140" height="25"/>
+                                                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
+                                                        <font key="font" metaFont="system"/>
+                                                        <segments>
+                                                            <segment label="Shuffle" width="67"/>
+                                                            <segment label="Repeat" width="66" tag="1"/>
+                                                        </segments>
+                                                    </segmentedCell>
+                                                    <connections>
+                                                        <action selector="shuffleRepeatSegmentedViewClicked:" target="B8D-0N-5wS" id="Byv-hn-ccK"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </viewController>
+                                            <size key="designTimeSize" width="140" height="22"/>
+                                        </touchBarItem>
                                         <sliderTouchBarItem id="Xko-cM-C4Q">
                                             <sliderAccessory key="minimumValueAccessory" image="NSTouchBarAudioOutputVolumeLowTemplate" id="lpQ-pr-AXw">
                                                 <sliderAccessoryBehavior key="behavior" id="0JU-9J-YpY"/>
@@ -756,7 +774,7 @@
                                                 <sliderAccessoryBehavior key="behavior" id="Zjn-xl-FRk"/>
                                             </sliderAccessory>
                                             <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daN-KH-YWE">
-                                                <rect key="frame" x="30" y="0.0" width="625" height="30"/>
+                                                <rect key="frame" x="30" y="0.0" width="477" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="frZ-X1-cv6"/>
                                                 </constraints>
@@ -773,6 +791,7 @@
                     </touchBar>
                     <connections>
                         <outlet property="controlsSegmentedView" destination="7UV-La-mul" id="jf8-ML-WVq"/>
+                        <outlet property="shuffleRepeatSegmentedView" destination="eRO-qI-4Ea" id="Mmc-xh-fqT"/>
                         <outlet property="songArtworkView" destination="Oc9-go-PNq" id="WeO-vp-wOk"/>
                         <outlet property="songProgressSlider" destination="nBU-lt-UsN" id="Rdq-MF-VG7"/>
                         <outlet property="songTitleLabel" destination="21c-Cc-j9t" id="J8k-vt-zmx"/>

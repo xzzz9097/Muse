@@ -32,6 +32,10 @@ protocol PlayerHelper: class {
     
     var volume: Int { set get }
     
+    var repeating: Bool { set get }
+    
+    var shuffling: Bool { set get }
+    
     // MARK: Artwork
     
     func artwork() -> Any?

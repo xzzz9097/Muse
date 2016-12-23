@@ -46,6 +46,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     @IBOutlet weak var soundSlider: NSSliderTouchBarItem!
     
+    @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
+    
     var isSliding = false
     
     // MARK: Actions
@@ -60,6 +62,23 @@ class WindowController: NSWindowController, NSWindowDelegate {
             spotifyHelper.togglePlayPause()
         case 2:
             spotifyHelper.nextTrack()
+        default:
+            return
+        }
+    }
+    
+    @IBAction func shuffleRepeatSegmentedViewClicked(_ sender: Any) {
+        guard let segmentedControl = sender as? NSSegmentedControl else { return }
+        
+        let selectedSegment = segmentedControl.selectedSegment
+        
+        switch selectedSegment {
+        case 0:
+            // Toggle shuffling
+            spotifyHelper.shuffling = segmentedControl.isSelected(forSegment: selectedSegment)
+        case 1:
+            // Toggle repeating
+            spotifyHelper.repeating = segmentedControl.isSelected(forSegment: selectedSegment)
         default:
             return
         }
@@ -215,6 +234,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Sync the sound slider and button
         prepareSoundSlider()
+        
+        // Sync shuffling and repeating segmented control
+        prepareShuffleRepeatSegmentedView()
     }
     
     func prepareWindow() {
@@ -282,6 +304,14 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Set the player volume on the slider
         soundSlider.slider.integerValue = volume
+    }
+
+    func prepareShuffleRepeatSegmentedView() {
+        // Select 'shuffle' button
+        shuffleRepeatSegmentedView.setSelected(spotifyHelper.shuffling, forSegment: 0)
+        
+        // Select 'repeat' button
+        shuffleRepeatSegmentedView.setSelected(spotifyHelper.repeating, forSegment: 1)
     }
     
     func prepareImageView() {

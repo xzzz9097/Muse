@@ -16,6 +16,8 @@ import ScriptingBridge
     @objc optional var playerPosition: Double { get }
     @objc optional var playerState: SpotifyPlayerState { get }
     @objc optional var soundVolume: Int { get }
+    @objc optional var repeating: Bool { get }
+    @objc optional var shuffling: Bool { get }
     
     @objc optional func playpause()
     @objc optional func nextTrack()
@@ -23,6 +25,8 @@ import ScriptingBridge
     
     @objc optional func setPlayerPosition(_ position: Double)
     @objc optional func setSoundVolume(_ volume: Int)
+    @objc optional func setRepeating(_ repeating: Bool)
+    @objc optional func setShuffling(_ shuffling: Bool)
 }
 
 // Protocol for Spotify track object
@@ -123,6 +127,34 @@ class SpotifyHelper: PlayerHelper {
             
             // Get current volume
             return volume
+        }
+    }
+    
+    var repeating: Bool {
+        set {
+            // Toggle repeating on the player
+            application.setRepeating!(newValue)
+        }
+        
+        get {
+            guard let repeating = application.repeating else { return false }
+            
+            // Return current repeating status
+            return repeating
+        }
+    }
+    
+    var shuffling: Bool {
+        set {
+            // Toggle shuffling on the player
+            application.setShuffling!(newValue)
+        }
+        
+        get {
+            guard let shuffling = application.shuffling else { return false }
+            
+            // Return current shuffling status
+            return shuffling
         }
     }
     
