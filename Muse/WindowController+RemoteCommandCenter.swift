@@ -15,9 +15,9 @@ extension WindowController {
     // MARK: TouchBar playback controls
     
     func togglePlayPause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        spotifyHelper.togglePlayPause()
-        
         togglePlaybackState(reverse: true)
+        
+        spotifyHelper.togglePlayPause()
         
         return .success
     }
@@ -59,6 +59,10 @@ extension WindowController {
     // MARK: TouchBar info refresh
     
     func updateNowPlayingInfo() {
+        // First reset the playback state
+        // This fixes occasional stuck progress bar after track end
+        nowPlayingInfoCenter.playbackState = .interrupted
+        
         togglePlaybackState()
         
         self.nowPlayingInfo = [
