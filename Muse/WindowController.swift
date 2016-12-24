@@ -280,7 +280,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func prepareSong() {
         self.song = spotifyHelper.song
         
-        updateUIAfterNotification()
+        updateAfterNotification()
         
         trackSongProgress()
     }
@@ -350,7 +350,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // with only PlayerStateStopped, that causes it to 
         // reopen for being polled by Muse
         // So we detect if the notification is a closing one
-        guard !isClosing(with: notification) else {
+        if isClosing(with: notification) {
             // Set placeholder value
             // TODO: update artwork with some blank
             self.song = Song()
@@ -358,23 +358,39 @@ class WindowController: NSWindowController, NSWindowDelegate {
             // This avoids reopening while playing too
             deinitSongTrackingTimer()
             
-            updateUIAfterNotification()
-            
+            updateAfterNotification()
             updateSongProgressSlider(shouldLoadTime: false)
             
             return
         }
         
-        willChangeValue(forKey: kSong)
+        if shouldLoadSong {
+            // New track notification
+            willChangeValue(forKey: kSong)
         
-        // Retrieve new value
-        self.song = spotifyHelper.song
+            // Retrieve new value
+            self.song = spotifyHelper.song
         
-        didChangeValue(forKey: kSong)
+            didChangeValue(forKey: kSong)
         
-        updateUIAfterNotification()
+            updateAfterNotification()
+        } else {
+            // Play/pause notification
+            self.song.isPlaying = spotifyHelper.song.isPlaying
+            self.song.playbackPosition = spotifyHelper.song.playbackPosition
+            
+            updateUIAfterNotification()
+            togglePlaybackState()
+            updateNowPlayingInfoElapsedPlaybackTime()
+        }
         
         trackSongProgress()
+    }
+    
+    var shouldLoadSong: Bool {
+        // A new song should be fully reloaded only
+        // if it's an actually different track
+        return spotifyHelper.song.name != self.song.name
     }
     
     // MARK: Playback progress handling
@@ -453,12 +469,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: UI refresh
     
+    func updateAfterNotification() {
+        updateUIAfterNotification()
+        
+        // Also update TouchBar media controls
+        updateNowPlayingInfo()
+    }
+    
     func updateUIAfterNotification() {
         updateTouchBarUI()
         
         updateViewUI()
-        
-        updateNowPlayingInfo()
     }
     
     func updateTouchBarUI() {

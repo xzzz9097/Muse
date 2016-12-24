@@ -17,6 +17,8 @@ extension WindowController {
     func togglePlayPause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         spotifyHelper.togglePlayPause()
         
+        togglePlaybackState(reverse: true)
+        
         return .success
     }
     
@@ -57,6 +59,8 @@ extension WindowController {
     // MARK: TouchBar info refresh
     
     func updateNowPlayingInfo() {
+        togglePlaybackState()
+        
         self.nowPlayingInfo = [
             MPMediaItemPropertyTitle: self.song.name,
             MPMediaItemPropertyArtist: self.song.artist,
@@ -68,15 +72,20 @@ extension WindowController {
         
         // MediaPlayer nowPlayingInfo
         nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
-        
-        // Update playbackState accordingly
-        nowPlayingInfoCenter.playbackState = self.song.isPlaying ? .playing : .paused
     }
     
     func updateNowPlayingInfoElapsedPlaybackTime() {
         self.nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.song.playbackPosition
         
         nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
+    }
+    
+    func togglePlaybackState(reverse: Bool = false) {
+        if reverse {
+            nowPlayingInfoCenter.playbackState = self.song.isPlaying ? .paused : .playing
+        } else {
+            nowPlayingInfoCenter.playbackState = self.song.isPlaying ? .playing : .paused
+        }
     }
     
 }
