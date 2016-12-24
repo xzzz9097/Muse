@@ -351,40 +351,53 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // reopen for being polled by Muse
         // So we detect if the notification is a closing one
         if isClosing(with: notification) {
-            // Set placeholder value
-            // TODO: update artwork with some blank
-            self.song = Song()
-            
-            // This avoids reopening while playing too
-            deinitSongTrackingTimer()
-            
-            updateAfterNotification()
-            updateSongProgressSlider(shouldLoadTime: false)
-            
+            handleClosing()
             return
-        }
-        
-        if shouldLoadSong {
-            // New track notification
-            willChangeValue(forKey: kSong)
-        
-            // Retrieve new value
-            self.song = spotifyHelper.song
-        
-            didChangeValue(forKey: kSong)
-        
-            updateAfterNotification()
+        } else if shouldLoadSong {
+            handleNewSong()
         } else {
-            // Play/pause notification
-            self.song.isPlaying = spotifyHelper.song.isPlaying
-            self.song.playbackPosition = spotifyHelper.song.playbackPosition
-            
-            updateUIAfterNotification()
-            togglePlaybackState()
-            updateNowPlayingInfoElapsedPlaybackTime()
+            handlePlayPause()
         }
         
         trackSongProgress()
+    }
+    
+    func handleClosing() {
+        // Set placeholder value
+        // TODO: update artwork with some blank
+        self.song = Song()
+        
+        // This avoids reopening while playing too
+        deinitSongTrackingTimer()
+        
+        updateAfterNotification()
+        
+        // Reset song progress slider
+        updateSongProgressSlider(shouldLoadTime: false)
+    }
+    
+    func handleNewSong() {
+        // New track notification
+        willChangeValue(forKey: kSong)
+        
+        // Retrieve new value
+        self.song = spotifyHelper.song
+        
+        didChangeValue(forKey: kSong)
+        
+        updateAfterNotification()
+    }
+    
+    func handlePlayPause() {
+        // Play/pause notification
+        self.song.isPlaying = spotifyHelper.song.isPlaying
+        self.song.playbackPosition = spotifyHelper.song.playbackPosition
+        
+        updateAfterNotification(updateNowPlaying: false)
+        
+        // Set play/pause and update elapsed time on the TouchBar
+        togglePlaybackState()
+        updateNowPlayingInfoElapsedPlaybackTime()
     }
     
     var shouldLoadSong: Bool {
@@ -469,11 +482,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: UI refresh
     
-    func updateAfterNotification() {
+    func updateAfterNotification(updateNowPlaying: Bool = true) {
         updateUIAfterNotification()
         
-        // Also update TouchBar media controls
-        updateNowPlayingInfo()
+        if updateNowPlaying {
+            // Also update TouchBar media controls
+            updateNowPlayingInfo()
+        }
     }
     
     func updateUIAfterNotification() {
