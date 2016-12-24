@@ -8,6 +8,10 @@
 
 protocol PlayerHelper: class {
     
+    // MARK: Player availability
+    
+    var isAvailable: Bool { get }
+    
     // MARK: Song data
     
     var song: Song { get }

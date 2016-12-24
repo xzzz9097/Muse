@@ -12,6 +12,8 @@ import ScriptingBridge
 // These props. and funcs. are set to optional in order
 // to be overridded and implemented by the bridge itself
 @objc protocol SpotifyApplication: class {
+    var isRunning: Bool { get }
+    
     @objc optional var currentTrack: SpotifyTrack { get }
     @objc optional var playerPosition: Double { get }
     @objc optional var playerState: SpotifyPlayerState { get }
@@ -48,6 +50,14 @@ class SpotifyHelper: PlayerHelper {
     
     // The SBApplication object buond to the helper class
     private let application: SpotifyApplication = SBApplication.init(bundleIdentifier: bundleIdentifier)!
+    
+    // MARK: Player availability
+    
+    var isAvailable: Bool {
+        // Returns if the application is running
+        // ( implemented by SBApplication )
+        return application.isRunning
+    }
     
     // MARK: Song data
     
