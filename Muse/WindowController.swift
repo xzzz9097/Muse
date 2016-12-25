@@ -307,11 +307,32 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
 
     func prepareShuffleRepeatSegmentedView() {
+        // Set image for 'shuffle' button
+        shuffleRepeatSegmentedView.setImage(shuffleIcon, forSegment: 0)
+        
         // Select 'shuffle' button
         shuffleRepeatSegmentedView.setSelected(spotifyHelper.shuffling, forSegment: 0)
         
+        // Set image for 'repeat' button
+        shuffleRepeatSegmentedView.setImage(repeatIcon, forSegment: 1)
+        
         // Select 'repeat' button
         shuffleRepeatSegmentedView.setSelected(spotifyHelper.repeating, forSegment: 1)
+    }
+    
+    func touchBarIcon(named: String) -> NSImage {
+        let icon = NSImage(named: named)
+        icon?.isTemplate = true
+        
+        return icon!
+    }
+    
+    var shuffleIcon: NSImage {
+        return touchBarIcon(named: "DFRShuffle")
+    }
+    
+    var repeatIcon: NSImage {
+        return touchBarIcon(named: "DFRRepeat")
     }
     
     func prepareImageView() {

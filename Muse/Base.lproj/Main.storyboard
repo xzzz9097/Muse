@@ -755,8 +755,12 @@
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
                                                         <font key="font" metaFont="system"/>
                                                         <segments>
-                                                            <segment label="Shuffle" width="67"/>
-                                                            <segment label="Repeat" width="66" tag="1"/>
+                                                            <segment width="67">
+                                                                <nil key="label"/>
+                                                            </segment>
+                                                            <segment width="66" tag="1">
+                                                                <nil key="label"/>
+                                                            </segment>
                                                         </segments>
                                                     </segmentedCell>
                                                     <connections>
