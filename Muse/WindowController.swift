@@ -320,19 +320,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
         shuffleRepeatSegmentedView.setSelected(spotifyHelper.repeating, forSegment: 1)
     }
     
-    func touchBarIcon(named: String) -> NSImage {
-        let icon = NSImage(named: named)
-        icon?.isTemplate = true
-        
-        return icon!
-    }
-    
     var shuffleIcon: NSImage {
-        return touchBarIcon(named: "DFRShuffle")
+        return NSImage(named: "DFRShuffle")!.forUI()
     }
     
     var repeatIcon: NSImage {
-        return touchBarIcon(named: "DFRRepeat")
+        return NSImage(named: "DFRRepeat")!.forUI()
     }
     
     func prepareImageView() {
