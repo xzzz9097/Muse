@@ -182,14 +182,10 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Application identifier
     
-    static var bundleIdentifier: String {
-        return "com.spotify.client"
-    }
+    static let bundleIdentifier = "com.spotify.client"
     
     // MARK: Notification ID
     
-    var notificationID: String {
-        return "com.spotify.client.PlaybackStateChanged"
-    }
+    let notificationID = "com.spotify.client.PlaybackStateChanged"
     
 }
