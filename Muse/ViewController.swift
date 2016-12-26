@@ -132,10 +132,9 @@ class ViewController: NSViewController {
     
     func updateButtons(for song: Song) {
         // Initialize playback control buttons
-        previousTrackButton.image = NSImage(named: NSImageNameTouchBarRewindTemplate)
-        togglePlayPauseButton.image = song.isPlaying ? NSImage(named: NSImageNameTouchBarPauseTemplate) :
-                                                       NSImage(named: NSImageNameTouchBarPlayTemplate)
-        nextTrackButton.image = NSImage(named: NSImageNameTouchBarFastForwardTemplate)
+        previousTrackButton.image = .previous
+        togglePlayPauseButton.image = song.isPlaying ? .pause : .play
+        nextTrackButton.image = .next
     }
     
     func updateFullSongArtworkView(with object: Any?) {

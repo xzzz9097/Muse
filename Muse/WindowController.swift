@@ -286,15 +286,15 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func prepareButtons() {
-        self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarRewindTemplate), forSegment: 0)
-        self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarPlayPauseTemplate), forSegment: 1)
-        self.controlsSegmentedView.setImage(NSImage(named: NSImageNameTouchBarFastForwardTemplate), forSegment: 2)
+        self.controlsSegmentedView.setImage(.previous, forSegment: 0)
+        self.controlsSegmentedView.setImage(.play, forSegment: 1)
+        self.controlsSegmentedView.setImage(.next, forSegment: 2)
     }
     
     func prepareSongProgressSlider() {
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
-        cell.knobImage = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
+        cell.knobImage = .playhead
     }
     
     func prepareSoundSlider() {
@@ -308,24 +308,16 @@ class WindowController: NSWindowController, NSWindowDelegate {
 
     func prepareShuffleRepeatSegmentedView() {
         // Set image for 'shuffle' button
-        shuffleRepeatSegmentedView.setImage(shuffleIcon, forSegment: 0)
+        shuffleRepeatSegmentedView.setImage(.shuffling, forSegment: 0)
         
         // Select 'shuffle' button
         shuffleRepeatSegmentedView.setSelected(spotifyHelper.shuffling, forSegment: 0)
         
         // Set image for 'repeat' button
-        shuffleRepeatSegmentedView.setImage(repeatIcon, forSegment: 1)
+        shuffleRepeatSegmentedView.setImage(.repeating, forSegment: 1)
         
         // Select 'repeat' button
         shuffleRepeatSegmentedView.setSelected(spotifyHelper.repeating, forSegment: 1)
-    }
-    
-    var shuffleIcon: NSImage {
-        return NSImage(named: "DFRShuffle")!.forUI()
-    }
-    
-    var repeatIcon: NSImage {
-        return NSImage(named: "DFRRepeat")!.forUI()
     }
     
     func prepareImageView() {
@@ -473,14 +465,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func updateSoundPopoverButton(for volume: Int) {
         // Change the popover icon based on current volume
         if (volume > 70) {
-            soundPopoverButton.collapsedRepresentationImage =
-                NSImage(named: NSImageNameTouchBarAudioOutputVolumeHighTemplate)
+            soundPopoverButton.collapsedRepresentationImage = .volumeHigh
         } else if (volume > 30) {
-            soundPopoverButton.collapsedRepresentationImage =
-                NSImage(named: NSImageNameTouchBarAudioOutputVolumeMediumTemplate)
+            soundPopoverButton.collapsedRepresentationImage = .volumeMedium
         } else {
-            soundPopoverButton.collapsedRepresentationImage =
-                NSImage(named: NSImageNameTouchBarAudioOutputVolumeLowTemplate)
+            soundPopoverButton.collapsedRepresentationImage = .volumeLow
         }
     }
     
@@ -515,9 +504,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         self.songTitleLabel.stringValue = self.song.name
         
         self.controlsSegmentedView.setImage(
-            self.song.isPlaying ?
-                NSImage(named: NSImageNameTouchBarPauseTemplate) :
-                NSImage(named: NSImageNameTouchBarPlayTemplate),
+            self.song.isPlaying ? .pause : .play,
             forSegment: 1
         )
         
