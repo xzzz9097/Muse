@@ -13,9 +13,9 @@
 // Obj-C definition is required to create
 // a type compatible with Spotify AS output
 typedef enum {
-    SpotifyPlayerStatePlaying = 'kPSP',
-    SpotifyPlayerStatePaused = 'kPSp',
-    SpotifyPlayerStateStopped = 'kPSS'
-} SpotifyPlayerState;
+    SpotifyEPlSPlaying = 'kPSP',
+    SpotifyEPlSPaused = 'kPSp',
+    SpotifyEPlSStopped = 'kPSS'
+} SpotifyEPlS;
 
 #endif /* PlayerStates_h */

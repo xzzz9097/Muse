@@ -16,7 +16,7 @@ import ScriptingBridge
     
     @objc optional var currentTrack: SpotifyTrack { get }
     @objc optional var playerPosition: Double { get }
-    @objc optional var playerState: SpotifyPlayerState { get }
+    @objc optional var playerState: SpotifyEPlS { get }
     @objc optional var soundVolume: Int { get }
     @objc optional var repeating: Bool { get }
     @objc optional var shuffling: Bool { get }
@@ -67,7 +67,7 @@ class SpotifyHelper: PlayerHelper {
         return Song(name: currentTrack.name!,
                     artist: currentTrack.artist!,
                     album: currentTrack.album!,
-                    isPlaying: (application.playerState == SpotifyPlayerStatePlaying),
+                    isPlaying: (application.playerState == SpotifyEPlSPlaying),
                     playbackPosition: playbackPosition,
                     duration: trackDuration)
     }
