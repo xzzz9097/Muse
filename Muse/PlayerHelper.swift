@@ -54,10 +54,10 @@ protocol PlayerHelper: class {
     
     // MARK: Application identifier
     
-    static var bundleIdentifier: String { get }
+    static var BundleIdentifier: String { get }
     
     // MARK: Notification ID
     
-    var notificationID: String { get }
+    static var PlaybackStateChangedNotification: String { get }
     
 }

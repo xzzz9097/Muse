@@ -49,7 +49,7 @@ class SpotifyHelper: PlayerHelper {
     static let shared = SpotifyHelper()
     
     // The SBApplication object buond to the helper class
-    private let application: SpotifyApplication = SBApplication.init(bundleIdentifier: bundleIdentifier)!
+    private let application: SpotifyApplication = SBApplication.init(bundleIdentifier: BundleIdentifier)!
     
     // MARK: Player availability
     
@@ -187,10 +187,10 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Application identifier
     
-    static let bundleIdentifier = "com.spotify.client"
+    static let BundleIdentifier = "com.spotify.client"
     
     // MARK: Notification ID
     
-    let notificationID = "com.spotify.client.PlaybackStateChanged"
+    static let PlaybackStateChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
     
 }

@@ -169,7 +169,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func showPlayer() {
         let player = NSRunningApplication.runningApplications(
-            withBundleIdentifier: SpotifyHelper.bundleIdentifier
+            withBundleIdentifier: type(of: spotifyHelper).BundleIdentifier
             )[0]
         
         // Takes to the player window
@@ -324,18 +324,23 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: Notification handling
     
+    var PlaybackStateChangedNotification: String {
+        // Use 'type' because it's a static var
+        return type(of: spotifyHelper).PlaybackStateChangedNotification
+    }
+    
     func initNotificationWatcher() {
         // Attach the NotificationObserver for Spotify notifications
         DistributedNotificationCenter.default().addObserver(self,
                                        selector: #selector(hookNotification(notification:)),
-                                       name: NSNotification.Name(rawValue: spotifyHelper.notificationID),
+                                       name: NSNotification.Name(rawValue: PlaybackStateChangedNotification),
                                        object: nil)
     }
     
     func deinitNotificationWatcher() {
         // Remove the NotificationObserver
         DistributedNotificationCenter.default().removeObserver(self,
-                                          name: NSNotification.Name(rawValue: spotifyHelper.notificationID),
+                                          name: NSNotification.Name(rawValue: PlaybackStateChangedNotification),
                                           object: nil)
     }
     
