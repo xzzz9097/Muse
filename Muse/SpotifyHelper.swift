@@ -67,7 +67,7 @@ class SpotifyHelper: PlayerHelper {
         return Song(name: currentTrack.name!,
                     artist: currentTrack.artist!,
                     album: currentTrack.album!,
-                    isPlaying: (application.playerState == SpotifyEPlSPlaying),
+                    isPlaying: isPlaying,
                     playbackPosition: playbackPosition,
                     duration: trackDuration)
     }
@@ -91,6 +91,13 @@ class SpotifyHelper: PlayerHelper {
     }
     
     // MARK: Playback status
+    
+    var isPlaying: Bool {
+        let isPlaying = application.playerState == SpotifyEPlSPlaying
+        
+        // Return current playback status ( R/O )
+        return isPlaying
+    }
     
     var playbackPosition: Double {
         set {

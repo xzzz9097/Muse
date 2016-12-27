@@ -26,6 +26,8 @@ protocol PlayerHelper: class {
     
     // MARK: Playback status
     
+    var isPlaying: Bool { get }
+    
     var playbackPosition: Double { set get }
     
     var trackDuration: Double { get }
