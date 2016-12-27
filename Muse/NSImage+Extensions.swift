@@ -11,6 +11,8 @@ extension NSImage {
     
     // MARK: Project drawables
     
+    static let menuBarIcon  = NSImage(named: "menuBarIcon")!.forUI()
+    
     static let shuffling    = NSImage(named: "DFRShuffle")!.forUI()
     static let repeating    = NSImage(named: "DFRRepeat")!.forUI()
     
