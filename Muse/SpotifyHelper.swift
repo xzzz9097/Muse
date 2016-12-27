@@ -67,8 +67,6 @@ class SpotifyHelper: PlayerHelper {
         return Song(name: currentTrack.name!,
                     artist: currentTrack.artist!,
                     album: currentTrack.album!,
-                    isPlaying: isPlaying,
-                    playbackPosition: playbackPosition,
                     duration: trackDuration)
     }
     

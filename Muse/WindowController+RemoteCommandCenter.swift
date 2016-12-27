@@ -69,7 +69,7 @@ extension WindowController {
             MPMediaItemPropertyTitle: self.song.name,
             MPMediaItemPropertyArtist: self.song.artist,
             MPMediaItemPropertyAlbumTitle: self.song.album,
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: self.song.playbackPosition,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: spotifyHelper.playbackPosition,
             MPMediaItemPropertyPlaybackDuration: self.song.duration,
             MPNowPlayingInfoPropertyMediaType: MPNowPlayingInfoMediaType.audio.rawValue
         ]
@@ -79,16 +79,16 @@ extension WindowController {
     }
     
     func updateNowPlayingInfoElapsedPlaybackTime() {
-        self.nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.song.playbackPosition
+        self.nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = spotifyHelper.playbackPosition
         
         nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
     }
     
     func togglePlaybackState(reverse: Bool = false) {
         if reverse {
-            nowPlayingInfoCenter.playbackState = self.song.isPlaying ? .paused : .playing
+            nowPlayingInfoCenter.playbackState = spotifyHelper.isPlaying ? .paused : .playing
         } else {
-            nowPlayingInfoCenter.playbackState = self.song.isPlaying ? .playing : .paused
+            nowPlayingInfoCenter.playbackState = spotifyHelper.isPlaying ? .playing : .paused
         }
     }
     

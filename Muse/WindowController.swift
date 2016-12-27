@@ -181,9 +181,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func registerCallbacks() {
         // Callback for PlayerHelper's nextTrack() and previousTrack()
         spotifyHelper.trackChangedHandler = {
-            self.song.playbackPosition = 0
-            
-            self.updateSongProgressSlider(shouldLoadTime: false)
+            self.updateSongProgressSlider(with: 0)
             
             self.updateNowPlayingInfo()
         }
@@ -194,9 +192,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             guard !self.isSliding, let value = doubleValue else { return }
             
-            self.song.playbackPosition = value * self.song.duration
-            
-            self.updateSongProgressSlider(shouldLoadTime: false)
+            self.updateSongProgressSlider(with: value * self.song.duration)
         }
     }
     
@@ -230,7 +226,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func windowDidBecomeKey(_ notification: Notification) {
         // Sync progress slider if song is not playing
-        if !self.song.isPlaying { syncSongProgressSlider() }
+        if !spotifyHelper.isPlaying { syncSongProgressSlider() }
         
         // Sync the sound slider and button
         prepareSoundSlider()
@@ -379,7 +375,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         updateAfterNotification()
         
         // Reset song progress slider
-        updateSongProgressSlider(shouldLoadTime: false)
+        updateSongProgressSlider(with: 0)
     }
     
     func handleNewSong() {
@@ -396,9 +392,6 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func handlePlayPause() {
         // Play/pause notification
-        self.song.isPlaying = spotifyHelper.song.isPlaying
-        self.song.playbackPosition = spotifyHelper.song.playbackPosition
-        
         updateAfterNotification(updateNowPlaying: false)
         
         // Set play/pause and update elapsed time on the TouchBar
@@ -417,7 +410,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func trackSongProgress() {
         if songTrackingTimer.isValid { deinitSongTrackingTimer() }
         
-        if song.isPlaying {
+        if spotifyHelper.isPlaying {
             songTrackingTimer = Timer.scheduledTimer(timeInterval: 1,
                                                      target: self,
                                                      selector: #selector(syncSongProgressSlider),
@@ -434,18 +427,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
         songTrackingTimer.invalidate()
     }
     
-    func updateSongProgressSlider(shouldLoadTime: Bool) {
+    func updateSongProgressSlider(with position: Double = -1) {
         if !isSliding {
-            if shouldLoadTime {
-                self.song.playbackPosition = spotifyHelper.playbackPosition
-                
-                if self.song.playbackPosition > self.song.duration && self.song.duration == 0 {
-                    // Hotfix for occasional song loading errors
-                    self.song = spotifyHelper.song
-                }
+            if spotifyHelper.playbackPosition > self.song.duration && self.song.duration == 0 {
+                // Hotfix for occasional song loading errors
+                // TODO: Check if this is actually working
+                self.song = spotifyHelper.song
             }
             
-            songProgressSlider.doubleValue = self.song.playbackPosition / self.song.duration
+            let position = (position > -1 ? position : spotifyHelper.playbackPosition) / self.song.duration
+            
+            songProgressSlider.doubleValue = position
             
             // Also update native touchbar scrubber
             updateNowPlayingInfoElapsedPlaybackTime()
@@ -453,13 +445,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
             // And the View's slider
             guard let viewController = self.contentViewController as? ViewController else { return }
             
-            viewController.updateSongProgressSlider(for: self.song)
+            viewController.updateSongProgressSlider(with: position)
         }
     }
     
     func syncSongProgressSlider() {
         // Convenience call for updating the progress slider during playback
-        updateSongProgressSlider(shouldLoadTime: true)
+        updateSongProgressSlider()
     }
     
     func updateSoundPopoverButton(for volume: Int) {
@@ -504,7 +496,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         self.songTitleLabel.stringValue = self.song.name
         
         self.controlsSegmentedView.setImage(
-            self.song.isPlaying ? .pause : .play,
+            spotifyHelper.isPlaying ? .pause : .play,
             forSegment: 1
         )
         

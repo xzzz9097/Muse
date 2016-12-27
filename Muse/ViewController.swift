@@ -133,7 +133,7 @@ class ViewController: NSViewController {
     func updateButtons(for song: Song) {
         // Initialize playback control buttons
         previousTrackButton.image = .previous
-        togglePlayPauseButton.image = song.isPlaying ? .pause : .play
+        togglePlayPauseButton.image = spotifyHelper.isPlaying ? .pause : .play
         nextTrackButton.image = .next
     }
     
@@ -153,8 +153,8 @@ class ViewController: NSViewController {
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
     }
     
-    func updateSongProgressSlider(for song: Song) {
-        songProgressSlider.doubleValue = song.playbackPosition / song.duration
+    func updateSongProgressSlider(with position: Double) {
+        songProgressSlider.doubleValue = position
     }
     
 }
