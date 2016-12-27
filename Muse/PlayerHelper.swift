@@ -52,6 +52,8 @@ protocol PlayerHelper: class {
     
     var timeChangedHandler: (Bool, Double?) -> () { set get }
     
+    var shuffleRepeatChangedHandler: (Bool?, Bool?) -> () { set get }
+    
     // MARK: Application identifier
     
     static var BundleIdentifier: String { get }

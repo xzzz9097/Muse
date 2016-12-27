@@ -130,6 +130,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
             spotifyHelper.nextTrack()
         case kVK_Return, kVK_ANSI_W:
             showPlayer()
+        case kVK_ANSI_X:
+            spotifyHelper.shuffling = !spotifyHelper.shuffling
+        case kVK_ANSI_R:
+            spotifyHelper.repeating = !spotifyHelper.repeating
         default:
             super.keyDown(with: event)
         }
@@ -178,6 +182,14 @@ class WindowController: NSWindowController, NSWindowDelegate {
             guard !self.isSliding, let value = doubleValue else { return }
             
             self.updateSongProgressSlider(with: value * self.song.duration)
+        }
+        
+        // Callback for PlayerHelper's shuffe/repeat setters
+        spotifyHelper.shuffleRepeatChangedHandler = { shuffleSelected, repeatSelected in
+            // We have to manually provide new values
+            // otherwise old ones keep coming back
+            self.setShuffleRepeatSegmentedView(shuffleSelected: shuffleSelected,
+                                               repeatSelected: repeatSelected)
         }
         
         if  let delegate = NSApplication.shared().delegate as? AppDelegate,
@@ -297,14 +309,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // Set image for 'shuffle' button
         shuffleRepeatSegmentedView.setImage(.shuffling, forSegment: 0)
         
-        // Select 'shuffle' button
-        shuffleRepeatSegmentedView.setSelected(spotifyHelper.shuffling, forSegment: 0)
-        
         // Set image for 'repeat' button
         shuffleRepeatSegmentedView.setImage(.repeating, forSegment: 1)
         
-        // Select 'repeat' button
-        shuffleRepeatSegmentedView.setSelected(spotifyHelper.repeating, forSegment: 1)
+        updateShuffleRepeatSegmentedView()
     }
     
     func prepareImageView() {
@@ -448,6 +456,24 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func syncSongProgressSlider() {
         // Convenience call for updating the progress slider during playback
         updateSongProgressSlider()
+    }
+    
+    func setShuffleRepeatSegmentedView(shuffleSelected: Bool?, repeatSelected: Bool?) {
+        // Select 'shuffle' button
+        if let shuffleSelected = shuffleSelected {
+            shuffleRepeatSegmentedView.setSelected(shuffleSelected, forSegment: 0)
+        }
+        
+        // Select 'repeat' button
+        if let repeatSelected = repeatSelected {
+            shuffleRepeatSegmentedView.setSelected(repeatSelected, forSegment: 1)
+        }
+    }
+    
+    func updateShuffleRepeatSegmentedView() {
+        // Convenience call for updating the 'repeat' and 'shuffle' buttons
+        setShuffleRepeatSegmentedView(shuffleSelected: spotifyHelper.shuffling,
+                                      repeatSelected: spotifyHelper.repeating)
     }
     
     func updateSoundPopoverButton(for volume: Int) {
