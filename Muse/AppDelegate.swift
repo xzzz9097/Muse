@@ -15,12 +15,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: Properties
     
     let menuItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+    
+    var windowToggledHandler: () -> () = { }
 
     // MARK: Outlets
     
     @IBOutlet weak var menuBarMenu: NSMenu!
     
     // MARK: Actions
+    
+    @IBAction func toggleWindowMenuItemClicked(_ sender: Any) {
+        // Show window
+        windowToggledHandler()
+    }
     
     @IBAction func quitMenuItemClicked(_ sender: Any) {
         // Quit the application

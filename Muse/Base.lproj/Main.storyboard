@@ -71,6 +71,13 @@
                 </customObject>
                 <menu id="3ym-64-pdK">
                     <items>
+                        <menuItem title="Toggle window" keyEquivalent="s" id="Bui-oX-Ymd">
+                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                            <connections>
+                                <action selector="toggleWindowMenuItemClicked:" target="Voe-Tx-rLC" id="nfU-G6-SyF"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="kk4-va-XnQ"/>
                         <menuItem title="Quit Muse" keyEquivalent="q" id="yNZ-Pt-Iyt">
                             <connections>
                                 <action selector="quitMenuItemClicked:" target="Voe-Tx-rLC" id="Weu-58-Vap"/>

@@ -187,12 +187,21 @@ class WindowController: NSWindowController, NSWindowDelegate {
         }
         
         // Callback for PlayerHelper's goTo(Bool, Double?)
-        spotifyHelper.timeChangedHandler  = { touching, doubleValue in
+        spotifyHelper.timeChangedHandler = { touching, doubleValue in
             self.isSliding = touching
             
             guard !self.isSliding, let value = doubleValue else { return }
             
             self.updateSongProgressSlider(with: value * self.song.duration)
+        }
+        
+        guard   let delegate = NSApplication.shared().delegate as? AppDelegate,
+                let window = self.window
+        else { return }
+        
+        // Callback for AppDelegate window toggled
+        delegate.windowToggledHandler = {
+            self.toggleWindow(window, visible: true)
         }
     }
     
