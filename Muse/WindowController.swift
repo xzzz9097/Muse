@@ -122,7 +122,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         switch Int(event.keyCode) {
         case kVK_Escape:
             guard let window = self.window else { return }
-            toggleWindow(window, visible: false)
+            window.setVisibility(false)
         case kVK_LeftArrow, kVK_ANSI_A:
             spotifyHelper.previousTrack()
         case kVK_Space, kVK_ANSI_S:
@@ -150,21 +150,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func hotkeyAction() {
-        guard let window = self.window else { return }
-        
-        // Hide window if focused, show if not
-        toggleWindow(window, visible: !window.isKeyWindow)
-    }
-    
-    func toggleWindow(_ window: NSWindow, visible: Bool) {
-        // Toggles window visibility
-        // Bringing the older app on top if necessary
-        if (visible) {
-            window.makeKeyAndOrderFront(self)
-            NSApp.activate(ignoringOtherApps: true)
-        } else {
-            NSApp.hide(self)
-        }
+        if let window = self.window { window.toggleVisibility() }
     }
     
     func showPlayer() {
@@ -200,9 +186,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         else { return }
         
         // Callback for AppDelegate window toggled
-        delegate.windowToggledHandler = {
-            self.toggleWindow(window, visible: true)
-        }
+        delegate.windowToggledHandler = { window.toggleVisibility() }
     }
     
     // MARK: UI preparation
