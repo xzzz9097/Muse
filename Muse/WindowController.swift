@@ -121,8 +121,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // Catch key events
         switch Int(event.keyCode) {
         case kVK_Escape:
-            guard let window = self.window else { return }
-            window.setVisibility(false)
+            if let window = self.window { window.setVisibility(false) }
         case kVK_LeftArrow, kVK_ANSI_A:
             spotifyHelper.previousTrack()
         case kVK_Space, kVK_ANSI_S:
@@ -181,12 +180,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
             self.updateSongProgressSlider(with: value * self.song.duration)
         }
         
-        guard   let delegate = NSApplication.shared().delegate as? AppDelegate,
-                let window = self.window
-        else { return }
-        
-        // Callback for AppDelegate window toggled
-        delegate.windowToggledHandler = { window.toggleVisibility() }
+        if  let delegate = NSApplication.shared().delegate as? AppDelegate,
+            let window = self.window {
+            // Callback for AppDelegate window toggled
+            delegate.windowToggledHandler = { window.toggleVisibility() }
+        }
     }
     
     // MARK: UI preparation
