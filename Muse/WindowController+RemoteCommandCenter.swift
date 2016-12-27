@@ -78,8 +78,8 @@ extension WindowController {
         nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
     }
     
-    func updateNowPlayingInfoElapsedPlaybackTime() {
-        self.nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = spotifyHelper.playbackPosition
+    func updateNowPlayingInfoElapsedPlaybackTime(with position: Double) {
+        self.nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = position
         
         nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
     }

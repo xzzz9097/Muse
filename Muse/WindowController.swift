@@ -396,7 +396,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Set play/pause and update elapsed time on the TouchBar
         togglePlaybackState()
-        updateNowPlayingInfoElapsedPlaybackTime()
+        updateNowPlayingInfoElapsedPlaybackTime(with: spotifyHelper.playbackPosition)
     }
     
     var shouldLoadSong: Bool {
@@ -435,17 +435,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 self.song = spotifyHelper.song
             }
             
-            let position = (position > -1 ? position : spotifyHelper.playbackPosition) / self.song.duration
+            let position = position > -1 ? position : spotifyHelper.playbackPosition
             
-            songProgressSlider.doubleValue = position
+            songProgressSlider.doubleValue = position / self.song.duration
             
             // Also update native touchbar scrubber
-            updateNowPlayingInfoElapsedPlaybackTime()
+            updateNowPlayingInfoElapsedPlaybackTime(with: position)
             
             // And the View's slider
             guard let viewController = self.contentViewController as? ViewController else { return }
             
-            viewController.updateSongProgressSlider(with: position)
+            viewController.updateSongProgressSlider(with: position / self.song.duration)
         }
     }
     
