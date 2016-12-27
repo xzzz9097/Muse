@@ -38,10 +38,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Enable touchbar if on eligible macOS release
-        if #available(OSX 10.12.2, *) {
-            NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
-        }
+        // Enable TouchBar overlay
+        NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
         
         // Create the menu item
         attachMenuItem()
