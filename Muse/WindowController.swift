@@ -13,6 +13,10 @@ import MediaPlayer
 @available(OSX 10.12.2, *)
 class WindowController: NSWindowController, NSWindowDelegate {
     
+    // MARK: App delegate getter
+    
+    let delegate = NSApplication.shared().delegate as? AppDelegate
+    
     // MARK: Helpers
     
     var spotifyHelper        = SpotifyHelper.shared
@@ -33,6 +37,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
     // MARK: Keys
     
     let kSong = "song"
+    // Constant for enabling title on menuBar
+    // should be defined in a preference
+    let kShouldSetTitleOnMenuBar = true
 
     // MARK: Outlets
     
@@ -192,8 +199,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
                                                repeatSelected: repeatSelected)
         }
         
-        if  let delegate = NSApplication.shared().delegate as? AppDelegate,
-            let window = self.window {
+        if let window = self.window, let delegate = self.delegate {
             // Callback for AppDelegate window toggled
             delegate.windowToggledHandler = { window.toggleVisibility() }
         }
@@ -506,12 +512,26 @@ class WindowController: NSWindowController, NSWindowDelegate {
             // Also update TouchBar media controls
             updateNowPlayingInfo()
         }
+        
+        updateMenuBar()
     }
     
     func updateUIAfterNotification() {
         updateTouchBarUI()
         
         updateViewUI()
+    }
+    
+    var shouldSetTitleOnMenuBar: Bool {
+        // Determines wheter the title on the menuBar should be set
+        return kShouldSetTitleOnMenuBar && self.song.isValid
+    }
+    
+    func updateMenuBar() {
+        guard let delegate = self.delegate else { return }
+        
+        // Set the title on the menuBar if enabled
+        delegate.menuItem.title = shouldSetTitleOnMenuBar ? " " + self.song.name : nil
     }
     
     func updateTouchBarUI() {
