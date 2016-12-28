@@ -524,7 +524,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     var shouldSetTitleOnMenuBar: Bool {
         // Determines wheter the title on the menuBar should be set
-        return kShouldSetTitleOnMenuBar && self.song.isValid
+        return kShouldSetTitleOnMenuBar && self.song.isValid && spotifyHelper.isPlaying
     }
     
     func updateMenuBar() {
