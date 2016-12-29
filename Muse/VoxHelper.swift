@@ -88,8 +88,6 @@ class VoxHelper: PlayerHelper {
     var isPlaying: Bool {
         let isPlaying = application.playerState == 1
         
-        print(isPlaying)
-        
         // Return current playback status ( R/O )
         return isPlaying
     }
