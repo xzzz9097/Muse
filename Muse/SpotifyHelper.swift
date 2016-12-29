@@ -11,7 +11,7 @@ import ScriptingBridge
 // Protocol for Spotify application queries
 // These props. and funcs. are set to optional in order
 // to be overridded and implemented by the bridge itself
-@objc protocol SpotifyApplication: class {
+@objc fileprivate protocol SpotifyApplication: class {
     var isRunning: Bool { get }
     
     @objc optional var currentTrack: SpotifyTrack { get }
@@ -32,7 +32,7 @@ import ScriptingBridge
 }
 
 // Protocol for Spotify track object
-@objc protocol SpotifyTrack: class {
+@objc fileprivate protocol SpotifyTrack: class {
     @objc optional var name: String { get }
     @objc optional var artist: String { get }
     @objc optional var album: String { get }
