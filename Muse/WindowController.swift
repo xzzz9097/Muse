@@ -550,21 +550,19 @@ class WindowController: NSWindowController, NSWindowDelegate {
             forSegment: 1
         )
         
+        // Also set image on VC's ImageView after download
+        // Faster and more efficient
+        guard let viewController = self.contentViewController as? ViewController else { return }
+        
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
             self.songArtworkView.loadImage(from: artworkURL, callback: { image in
-                if let viewController = self.contentViewController as? ViewController {
-                    // Also set image on VC's ImageView after download
-                    // Faster and more efficient
-                    viewController.updateFullSongArtworkView(with: image)
-                }
+                viewController.updateFullSongArtworkView(with: image)
             })
         } else if let image = helper.artwork() as? NSImage {
             self.songArtworkView.image = image
             
             if let viewController = self.contentViewController as? ViewController {
-                // Also set image on VC's ImageView after download
-                // Faster and more efficient
                 viewController.updateFullSongArtworkView(with: image)
             }
         }
