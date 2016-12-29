@@ -19,7 +19,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: Helpers
     
-    var spotifyHelper        = SpotifyHelper.shared
+    var helper               = VoxHelper.shared
     let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     let remoteCommandCenter  = MPRemoteCommandCenter.shared()
     
@@ -66,11 +66,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         switch segmentedControl.selectedSegment {
         case 0:
-            spotifyHelper.previousTrack()
+            helper.previousTrack()
         case 1:
-            spotifyHelper.togglePlayPause()
+            helper.togglePlayPause()
         case 2:
-            spotifyHelper.nextTrack()
+            helper.nextTrack()
         default:
             return
         }
@@ -84,10 +84,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         switch selectedSegment {
         case 0:
             // Toggle shuffling
-            spotifyHelper.shuffling = segmentedControl.isSelected(forSegment: selectedSegment)
+            helper.shuffling = segmentedControl.isSelected(forSegment: selectedSegment)
         case 1:
             // Toggle repeating
-            spotifyHelper.repeating = segmentedControl.isSelected(forSegment: selectedSegment)
+            helper.repeating = segmentedControl.isSelected(forSegment: selectedSegment)
         default:
             return
         }
@@ -100,12 +100,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
                 // Detected touch phase start
-                spotifyHelper.scrub(touching: true)
+                helper.scrub(touching: true)
             }
             
             for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
                 // Detected touch phase end
-                spotifyHelper.scrub(to: slider.doubleValue)
+                helper.scrub(to: slider.doubleValue)
             }
         }
     }
@@ -114,9 +114,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
         guard let sliderItem = sender as? NSSliderTouchBarItem else { return }
         
         // Set the volume on the player
-        spotifyHelper.volume = sliderItem.slider.integerValue
+        helper.volume = sliderItem.slider.integerValue
         
-        updateSoundPopoverButton(for: spotifyHelper.volume)
+        updateSoundPopoverButton(for: helper.volume)
     }
     
     @IBAction func songArtworkViewClicked(_ sender: Any) {
@@ -132,17 +132,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
         case kVK_Escape:
             if let window = self.window { window.setVisibility(false) }
         case kVK_LeftArrow, kVK_ANSI_A:
-            spotifyHelper.previousTrack()
+            helper.previousTrack()
         case kVK_Space, kVK_ANSI_S:
-            spotifyHelper.togglePlayPause()
+            helper.togglePlayPause()
         case kVK_RightArrow, kVK_ANSI_D:
-            spotifyHelper.nextTrack()
+            helper.nextTrack()
         case kVK_Return, kVK_ANSI_W:
             showPlayer()
         case kVK_ANSI_X:
-            spotifyHelper.shuffling = !spotifyHelper.shuffling
+            helper.shuffling = !helper.shuffling
         case kVK_ANSI_R:
-            spotifyHelper.repeating = !spotifyHelper.repeating
+            helper.repeating = !helper.repeating
         default:
             super.keyDown(with: event)
         }
@@ -167,7 +167,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func showPlayer() {
         let player = NSRunningApplication.runningApplications(
-            withBundleIdentifier: type(of: spotifyHelper).BundleIdentifier
+            withBundleIdentifier: type(of: helper).BundleIdentifier
             )[0]
         
         // Takes to the player window
@@ -178,14 +178,14 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func registerCallbacks() {
         // Callback for PlayerHelper's nextTrack() and previousTrack()
-        spotifyHelper.trackChangedHandler = {
+        helper.trackChangedHandler = {
             self.updateSongProgressSlider(with: 0)
             
             self.updateNowPlayingInfo()
         }
         
         // Callback for PlayerHelper's goTo(Bool, Double?)
-        spotifyHelper.timeChangedHandler = { touching, doubleValue in
+        helper.timeChangedHandler = { touching, doubleValue in
             self.isSliding = touching
             
             guard !self.isSliding, let value = doubleValue else { return }
@@ -194,7 +194,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         }
         
         // Callback for PlayerHelper's shuffe/repeat setters
-        spotifyHelper.shuffleRepeatChangedHandler = { shuffleSelected, repeatSelected in
+        helper.shuffleRepeatChangedHandler = { shuffleSelected, repeatSelected in
             // We have to manually provide new values
             // otherwise old ones keep coming back
             self.setShuffleRepeatSegmentedView(shuffleSelected: shuffleSelected,
@@ -237,7 +237,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func windowDidBecomeKey(_ notification: Notification) {
         // Sync progress slider if song is not playing
-        if !spotifyHelper.isPlaying { syncSongProgressSlider() }
+        if !helper.isPlaying { syncSongProgressSlider() }
         
         // Sync the sound slider and button
         prepareSoundSlider()
@@ -285,7 +285,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func prepareSong() {
-        self.song = spotifyHelper.song
+        self.song = helper.song
         
         updateAfterNotification()
         
@@ -305,7 +305,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func prepareSoundSlider() {
-        let volume = spotifyHelper.volume
+        let volume = helper.volume
         
         updateSoundPopoverButton(for: volume)
         
@@ -333,7 +333,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     var PlaybackStateChangedNotification: String {
         // Use 'type' because it's a static var
-        return type(of: spotifyHelper).PlaybackStateChangedNotification
+        return type(of: helper).PlaybackStateChangedNotification
     }
     
     func initNotificationWatcher() {
@@ -352,6 +352,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func isClosing(with notification: NSNotification) -> Bool {
+        // This is only for Spotify!
+        guard type(of: helper) == SpotifyHelper.self else { return false }
+        
         guard let userInfo = notification.userInfo else { return true }
         
         // If the notification has only one item
@@ -395,7 +398,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         willChangeValue(forKey: kSong)
         
         // Retrieve new value
-        self.song = spotifyHelper.song
+        self.song = helper.song
         
         didChangeValue(forKey: kSong)
         
@@ -408,13 +411,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Set play/pause and update elapsed time on the TouchBar
         togglePlaybackState()
-        updateNowPlayingInfoElapsedPlaybackTime(with: spotifyHelper.playbackPosition)
+        updateNowPlayingInfoElapsedPlaybackTime(with: helper.playbackPosition)
     }
     
     var shouldLoadSong: Bool {
         // A new song should be fully reloaded only
         // if it's an actually different track
-        return spotifyHelper.song.name != self.song.name
+        return helper.song.name != self.song.name
     }
     
     // MARK: Playback progress handling
@@ -422,7 +425,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func trackSongProgress() {
         if songTrackingTimer.isValid { deinitSongTrackingTimer() }
         
-        if spotifyHelper.isPlaying {
+        if helper.isPlaying {
             songTrackingTimer = Timer.scheduledTimer(timeInterval: 1,
                                                      target: self,
                                                      selector: #selector(syncSongProgressSlider),
@@ -441,13 +444,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func updateSongProgressSlider(with position: Double = -1) {
         if !isSliding {
-            if spotifyHelper.playbackPosition > self.song.duration && self.song.duration == 0 {
+            if helper.playbackPosition > self.song.duration && self.song.duration == 0 {
                 // Hotfix for occasional song loading errors
                 // TODO: Check if this is actually working
-                self.song = spotifyHelper.song
+                self.song = helper.song
             }
             
-            let position = position > -1 ? position : spotifyHelper.playbackPosition
+            let position = position > -1 ? position : helper.playbackPosition
             
             songProgressSlider.doubleValue = position / self.song.duration
             
@@ -480,8 +483,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func updateShuffleRepeatSegmentedView() {
         // Convenience call for updating the 'repeat' and 'shuffle' buttons
-        setShuffleRepeatSegmentedView(shuffleSelected: spotifyHelper.shuffling,
-                                      repeatSelected: spotifyHelper.repeating)
+        setShuffleRepeatSegmentedView(shuffleSelected: helper.shuffling,
+                                      repeatSelected: helper.repeating)
     }
     
     func updateSoundPopoverButton(for volume: Int) {
@@ -526,7 +529,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     var shouldSetTitleOnMenuBar: Bool {
         // Determines wheter the title on the menuBar should be set
-        return kShouldSetTitleOnMenuBar && self.song.isValid && spotifyHelper.isPlaying
+        return kShouldSetTitleOnMenuBar && self.song.isValid && helper.isPlaying
     }
     
     func updateMenuBar() {
@@ -543,21 +546,28 @@ class WindowController: NSWindowController, NSWindowDelegate {
         self.songTitleLabel.stringValue = self.song.name
         
         self.controlsSegmentedView.setImage(
-            spotifyHelper.isPlaying ? .pause : .play,
+            helper.isPlaying ? .pause : .play,
             forSegment: 1
         )
         
-        guard   let stringURL = spotifyHelper.artwork() as? String,
-                let artworkURL = URL(string: stringURL)
-        else { return }
-        
-        self.songArtworkView.loadImage(from: artworkURL, callback: { image in
+        if  let stringURL = helper.artwork() as? String,
+            let artworkURL = URL(string: stringURL) {
+            self.songArtworkView.loadImage(from: artworkURL, callback: { image in
+                if let viewController = self.contentViewController as? ViewController {
+                    // Also set image on VC's ImageView after download
+                    // Faster and more efficient
+                    viewController.updateFullSongArtworkView(with: image)
+                }
+            })
+        } else if let image = helper.artwork() as? NSImage {
+            self.songArtworkView.image = image
+            
             if let viewController = self.contentViewController as? ViewController {
                 // Also set image on VC's ImageView after download
                 // Faster and more efficient
                 viewController.updateFullSongArtworkView(with: image)
             }
-        })
+        }
     }
     
     func updateViewUI() {

@@ -17,25 +17,25 @@ extension WindowController {
     func togglePlayPause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         togglePlaybackState(reverse: true)
         
-        spotifyHelper.togglePlayPause()
+        helper.togglePlayPause()
         
         return .success
     }
     
     func changePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        spotifyHelper.scrub(to: event.positionTime.rounded() / self.song.duration)
+        helper.scrub(to: event.positionTime.rounded() / self.song.duration)
         
         return .success
     }
     
     func previousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        spotifyHelper.previousTrack()
+        helper.previousTrack()
         
         return .success
     }
     
     func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        spotifyHelper.nextTrack()
+        helper.nextTrack()
         
         return .success
     }
@@ -69,7 +69,7 @@ extension WindowController {
             MPMediaItemPropertyTitle: self.song.name,
             MPMediaItemPropertyArtist: self.song.artist,
             MPMediaItemPropertyAlbumTitle: self.song.album,
-            MPNowPlayingInfoPropertyElapsedPlaybackTime: spotifyHelper.playbackPosition,
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: helper.playbackPosition,
             MPMediaItemPropertyPlaybackDuration: self.song.duration,
             MPNowPlayingInfoPropertyMediaType: MPNowPlayingInfoMediaType.audio.rawValue
         ]
@@ -86,9 +86,9 @@ extension WindowController {
     
     func togglePlaybackState(reverse: Bool = false) {
         if reverse {
-            nowPlayingInfoCenter.playbackState = spotifyHelper.isPlaying ? .paused : .playing
+            nowPlayingInfoCenter.playbackState = helper.isPlaying ? .paused : .playing
         } else {
-            nowPlayingInfoCenter.playbackState = spotifyHelper.isPlaying ? .playing : .paused
+            nowPlayingInfoCenter.playbackState = helper.isPlaying ? .playing : .paused
         }
     }
     
