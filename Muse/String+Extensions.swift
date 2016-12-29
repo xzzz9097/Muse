@@ -22,6 +22,11 @@ extension String {
         // Split string till limited index
         var truncated = self.substring(to: self.index(self.startIndex, offsetBy: length))
         
+        if truncated.characters.last == " " {
+            // Remove last character if it's a space
+            truncated.characters.removeLast()
+        }
+        
         // Append the 'wrap' symbol
         truncated = truncated.appending("...")
         
