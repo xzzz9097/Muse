@@ -40,6 +40,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     // Constant for enabling title on menuBar
     // should be defined in a preference
     let kShouldSetTitleOnMenuBar = true
+    // Constant for setting menu title length
+    let kMenuItemMaximumLength = 20
 
     // MARK: Outlets
     
@@ -530,8 +532,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func updateMenuBar() {
         guard let delegate = self.delegate else { return }
         
+        // Get the wrapped title
+        let title = " " + self.song.name.truncate(at: kMenuItemMaximumLength)
+        
         // Set the title on the menuBar if enabled
-        delegate.menuItem.title = shouldSetTitleOnMenuBar ? " " + self.song.name : nil
+        delegate.menuItem.title = shouldSetTitleOnMenuBar ? title : nil
     }
     
     func updateTouchBarUI() {

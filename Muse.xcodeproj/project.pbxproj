@@ -19,6 +19,7 @@
 		0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */; };
 		0CD2870E1E106D4600EF0E73 /* NSImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD2870D1E106D4600EF0E73 /* NSImage+Extensions.swift */; };
 		0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDD1ADA1DF04B560027661A /* SliderCell.swift */; };
+		0CEAEB391E14583500BD68D5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEAEB381E14583500BD68D5 /* String+Extensions.swift */; };
 		0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B7E31DF9772900CDD130 /* ImageView.swift */; };
 		0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
@@ -120,6 +121,7 @@
 		0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDHotKeyUtilities.m; sourceTree = "<group>"; };
 		0CD2870D1E106D4600EF0E73 /* NSImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+Extensions.swift"; sourceTree = "<group>"; };
 		0CDD1ADA1DF04B560027661A /* SliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
+		0CEAEB381E14583500BD68D5 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		0CF8B7E31DF9772900CDD130 /* ImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +221,7 @@
 			children = (
 				0C9A60CD1DE79AE50051CDC6 /* DDHotKey */,
 				0CFF46691DE3826300A3BE8E /* AppDelegate.swift */,
+				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
 				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
@@ -478,6 +481,7 @@
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
 				0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */,
 				0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */,
+				0CEAEB391E14583500BD68D5 /* String+Extensions.swift in Sources */,
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
 				0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */,
 				0CD2870E1E106D4600EF0E73 /* NSImage+Extensions.swift in Sources */,
