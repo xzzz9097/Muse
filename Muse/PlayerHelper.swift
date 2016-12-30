@@ -60,6 +60,10 @@ protocol PlayerHelper: class {
     
     var shuffleRepeatChangedHandler: (Bool?, Bool?) -> () { set get }
     
+    // MARK: Callback executors
+    
+    func execPlayPauseHandler()
+    
     // MARK: Application identifier
     
     static var BundleIdentifier: String { get }
@@ -67,5 +71,13 @@ protocol PlayerHelper: class {
     // MARK: Notification ID
     
     static var TrackChangedNotification: String { get }
+    
+}
+
+extension PlayerHelper {
+    
+    func execPlayPauseHandler() {
+        DispatchQueue.main.run({ self.playPauseHandler() }, after: 10)
+    }
     
 }

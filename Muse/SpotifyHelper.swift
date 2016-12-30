@@ -79,7 +79,7 @@ class SpotifyHelper: PlayerHelper {
     func togglePlayPause() {
         application.playpause!()
         
-        playPauseHandler()
+        execPlayPauseHandler()
     }
     
     func nextTrack() {

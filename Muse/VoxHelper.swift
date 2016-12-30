@@ -74,9 +74,7 @@ class VoxHelper: PlayerHelper {
     func togglePlayPause() {
         application.playpause!()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10), execute: {
-            self.playPauseHandler()
-        })
+        execPlayPauseHandler()
     }
     
     func nextTrack() {
