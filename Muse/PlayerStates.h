@@ -18,4 +18,17 @@ typedef enum {
     SpotifyEPlSStopped = 'kPSS'
 } SpotifyEPlS;
 
+/* Vox player states enum */
+typedef NS_ENUM(NSInteger, VoxEPlS) {
+    paused = 0,
+    playing = 1
+};
+
+/* Vox repeat states enum */
+typedef NS_ENUM(NSInteger, VoxERpS) {
+    none = 0,
+    repeatOne = 1,
+    repeatAll = 2
+};
+
 #endif /* PlayerStates_h */

@@ -20,9 +20,9 @@ import ScriptingBridge
     
     // Playback properties
     @objc optional var currentTime: Double { get }
-    @objc optional var playerState: Int { get }
+    @objc optional var playerState: VoxEPlS { get }
     @objc optional var playerVolume: Double { get }
-    @objc optional var repeatState: Int { get }
+    @objc optional var repeatState: VoxERpS { get }
     
     // Playback control functions
     @objc optional func playpause()
@@ -32,9 +32,9 @@ import ScriptingBridge
     
     // Playback properties - setters
     @objc optional func setCurrentTime(_ time: Double)
-    @objc optional func setPlayerState(_ state: Int)
+    @objc optional func setPlayerState(_ state: VoxEPlS)
     @objc optional func setPlayerVolume(_ volume: Double)
-    @objc optional func setRepeatState(_ state: Int)
+    @objc optional func setRepeatState(_ state: VoxERpS)
 }
 
 // Protocols will implemented and populated through here
@@ -86,7 +86,7 @@ class VoxHelper: PlayerHelper {
     // MARK: Playback status
     
     var isPlaying: Bool {
-        let isPlaying = application.playerState == 1
+        let isPlaying = application.playerState == .playing
         
         // Return current playback status ( R/O )
         return isPlaying
@@ -138,9 +138,12 @@ class VoxHelper: PlayerHelper {
         }
     }
     
+    // TODO: This is broken!
+    // Vox AppleScript command for getting and toggling
+    // repeat does not work (always returns 0, set does nothing)
     var repeating: Bool {
         set {
-            let repeating = newValue ? 1 : 0
+            let repeating: VoxERpS = newValue ? .repeatAll : .none
             
             // Toggle repeating on the player
             application.setRepeatState!(repeating)
@@ -154,7 +157,7 @@ class VoxHelper: PlayerHelper {
             
             // return current repeating status
             // 1: repeat one, 2: repeat all 
-            return (repeating == 1 || repeating == 2)
+            return (repeating == .repeatOne || repeating == .repeatAll)
         }
     }
     
