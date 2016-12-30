@@ -203,11 +203,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
         }
         
         // Callback for PlayerHelper's shuffe/repeat setters
-        helper.shuffleRepeatChangedHandler = { shuffleSelected, repeatSelected in
-            // We have to manually provide new values
-            // otherwise old ones keep coming back
-            self.setShuffleRepeatSegmentedView(shuffleSelected: shuffleSelected,
-                                               repeatSelected: repeatSelected)
+        helper.shuffleRepeatChangedHandler = {
+            // Update shuffleRepeat segmented view with new values
+            self.updateShuffleRepeatSegmentedView()
         }
         
         if let window = self.window, let delegate = self.delegate {

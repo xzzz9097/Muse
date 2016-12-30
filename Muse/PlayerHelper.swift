@@ -58,11 +58,7 @@ protocol PlayerHelper: class {
     
     var timeChangedHandler: (Bool, Double?) -> () { set get }
     
-    var shuffleRepeatChangedHandler: (Bool?, Bool?) -> () { set get }
-    
-    // MARK: Callback executors
-    
-    func execPlayPauseHandler()
+    var shuffleRepeatChangedHandler: () -> () { set get }
     
     // MARK: Application identifier
     
@@ -76,8 +72,18 @@ protocol PlayerHelper: class {
 
 extension PlayerHelper {
     
+    // MARK: Callback executors
+    
+    // The time (in millis) after which
+    // the instructions will run
+    var delayTime: Int { return 5 }
+    
     func execPlayPauseHandler() {
-        DispatchQueue.main.run({ self.playPauseHandler() }, after: 10)
+        DispatchQueue.main.run({ self.playPauseHandler() }, after: delayTime)
+    }
+    
+    func execShuffleRepeatChangedHandler() {
+        DispatchQueue.main.run({ self.shuffleRepeatChangedHandler() }, after: delayTime)
     }
     
 }

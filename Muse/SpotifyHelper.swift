@@ -157,7 +157,7 @@ class SpotifyHelper: PlayerHelper {
             application.setRepeating!(newValue)
             
             // Call the handler with new repeat value
-            shuffleRepeatChangedHandler(nil, newValue)
+            execShuffleRepeatChangedHandler()
         }
         
         get {
@@ -174,7 +174,7 @@ class SpotifyHelper: PlayerHelper {
             application.setShuffling!(newValue)
             
             // Call the handler with new shuffle value
-            shuffleRepeatChangedHandler(newValue, nil)
+            execShuffleRepeatChangedHandler()
         }
         
         get {
@@ -199,7 +199,7 @@ class SpotifyHelper: PlayerHelper {
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
-    var shuffleRepeatChangedHandler: (Bool?, Bool?) -> () = { _, _ in }
+    var shuffleRepeatChangedHandler: () -> () = { }
     
     // MARK: Application identifier
     
