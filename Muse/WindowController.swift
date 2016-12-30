@@ -177,6 +177,15 @@ class WindowController: NSWindowController, NSWindowDelegate {
     // MARK: Callbacks
     
     func registerCallbacks() {
+        // Callback for PlayerHelper's togglePlayPause()
+        helper.playPauseHandler = {
+            if !self.helper.doesSendPlayPauseNotification {
+                self.handlePlayPause()
+                
+                self.trackSongProgress()
+            }
+        }
+        
         // Callback for PlayerHelper's nextTrack() and previousTrack()
         helper.trackChangedHandler = {
             self.updateSongProgressSlider(with: 0)
@@ -331,23 +340,23 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: Notification handling
     
-    var PlaybackStateChangedNotification: String {
+    var TrackChangedNotification: String {
         // Use 'type' because it's a static var
-        return type(of: helper).PlaybackStateChangedNotification
+        return type(of: helper).TrackChangedNotification
     }
     
     func initNotificationWatcher() {
         // Attach the NotificationObserver for Spotify notifications
         DistributedNotificationCenter.default().addObserver(self,
                                        selector: #selector(hookNotification(notification:)),
-                                       name: NSNotification.Name(rawValue: PlaybackStateChangedNotification),
+                                       name: NSNotification.Name(rawValue: TrackChangedNotification),
                                        object: nil)
     }
     
     func deinitNotificationWatcher() {
         // Remove the NotificationObserver
         DistributedNotificationCenter.default().removeObserver(self,
-                                          name: NSNotification.Name(rawValue: PlaybackStateChangedNotification),
+                                          name: NSNotification.Name(rawValue: TrackChangedNotification),
                                           object: nil)
     }
     

@@ -13,7 +13,8 @@ class ViewController: NSViewController {
     
     // MARK: Helpers
     
-    let spotifyHelper = SpotifyHelper.shared
+    // TODO: Delete this helper and use WC's
+    let helper = VoxHelper.shared
     
     // MARK: Outlets
 
@@ -36,15 +37,15 @@ class ViewController: NSViewController {
     // MARK: Actions
     
     @IBAction func previousTrackButtonClicked(_ sender: Any) {
-        spotifyHelper.previousTrack()
+        helper.previousTrack()
     }
     
     @IBAction func togglePlayPauseButtonClicked(_ sender: Any) {
-        spotifyHelper.togglePlayPause()
+        helper.togglePlayPause()
     }
     
     @IBAction func nextTrackButtonClicked(_ sender: Any) {
-        spotifyHelper.nextTrack()
+        helper.nextTrack()
     }
     
     @IBAction func songProgressSliderValueChanged(_ sender: Any) {
@@ -54,12 +55,12 @@ class ViewController: NSViewController {
             
             if (currentEvent.type == .leftMouseDown) {
                 // Detected mouse down
-                spotifyHelper.scrub(touching: true)
+                helper.scrub(touching: true)
             }
             
             if (currentEvent.type == .leftMouseUp) {
                 // Detected mouse up
-                spotifyHelper.scrub(to: slider.doubleValue)
+                helper.scrub(to: slider.doubleValue)
             }
         }
     }
@@ -133,7 +134,7 @@ class ViewController: NSViewController {
     func updateButtons(for song: Song) {
         // Initialize playback control buttons
         previousTrackButton.image = .previous
-        togglePlayPauseButton.image = spotifyHelper.isPlaying ? .pause : .play
+        togglePlayPauseButton.image = helper.isPlaying ? .pause : .play
         nextTrackButton.image = .next
     }
     

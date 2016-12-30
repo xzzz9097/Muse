@@ -59,6 +59,10 @@ class SpotifyHelper: PlayerHelper {
         return application.isRunning
     }
     
+    // MARK: Player features
+    
+    let doesSendPlayPauseNotification = true
+    
     // MARK: Song data
     
     var song: Song {
@@ -74,6 +78,8 @@ class SpotifyHelper: PlayerHelper {
     
     func togglePlayPause() {
         application.playpause!()
+        
+        playPauseHandler()
     }
     
     func nextTrack() {
@@ -187,6 +193,8 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Callbacks
     
+    var playPauseHandler: () -> () = { }
+    
     var trackChangedHandler: () -> () = { }
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
@@ -199,6 +207,6 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Notification ID
     
-    static let PlaybackStateChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
+    static let TrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
     
 }

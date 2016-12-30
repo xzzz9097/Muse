@@ -56,6 +56,10 @@ class VoxHelper: PlayerHelper {
         return application.isRunning
     }
     
+    // MARK: Player features
+    
+    let doesSendPlayPauseNotification = false
+    
     // MARK: Song data
     
     var song: Song {
@@ -69,6 +73,10 @@ class VoxHelper: PlayerHelper {
     
     func togglePlayPause() {
         application.playpause!()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10), execute: {
+            self.playPauseHandler()
+        })
     }
     
     func nextTrack() {
@@ -185,6 +193,8 @@ class VoxHelper: PlayerHelper {
     
     // MARK: Callbacks
     
+    var playPauseHandler: () -> () = { }
+    
     var trackChangedHandler: () -> () = { }
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
@@ -197,6 +207,6 @@ class VoxHelper: PlayerHelper {
     
     // MARK: Notification ID
     
-    static let PlaybackStateChangedNotification = BundleIdentifier + ".trackChanged"
+    static let TrackChangedNotification = BundleIdentifier + ".trackChanged"
     
 }

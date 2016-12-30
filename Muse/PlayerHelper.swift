@@ -12,6 +12,10 @@ protocol PlayerHelper: class {
     
     var isAvailable: Bool { get }
     
+    // MARK: Player features
+    
+    var doesSendPlayPauseNotification: Bool { get }
+    
     // MARK: Song data
     
     var song: Song { get }
@@ -48,6 +52,8 @@ protocol PlayerHelper: class {
     
     // MARK: Callbacks
     
+    var playPauseHandler: () -> () { set get }
+    
     var trackChangedHandler: () -> () { set get }
     
     var timeChangedHandler: (Bool, Double?) -> () { set get }
@@ -60,6 +66,6 @@ protocol PlayerHelper: class {
     
     // MARK: Notification ID
     
-    static var PlaybackStateChangedNotification: String { get }
+    static var TrackChangedNotification: String { get }
     
 }
