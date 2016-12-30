@@ -6,7 +6,7 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
-protocol PlayerHelper: class {
+protocol PlayerHelper {
     
     // MARK: Player availability
     

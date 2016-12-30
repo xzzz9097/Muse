@@ -8,7 +8,7 @@
 
 import ScriptingBridge
 
-@objc fileprivate protocol VoxApplication: class {
+@objc fileprivate protocol VoxApplication {
     var isRunning: Bool { get }
     
     // Track properties
