@@ -19,7 +19,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: Helpers
     
-    var helper               = VoxHelper.shared
+    var helper: PlayerHelper = VoxHelper.shared
     let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
     let remoteCommandCenter  = MPRemoteCommandCenter.shared()
     
@@ -143,6 +143,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
             helper.shuffling = !helper.shuffling
         case kVK_ANSI_R:
             helper.repeating = !helper.repeating
+        case kVK_ANSI_1:
+            setPlayerHelper(to: .spotify)
+            return
+        case kVK_ANSI_2:
+            setPlayerHelper(to: .vox)
         default:
             super.keyDown(with: event)
         }
@@ -172,6 +177,30 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Takes to the player window
         player.activate(options: .activateIgnoringOtherApps)
+    }
+    
+    // MARK: Player loading
+    
+    func setPlayerHelper(to id: PlayerID) {
+        // Stop the old watcher
+        deinitNotificationWatcher()
+        
+        // Set the new player
+        switch id {
+        case .spotify:
+            helper = (playersDictionary[id] as? SpotifyHelper)!
+        default:
+            helper = (playersDictionary[id] as? VoxHelper)!
+        }
+        
+        // Initiate the new watcher
+        initNotificationWatcher()
+        
+        // Load the new song
+        handleNewSong()
+        
+        // Update timing
+        trackSongProgress()
     }
     
     // MARK: Callbacks

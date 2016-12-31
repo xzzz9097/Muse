@@ -124,7 +124,7 @@ class SpotifyHelper: PlayerHelper {
         return Double(trackDuration) / 1000
     }
     
-    func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
+    func scrub(to doubleValue: Double?, touching: Bool) {
         if !touching, let value = doubleValue {
             playbackPosition = value * trackDuration
         }

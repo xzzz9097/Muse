@@ -116,7 +116,7 @@ class VoxHelper: PlayerHelper {
         return trackDuration
     }
     
-    func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
+    func scrub(to doubleValue: Double?, touching: Bool) {
         if !touching, let value = doubleValue {
             playbackPosition = value * trackDuration
         }

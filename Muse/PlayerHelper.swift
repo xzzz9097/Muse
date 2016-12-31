@@ -88,6 +88,11 @@ extension PlayerHelper {
         return playerState == .playing
     }
     
+    func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
+        // Override this in extension to provide default args
+        self.scrub(to: doubleValue, touching: touching)
+    }
+    
     // MARK: App data
     
     var name: String? {

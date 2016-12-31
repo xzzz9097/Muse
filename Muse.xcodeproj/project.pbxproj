@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
+		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
 		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
 		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
 		0C9A60C71DE75DCC0051CDC6 /* Imageable+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extensions.swift"; sourceTree = "<group>"; };
+		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
 		0C676BD41DF443AD00B75164 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0C676BD61DF443C900B75164 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -232,6 +234,7 @@
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
 				0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */,
+				0C48DA411E181C0B0059BA69 /* PlayersManager.swift */,
 				0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */,
 				0CF8B7E31DF9772900CDD130 /* ImageView.swift */,
 				0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */,
@@ -485,6 +488,7 @@
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
+				0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */,
 				0CEAEB3F1E16624800BD68D5 /* DispatchQueue+Extensions.swift in Sources */,
 				0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */,
 				0CEAEB3D1E15A34400BD68D5 /* VoxHelper.swift in Sources */,
