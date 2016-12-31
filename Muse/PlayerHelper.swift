@@ -6,21 +6,7 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
-// Generic protocol for a player application
-// AppleScript object
-@objc protocol PlayerApplication {
-    var isRunning: Bool { get }
-}
-
 protocol PlayerHelper {
-    
-    // MARK: Application
-    
-    // A type that conforms to PlayerApplication
-    associatedtype Application: PlayerApplication
-    
-    // TODO: Make this private somehow
-    var application: Application { get }
     
     // MARK: Player features
     
@@ -86,8 +72,30 @@ extension PlayerHelper {
     
     var isAvailable: Bool {
         // Returns if the application is running
-        // ( implemented by SBApplication )
-        return application.isRunning
+        return NSRunningApplication
+            .runningApplications(withBundleIdentifier: Self.BundleIdentifier).count > 0
+    }
+    
+    // MARK: App data
+    
+    var name: String? {
+        // Returns the name of the application
+        // return application.name
+        return Bundle.init(identifier: Self.BundleIdentifier)?
+            .object(forInfoDictionaryKey: kCFBundleNameKey as String) as? String
+    }
+    
+    var path: String? {
+        // Returns the path of the player application
+        return NSWorkspace.shared()
+            .absolutePathForApplication(withBundleIdentifier: Self.BundleIdentifier)
+    }
+    
+    var icon: NSImage? {
+        guard let path = path else { return nil }
+        
+        // Returns the icon of the player application
+        return NSWorkspace.shared().icon(forFile: path)
     }
     
     // MARK: Callback executors

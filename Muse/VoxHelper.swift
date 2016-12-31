@@ -8,7 +8,7 @@
 
 import ScriptingBridge
 
-@objc protocol VoxApplication: PlayerApplication {
+@objc fileprivate protocol VoxApplication {
     // Track properties
     @objc optional var track: String { get }
     @objc optional var artist: String { get }
@@ -44,7 +44,7 @@ class VoxHelper: PlayerHelper {
     static let shared = VoxHelper()
     
     // The SBApplication object buond to the helper class
-    internal let application: VoxApplication = SBApplication.init(bundleIdentifier: BundleIdentifier)!
+    private let application: VoxApplication = SBApplication.init(bundleIdentifier: BundleIdentifier)!
     
     // MARK: Player features
     
