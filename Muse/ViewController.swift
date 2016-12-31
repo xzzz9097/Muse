@@ -13,8 +13,16 @@ class ViewController: NSViewController {
     
     // MARK: Helpers
     
-    // TODO: Delete this helper and use WC's
-    let helper = VoxHelper.shared
+    var helper: PlayerHelper {
+        guard let window = self.view.window, let windowController = window.windowController as? WindowController else {
+            // Default helper
+            return SpotifyHelper.shared
+        }
+        
+        // Returns helper from WindowController
+        // TODO: Move helper outside WC
+        return windowController.helper
+    }
     
     // MARK: Outlets
 
