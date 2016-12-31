@@ -6,11 +6,21 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
+// Generic protocol for a player application
+// AppleScript object
+@objc protocol PlayerApplication {
+    var isRunning: Bool { get }
+}
+
 protocol PlayerHelper {
     
-    // MARK: Player availability
+    // MARK: Application
     
-    var isAvailable: Bool { get }
+    // A type that conforms to PlayerApplication
+    associatedtype Application: PlayerApplication
+    
+    // TODO: Make this private somehow
+    var application: Application { get }
     
     // MARK: Player features
     
@@ -71,6 +81,14 @@ protocol PlayerHelper {
 }
 
 extension PlayerHelper {
+    
+    // MARK: Player availability
+    
+    var isAvailable: Bool {
+        // Returns if the application is running
+        // ( implemented by SBApplication )
+        return application.isRunning
+    }
     
     // MARK: Callback executors
     
