@@ -6,6 +6,11 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
+enum PlayerState {
+    // Enum for the three possible player states
+    case stopped, paused, playing
+}
+
 protocol PlayerHelper {
     
     // MARK: Player features
@@ -26,7 +31,7 @@ protocol PlayerHelper {
     
     // MARK: Playback status
     
-    var isPlaying: Bool { get }
+    var playerState: PlayerState { get }
     
     var playbackPosition: Double { set get }
     
@@ -74,6 +79,13 @@ extension PlayerHelper {
         // Returns if the application is running
         return NSRunningApplication
             .runningApplications(withBundleIdentifier: Self.BundleIdentifier).count > 0
+    }
+    
+    // MARK: Playback status
+    
+    var isPlaying: Bool {
+        // Returns if the player is playing a track
+        return playerState == .playing
     }
     
     // MARK: App data

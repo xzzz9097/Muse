@@ -20,6 +20,7 @@ typedef enum {
 
 /* Vox player states enum */
 typedef NS_ENUM(NSInteger, VoxEPlS) {
+    stopped = -1,
     paused = 0,
     playing = 1
 };

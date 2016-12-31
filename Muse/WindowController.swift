@@ -386,7 +386,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         trackSongProgress()
     }
     
-    func handleClosing() {
+    func resetSong() {
         // Set placeholder value
         // TODO: update artwork with some blank
         self.song = Song()
@@ -398,6 +398,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Reset song progress slider
         updateSongProgressSlider(with: 0)
+    }
+    
+    func handleClosing() {
+        resetSong()
     }
     
     func handleNewSong() {
@@ -472,6 +476,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func syncSongProgressSlider() {
+        guard helper.playerState != .stopped else {
+            // Reset song data if player is stopped
+            resetSong()
+            return
+        }
+        
         // Convenience call for updating the progress slider during playback
         updateSongProgressSlider()
     }
