@@ -12,14 +12,8 @@ enum PlayerID {
     case vox
 }
 
-typealias PlayersDictionary = [PlayerID: PlayerHelper]
-
-// The players dictionary
-let playersDictionary: PlayersDictionary = [.spotify: SpotifyHelper.shared,
-                                            .vox: VoxHelper.shared]
-
 // Extend the dictionary with some useful functions
-extension Dictionary where Value: PlayerHelper {
+/* extension Dictionary where Value: PlayerHelper {
     
     // MARK: Extended functions
     
@@ -33,6 +27,49 @@ extension Dictionary where Value: PlayerHelper {
         
         // Return Spotify helper by default
         return SpotifyHelper.shared
+    }
+    
+} */
+
+class PlayersManager {
+    
+    // MARK: Constructors
+    
+    static let shared = PlayersManager()
+    
+    private init() { }
+    
+    // MARK: Dictionary
+    
+    typealias PlayersDictionary = [PlayerID: PlayerHelper]
+    
+    // The players dictionary
+    private let playersDictionary: PlayersDictionary = [.spotify: SpotifyHelper.shared,
+                                                        .vox: VoxHelper.shared]
+    
+    // Interaction functions
+    
+    func get(_ id: PlayerID) -> PlayerHelper {
+        // Return a requested helper
+        return playersDictionary[id]!
+    }
+    
+    // MARK: Player vars
+    
+    var designatedHelper: PlayerHelper {
+        // Find the first player that's runninng and playing
+        for (_, helper) in playersDictionary {
+            if helper.isAvailable && helper.isPlaying {
+                return helper
+            }
+        }
+        
+        // Return default helper otherwise
+        return defaultHelper
+    }
+    
+    var defaultHelper: PlayerHelper {
+        return playersDictionary[.spotify]!
     }
     
 }

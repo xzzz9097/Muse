@@ -16,7 +16,7 @@ class ViewController: NSViewController {
     var helper: PlayerHelper {
         guard let window = self.view.window, let windowController = window.windowController as? WindowController else {
             // Default helper
-            return SpotifyHelper.shared
+            return PlayersManager.shared.defaultHelper
         }
         
         // Returns helper from WindowController

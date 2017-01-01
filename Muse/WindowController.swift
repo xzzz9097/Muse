@@ -18,10 +18,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
     let delegate = NSApplication.shared().delegate as? AppDelegate
     
     // MARK: Helpers
-    
-    var helper: PlayerHelper = VoxHelper.shared
-    let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
-    let remoteCommandCenter  = MPRemoteCommandCenter.shared()
+
+    let manager: PlayersManager = PlayersManager.shared
+    var helper: PlayerHelper    = PlayersManager.shared.designatedHelper
+    let nowPlayingInfoCenter    = MPNowPlayingInfoCenter.default()
+    let remoteCommandCenter     = MPRemoteCommandCenter.shared()
     
     // MARK: Runtime properties
     
@@ -188,9 +189,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // Set the new player
         switch id {
         case .spotify:
-            helper = (playersDictionary[id] as? SpotifyHelper)!
-        default:
-            helper = (playersDictionary[id] as? VoxHelper)!
+            helper = (manager.get(id) as? SpotifyHelper)!
+        case .vox:
+            helper = (manager.get(id) as? VoxHelper)!
         }
         
         // Initiate the new watcher
