@@ -12,6 +12,9 @@ enum PlayerID {
     case vox
 }
 
+// Default player's id (Spotify)
+let defaultPlayerID: PlayerID = .spotify
+
 class PlayersManager {
     
     // MARK: Constructors
@@ -50,7 +53,8 @@ class PlayersManager {
     }
     
     var defaultHelper: PlayerHelper {
-        return playersDictionary[.spotify]!
+        // Returns the default player
+        return get(defaultPlayerID)
     }
     
 }
