@@ -187,12 +187,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         deinitNotificationWatcher()
         
         // Set the new player
-        switch id {
-        case .spotify:
-            helper = (manager.get(id) as? SpotifyHelper)!
-        case .vox:
-            helper = (manager.get(id) as? VoxHelper)!
-        }
+        helper = manager.get(id)
+        
+        // Register again the callbacks
+        registerCallbacks()
         
         // Initiate the new watcher
         initNotificationWatcher()
