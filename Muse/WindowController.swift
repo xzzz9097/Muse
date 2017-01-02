@@ -483,6 +483,16 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func updateSongProgressSlider(with position: Double = -1) {
         if !isSliding {
+            if !helper.doesSendPlayPauseNotification {
+                // If the player does not send a play/pause notification
+                // we must manually check if state has changed
+                // This means the timer cannot be stopped though...
+                // TODO: find a better way to do this
+                if isUIPlaying != helper.isPlaying {
+                    handlePlayPause()
+                }
+            }
+            
             if helper.playbackPosition > self.song.duration && self.song.duration == 0 {
                 // Hotfix for occasional song loading errors
                 // TODO: Check if this is actually working
@@ -611,6 +621,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 viewController.updateFullSongArtworkView(with: image)
             }
         }
+    }
+    
+    var isUIPlaying: Bool {
+        // Simple trick to know whether the UI is in 'play' mode
+        return self.controlsSegmentedView.image(forSegment: 1) == .pause
     }
     
     func updateViewUI() {
