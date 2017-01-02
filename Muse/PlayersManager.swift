@@ -31,7 +31,7 @@ class PlayersManager {
     private let playersDictionary: PlayersDictionary = [.spotify: SpotifyHelper.shared,
                                                         .vox: VoxHelper.shared]
     
-    // Interaction functions
+    // MARK: Interaction functions
     
     func get(_ id: PlayerID) -> PlayerHelper {
         // Return a requested helper
