@@ -12,21 +12,50 @@ import Cocoa
 
 class SliderCell: NSSliderCell {
     
+    // MARK: Properties
+    // These require resreshing after being set
+    // through calling needsDisplay on the control view
+    // aka 'NSSliderView'
+    
     // The NSImage resource for the knob
-    var knobImage: NSImage!
+    var knobImage: NSImage! {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
     
     // The knob's visibility
-    var knobVisible: Bool = true
+    var knobVisible: Bool = true {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
     
     // Colors
-    var backgroundColor = NSColor.lightGray.withAlphaComponent(0.5)
-    var highlightColor  = NSColor.darkGray
+    var backgroundColor = NSColor.lightGray.withAlphaComponent(0.5) {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    var highlightColor  = NSColor.darkGray {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
     
     // Roundness radius
-    var radius: CGFloat = 1
+    var radius: CGFloat = 1 {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
     
     // Height
-    var height: CGFloat = 2.5
+    var height: CGFloat = 2.5 {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
     
     /**
      Draw the bars, setting custom height, colors and radius
