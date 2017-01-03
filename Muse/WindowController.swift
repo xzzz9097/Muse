@@ -633,7 +633,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         viewController.updateTitleAlbumArtistView(for: self.song)
         
-        viewController.updateButtons(for: self.song)
+        viewController.updateButtons()
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import QuartzCore
 
 @available(OSX 10.12.2, *)
 class ViewController: NSViewController {
@@ -79,10 +80,10 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         titleAlbumArtistSuperview = titleLabelView.superview
-        
         titleAlbumArtistSuperview.wantsLayer = true
         
         controlsSuperview = togglePlayPauseButton.superview
+        controlsSuperview.wantsLayer = true
     }
     
     override func viewWillAppear() {
@@ -106,9 +107,6 @@ class ViewController: NSViewController {
         
         // Set background color
         layer.backgroundColor = NSColor.controlColor.cgColor
-        
-        // Set transparency
-        layer.opacity = 0.97
         
         // Create shadow
         superview.shadow = NSShadow()
@@ -139,7 +137,7 @@ class ViewController: NSViewController {
     
     // MARK: UI refresh
     
-    func updateButtons(for song: Song) {
+    func updateButtons() {
         // Initialize playback control buttons
         previousTrackButton.image = .previous
         togglePlayPauseButton.image = helper.isPlaying ? .pause : .play
@@ -154,6 +152,30 @@ class ViewController: NSViewController {
         } else if let image = object as? NSImage {
             fullSongArtworkView.image = image
         }
+        
+        guard let image = fullSongArtworkView.image else { return }
+        
+        // Update the colors with a completion handler
+        // This avoids blocking the main UI thread
+        image.getColors { colors in
+            self.colorViews(with: colors)
+        }
+    }
+    
+    func colorViews(with colors: ImageColors) {
+        // TODO: Animate this
+        
+        // Blend the background color with 'lightGray'
+        // This prevents view from getting too dark
+        let backgroundColor = colors.background.blended(withFraction: 0.6, of: .lightGray)?.cgColor
+        
+        // Set the background colors on the superviews
+        titleAlbumArtistSuperview.layer?.backgroundColor = backgroundColor
+        controlsSuperview.layer?.backgroundColor = backgroundColor
+        
+        // Set the text colors
+        titleLabelView.textColor = colors.primary
+        albumArtistLabelView.textColor = colors.secondary
     }
     
     func updateTitleAlbumArtistView(for song: Song) {
