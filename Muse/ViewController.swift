@@ -167,15 +167,20 @@ class ViewController: NSViewController {
         
         // Blend the background color with 'lightGray'
         // This prevents view from getting too dark
-        let backgroundColor = colors.background.blended(withFraction: 0.6, of: .lightGray)?.cgColor
+        let backgroundColor = colors.background.blended(withFraction: 0.5, of: .lightGray)?.cgColor
+        let primaryColor = colors.primary.blended(withFraction: 0.5, of: .lightGray)
+        let secondaryColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
         
         // Set the background colors on the superviews
         titleAlbumArtistSuperview.layer?.backgroundColor = backgroundColor
         controlsSuperview.layer?.backgroundColor = backgroundColor
         
         // Set the text colors
-        titleLabelView.textColor = colors.primary
-        albumArtistLabelView.textColor = colors.secondary
+        titleLabelView.textColor = primaryColor
+        albumArtistLabelView.textColor = secondaryColor
+        
+        // Set color on the slider too
+        if let cell = songProgressSlider.cell as? SliderCell { cell.highlightColor = secondaryColor! }
     }
     
     func updateTitleAlbumArtistView(for song: Song) {

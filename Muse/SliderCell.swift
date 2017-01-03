@@ -18,7 +18,43 @@ class SliderCell: NSSliderCell {
     // The knob's visibility
     var knobVisible: Bool = true
     
-    /*
+    // Colors
+    var backgroundColor = NSColor.lightGray.withAlphaComponent(0.5)
+    var highlightColor  = NSColor.darkGray
+    
+    // Roundness radius
+    var radius: CGFloat = 1
+    
+    // Height
+    var height: CGFloat = 2.5
+    
+    /**
+     Draw the bars, setting custom height, colors and radius
+     */
+    override func drawBar(inside rect: NSRect, flipped: Bool) {
+        var backgroundRect = rect
+        var leftRect       = rect
+        
+        // Apply the desired heigt
+        backgroundRect.size.height = height
+        leftRect.size.height       = height
+        
+        leftRect.size.width *= relativeKnobPosition()
+        
+        // Create the drawing areas
+        let backgroundColorArea = NSBezierPath(roundedRect: backgroundRect, xRadius: radius, yRadius: radius)
+        let highlightColorArea  = NSBezierPath(roundedRect: leftRect, xRadius: radius, yRadius: radius)
+        
+        // Fill the background area
+        backgroundColor.setFill()
+        backgroundColorArea.fill()
+        
+        // Fill the active area
+        highlightColor.setFill()
+        highlightColorArea.fill()
+    }
+    
+    /**
      Draw the knob
      */
     override func drawKnob(_ knobRect: NSRect) {
@@ -37,7 +73,7 @@ class SliderCell: NSSliderCell {
         image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
     }
     
-    /*
+    /**
      Build the rect for our knob image
      */
     override func knobRect(flipped: Bool) -> NSRect {
@@ -58,7 +94,7 @@ class SliderCell: NSSliderCell {
         return rect
     }
     
-    /*
+    /**
      Return current knob position %
      */
     func relativeKnobPosition() -> CGFloat {
