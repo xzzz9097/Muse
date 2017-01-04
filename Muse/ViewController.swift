@@ -180,7 +180,10 @@ class ViewController: NSViewController {
         albumArtistLabelView.textColor = secondaryColor
         
         // Set color on the slider too
-        if let cell = songProgressSlider.cell as? SliderCell { cell.highlightColor = secondaryColor! }
+        if let cell = songProgressSlider.cell as? SliderCell {
+            cell.backgroundColor = primaryColor!
+            cell.highlightColor = secondaryColor!
+        }
     }
     
     func updateTitleAlbumArtistView(for song: Song) {
