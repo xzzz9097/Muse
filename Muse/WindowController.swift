@@ -450,6 +450,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // Play/pause notification
         updateControlsAfterPlayPause()
         
+        // Update menuBar title
+        updateMenuBar()
+        
         // Set play/pause and update elapsed time on the TouchBar
         togglePlaybackState()
         updateNowPlayingInfoElapsedPlaybackTime(with: helper.playbackPosition)
