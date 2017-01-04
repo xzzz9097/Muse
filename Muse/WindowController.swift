@@ -446,7 +446,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func handlePlayPause() {
         // Play/pause notification
-        updateAfterNotification(updateNowPlaying: false)
+        updateControlsAfterPlayPause()
         
         // Set play/pause and update elapsed time on the TouchBar
         togglePlaybackState()
@@ -522,6 +522,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Convenience call for updating the progress slider during playback
         updateSongProgressSlider()
+    }
+    
+    func updateControlsAfterPlayPause() {
+        self.controlsSegmentedView.setImage(
+            helper.isPlaying ? .pause : .play,
+            forSegment: 1
+        )
+        
+        if let viewController = self.contentViewController as? ViewController {
+            viewController.updateButtons()
+        }
     }
     
     func setShuffleRepeatSegmentedView(shuffleSelected: Bool?, repeatSelected: Bool?) {
