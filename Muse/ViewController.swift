@@ -12,6 +12,14 @@ import QuartzCore
 @available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
+    // MARK: Properties
+    
+    // Button images
+    var previousImage = NSImage.previous
+    var playImage     = NSImage.play
+    var pauseImage    = NSImage.pause
+    var nextImage     = NSImage.next
+    
     // MARK: Helpers
     
     var helper: PlayerHelper {
@@ -139,9 +147,9 @@ class ViewController: NSViewController {
     
     func updateButtons() {
         // Initialize playback control buttons
-        previousTrackButton.image = .previous
-        togglePlayPauseButton.image = helper.isPlaying ? .pause : .play
-        nextTrackButton.image = .next
+        previousTrackButton.image = previousImage
+        togglePlayPauseButton.image = helper.isPlaying ? pauseImage : playImage
+        nextTrackButton.image = nextImage
     }
     
     func updateFullSongArtworkView(with object: Any?) {
@@ -162,12 +170,22 @@ class ViewController: NSViewController {
         }
     }
     
+    func colorButtonImages(with color: NSColor) {
+        // Update button images with new color
+        previousImage = NSImage.previous?.tint(with: color)
+        playImage     = NSImage.play?.tint(with: color)
+        pauseImage    = NSImage.pause?.tint(with: color)
+        nextImage     = NSImage.next?.tint(with: color)
+    }
+    
     func colorViews(with colors: ImageColors) {
         // Blend the background color with 'lightGray'
         // This prevents view from getting too dark
         let backgroundColor = colors.background.blended(withFraction: 0.5, of: .lightGray)?.cgColor
         let primaryColor = colors.primary.blended(withFraction: 0.5, of: .lightGray)
         let secondaryColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
+        
+        let buttonColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
         
         animateColorChange(on: titleAlbumArtistSuperview.layer!, to: backgroundColor!)
         animateColorChange(on: controlsSuperview.layer!, to: backgroundColor!)
@@ -181,6 +199,10 @@ class ViewController: NSViewController {
             cell.backgroundColor = primaryColor!
             cell.highlightColor = secondaryColor!
         }
+        
+        // Set the color on the playback buttons
+        colorButtonImages(with: buttonColor!)
+        updateButtons()
     }
     
     func animateColorChange(on layer: CALayer, to value: CGColor) {
