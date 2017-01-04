@@ -337,6 +337,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
         cell.knobImage = .playhead
+        cell.height    = 20
+        cell.radius    = 2.5
     }
     
     func prepareSoundSlider() {
