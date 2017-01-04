@@ -68,6 +68,10 @@ class SliderCell: NSSliderCell {
         backgroundRect.size.height = height
         leftRect.size.height       = height
         
+        // Center the slider
+        backgroundRect.origin.y = rect.midY - height / 2.0
+        leftRect.origin.y       = backgroundRect.origin.y
+        
         leftRect.size.width *= relativeKnobPosition()
         
         // Create the drawing areas
