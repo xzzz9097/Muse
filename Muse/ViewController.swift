@@ -153,11 +153,11 @@ class ViewController: NSViewController {
             fullSongArtworkView.image = image
         }
         
-        guard let image = fullSongArtworkView.image else { return }
-        
         // Update the colors with a completion handler
         // This avoids blocking the main UI thread
-        image.getColors { colors in
+        fullSongArtworkView.image?.getColors(scaleDownSize: NSMakeSize(25, 25)) { colors in
+            // We also set an aggressive scaling size
+            // to optimize performace and memory usage
             self.colorViews(with: colors)
         }
     }
