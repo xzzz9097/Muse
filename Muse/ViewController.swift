@@ -187,8 +187,11 @@ class ViewController: NSViewController {
         
         let buttonColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
         
-        animateColorChange(on: titleAlbumArtistSuperview.layer!, to: backgroundColor!)
-        animateColorChange(on: controlsSuperview.layer!, to: backgroundColor!)
+        // Set the superview background color and animate it
+        titleAlbumArtistSuperview.layer?.animateChange(to: backgroundColor!,
+                                                       for: CALayer.kBackgroundColorPath)
+        controlsSuperview.layer?.animateChange(to: backgroundColor!,
+                                               for: CALayer.kBackgroundColorPath)
         
         // Set the text colors
         titleLabelView.textColor = primaryColor
@@ -203,24 +206,6 @@ class ViewController: NSViewController {
         // Set the color on the playback buttons
         colorButtonImages(with: buttonColor!)
         updateButtons()
-    }
-    
-    func animateColorChange(on layer: CALayer, to value: CGColor) {
-        let kBackgroundColorAnimation = "backgroundColor"
-        
-        let animation = CABasicAnimation(keyPath: kBackgroundColorAnimation)
-        
-        CATransaction.begin()
-        CATransaction.setCompletionBlock {
-            layer.backgroundColor = value
-        }
-        
-        animation.fromValue = layer.backgroundColor
-        animation.toValue   = value
-        
-        layer.add(animation, forKey: kBackgroundColorAnimation)
-        
-        CATransaction.commit()
     }
     
     func updateTitleAlbumArtistView(for song: Song) {
