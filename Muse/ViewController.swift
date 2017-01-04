@@ -163,17 +163,14 @@ class ViewController: NSViewController {
     }
     
     func colorViews(with colors: ImageColors) {
-        // TODO: Animate this
-        
         // Blend the background color with 'lightGray'
         // This prevents view from getting too dark
         let backgroundColor = colors.background.blended(withFraction: 0.5, of: .lightGray)?.cgColor
         let primaryColor = colors.primary.blended(withFraction: 0.5, of: .lightGray)
         let secondaryColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
         
-        // Set the background colors on the superviews
-        titleAlbumArtistSuperview.layer?.backgroundColor = backgroundColor
-        controlsSuperview.layer?.backgroundColor = backgroundColor
+        animateColorChange(on: titleAlbumArtistSuperview.layer!, to: backgroundColor!)
+        animateColorChange(on: controlsSuperview.layer!, to: backgroundColor!)
         
         // Set the text colors
         titleLabelView.textColor = primaryColor
@@ -184,6 +181,24 @@ class ViewController: NSViewController {
             cell.backgroundColor = primaryColor!
             cell.highlightColor = secondaryColor!
         }
+    }
+    
+    func animateColorChange(on layer: CALayer, to value: CGColor) {
+        let kBackgroundColorAnimation = "backgroundColor"
+        
+        let animation = CABasicAnimation(keyPath: kBackgroundColorAnimation)
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            layer.backgroundColor = value
+        }
+        
+        animation.fromValue = layer.backgroundColor
+        animation.toValue   = value
+        
+        layer.add(animation, forKey: kBackgroundColorAnimation)
+        
+        CATransaction.commit()
     }
     
     func updateTitleAlbumArtistView(for song: Song) {
