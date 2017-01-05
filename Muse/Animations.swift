@@ -22,6 +22,10 @@ extension CALayer {
     func animateChange(to value: Any?, for key: String) {
         let animation = CABasicAnimation(keyPath: key)
         
+        // Lock the transaction
+        // Should avoid layer corruption
+        CATransaction.lock()
+        
         CATransaction.begin()
         
         // Callback for actually setting the new value
@@ -32,9 +36,15 @@ extension CALayer {
         
         animation.toValue = value
         
+        // Also to avoid flickering
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = kCAFillModeForwards
+        
         self.add(animation, forKey: key)
         
         CATransaction.commit()
+        
+        CATransaction.unlock()
     }
     
 }
