@@ -27,14 +27,12 @@ class PCCountedColor {
 
 extension CGColor {
     var components: [CGFloat] {
-        get {
-            var red = CGFloat()
-            var green = CGFloat()
-            var blue = CGFloat()
-            var alpha = CGFloat()
-            NSColor(cgColor: self)?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-            return [red,green,blue,alpha]
-        }
+        var red = CGFloat()
+        var green = CGFloat()
+        var blue = CGFloat()
+        var alpha = CGFloat()
+        NSColor(cgColor: self)?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return [red,green,blue,alpha]
     }
 }
 
@@ -109,7 +107,7 @@ extension NSImage {
         return maskRef!
     }
     
-    private func resizeForImageColors(newSize: CGSize) -> NSImage {
+    func resized(to newSize: CGSize) -> NSImage {
         let temp = NSImage(size: newSize)
         
         temp.lockFocus()
@@ -164,7 +162,7 @@ extension NSImage {
         
         var result = ImageColors()
         
-        let image = self.resizeForImageColors(newSize: scaleDownSize)
+        let image = self.resized(to: scaleDownSize)
         
         let cgImage = image.cgImage
         let width = cgImage.width

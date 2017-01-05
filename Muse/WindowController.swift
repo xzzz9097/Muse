@@ -46,8 +46,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
 
     // MARK: Outlets
     
-    @IBOutlet weak var songArtworkView: NSButton!
-    @IBOutlet weak var songTitleLabel: NSTextField!
+    @IBOutlet weak var songArtworkTitleButton: NSButton!
     @IBOutlet weak var songProgressSlider: NSSlider!
     
     @IBOutlet weak var controlsSegmentedView: NSSegmentedControl!
@@ -120,7 +119,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         updateSoundPopoverButton(for: helper.volume)
     }
     
-    @IBAction func songArtworkViewClicked(_ sender: Any) {
+    @IBAction func songArtworkTitleButtonClicked(_ sender: Any) {
         // Jump to player when the artwork on the TouchBar is tapped
         showPlayer()
     }
@@ -255,7 +254,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         prepareButtons()
         prepareSongProgressSlider()
-        prepareImageView()
+        prepareSongArtworkTitleButton()
         
         // Register callbacks for PlayerHelper
         registerCallbacks()
@@ -344,6 +343,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         cell.highlightColor  = cell.backgroundColor
     }
     
+    func prepareSongArtworkTitleButton() {
+        self.songArtworkTitleButton.imagePosition = .imageLeading
+    }
+    
     func prepareSoundSlider() {
         let volume = helper.volume
         
@@ -361,12 +364,6 @@ class WindowController: NSWindowController, NSWindowDelegate {
         shuffleRepeatSegmentedView.setImage(.repeating, forSegment: 1)
         
         updateShuffleRepeatSegmentedView()
-    }
-    
-    func prepareImageView() {
-        self.songArtworkView.wantsLayer = true
-        self.songArtworkView.layer?.cornerRadius = 4.0
-        self.songArtworkView.layer?.masksToBounds = true
     }
     
     // MARK: Notification handling
@@ -617,7 +614,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func updateTouchBarUI() {
-        self.songTitleLabel.stringValue = self.song.name
+        self.songArtworkTitleButton.title = self.song.name.truncate(at: 15)
+        self.songArtworkTitleButton.sizeToFit()
         
         self.controlsSegmentedView.setImage(
             helper.isPlaying ? .pause : .play,
@@ -630,15 +628,29 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
-            self.songArtworkView.loadImage(from: artworkURL, callback: { image in
+            self.songArtworkTitleButton.loadImage(from: artworkURL, callback: { image in
+                self.updateArtworkColorAndSize()
+                
                 viewController.updateFullSongArtworkView(with: image)
             })
         } else if let image = helper.artwork() as? NSImage {
-            self.songArtworkView.image = image
+            updateArtworkColorAndSize()
             
             if let viewController = self.contentViewController as? ViewController {
                 viewController.updateFullSongArtworkView(with: image)
             }
+        }
+    }
+    
+    func updateArtworkColorAndSize() {
+        // Resize image to fit TouchBar view
+        // TODO: Move this elsewhere
+        self.songArtworkTitleButton.image = self.songArtworkTitleButton.image?.resized(to: NSMakeSize(30, 30))
+        
+        // Set bezel color
+        // TODO: Share this colors with ViewController
+        self.songArtworkTitleButton.image?.getColors(scaleDownSize: NSMakeSize(10, 10)) { colors in
+            self.songArtworkTitleButton.bezelColor = colors.primary.blended(withFraction: 0.75, of: .darkGray)
         }
     }
     
