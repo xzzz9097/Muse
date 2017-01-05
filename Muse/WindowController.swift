@@ -648,7 +648,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // Set bezel color
         // TODO: Share this colors with ViewController
         self.songArtworkTitleButton.image?.getColors(scaleDownSize: NSMakeSize(10, 10)) { colors in
-            self.songArtworkTitleButton.bezelColor = colors.primary.blended(withFraction: 0.75, of: .darkGray)
+            self.songArtworkTitleButton.bezelColor = colors.primary.blended(withFraction: 0.5, of: .darkGray)
         }
     }
     
