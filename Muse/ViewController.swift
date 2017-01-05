@@ -185,7 +185,7 @@ class ViewController: NSViewController {
         let primaryColor = colors.primary.blended(withFraction: 0.5, of: .lightGray)
         let secondaryColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
         
-        let buttonColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
+        let buttonColor = colors.primary.blended(withFraction: 0.5, of: .lightGray)
         
         // Set the superview background color and animate it
         titleAlbumArtistSuperview.layer?.animateChange(to: backgroundColor!,
