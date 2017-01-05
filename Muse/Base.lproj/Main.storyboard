@@ -146,7 +146,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="WkF-64-hT4"/>
                                                 </constraints>
-                                                <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="9KY-6x-rc5" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
+                                                <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="9KY-6x-rc5" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                                 <connections>
                                                     <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="CpU-N9-Xhx"/>
                                                 </connections>
