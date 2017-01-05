@@ -636,9 +636,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         } else if let image = helper.artwork() as? NSImage {
             updateArtworkColorAndSize()
             
-            if let viewController = self.contentViewController as? ViewController {
-                viewController.updateFullSongArtworkView(with: image)
-            }
+            viewController.updateFullSongArtworkView(with: image)
         }
     }
     
