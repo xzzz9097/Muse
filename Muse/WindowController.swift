@@ -633,25 +633,25 @@ class WindowController: NSWindowController, NSWindowDelegate {
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
             self.songArtworkTitleButton.loadImage(from: artworkURL, callback: { image in
-                self.updateArtworkColorAndSize()
+                self.updateArtworkColorAndSize(for: image)
                 
                 viewController.updateFullSongArtworkView(with: image)
             })
         } else if let image = helper.artwork() as? NSImage {
-            updateArtworkColorAndSize()
+            updateArtworkColorAndSize(for: image)
             
             viewController.updateFullSongArtworkView(with: image)
         }
     }
     
-    func updateArtworkColorAndSize() {
+    func updateArtworkColorAndSize(for image: NSImage) {
         // Resize image to fit TouchBar view
         // TODO: Move this elsewhere
-        self.songArtworkTitleButton.image = self.songArtworkTitleButton.image?.resized(to: NSMakeSize(30, 30))
+        self.songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
         
         // Set bezel color
         // TODO: Share this colors with ViewController
-        self.songArtworkTitleButton.image?.getColors(scaleDownSize: NSMakeSize(10, 10)) { colors in
+        image.getColors(scaleDownSize: NSMakeSize(10, 10)) { colors in
             self.songArtworkTitleButton.bezelColor = colors.primary.blended(withFraction: 0.5, of: .darkGray)
         }
     }
