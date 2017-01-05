@@ -103,12 +103,12 @@
                         <touchBarItems>
                             <touchBarItem id="qKs-z8-kR4">
                                 <viewController key="viewController" id="953-Nr-7qT">
-                                    <button key="view" verticalHuggingPriority="750" imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e9d-da-gdW">
+                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e9d-da-gdW">
                                         <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="180" id="zdu-sg-Cu4"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="185" id="zdu-sg-Cu4"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gQP-mU-VMl">
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gQP-mU-VMl" customClass="ButtonCell" customModule="Muse" customModuleProvider="target">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="15"/>
                                         </buttonCell>
