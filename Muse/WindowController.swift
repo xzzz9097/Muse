@@ -182,17 +182,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
     // MARK: Player loading
     
     func setPlayerHelper(to id: PlayerID) {
-        // Stop the old watcher
-        deinitNotificationWatcher()
-        
         // Set the new player
         helper = manager.get(id)
         
         // Register again the callbacks
         registerCallbacks()
-        
-        // Initiate the new watcher
-        initNotificationWatcher()
         
         // Load the new song
         handleNewSong()
@@ -247,7 +241,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         super.windowDidLoad()
         
         // Initialize our watcher
-        initNotificationWatcher()
+        initNotificationWatchers()
         
         // Set custom window attributes
         prepareWindow()
@@ -368,24 +362,28 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: Notification handling
     
-    var TrackChangedNotification: String {
+    var TrackChangedNotification: NSNotification.Name {
         // Use 'type' because it's a static var
-        return type(of: helper).TrackChangedNotification
+        return NSNotification.Name(rawValue: type(of: helper).TrackChangedNotification)
     }
     
-    func initNotificationWatcher() {
-        // Attach the NotificationObserver for Spotify notifications
-        DistributedNotificationCenter.default().addObserver(self,
-                                       selector: #selector(hookNotification(notification:)),
-                                       name: NSNotification.Name(rawValue: TrackChangedNotification),
-                                       object: nil)
+    func initNotificationWatchers() {
+        for (_, notification) in manager.TrackChangedNotifications {
+            // Attach the NotificationObserver for Spotify notifications
+            DistributedNotificationCenter.default().addObserver(self,
+                                                                selector: #selector(hookNotification(notification:)),
+                                                                name: notification,
+                                                                object: nil)
+        }
     }
     
-    func deinitNotificationWatcher() {
-        // Remove the NotificationObserver
-        DistributedNotificationCenter.default().removeObserver(self,
-                                          name: NSNotification.Name(rawValue: TrackChangedNotification),
-                                          object: nil)
+    func deinitNotificationWatchers() {
+        for (_, notification) in manager.TrackChangedNotifications {
+            // Remove the NotificationObserver
+            DistributedNotificationCenter.default().removeObserver(self,
+                                                                   name: notification,
+                                                                   object: nil)
+        }
     }
     
     func isClosing(with notification: NSNotification) -> Bool {
@@ -400,6 +398,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func hookNotification(notification: NSNotification) {
+        if notification.name != TrackChangedNotification {
+            // Switch to a new helper
+            // If the notification is sent from another player
+            setPlayerHelper(to: manager.designatedHelperID)
+        }
+        
         // When Spotify is quitted, it sends an NSNotification
         // with only PlayerStateStopped, that causes it to 
         // reopen for being polled by Muse
@@ -573,7 +577,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func windowWillClose(_ notification: Notification) {
         // Remove the observer when window is closed
-        deinitNotificationWatcher()
+        deinitNotificationWatchers()
         
         // Invalidate progress timer
         deinitSongTrackingTimer()

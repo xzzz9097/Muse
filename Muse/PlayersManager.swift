@@ -23,38 +23,55 @@ class PlayersManager {
     
     private init() { }
     
-    // MARK: Dictionary
+    // MARK: Dictionary definitions
     
     typealias PlayersDictionary = [PlayerID: PlayerHelper]
     
+    typealias NotificationsDictionary = [PlayerID: NSNotification.Name]
+    
     // The players dictionary
-    private let playersDictionary: PlayersDictionary = [.spotify: SpotifyHelper.shared,
-                                                        .vox: VoxHelper.shared]
+    private let players: PlayersDictionary = [.spotify: SpotifyHelper.shared,
+                                              .vox: VoxHelper.shared]
     
     // MARK: Interaction functions
     
     func get(_ id: PlayerID) -> PlayerHelper {
         // Return a requested helper
-        return playersDictionary[id]!
+        return players[id]!
     }
     
     // MARK: Player vars
     
-    var designatedHelper: PlayerHelper {
+    var designatedHelperID: PlayerID {
         // Find the first player that's runninng and playing
-        for (_, helper) in playersDictionary {
+        for (id, helper) in players {
             if helper.isAvailable && helper.isPlaying {
-                return helper
+                return id
             }
         }
         
         // Return default helper otherwise
-        return defaultHelper
+        return defaultPlayerID
+    }
+    
+    var designatedHelper: PlayerHelper {
+        // Returns the currently designated player
+        return get(designatedHelperID)
     }
     
     var defaultHelper: PlayerHelper {
         // Returns the default player
         return get(defaultPlayerID)
+    }
+    
+    var TrackChangedNotifications: NotificationsDictionary {
+        var notifications: NotificationsDictionary = [ : ]
+        
+        for (id, player) in players {
+            notifications[id] = NSNotification.Name(rawValue: type(of: player).TrackChangedNotification)
+        }
+        
+        return notifications
     }
     
 }
