@@ -146,7 +146,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="WkF-64-hT4"/>
                                                 </constraints>
-                                                <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="9KY-6x-rc5" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
+                                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="9KY-6x-rc5" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                                 <connections>
                                                     <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="CpU-N9-Xhx"/>
                                                 </connections>
@@ -188,7 +188,8 @@
                                         <touchBarItem id="DmD-M5-F0o">
                                             <viewController key="viewController" id="Dyt-zM-9FW">
                                                 <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
-                                                    <rect key="frame" x="0.0" y="-2" width="140" height="25"/>
+                                                    <rect key="frame" x="0.0" y="-2" width="140" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
                                                         <font key="font" metaFont="system"/>
                                                         <segments>
@@ -215,7 +216,7 @@
                                                 <sliderAccessoryBehavior key="behavior" id="Zjn-xl-FRk"/>
                                             </sliderAccessory>
                                             <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daN-KH-YWE">
-                                                <rect key="frame" x="30" y="0.0" width="477" height="30"/>
+                                                <rect key="frame" x="30" y="0.0" width="477" height="19"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="frZ-X1-cv6"/>
                                                 </constraints>
