@@ -338,7 +338,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         cell.knobImage = .playhead
         cell.height    = 20
-        cell.radius    = 2.5
+        cell.radius    = 0
+        
+        cell.backgroundColor = NSColor(patternImage: NSImage.playbar!)
+        cell.highlightColor  = cell.backgroundColor
     }
     
     func prepareSoundSlider() {

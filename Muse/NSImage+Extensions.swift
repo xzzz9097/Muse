@@ -27,6 +27,7 @@ extension NSImage {
     static let volumeHigh   = NSImage(named: NSImageNameTouchBarAudioOutputVolumeHighTemplate)
     
     static let playhead     = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
+    static let playbar      = NSImage(named: "playbar")
     
     // MARK: Extended functions
     
