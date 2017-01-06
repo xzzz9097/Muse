@@ -399,7 +399,6 @@ class WindowController: NSWindowController, NSWindowDelegate {
             setPlayerHelper(to: manager.designatedHelperID)
         }
         
-        // TODO: This is not working! Fix regression!
         // When Spotify is quitted, it sends an NSNotification
         // with only PlayerStateStopped, that causes it to 
         // reopen for being polled by Muse
@@ -424,7 +423,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // This avoids reopening while playing too
         deinitSongTrackingTimer()
         
-        updateAfterNotification()
+        // TODO: Disabled because was causing player to reopen
+        //       Find a proper way to reset song data and update!
+        // updateAfterNotification()
         
         // Reset song progress slider
         updateSongProgressSlider(with: 0)
