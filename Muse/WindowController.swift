@@ -264,6 +264,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func windowDidBecomeKey(_ notification: Notification) {
+        // Try switching to another helper is song is blank
+        // (that means previous player has been closed)
+        // Or if helper is no longer available
+        if self.song == Song() || !helper.isAvailable {
+            setPlayerHelper(to: manager.designatedHelperID)
+        }
+        
         // Sync progress slider if song is not playing
         if !helper.isPlaying { syncSongProgressSlider() }
         

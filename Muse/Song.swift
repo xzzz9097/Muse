@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Song {
+struct Song: Equatable {
     
     // MARK: Song attributes
     
@@ -39,6 +39,19 @@ struct Song {
         self.artist = artist
         self.album = album
         self.duration = duration
+    }
+    
+    // MARK: Equatable
+    
+    /**
+     The equalization functions to conform to `Equatable` protocol.
+     This allows to evaluate if two `Song` items are the same.
+     */
+    static func ==(lhs: Song, rhs: Song) -> Bool {
+        return  lhs.name     == rhs.name   &&
+                lhs.artist   == rhs.artist &&
+                lhs.album    == rhs.album  &&
+                lhs.duration == rhs.duration
     }
     
 }
