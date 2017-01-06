@@ -9,6 +9,19 @@
 import Cocoa
 import QuartzCore
 
+// MARK: ActionInfo
+
+// Defines a set of infos to inform the VC
+// about player events from the outside
+enum PlayerAction {
+    case play
+    case pause
+    case previous
+    case next
+}
+
+// MARK: ViewController
+
 @available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
@@ -19,6 +32,10 @@ class ViewController: NSViewController {
     var playImage     = NSImage.play
     var pauseImage    = NSImage.pause
     var nextImage     = NSImage.next
+    
+    // Action view auto close
+    let actionViewTimeout: TimeInterval = 0.75 // Timeout in seconds
+    var autoCloseTimer:    Timer        = Timer() // The timer
     
     // MARK: Helpers
     
@@ -46,10 +63,13 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var songProgressSlider: NSSlider!
     
+    @IBOutlet weak var actionImageView: NSImageView!
+    
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
     var controlsSuperview: NSView!
+    var actionSuperview: NSView!
     
     // MARK: Actions
     
@@ -88,20 +108,21 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         titleAlbumArtistSuperview = titleLabelView.superview
-        titleAlbumArtistSuperview.wantsLayer = true
+        controlsSuperview         = togglePlayPauseButton.superview
+        actionSuperview           = actionImageView.superview
         
-        controlsSuperview = togglePlayPauseButton.superview
-        controlsSuperview.wantsLayer = true
+        titleAlbumArtistSuperview.wantsLayer = true
+        controlsSuperview.wantsLayer         = true
+        actionSuperview.wantsLayer           = true
     }
     
     override func viewWillAppear() {
-        setBackgroundAndShadowForSuperView(titleAlbumArtistSuperview)
-        
-        setBackgroundAndShadowForSuperView(controlsSuperview)
+        setBackgroundAndShadow(for: titleAlbumArtistSuperview)
+        setBackgroundAndShadow(for: controlsSuperview)
         
         prepareSongProgressSlider()
-        
         prepareFullSongArtworkView()
+        prepareLastActionView()
     }
 
     override var representedObject: Any? {
@@ -110,14 +131,19 @@ class ViewController: NSViewController {
         }
     }
     
-    func setBackgroundAndShadowForSuperView(_ superview: NSView!) {
+    func setBackgroundAndShadow(for superview: NSView!) {
         guard let layer = superview.layer else { return }
         
         // Set background color
         layer.backgroundColor = NSColor.controlColor.cgColor
         
-        // Create shadow
+        // Set the shadow
         superview.shadow = NSShadow()
+        setShadow(for: layer)
+    }
+    
+    func setShadow(for layer: CALayer) {
+        // Create shadow
         layer.shadowColor = NSColor.controlShadowColor.cgColor
         layer.shadowRadius = 0.5
         layer.shadowOpacity = 1
@@ -140,6 +166,51 @@ class ViewController: NSViewController {
             (mouseHovering: Bool) -> Void in
             self.titleAlbumArtistSuperview.animator().isHidden = !mouseHovering
             self.controlsSuperview.animator().isHidden = !mouseHovering
+        }
+    }
+    
+    func prepareLastActionView() {
+        guard let layer = actionSuperview.layer else { return }
+        
+        // Set radius
+        layer.cornerRadius = 5.0
+        layer.masksToBounds = true
+        
+        // Set shadow
+        actionSuperview.shadow = NSShadow()
+        setShadow(for: layer)
+    }
+    
+    // MARK: UI activation
+    
+    func showLastActionView(for action: PlayerAction) {
+        // Only show action info if mouse is not hovering
+        guard controlsSuperview.isHidden else { return }
+        
+        // Invalidate existing timers
+        // This prevents calls from precedent ones
+        autoCloseTimer.invalidate()
+        
+        switch action {
+        case .play:
+            actionImageView.image = playImage
+        case .pause:
+            actionImageView.image = pauseImage
+        case .previous:
+            actionImageView.image = previousImage
+        case .next:
+            actionImageView.image = nextImage
+        }
+        
+        // Show the view
+        actionSuperview.animator().isHidden = false
+        
+        // Restart the autoclose timer
+        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: actionViewTimeout,
+                                              repeats: false) { timer in
+            // Hide the view and invalidate the timer
+            self.actionSuperview.animator().isHidden = true
+            timer.invalidate()
         }
     }
     
@@ -176,6 +247,9 @@ class ViewController: NSViewController {
         playImage     = NSImage.play?.tint(with: color)
         pauseImage    = NSImage.pause?.tint(with: color)
         nextImage     = NSImage.next?.tint(with: color)
+        
+        // Color action image too
+        actionImageView.image = actionImageView.image?.tint(with: color)
     }
     
     func colorViews(with colors: ImageColors) {
@@ -192,6 +266,8 @@ class ViewController: NSViewController {
                                                        for: CALayer.kBackgroundColorPath)
         controlsSuperview.layer?.animateChange(to: backgroundColor!,
                                                for: CALayer.kBackgroundColorPath)
+        actionSuperview.layer?.animateChange(to: backgroundColor!,
+                                                 for: CALayer.kBackgroundColorPath)
         
         // Set the text colors
         titleLabelView.textColor = primaryColor

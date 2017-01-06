@@ -55,7 +55,7 @@ protocol PlayerHelper {
     
     var playPauseHandler: () -> () { set get }
     
-    var trackChangedHandler: () -> () { set get }
+    var trackChangedHandler: (Bool) -> () { set get }
     
     var timeChangedHandler: (Bool, Double?) -> () { set get }
     

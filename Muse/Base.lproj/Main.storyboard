@@ -124,7 +124,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="30"/>
                                         <subviews>
                                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A3K-Ti-soQ">
-                                                <rect key="frame" x="4" y="0.0" width="172" height="30"/>
+                                                <rect key="frame" x="8" y="-2" width="164" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="WkF-64-hT4"/>
                                                 </constraints>
@@ -345,14 +345,35 @@
                                     <constraint firstItem="1xW-XK-zSM" firstAttribute="leading" secondItem="6Z3-b0-ujX" secondAttribute="trailing" constant="5" id="vQk-i9-5mg"/>
                                 </constraints>
                             </customView>
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy">
+                                <rect key="frame" x="105" y="105" width="40" height="40"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n4M-1Y-2JZ">
+                                        <rect key="frame" x="5" y="5" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="ESh-WP-2Us"/>
+                                            <constraint firstAttribute="height" constant="30" id="MzL-u9-Jr6"/>
+                                        </constraints>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="q5d-mm-DGp"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="n4M-1Y-2JZ" firstAttribute="centerX" secondItem="L8t-8O-zhy" secondAttribute="centerX" id="DIX-4R-dGI"/>
+                                    <constraint firstItem="n4M-1Y-2JZ" firstAttribute="centerY" secondItem="L8t-8O-zhy" secondAttribute="centerY" id="Ghv-kd-8lL"/>
+                                    <constraint firstAttribute="width" constant="40" id="WAo-hX-p3t"/>
+                                    <constraint firstAttribute="height" constant="40" id="eTR-XI-53F"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mIG-iE-c3d" secondAttribute="trailing" id="Mwp-ft-xJI"/>
+                            <constraint firstItem="L8t-8O-zhy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Q9n-qe-kgS"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
                             <constraint firstItem="8rY-c5-W6v" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cr5-PS-soL"/>
                             <constraint firstAttribute="trailing" secondItem="FL1-mx-O2f" secondAttribute="trailing" id="dyY-ER-2vM"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="e93-MX-3cq"/>
+                            <constraint firstItem="L8t-8O-zhy" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="lQK-h0-fKj"/>
                             <constraint firstAttribute="bottom" secondItem="8rY-c5-W6v" secondAttribute="bottom" id="oMd-Mq-LxE"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="oXe-vP-81L"/>
                             <constraint firstAttribute="trailing" secondItem="8rY-c5-W6v" secondAttribute="trailing" id="q1z-pb-Dqu"/>
@@ -360,7 +381,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="actionImageView" destination="n4M-1Y-2JZ" id="F3O-Co-NpG"/>
                         <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>
+                        <outlet property="currentActionButton" destination="L8t-8O-zhy" id="93M-Ki-GTk"/>
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>
                         <outlet property="nextTrackButton" destination="1xW-XK-zSM" id="CbI-95-0cP"/>
                         <outlet property="previousTrackButton" destination="l3h-iT-7mg" id="r1D-gC-p5A"/>

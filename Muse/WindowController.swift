@@ -205,13 +205,21 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 
                 self.trackSongProgress()
             }
+            
+            if let controller = self.viewController {
+                controller.showLastActionView(for: self.helper.isPlaying ? .play : .pause)
+            }            
         }
         
         // Callback for PlayerHelper's nextTrack() and previousTrack()
-        helper.trackChangedHandler = {
+        helper.trackChangedHandler = { next in
             self.updateSongProgressSlider(with: 0)
             
             self.updateNowPlayingInfo()
+            
+            if let controller = self.viewController {
+                controller.showLastActionView(for: next ? .next : .previous)
+            }
         }
         
         // Callback for PlayerHelper's goTo(Bool, Double?)
@@ -365,6 +373,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         shuffleRepeatSegmentedView.setImage(.repeating, forSegment: 1)
         
         updateShuffleRepeatSegmentedView()
+    }
+    
+    var viewController: ViewController? {
+        return self.contentViewController as? ViewController
     }
     
     // MARK: Notification handling
