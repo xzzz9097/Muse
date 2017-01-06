@@ -20,10 +20,15 @@ class ButtonCell: NSButtonCell {
     }
     
     // Amount by which the title label will be moved
-    var xOriginShiftDelta: CGFloat = -5.0 {
-        didSet {
-            self.controlView?.needsDisplay = true
-        }
+    var xOriginShiftDelta: CGFloat {
+        self.controlView?.needsDisplay = true
+        
+        // Only reduce the margin if we have an image
+        guard let view = self.controlView, self.image != nil else { return 0 }
+        
+        // Compute the delta based on our rect vs super's
+        return  imageRect(forBounds: view.bounds).origin.x       -
+                super.imageRect(forBounds: view.bounds).origin.x + 4
     }
 
     // MARK: Drawing functions
@@ -42,7 +47,6 @@ class ButtonCell: NSButtonCell {
         var frame = frame
         
         // Shift the title leftwards
-        // TODO: Calculate this more accurately
         frame.origin.x += xOriginShiftDelta
         
         return super.drawTitle(title, withFrame: frame, in: controlView)
