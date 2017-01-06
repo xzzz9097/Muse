@@ -122,11 +122,11 @@ extension PlayerHelper {
     var delayTime: Int { return 5 }
     
     func execPlayPauseHandler() {
-        DispatchQueue.main.run({ self.playPauseHandler() }, after: delayTime)
+        DispatchQueue.main.run(after: delayTime) { self.playPauseHandler() }
     }
     
     func execShuffleRepeatChangedHandler() {
-        DispatchQueue.main.run({ self.shuffleRepeatChangedHandler() }, after: delayTime)
+        DispatchQueue.main.run(after: delayTime) { self.shuffleRepeatChangedHandler() }
     }
     
     // MARK: Notification ID

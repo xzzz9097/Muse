@@ -15,7 +15,7 @@ extension DispatchQueue {
      work: the block of instructions to run
      millis: the delay in milliseconds
      */
-    func run(_ work: @escaping @convention(block) () -> Swift.Void, after millis: Int) {
+    func run(after millis: Int, work: @escaping @convention(block) () -> Swift.Void) {
         self.asyncAfter(deadline: .now() + .milliseconds(millis), execute: work)
     }
     
