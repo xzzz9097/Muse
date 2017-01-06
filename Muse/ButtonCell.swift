@@ -21,8 +21,6 @@ class ButtonCell: NSButtonCell {
     
     // Amount by which the title label will be moved
     var xOriginShiftDelta: CGFloat {
-        self.controlView?.needsDisplay = true
-        
         // Only reduce the margin if we have an image
         guard let view = self.controlView, self.image != nil else { return 0 }
         
