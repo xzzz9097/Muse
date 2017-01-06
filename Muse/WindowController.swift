@@ -390,7 +390,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func isClosing(with notification: NSNotification) -> Bool {
         // This is only for Spotify!
-        guard type(of: helper) == SpotifyHelper.self else { return false }
+        guard notification.name.rawValue == SpotifyHelper.rawTrackChangedNotification else { return false }
         
         guard let userInfo = notification.userInfo else { return true }
         
@@ -400,20 +400,23 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func hookNotification(notification: NSNotification) {
-        if notification.name != helper.TrackChangedNotification {
-            // Switch to a new helper
-            // If the notification is sent from another player
-            setPlayerHelper(to: manager.designatedHelperID)
-        }
-        
         // When Spotify is quitted, it sends an NSNotification
-        // with only PlayerStateStopped, that causes it to 
+        // with only PlayerStateStopped, that causes it to
         // reopen for being polled by Muse
         // So we detect if the notification is a closing one
-        if isClosing(with: notification) {
+        guard !isClosing(with: notification) else {
             handleClosing()
             return
-        } else if shouldLoadSong {
+        }
+        
+        // Switch to a new helper
+        // If the notification is sent from another player
+        guard notification.name == helper.TrackChangedNotification else {
+            setPlayerHelper(to: manager.designatedHelperID)
+            return
+        }
+        
+        if shouldLoadSong {
             handleNewSong()
         } else {
             handlePlayPause()
