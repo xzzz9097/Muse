@@ -173,7 +173,7 @@ class ViewController: NSViewController {
         guard let layer = actionSuperview.layer else { return }
         
         // Set radius
-        layer.cornerRadius = 5.0
+        layer.cornerRadius = 7.5
         layer.masksToBounds = true
         
         // Set shadow
