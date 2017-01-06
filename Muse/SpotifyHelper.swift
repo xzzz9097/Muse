@@ -204,6 +204,6 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Notification ID
     
-    static let TrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
+    static let rawTrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
     
 }

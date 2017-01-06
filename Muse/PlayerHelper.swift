@@ -67,7 +67,7 @@ protocol PlayerHelper {
     
     // MARK: Notification ID
     
-    static var TrackChangedNotification: String { get }
+    static var rawTrackChangedNotification: String { get }
     
 }
 
@@ -127,6 +127,13 @@ extension PlayerHelper {
     
     func execShuffleRepeatChangedHandler() {
         DispatchQueue.main.run({ self.shuffleRepeatChangedHandler() }, after: delayTime)
+    }
+    
+    // MARK: Notification ID
+    
+    var TrackChangedNotification: NSNotification.Name {
+        // Returns the NSNotification.Name for an observer 
+        return NSNotification.Name(rawValue: Self.rawTrackChangedNotification)
     }
     
 }

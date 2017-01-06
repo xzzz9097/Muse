@@ -362,11 +362,6 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     // MARK: Notification handling
     
-    var TrackChangedNotification: NSNotification.Name {
-        // Use 'type' because it's a static var
-        return NSNotification.Name(rawValue: type(of: helper).TrackChangedNotification)
-    }
-    
     func initNotificationWatchers() {
         for (_, notification) in manager.TrackChangedNotifications {
             // Attach the NotificationObserver for Spotify notifications
@@ -398,7 +393,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func hookNotification(notification: NSNotification) {
-        if notification.name != TrackChangedNotification {
+        if notification.name != helper.TrackChangedNotification {
             // Switch to a new helper
             // If the notification is sent from another player
             setPlayerHelper(to: manager.designatedHelperID)

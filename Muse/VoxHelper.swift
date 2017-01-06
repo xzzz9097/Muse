@@ -202,6 +202,6 @@ class VoxHelper: PlayerHelper {
     
     // MARK: Notification ID
     
-    static let TrackChangedNotification = BundleIdentifier + ".trackChanged"
+    static let rawTrackChangedNotification = BundleIdentifier + ".trackChanged"
     
 }

@@ -68,7 +68,7 @@ class PlayersManager {
         var notifications: NotificationsDictionary = [ : ]
         
         for (id, player) in players {
-            notifications[id] = NSNotification.Name(rawValue: type(of: player).TrackChangedNotification)
+            notifications[id] = player.TrackChangedNotification
         }
         
         return notifications
