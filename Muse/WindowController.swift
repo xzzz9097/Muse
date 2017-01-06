@@ -275,7 +275,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // Try switching to another helper is song is blank
         // (that means previous player has been closed)
         // Or if helper is no longer available
-        if self.song == Song() || !helper.isAvailable {
+        if song == Song() || !helper.isAvailable {
             setPlayerHelper(to: manager.designatedHelperID)
         }
         
@@ -328,7 +328,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func prepareSong() {
-        self.song = helper.song
+        song = helper.song
         
         updateAfterNotification()
         
@@ -336,9 +336,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func prepareButtons() {
-        self.controlsSegmentedView.setImage(.previous, forSegment: 0)
-        self.controlsSegmentedView.setImage(.play, forSegment: 1)
-        self.controlsSegmentedView.setImage(.next, forSegment: 2)
+        controlsSegmentedView.setImage(.previous, forSegment: 0)
+        controlsSegmentedView.setImage(.play, forSegment: 1)
+        controlsSegmentedView.setImage(.next, forSegment: 2)
     }
     
     func prepareSongProgressSlider() {
@@ -353,7 +353,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func prepareSongArtworkTitleButton() {
-        self.songArtworkTitleButton.imagePosition = .imageLeading
+        songArtworkTitleButton.imagePosition = .imageLeading
     }
     
     func prepareSoundSlider() {
@@ -449,7 +449,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func resetSong() {
         // Set placeholder value
         // TODO: update artwork with some blank
-        self.song = Song()
+        song = Song()
         
         // This avoids reopening while playing too
         deinitSongTrackingTimer()
@@ -471,7 +471,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         willChangeValue(forKey: kSong)
         
         // Retrieve new value
-        self.song = helper.song
+        song = helper.song
         
         didChangeValue(forKey: kSong)
         
@@ -493,7 +493,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     var shouldLoadSong: Bool {
         // A new song should be fully reloaded only
         // if it's an actually different track
-        return helper.song.name != self.song.name
+        return helper.song.name != song.name
     }
     
     // MARK: Playback progress handling
@@ -530,15 +530,15 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 }
             }
             
-            if helper.playbackPosition > self.song.duration && self.song.duration == 0 {
+            if helper.playbackPosition > song.duration && song.duration == 0 {
                 // Hotfix for occasional song loading errors
                 // TODO: Check if this is actually working
-                self.song = helper.song
+                song = helper.song
             }
             
             let position = position > -1 ? position : helper.playbackPosition
             
-            songProgressSlider.doubleValue = position / self.song.duration
+            songProgressSlider.doubleValue = position / song.duration
             
             // Also update native touchbar scrubber
             updateNowPlayingInfoElapsedPlaybackTime(with: position)
@@ -562,7 +562,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func updateControlsAfterPlayPause() {
-        self.controlsSegmentedView.setImage(
+        controlsSegmentedView.setImage(
             helper.isPlaying ? .pause : .play,
             forSegment: 1
         )
@@ -632,31 +632,29 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     var shouldSetTitleOnMenuBar: Bool {
         // Determines wheter the title on the menuBar should be set
-        return kShouldSetTitleOnMenuBar && self.song.isValid && helper.isPlaying
+        return kShouldSetTitleOnMenuBar && song.isValid && helper.isPlaying
     }
     
     func updateMenuBar() {
         guard let delegate = self.delegate else { return }
         
         // Get the wrapped title
-        let title = " " + self.song.name.truncate(at: kMenuItemMaximumLength)
+        let title = " " + song.name.truncate(at: kMenuItemMaximumLength)
         
         // Set the title on the menuBar if enabled
         delegate.menuItem.title = shouldSetTitleOnMenuBar ? title : nil
     }
     
     func updateTouchBarUI() {
-        self.songArtworkTitleButton.title = self.song.name.truncate(at: 15)
-        self.songArtworkTitleButton.sizeToFit()
+        songArtworkTitleButton.title = song.name.truncate(at: 15)
+        songArtworkTitleButton.sizeToFit()
         
-        self.controlsSegmentedView.setImage(
-            helper.isPlaying ? .pause : .play,
-            forSegment: 1
-        )
+        controlsSegmentedView.setImage(helper.isPlaying ? .pause : .play,
+                                       forSegment: 1)
         
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
-            self.songArtworkTitleButton.loadImage(from: artworkURL, callback: { image in
+            songArtworkTitleButton.loadImage(from: artworkURL, callback: { image in
                 self.updateArtworkColorAndSize(for: image)
                 
                 // Set image on ViewController when downloaded
@@ -676,7 +674,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func updateArtworkColorAndSize(for image: NSImage) {
         // Resize image to fit TouchBar view
         // TODO: Move this elsewhere
-        self.songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
+        songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
         
         // Set bezel color
         // TODO: Share this colors with ViewController
@@ -687,7 +685,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     var isUIPlaying: Bool {
         // Simple trick to know whether the UI is in 'play' mode
-        return self.controlsSegmentedView.image(forSegment: 1) == .pause
+        return controlsSegmentedView.image(forSegment: 1) == .pause
     }
     
     func updateViewUI() {
