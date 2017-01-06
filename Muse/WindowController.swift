@@ -399,6 +399,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
             setPlayerHelper(to: manager.designatedHelperID)
         }
         
+        // TODO: This is not working! Fix regression!
         // When Spotify is quitted, it sends an NSNotification
         // with only PlayerStateStopped, that causes it to 
         // reopen for being polled by Muse

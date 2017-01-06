@@ -50,6 +50,13 @@ class PlayersManager {
             }
         }
         
+        // If there are no running players check for the open one
+        for (id, helper) in players {
+            if helper.isAvailable {
+                return id
+            }
+        }
+        
         // Return default helper otherwise
         return defaultPlayerID
     }

@@ -132,7 +132,7 @@ extension PlayerHelper {
     // MARK: Notification ID
     
     var TrackChangedNotification: NSNotification.Name {
-        // Returns the NSNotification.Name for an observer 
+        // Returns the NSNotification.Name for an observer
         return NSNotification.Name(rawValue: Self.rawTrackChangedNotification)
     }
     
