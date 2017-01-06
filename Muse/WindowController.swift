@@ -206,9 +206,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 self.trackSongProgress()
             }
             
-            if let controller = self.viewController {
+            self.onViewController { controller in
                 controller.showLastActionView(for: self.helper.isPlaying ? .play : .pause)
-            }            
+            }
         }
         
         // Callback for PlayerHelper's nextTrack() and previousTrack()
@@ -217,7 +217,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             self.updateNowPlayingInfo()
             
-            if let controller = self.viewController {
+            self.onViewController { controller in
                 controller.showLastActionView(for: next ? .next : .previous)
             }
         }
@@ -375,8 +375,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
         updateShuffleRepeatSegmentedView()
     }
     
+    // MARK: ViewController communication
+    
     var viewController: ViewController? {
         return self.contentViewController as? ViewController
+    }
+    
+    func onViewController(block: @escaping @convention(block) (ViewController) -> Swift.Void) {
+        guard let controller = viewController else { return }
+        
+        // Pass controller to the block
+        block(controller)
     }
     
     // MARK: Notification handling
@@ -535,9 +544,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
             updateNowPlayingInfoElapsedPlaybackTime(with: position)
             
             // And the View's slider
-            guard let viewController = self.contentViewController as? ViewController else { return }
-            
-            viewController.updateSongProgressSlider(with: position / self.song.duration)
+            onViewController { controller in
+                controller.updateSongProgressSlider(with: position / self.song.duration)
+            }
         }
     }
     
@@ -558,8 +567,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
             forSegment: 1
         )
         
-        if let viewController = self.contentViewController as? ViewController {
-            viewController.updateButtons()
+        onViewController { controller in
+            controller.updateButtons()
         }
     }
     
@@ -645,21 +654,22 @@ class WindowController: NSWindowController, NSWindowDelegate {
             forSegment: 1
         )
         
-        // Also set image on VC's ImageView after download
-        // Faster and more efficient
-        guard let viewController = self.contentViewController as? ViewController else { return }
-        
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
             self.songArtworkTitleButton.loadImage(from: artworkURL, callback: { image in
                 self.updateArtworkColorAndSize(for: image)
                 
-                viewController.updateFullSongArtworkView(with: image)
+                // Set image on ViewController when downloaded
+                self.onViewController { controller in
+                    controller.updateFullSongArtworkView(with: image)
+                }
             })
         } else if let image = helper.artwork() as? NSImage {
             updateArtworkColorAndSize(for: image)
             
-            viewController.updateFullSongArtworkView(with: image)
+            onViewController { controller in
+                controller.updateFullSongArtworkView(with: image)
+            }
         }
     }
     
@@ -681,11 +691,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func updateViewUI() {
-        guard let viewController = self.contentViewController as? ViewController else { return }
-        
-        viewController.updateTitleAlbumArtistView(for: self.song)
-        
-        viewController.updateButtons()
+        onViewController { controller in
+            controller.updateTitleAlbumArtistView(for: self.song)
+            controller.updateButtons()
+        }
     }
     
 }
