@@ -18,6 +18,8 @@ enum PlayerAction {
     case pause
     case previous
     case next
+    case shuffling
+    case repeating
 }
 
 // MARK: ViewController
@@ -32,6 +34,8 @@ class ViewController: NSViewController {
     var playImage     = NSImage.play
     var pauseImage    = NSImage.pause
     var nextImage     = NSImage.next
+    var shuffleImage  = NSImage.shuffling
+    var repeatImage   = NSImage.repeating
     
     // Action view auto close
     let actionViewTimeout: TimeInterval = 0.75 // Timeout in seconds
@@ -200,6 +204,10 @@ class ViewController: NSViewController {
             actionImageView.image = previousImage
         case .next:
             actionImageView.image = nextImage
+        case .shuffling:
+            actionImageView.image = shuffleImage
+        case .repeating:
+            actionImageView.image = repeatImage
         }
         
         // Show the view
@@ -243,10 +251,12 @@ class ViewController: NSViewController {
     
     func colorButtonImages(with color: NSColor) {
         // Update button images with new color
-        previousImage = NSImage.previous?.tint(with: color)
-        playImage     = NSImage.play?.tint(with: color)
-        pauseImage    = NSImage.pause?.tint(with: color)
-        nextImage     = NSImage.next?.tint(with: color)
+        previousImage = previousImage?.tint(with: color)
+        playImage     = playImage?.tint(with: color)
+        pauseImage    = pauseImage?.tint(with: color)
+        nextImage     = nextImage?.tint(with: color)
+        shuffleImage  = shuffleImage.tint(with: color)
+        repeatImage   = repeatImage.tint(with: color)
         
         // Color action image too
         actionImageView.image = actionImageView.image?.tint(with: color)

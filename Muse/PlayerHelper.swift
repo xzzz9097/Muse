@@ -59,7 +59,7 @@ protocol PlayerHelper {
     
     var timeChangedHandler: (Bool, Double?) -> () { set get }
     
-    var shuffleRepeatChangedHandler: () -> () { set get }
+    var shuffleRepeatChangedHandler: (Bool, Bool) -> () { set get }
     
     // MARK: Application identifier
     
@@ -125,8 +125,8 @@ extension PlayerHelper {
         DispatchQueue.main.run(after: delayTime) { self.playPauseHandler() }
     }
     
-    func execShuffleRepeatChangedHandler() {
-        DispatchQueue.main.run(after: delayTime) { self.shuffleRepeatChangedHandler() }
+    func execShuffleRepeatChangedHandler(shuffleChanged: Bool = false, repeatChanged: Bool = false) {
+        DispatchQueue.main.run(after: delayTime) { self.shuffleRepeatChangedHandler(shuffleChanged, repeatChanged) }
     }
     
     // MARK: Notification ID

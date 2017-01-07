@@ -152,7 +152,7 @@ class VoxHelper: PlayerHelper {
             application.setRepeatState!(repeating)
             
             // Call the ghandler with new repeat value
-            execShuffleRepeatChangedHandler()
+            execShuffleRepeatChangedHandler(repeatChanged: true)
         }
         
         get {
@@ -170,7 +170,7 @@ class VoxHelper: PlayerHelper {
             application.shuffle!()
             
             // Call the handler with new shuffle value
-            execShuffleRepeatChangedHandler()
+            execShuffleRepeatChangedHandler(shuffleChanged: true)
         }
         
         get {
@@ -194,7 +194,7 @@ class VoxHelper: PlayerHelper {
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
-    var shuffleRepeatChangedHandler: () -> () = { }
+    var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     
     // MARK: Application identifier
     
