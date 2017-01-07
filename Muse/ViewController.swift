@@ -189,7 +189,7 @@ class ViewController: NSViewController {
     
     func showLastActionView(for action: PlayerAction) {
         // Only show action info if mouse is not hovering
-        guard controlsSuperview.isHidden else { return }
+        guard (controlsSuperview.isHidden || action == .repeating || action == .shuffling) else { return }
         
         // Invalidate existing timers
         // This prevents calls from precedent ones
