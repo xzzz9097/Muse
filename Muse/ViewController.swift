@@ -20,6 +20,7 @@ enum PlayerAction {
     case next
     case shuffling
     case repeating
+    case scrubbing
 }
 
 // MARK: ViewController
@@ -68,6 +69,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var songProgressSlider: NSSlider!
     
     @IBOutlet weak var actionImageView: NSImageView!
+    @IBOutlet weak var actionTextField: NSTextField!
     
     // MARK: Superviews
     
@@ -187,9 +189,9 @@ class ViewController: NSViewController {
     
     // MARK: UI activation
     
-    func showLastActionView(for action: PlayerAction) {
+    func showLastActionView(for action: PlayerAction, to time: Double = 0) {
         // Only show action info if mouse is not hovering
-        guard (controlsSuperview.isHidden || action == .repeating || action == .shuffling) else { return }
+        guard (controlsSuperview.isHidden || action == .repeating || action == .shuffling || action == .scrubbing) else { return }
         
         // Invalidate existing timers
         // This prevents calls from precedent ones
@@ -218,7 +220,16 @@ class ViewController: NSViewController {
             } else {
                 actionImageView.image = repeatImage.tint(with: .lightGray)
             }
+        case .scrubbing:
+            // Hide image view if scrubbing
+            actionImageView.isHidden = true
+            
+            // Set the string value formatted as MM:SS
+            actionTextField.stringValue = time.secondsToMMSSString
         }
+        
+        // Show image view if not scrubbing
+        if action != .scrubbing { actionImageView.isHidden = false }
         
         // Show the view
         actionSuperview.animator().isHidden = false
@@ -228,6 +239,7 @@ class ViewController: NSViewController {
                                               repeats: false) { timer in
             // Hide the view and invalidate the timer
             self.actionSuperview.animator().isHidden = true
+            self.actionTextField.stringValue = ""
             timer.invalidate()
         }
     }
@@ -276,10 +288,9 @@ class ViewController: NSViewController {
         // Blend the background color with 'lightGray'
         // This prevents view from getting too dark
         let backgroundColor = colors.background.blended(withFraction: 0.5, of: .lightGray)?.cgColor
-        let primaryColor = colors.primary.blended(withFraction: 0.5, of: .lightGray)
-        let secondaryColor = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
-        
-        let buttonColor = colors.primary.blended(withFraction: 0.5, of: .lightGray)
+        let primaryColor    = colors.primary.blended(withFraction: 0.5, of: .lightGray)
+        let secondaryColor  = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
+        let buttonColor     = colors.primary.blended(withFraction: 0.5, of: .lightGray)
         
         // Set the superview background color and animate it
         titleAlbumArtistSuperview.layer?.animateChange(to: backgroundColor!,
@@ -287,16 +298,17 @@ class ViewController: NSViewController {
         controlsSuperview.layer?.animateChange(to: backgroundColor!,
                                                for: CALayer.kBackgroundColorPath)
         actionSuperview.layer?.animateChange(to: backgroundColor!,
-                                                 for: CALayer.kBackgroundColorPath)
+                                             for: CALayer.kBackgroundColorPath)
         
         // Set the text colors
-        titleLabelView.textColor = primaryColor
+        titleLabelView.textColor       = primaryColor
         albumArtistLabelView.textColor = secondaryColor
+        actionTextField.textColor      = primaryColor
         
         // Set color on the slider too
         if let cell = songProgressSlider.cell as? SliderCell {
             cell.backgroundColor = primaryColor!
-            cell.highlightColor = secondaryColor!
+            cell.highlightColor  = secondaryColor!
         }
         
         // Set the color on the playback buttons

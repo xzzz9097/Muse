@@ -228,7 +228,13 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             guard !self.isSliding, let value = doubleValue else { return }
             
-            self.updateSongProgressSlider(with: value * self.song.duration)
+            let time = value * self.song.duration
+            
+            self.updateSongProgressSlider(with: time)
+            
+            self.onViewController { controller in
+                controller.showLastActionView(for: .scrubbing, to: time)
+            }
         }
         
         // Callback for PlayerHelper's shuffe/repeat setters
