@@ -205,9 +205,19 @@ class ViewController: NSViewController {
         case .next:
             actionImageView.image = nextImage
         case .shuffling:
-            actionImageView.image = shuffleImage
+            if helper.shuffling {
+                actionImageView.image = shuffleImage
+            } else {
+                // Let the user know if shuffle/repeat is disabled
+                // by setting a lighter color on the image
+                actionImageView.image = shuffleImage.tint(with: .lightGray)
+            }
         case .repeating:
-            actionImageView.image = repeatImage
+            if helper.repeating {
+                actionImageView.image = repeatImage
+            } else {
+                actionImageView.image = repeatImage.tint(with: .lightGray)
+            }
         }
         
         // Show the view
