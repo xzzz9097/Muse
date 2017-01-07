@@ -8,7 +8,12 @@
 
 import Foundation
 
+/**
+ Time intervals handling
+ */
 extension Double {
+    
+    // MARK: Extended functions
     
     /**
      Converts self (seconds in 'Double') to a tuple
