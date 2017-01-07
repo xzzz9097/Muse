@@ -324,7 +324,7 @@
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gf1-O0-WCI">
                                         <rect key="frame" x="30" y="1" width="190" height="19"/>
-                                        <sliderCell key="cell" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
+                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                         <connections>
                                             <action selector="songProgressSliderValueChanged:" target="XfG-lQ-9wD" id="Lsh-Jn-Pla"/>
                                         </connections>
