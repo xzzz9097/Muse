@@ -191,7 +191,7 @@ class ViewController: NSViewController {
     
     // MARK: UI activation
     
-    func showLastActionView(for action: PlayerAction, to time: Double = 0) {
+    func showLastActionView(for action: PlayerAction, to time: Double = 0, shouldClose: Bool = true) {
         // Only show action info if mouse is not hovering
         guard (controlsSuperview.isHidden || action == .repeating || action == .shuffling || action == .scrubbing) else { return }
         
@@ -235,6 +235,9 @@ class ViewController: NSViewController {
         
         // Show the view
         actionSuperview.animator().isHidden = false
+        
+        // This keeps time info visible while sliding
+        guard shouldClose else { return }
         
         // Restart the autoclose timer
         autoCloseTimer = Timer.scheduledTimer(withTimeInterval: actionViewTimeout,

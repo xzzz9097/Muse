@@ -233,7 +233,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
             self.updateSongProgressSlider(with: time)
             
             self.onViewController { controller in
-                controller.showLastActionView(for: .scrubbing, to: time)
+                controller.showLastActionView(for: .scrubbing,
+                                              to: time,
+                                              shouldClose: !touching)
             }
             
             // Set 'isSliding' after a short delay
