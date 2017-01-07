@@ -96,6 +96,8 @@ class ViewController: NSViewController {
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
+            helper.scrub(to: slider.doubleValue, touching: true)
+            
             if (currentEvent.type == .leftMouseDown) {
                 // Detected mouse down
                 helper.scrub(touching: true)
@@ -322,7 +324,7 @@ class ViewController: NSViewController {
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
     }
     
-    func updateSongProgressSlider(with position: Double) {
+    func updateSongProgressSlider(with position: Double) {        
         songProgressSlider.doubleValue = position
     }
     

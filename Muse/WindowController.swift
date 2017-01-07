@@ -98,6 +98,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
+            helper.scrub(to: slider.doubleValue, touching: true)
+            
             for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
                 // Detected touch phase start
                 helper.scrub(touching: true)
@@ -224,9 +226,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Callback for PlayerHelper's goTo(Bool, Double?)
         helper.timeChangedHandler = { touching, doubleValue in
-            self.isSliding = touching
-            
-            guard !self.isSliding, let value = doubleValue else { return }
+            guard let value = doubleValue else { return }
             
             let time = value * self.song.duration
             
@@ -235,6 +235,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
             self.onViewController { controller in
                 controller.showLastActionView(for: .scrubbing, to: time)
             }
+            
+            // Set 'isSliding' after a short delay
+            // This prevents timer from resuming too early
+            // after scrubbing, thus resetting the slider position
+            DispatchQueue.main.run(after: 5) { self.isSliding = touching }
         }
         
         // Callback for PlayerHelper's shuffe/repeat setters
@@ -534,34 +539,32 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func updateSongProgressSlider(with position: Double = -1) {
-        if !isSliding {
-            if !helper.doesSendPlayPauseNotification {
-                // If the player does not send a play/pause notification
-                // we must manually check if state has changed
-                // This means the timer cannot be stopped though...
-                // TODO: find a better way to do this
-                if isUIPlaying != helper.isPlaying {
-                    handlePlayPause()
-                }
+        if !helper.doesSendPlayPauseNotification {
+            // If the player does not send a play/pause notification
+            // we must manually check if state has changed
+            // This means the timer cannot be stopped though...
+            // TODO: find a better way to do this
+            if isUIPlaying != helper.isPlaying {
+                handlePlayPause()
             }
-            
-            if helper.playbackPosition > song.duration && song.duration == 0 {
-                // Hotfix for occasional song loading errors
-                // TODO: Check if this is actually working
-                song = helper.song
-            }
-            
-            let position = position > -1 ? position : helper.playbackPosition
-            
-            songProgressSlider.doubleValue = position / song.duration
-            
-            // Also update native touchbar scrubber
-            updateNowPlayingInfoElapsedPlaybackTime(with: position)
-            
-            // And the View's slider
-            onViewController { controller in
-                controller.updateSongProgressSlider(with: position / self.song.duration)
-            }
+        }
+        
+        if helper.playbackPosition > song.duration && song.duration == 0 {
+            // Hotfix for occasional song loading errors
+            // TODO: Check if this is actually working
+            song = helper.song
+        }
+        
+        let position = position > -1 ? position : helper.playbackPosition
+        
+        songProgressSlider.doubleValue = position / song.duration
+        
+        // Also update native touchbar scrubber
+        updateNowPlayingInfoElapsedPlaybackTime(with: position)
+        
+        // And the View's slider
+        onViewController { controller in
+            controller.updateSongProgressSlider(with: position / self.song.duration)
         }
     }
     
@@ -573,7 +576,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         }
         
         // Convenience call for updating the progress slider during playback
-        updateSongProgressSlider()
+        if !isSliding { updateSongProgressSlider() }
     }
     
     func updateControlsAfterPlayPause() {
