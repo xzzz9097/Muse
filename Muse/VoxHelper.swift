@@ -141,9 +141,6 @@ class VoxHelper: PlayerHelper {
         }
     }
     
-    // TODO: This is broken!
-    // Vox AppleScript command for getting and toggling
-    // repeat does not work (always returns 0, set does nothing)
     var repeating: Bool {
         set {
             let repeating: VoxERpS = newValue ? .repeatAll : .none
