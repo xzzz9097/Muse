@@ -104,7 +104,7 @@
                             <touchBarItem id="qKs-z8-kR4">
                                 <viewController key="viewController" id="953-Nr-7qT">
                                     <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e9d-da-gdW">
-                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <rect key="frame" x="-6" y="-7" width="84" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="185" id="zdu-sg-Cu4"/>
                                         </constraints>
@@ -146,7 +146,8 @@
                             <touchBarItem id="qeI-1V-kBR">
                                 <viewController key="viewController" id="I3D-jY-SvG">
                                     <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
-                                        <rect key="frame" x="0.0" y="-2" width="143" height="25"/>
+                                        <rect key="frame" x="0.0" y="-2" width="143" height="33"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -170,7 +171,8 @@
                                         <touchBarItem id="DmD-M5-F0o">
                                             <viewController key="viewController" id="Dyt-zM-9FW">
                                                 <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
-                                                    <rect key="frame" x="0.0" y="-2" width="140" height="25"/>
+                                                    <rect key="frame" x="0.0" y="-2" width="140" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
                                                         <font key="font" metaFont="system"/>
                                                         <segments>
@@ -197,7 +199,7 @@
                                                 <sliderAccessoryBehavior key="behavior" id="Zjn-xl-FRk"/>
                                             </sliderAccessory>
                                             <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daN-KH-YWE">
-                                                <rect key="frame" x="30" y="0.0" width="477" height="30"/>
+                                                <rect key="frame" x="30" y="0.0" width="477" height="19"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="frZ-X1-cv6"/>
                                                 </constraints>
@@ -231,22 +233,22 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Muse" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                        <rect key="frame" x="0.0" y="0.0" width="275" height="275"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FL1-mx-O2f" customClass="ImageView" customModule="Muse" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                                <rect key="frame" x="0.0" y="0.0" width="275" height="275"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="250" id="Hlj-tU-niT"/>
-                                    <constraint firstAttribute="width" constant="250" id="Ome-Fv-3Oe"/>
+                                    <constraint firstAttribute="height" constant="275" id="Hlj-tU-niT"/>
+                                    <constraint firstAttribute="width" constant="275" id="Ome-Fv-3Oe"/>
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="MEf-4T-602"/>
                             </imageView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
-                                <rect key="frame" x="0.0" y="204" width="250" height="46"/>
+                                <rect key="frame" x="0.0" y="229" width="275" height="46"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
-                                        <rect key="frame" x="8" y="20" width="234" height="20"/>
+                                        <rect key="frame" x="8" y="20" width="259" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="xpX-Vc-8U3"/>
                                         </constraints>
@@ -257,7 +259,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OP7-ud-xJg">
-                                        <rect key="frame" x="8" y="4" width="234" height="16"/>
+                                        <rect key="frame" x="8" y="4" width="259" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="yrl-dt-D55"/>
                                         </constraints>
@@ -280,10 +282,10 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
-                                <rect key="frame" x="0.0" y="0.0" width="250" height="46"/>
+                                <rect key="frame" x="0.0" y="0.0" width="275" height="46"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">
-                                        <rect key="frame" x="110" y="13" width="30" height="30"/>
+                                        <rect key="frame" x="123" y="13" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="1sQ-Kh-34t"/>
                                             <constraint firstAttribute="width" constant="30" id="sVY-Ju-ZW9"/>
@@ -297,7 +299,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="l3h-iT-7mg">
-                                        <rect key="frame" x="75" y="13" width="30" height="30"/>
+                                        <rect key="frame" x="88" y="13" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="IQq-hX-RaA"/>
                                         </constraints>
@@ -310,7 +312,7 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="1xW-XK-zSM">
-                                        <rect key="frame" x="145" y="13" width="30" height="30"/>
+                                        <rect key="frame" x="158" y="13" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="Hp2-PB-jJ6"/>
                                         </constraints>
@@ -323,7 +325,7 @@
                                         </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Gf1-O0-WCI">
-                                        <rect key="frame" x="30" y="1" width="190" height="19"/>
+                                        <rect key="frame" x="30" y="1" width="215" height="19"/>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="n9c-pa-Xr9" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                         <connections>
                                             <action selector="songProgressSliderValueChanged:" target="XfG-lQ-9wD" id="Lsh-Jn-Pla"/>
@@ -346,7 +348,7 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy">
-                                <rect key="frame" x="105" y="105" width="40" height="40"/>
+                                <rect key="frame" x="118" y="118" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BH-TZ-iv9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
