@@ -9,20 +9,6 @@
 import Cocoa
 import QuartzCore
 
-// MARK: ActionInfo
-
-// Defines a set of infos to inform the VC
-// about player events from the outside
-enum PlayerAction {
-    case play
-    case pause
-    case previous
-    case next
-    case shuffling
-    case repeating
-    case scrubbing
-}
-
 // MARK: ViewController
 
 @available(OSX 10.12.2, *)

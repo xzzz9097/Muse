@@ -6,8 +6,20 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
+// Defines a set of infos to inform the VC
+// about player events from the outside
+enum PlayerAction {
+    case play
+    case pause
+    case previous
+    case next
+    case shuffling
+    case repeating
+    case scrubbing
+}
+
+// Enum for the three possible player states
 enum PlayerState {
-    // Enum for the three possible player states
     case stopped, paused, playing
 }
 
