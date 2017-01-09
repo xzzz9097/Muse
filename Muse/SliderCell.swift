@@ -163,8 +163,8 @@ class SliderCell: NSSliderCell {
         
         // Sets dimensions the rect
         // TODO: Adapt this to given text
-        let margin = CGFloat(10)
-        let width  = CGFloat(32) + margin
+        let margin = CGFloat(20)
+        let width  = CGFloat(35) + margin
         let height = CGFloat(20)
         
         rect.size.width  = width
@@ -181,7 +181,7 @@ class SliderCell: NSSliderCell {
      Font attributes for the info text
      */
     var infoFontAttributes: [String: Any] {
-        let size  = CGFloat(15)
+        let size  = CGFloat(17)
         let color = NSColor.lightGray
         
         let font  = NSFont.systemFont(ofSize: size)
