@@ -244,7 +244,7 @@
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="MEf-4T-602"/>
                             </imageView>
-                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
                                 <rect key="frame" x="0.0" y="229" width="275" height="46"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
@@ -281,7 +281,7 @@
                                     <constraint firstAttribute="trailing" secondItem="OP7-ud-xJg" secondAttribute="trailing" constant="10" id="smo-dz-dJ2"/>
                                 </constraints>
                             </customView>
-                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
                                 <rect key="frame" x="0.0" y="0.0" width="275" height="46"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">

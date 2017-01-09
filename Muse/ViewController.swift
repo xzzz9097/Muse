@@ -42,6 +42,9 @@ class ViewController: NSViewController {
     let actionViewTimeout: TimeInterval = 0.75 // Timeout in seconds
     var autoCloseTimer:    Timer        = Timer() // The timer
     
+    // Preferences
+    let shouldPeekControls = true // Hide/show controls on mouse hover
+    
     // MARK: Helpers
     
     var helper: PlayerHelper {
@@ -169,12 +172,20 @@ class ViewController: NSViewController {
         // Set image scaling
         fullSongArtworkView.imageScaling = .scaleAxesIndependently
         
+        guard self.shouldPeekControls else { return }
+        
+        setControlViews(hidden: true)
+        
         // Add callback to show/hide views when hovering (animating)
-        fullSongArtworkView.mouseHandler = {
-            (mouseHovering: Bool) -> Void in
-            self.titleAlbumArtistSuperview.animator().isHidden = !mouseHovering
-            self.controlsSuperview.animator().isHidden = !mouseHovering
+        fullSongArtworkView.mouseHandler = { (mouseHovering: Bool) -> Void in
+            self.setControlViews(hidden: !mouseHovering)
         }
+    }
+    
+    func setControlViews(hidden: Bool) {
+        // Toggles visibility on popup views
+        titleAlbumArtistSuperview.animator().isHidden = hidden
+        controlsSuperview.animator().isHidden         = hidden
     }
     
     func prepareLastActionView() {
