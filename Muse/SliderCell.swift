@@ -57,6 +57,18 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // Time info switch
+    var hasTimeInfo: Bool = false {
+        didSet {
+            // Without this there's graphic corruption
+            // on the drawn string
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    // Time info
+    var timeInfo: NSString = ""
+    
     /**
      Draw the bars, setting custom height, colors and radius
      */
@@ -104,6 +116,8 @@ class SliderCell: NSSliderCell {
         let fraction: CGFloat = knobVisible ? 1.0 : 0.0
         
         image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
+        
+        if hasTimeInfo { drawInfo(near: rect) }
     }
     
     /**
@@ -132,6 +146,48 @@ class SliderCell: NSSliderCell {
      */
     func relativeKnobPosition() -> CGFloat {
         return CGFloat((self.doubleValue - self.minValue) / (self.maxValue - self.minValue))
+    }
+    
+    /**
+     Draws the specified 'timeInfo' text near the knob
+     */
+    func drawInfo(near knobRect: NSRect) {
+        timeInfo.draw(in: infoRect(near: knobRect), withAttributes: infoFontAttributes)
+    }
+    
+    /**
+     Returns a rect near the knob for the info view
+     */
+    func infoRect(near knobRect: NSRect) -> NSRect {
+        var rect = knobRect
+        
+        // Sets dimensions the rect
+        // TODO: Adapt this to given text
+        let margin = CGFloat(10)
+        let width  = CGFloat(35) + margin
+        let height = CGFloat(20)
+        
+        rect.size.width  = width
+        rect.size.height = height
+        
+        // Set correct position (left or right the knob, centered vertically)
+        rect.origin.x += rect.origin.x > width ? -width : margin
+        rect.origin.y  = knobRect.midY - height / 2.0
+        
+        return rect
+    }
+    
+    /**
+     Font attributes for the info text
+     */
+    var infoFontAttributes: [String: Any] {
+        let size  = CGFloat(15)
+        let color = NSColor.lightGray
+        
+        let font  = NSFont.systemFont(ofSize: size)
+        
+        return [NSFontAttributeName: font,
+                NSForegroundColorAttributeName: color]
     }
     
 }

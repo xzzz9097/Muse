@@ -230,6 +230,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             let time = value * self.song.duration
             
+            if let cell = self.songProgressSlider.cell as? SliderCell {
+                // If we are sliding, show time near TouchBar slider knob
+                cell.hasTimeInfo = touching
+                cell.timeInfo    = time.secondsToMMSSString as NSString
+            }
+            
             self.updateSongProgressSlider(with: time)
             
             self.onViewController { controller in
