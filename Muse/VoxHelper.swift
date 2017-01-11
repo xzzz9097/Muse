@@ -44,7 +44,7 @@ class VoxHelper: PlayerHelper {
     static let shared = VoxHelper()
     
     // The SBApplication object buond to the helper class
-    private let application: VoxApplication = SBApplication.init(bundleIdentifier: BundleIdentifier)!
+    private let application: VoxApplication? = SBApplication.init(bundleIdentifier: BundleIdentifier)
     
     // MARK: Player features
     
@@ -53,6 +53,8 @@ class VoxHelper: PlayerHelper {
     // MARK: Song data
     
     var song: Song {
+        guard let application = application else { return Song() }
+        
         return Song(name: application.track!,
                     artist: application.artist!,
                     album: application.album!,
@@ -62,18 +64,24 @@ class VoxHelper: PlayerHelper {
     // MARK: Playback controls
     
     func togglePlayPause() {
+        guard let application = application else { return }
+        
         application.playpause!()
         
         execPlayPauseHandler()
     }
     
     func nextTrack() {
+        guard let application = application else { return }
+        
         application.next!()
         
         trackChangedHandler(true)
     }
     
     func previousTrack() {
+        guard let application = application else { return }
+        
         application.previous!()
         
         trackChangedHandler(false)
@@ -82,6 +90,8 @@ class VoxHelper: PlayerHelper {
     // MARK: Playback status
     
     var playerState: PlayerState {
+        guard let application = application else { return .stopped}
+        
         // Return current playback status ( R/O )
         if application.playerState == .playing {
             return .playing
@@ -97,11 +107,15 @@ class VoxHelper: PlayerHelper {
     
     var playbackPosition: Double {
         set {
+            guard let application = application else { return }
+            
             // Set the position on the player
             application.setCurrentTime!(newValue)
         }
         
         get {
+            guard let application = application else { return 0 }
+            
             guard let playbackPosition = application.currentTime else { return 0 }
             
             // Return current playback position
@@ -110,6 +124,8 @@ class VoxHelper: PlayerHelper {
     }
     
     var trackDuration: Double {
+        guard let application = application else { return 0 }
+        
         guard let trackDuration = application.totalTime else { return 0 }
         
         // Return current track duration
@@ -128,11 +144,15 @@ class VoxHelper: PlayerHelper {
     
     var volume: Int {
         set {
+            guard let application = application else { return }
+            
             // Set the volume on the player
             application.setPlayerVolume!(Double(newValue))
         }
         
         get {
+            guard let application = application else { return 0 }
+            
             guard let volume = application.playerVolume else { return 0 }
             
             // Get current volume
@@ -143,6 +163,8 @@ class VoxHelper: PlayerHelper {
     
     var repeating: Bool {
         set {
+            guard let application = application else { return }
+            
             let repeating: VoxERpS = newValue ? .repeatAll : .none
             
             // Toggle repeating on the player
@@ -153,6 +175,8 @@ class VoxHelper: PlayerHelper {
         }
         
         get {
+            guard let application = application else { return false }
+            
             guard let repeating = application.repeatState else { return false }
             
             // return current repeating status
@@ -163,6 +187,8 @@ class VoxHelper: PlayerHelper {
     
     var shuffling: Bool {
         set {
+            guard let application = application else { return }
+            
             // Toggle shuffling on the player
             application.shuffle!()
             
@@ -180,6 +206,8 @@ class VoxHelper: PlayerHelper {
     // MARK: Artwork
     
     func artwork() -> Any? {
+        guard let application = application else { return nil }
+        
         return application.artworkImage
     }
     
