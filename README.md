@@ -3,8 +3,9 @@
 An open-source Spotify and Vox controller with TouchBar support and system-wide TouchBar controls (à la iTunes).
 [Demo video](https://www.youtube.com/watch?v=1hxwfGBvghg)
 
-<img src=Screenshots/Window.png width="387">
+<img src=Screenshots/Window.png width="387"><img src=Screenshots/Window2.png width="387">
 <img src=Screenshots/TouchBar.png width="545">
+<img src=Screenshots/TouchBar2.png width="545">
 
 ### Download
 [1.1 beta 1](https://github.com/xzzz9097/Muse/releases/tag/v1.1-beta.1)
