@@ -1,4 +1,4 @@
-## <img src=Muse/Assets.xcassets/AppIcon.appiconset/icon-512@2x.png width="96"> Muse
+## <img src=Muse/Assets.xcassets/AppIcon.appiconset/icon-512@2x.png width="32"> Muse
 
 An open-source Spotify and Vox controller with TouchBar support and system-wide TouchBar controls (à la iTunes).
 [Demo video](https://www.youtube.com/watch?v=1hxwfGBvghg)
