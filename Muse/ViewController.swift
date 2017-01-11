@@ -29,7 +29,7 @@ class ViewController: NSViewController {
     var autoCloseTimer:    Timer        = Timer() // The timer
     
     // Preferences
-    let shouldPeekControls = false // Hide/show controls on mouse hover
+    let shouldPeekControls = true // Hide/show controls on mouse hover
     
     // MARK: Helpers
     
