@@ -13,5 +13,5 @@ Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
 You'll be greeted with an album art window in the middle of the screen, and the playback controls on your TouchBar. Pressing the hotkey one more time makes them both disappear, and they also auto-hide when you focus another application. Bring up the window and press <kbd>command</kbd> + <kbd>q</kbd> or <kbd>esc</kbd> to quit the app.
 System-wide now playing controls are also accessible from the leftmost button of the control strip, just like iTunes and Safari ones.
 
-![Window Screenshot](Screenshots/Window.png)
-![TouchBar Screenshot](Screenshots/TouchBar.png)
+<img src=Screenshots/Window.png width="387">
+<img src=Screenshots/TouchBar.png width="545">
