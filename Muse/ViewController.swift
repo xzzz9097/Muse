@@ -263,14 +263,6 @@ class ViewController: NSViewController {
         } else if let image = object as? NSImage {
             fullSongArtworkView.image = image
         }
-        
-        // Update the colors with a completion handler
-        // This avoids blocking the main UI thread
-        fullSongArtworkView.image?.getColors(scaleDownSize: NSMakeSize(25, 25)) { colors in
-            // We also set an aggressive scaling size
-            // to optimize performace and memory usage
-            self.colorViews(with: colors)
-        }
     }
     
     func colorButtonImages(with color: NSColor) {

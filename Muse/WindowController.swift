@@ -702,10 +702,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
         // TODO: Move this elsewhere
         songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
         
-        // Set bezel color
-        // TODO: Share this colors with ViewController
-        image.getColors(scaleDownSize: NSMakeSize(10, 10)) { colors in
+        // Fetch image colors
+        // We also set an aggressive scaling size
+        // to optimize performace and memory usage
+        image.getColors(scaleDownSize: NSMakeSize(25, 25)) { colors in
+            // Set colors on TouchBar button
             self.songArtworkTitleButton.bezelColor = colors.primary.blended(withFraction: 0.5, of: .darkGray)
+
+            // Set colors on main view
+            self.onViewController { controller in
+                controller.colorViews(with: colors)
+            }
         }
     }
     
