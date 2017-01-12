@@ -85,14 +85,12 @@ class ViewController: NSViewController {
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
-            helper.scrub(to: slider.doubleValue, touching: true)
-            
-            if (currentEvent.type == .leftMouseDown) {
+            if currentEvent.type == .leftMouseDragged {
                 // Detected mouse down
-                helper.scrub(touching: true)
+                helper.scrub(to: slider.doubleValue, touching: true)
             }
             
-            if (currentEvent.type == .leftMouseUp) {
+            if currentEvent.type == .leftMouseUp {
                 // Detected mouse up
                 helper.scrub(to: slider.doubleValue)
             }

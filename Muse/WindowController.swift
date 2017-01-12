@@ -98,14 +98,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
-            helper.scrub(to: slider.doubleValue, touching: true)
-            
-            for _ in (currentEvent.touches(matching: NSTouchPhase.began, in: slider)) {
+            for _ in currentEvent.touches(matching: .touching, in: slider) {
                 // Detected touch phase start
-                helper.scrub(touching: true)
+                helper.scrub(to: slider.doubleValue, touching: true)
             }
             
-            for _ in (currentEvent.touches(matching: NSTouchPhase.ended, in: slider)) {
+            for _ in currentEvent.touches(matching: .ended, in: slider) {
                 // Detected touch phase end
                 helper.scrub(to: slider.doubleValue)
             }
