@@ -98,9 +98,15 @@ class WindowController: NSWindowController, NSWindowDelegate {
         if let slider = sender as? NSSlider {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
-            for _ in currentEvent.touches(matching: .touching, in: slider) {
-                // Detected touch phase start
-                helper.scrub(to: slider.doubleValue, touching: true)
+            for event in currentEvent.touches(matching: .touching, in: slider) {
+                if event.isOutOfXBounds(of: slider) {
+                    // Check if we're out of slider x bounds
+                    // If so, terminate slide
+                    helper.scrub(to: slider.doubleValue)
+                } else {
+                    // Detected touch phase start
+                    helper.scrub(to: slider.doubleValue, touching: true)
+                }
             }
             
             for _ in currentEvent.touches(matching: .ended, in: slider) {
