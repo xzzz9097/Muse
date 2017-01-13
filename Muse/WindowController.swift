@@ -99,7 +99,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
             for event in currentEvent.touches(matching: .touching, in: slider) {
-                if event.isOutOfXBounds(of: slider) {
+                if event.isGoingOutOfXBounds(of: slider) {
                     // Check if we're out of slider x bounds
                     // If so, terminate slide
                     helper.scrub(to: slider.doubleValue)

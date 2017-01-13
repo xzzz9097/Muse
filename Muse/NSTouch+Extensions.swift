@@ -24,17 +24,17 @@ extension NSTouch {
      - parameter view: the view that we're touching
      - returns: if the touches are going out of the view
      */
-    func isOutOfXBounds(of view: NSView?) -> Bool {
+    func isGoingOutOfXBounds(of view: NSView?) -> Bool {
         guard let view = view else { return false }
         
-        return isOutOfXLowerBound(of: view) || isOutOfXUpperBound(of: view)
+        return isGoingOutOfXLowerBound(of: view) || isGoingOutOfXUpperBound(of: view)
     }
     
-    func isOutOfXLowerBound(of view: NSView) -> Bool {
+    func isGoingOutOfXLowerBound(of view: NSView) -> Bool {
         return self.location(in: view).x < xBoundsThreshold
     }
     
-    func isOutOfXUpperBound(of view: NSView) -> Bool {
+    func isGoingOutOfXUpperBound(of view: NSView) -> Bool {
         return self.location(in: view).x > view.bounds.maxX - xBoundsThreshold
     }
     
