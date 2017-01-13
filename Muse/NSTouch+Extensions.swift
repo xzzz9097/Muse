@@ -13,7 +13,7 @@ extension NSTouch {
     
     // The maximum X treshold for considering
     // the touch out of bounds
-    var xBoundsThreshold: CGFloat { return 10 }
+    static let xBoundsThreshold: CGFloat = 15
     
     // MARK: Extended functions
     
@@ -31,11 +31,11 @@ extension NSTouch {
     }
     
     func isGoingOutOfXLowerBound(of view: NSView) -> Bool {
-        return self.location(in: view).x < xBoundsThreshold
+        return self.location(in: view).x < NSTouch.xBoundsThreshold
     }
     
     func isGoingOutOfXUpperBound(of view: NSView) -> Bool {
-        return self.location(in: view).x > view.bounds.maxX - xBoundsThreshold
+        return self.location(in: view).x > view.bounds.maxX - NSTouch.xBoundsThreshold
     }
     
 }
