@@ -13,7 +13,7 @@ extension NSTouch {
     
     // The maximum X treshold for considering
     // the touch out of bounds
-    static let xBoundsThreshold: CGFloat = 15
+    static let xBoundsThreshold: CGFloat = 25
     
     // MARK: Extended functions
     

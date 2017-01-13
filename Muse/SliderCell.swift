@@ -69,6 +69,15 @@ class SliderCell: NSSliderCell {
     // Time info
     var timeInfo: NSString = ""
     
+    // Info bar sizes
+    let infoHeight: CGFloat = 20.0
+    let infoWidth : CGFloat = 70.0
+    
+    // Info bar font attributes
+    let infoColor       = NSColor.lightGray
+    let infoFont        = NSFont.systemFont(ofSize: 17)
+    let paraghraphStyle = NSMutableParagraphStyle()
+    
     /**
      Draw the bars, setting custom height, colors and radius
      */
@@ -103,21 +112,24 @@ class SliderCell: NSSliderCell {
      Draw the knob
      */
     override func drawKnob(_ knobRect: NSRect) {
-        guard   let image = self.knobImage,
-                let flipped = self.controlView?.isFlipped
-        else {
+        guard let flipped = self.controlView?.isFlipped else {
             super.drawKnob(knobRect)
             return
         }
         
         let rect = self.knobRect(flipped: flipped)
         
+        if hasTimeInfo { drawInfo(near: rect) }
+        
+        guard let image = self.knobImage else {
+            super.drawKnob(knobRect)
+            return
+        }
+        
         // Determine wheter the knob will be visible
         let fraction: CGFloat = knobVisible ? 1.0 : 0.0
         
         image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
-        
-        if hasTimeInfo { drawInfo(near: rect) }
     }
     
     /**
@@ -152,7 +164,8 @@ class SliderCell: NSSliderCell {
      Draws the specified 'timeInfo' text near the knob
      */
     func drawInfo(near knobRect: NSRect) {
-        timeInfo.draw(in: infoRect(near: knobRect), withAttributes: infoFontAttributes)
+        timeInfo.draw(in: infoRect(near: knobRect),
+                      withAttributes: infoFontAttributes(for: knobRect))
     }
     
     /**
@@ -163,31 +176,33 @@ class SliderCell: NSSliderCell {
         
         // Sets dimensions the rect
         // TODO: Adapt this to given text
-        let margin = CGFloat(20)
-        let width  = CGFloat(35) + margin
-        let height = CGFloat(20)
-        
-        rect.size.width  = width
+        rect.size.width  = infoWidth + knobRect.width
         rect.size.height = height
         
         // Set correct position (left or right the knob, centered vertically)
-        rect.origin.x += rect.origin.x > width ? -width : margin
+        rect.origin.x += shouldInfoBeLeft(of: knobRect) ? -infoWidth : 0
         rect.origin.y  = knobRect.midY - height / 2.0
         
         return rect
     }
     
     /**
+     Determines whether info view should be drawn on lhs or rhs,
+     based on space availability before the knob rect
+     */
+    func shouldInfoBeLeft(of knobRect: NSRect) -> Bool {
+        return knobRect.origin.x > infoWidth
+    }
+    
+    /**
      Font attributes for the info text
      */
-    var infoFontAttributes: [String: Any] {
-        let size  = CGFloat(17)
-        let color = NSColor.lightGray
+    func infoFontAttributes(for rect: NSRect) -> [String: Any] {
+        paraghraphStyle.alignment = shouldInfoBeLeft(of: rect) ? .left : .right
         
-        let font  = NSFont.systemFont(ofSize: size)
-        
-        return [NSFontAttributeName: font,
-                NSForegroundColorAttributeName: color]
+        return [NSFontAttributeName: infoFont,
+                NSForegroundColorAttributeName: infoColor,
+                NSParagraphStyleAttributeName: paraghraphStyle]
     }
     
 }

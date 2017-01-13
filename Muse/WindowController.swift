@@ -99,10 +99,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
             guard let currentEvent = NSApplication.shared().currentEvent else { return }
             
             for event in currentEvent.touches(matching: .touching, in: slider) {
-                if event.isGoingOutOfXBounds(of: slider) {
-                    // Check if we're out of slider x bounds
-                    // If so, terminate slide
-                    helper.scrub(to: slider.doubleValue)
+                if event.isGoingOutOfXLowerBound(of: slider) {
+                    // Too far left in the slider -> jump to start
+                    helper.scrub(to: 0)
+                } else if event.isGoingOutOfXUpperBound(of: slider) {
+                    // Too far right in the slider -> jump to end
+                    helper.scrub(to: 1)
                 } else {
                     // Detected touch phase start
                     helper.scrub(to: slider.doubleValue, touching: true)
@@ -236,6 +238,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             if let cell = self.songProgressSlider.cell as? SliderCell {
                 // If we are sliding, show time near TouchBar slider knob
+                cell.knobImage   = touching ? nil : .playhead
                 cell.hasTimeInfo = touching
                 cell.timeInfo    = time.secondsToMMSSString as NSString
             }
