@@ -46,25 +46,21 @@ class ViewController: NSViewController {
     
     // MARK: Outlets
 
-    @IBOutlet weak var fullSongArtworkView: ImageView!
-    
-    @IBOutlet weak var titleLabelView: NSTextField!
-    @IBOutlet weak var albumArtistLabelView: NSTextField!
-    
-    @IBOutlet weak var previousTrackButton: NSButton!
+    @IBOutlet weak var fullSongArtworkView:   ImageView!
+    @IBOutlet weak var titleLabelView:        NSTextField!
+    @IBOutlet weak var albumArtistLabelView:  NSTextField!
+    @IBOutlet weak var previousTrackButton:   NSButton!
     @IBOutlet weak var togglePlayPauseButton: NSButton!
-    @IBOutlet weak var nextTrackButton: NSButton!
-    
-    @IBOutlet weak var songProgressSlider: NSSlider!
-    
-    @IBOutlet weak var actionImageView: NSImageView!
-    @IBOutlet weak var actionTextField: NSTextField!
+    @IBOutlet weak var nextTrackButton:       NSButton!
+    @IBOutlet weak var songProgressSlider:    NSSlider!
+    @IBOutlet weak var actionImageView:       NSImageView!
+    @IBOutlet weak var actionTextField:       NSTextField!
     
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
-    var controlsSuperview: NSView!
-    var actionSuperview: NSView!
+    var controlsSuperview:         NSView!
+    var actionSuperview:           NSView!
     
     // MARK: Actions
     

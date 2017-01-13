@@ -71,7 +71,7 @@ class SliderCell: NSSliderCell {
     
     // Info bar sizes
     let infoHeight: CGFloat = 20.0
-    let infoWidth : CGFloat = 70.0
+    let infoWidth:  CGFloat = 70.0
     
     // Info bar font attributes
     let infoColor       = NSColor.lightGray

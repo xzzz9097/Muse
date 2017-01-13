@@ -46,15 +46,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
 
     // MARK: Outlets
     
-    @IBOutlet weak var songArtworkTitleButton: NSButton!
-    @IBOutlet weak var songProgressSlider: NSSlider!
-    
-    @IBOutlet weak var controlsSegmentedView: NSSegmentedControl!
-    
-    @IBOutlet weak var soundPopoverButton: NSPopoverTouchBarItem!
-    
-    @IBOutlet weak var soundSlider: NSSliderTouchBarItem!
-    
+    @IBOutlet weak var songArtworkTitleButton:     NSButton!
+    @IBOutlet weak var songProgressSlider:         NSSlider!
+    @IBOutlet weak var controlsSegmentedView:      NSSegmentedControl!
+    @IBOutlet weak var soundPopoverButton:         NSPopoverTouchBarItem!
+    @IBOutlet weak var soundSlider:                NSSliderTouchBarItem!
     @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
     
     var isSliding = false
