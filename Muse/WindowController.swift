@@ -94,27 +94,25 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func progressSliderValueChanged(_ sender: Any) {
-        // Track progress slider changes
-        if let slider = sender as? NSSlider {
-            guard let currentEvent = NSApplication.shared().currentEvent else { return }
-            
-            for event in currentEvent.touches(matching: .touching, in: slider) {
-                if event.isGoingOutOfXLowerBound(of: slider) {
-                    // Too far left in the slider -> jump to start
-                    helper.scrub(to: 0)
-                } else if event.isGoingOutOfXUpperBound(of: slider) {
-                    // Too far right in the slider -> jump to end
-                    helper.scrub(to: 1)
-                } else {
-                    // Detected touch phase start
-                    helper.scrub(to: slider.doubleValue, touching: true)
-                }
+        guard   let slider = sender as? NSSlider,
+                let currentEvent = NSApplication.shared().currentEvent else { return }
+        
+        for event in currentEvent.touches(matching: .touching, in: slider) {
+            if event.isGoingOutOfXLowerBound(of: slider) {
+                // Too far left in the slider -> jump to start
+                helper.scrub(to: 0)
+            } else if event.isGoingOutOfXUpperBound(of: slider) {
+                // Too far right in the slider -> jump to end
+                helper.scrub(to: 1)
+            } else {
+                // Detected touch phase start
+                helper.scrub(to: slider.doubleValue, touching: true)
             }
-            
-            for _ in currentEvent.touches(matching: .ended, in: slider) {
-                // Detected touch phase end
-                helper.scrub(to: slider.doubleValue)
-            }
+        }
+        
+        for _ in currentEvent.touches(matching: .ended, in: slider) {
+            // Detected touch phase end
+            helper.scrub(to: slider.doubleValue)
         }
     }
     
