@@ -43,6 +43,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     let kShouldSetTitleOnMenuBar = true
     // Constant for setting menu title length
     let kMenuItemMaximumLength = 20
+    // Constant for TouchBar slider bounds
+    let xSliderBoundsThreshold: CGFloat = 25
 
     // MARK: Outlets
     
@@ -94,12 +96,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 let currentEvent = NSApplication.shared().currentEvent else { return }
         
         for event in currentEvent.touches(matching: .touching, in: slider) {
-            if event.isGoingOutOfXLowerBound(of: slider) {
+            if event.isGoingOutOfXLowerBound(of: slider, with: xSliderBoundsThreshold) {
                 // Too far left in the slider -> jump to start
                 helper.scrub(to: 0)
-            } else if event.isGoingOutOfXUpperBound(of: slider) {
+            } else if event.isGoingOutOfXUpperBound(of: slider, with: xSliderBoundsThreshold) {
                 // Too far right in the slider -> jump to end
-                helper.scrub(to: 1)
+                helper.scrub(to: 0.99)
             } else {
                 // Detected touch phase start
                 helper.scrub(to: slider.doubleValue, touching: true)
