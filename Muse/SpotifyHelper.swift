@@ -12,29 +12,34 @@ import ScriptingBridge
 // These props. and funcs. are set to optional in order
 // to be overridded and implemented by the bridge itself
 @objc fileprivate protocol SpotifyApplication {
+    // Track properties
     @objc optional var currentTrack: SpotifyTrack { get }
-    @objc optional var playerPosition: Double { get }
-    @objc optional var playerState: SpotifyEPlS { get }
-    @objc optional var soundVolume: Int { get }
-    @objc optional var repeating: Bool { get }
-    @objc optional var shuffling: Bool { get }
     
+    // Playback properties
+    @objc optional var playerPosition: Double { get }
+    @objc optional var playerState:    SpotifyEPlS { get }
+    @objc optional var soundVolume:    Int { get }
+    @objc optional var repeating:      Bool { get }
+    @objc optional var shuffling:      Bool { get }
+    
+    // Playback control functions
     @objc optional func playpause()
     @objc optional func nextTrack()
     @objc optional func previousTrack()
     
+    // Playback properties - setters
     @objc optional func setPlayerPosition(_ position: Double)
-    @objc optional func setSoundVolume(_ volume: Int)
-    @objc optional func setRepeating(_ repeating: Bool)
-    @objc optional func setShuffling(_ shuffling: Bool)
+    @objc optional func setSoundVolume   (_ volume: Int)
+    @objc optional func setRepeating     (_ repeating: Bool)
+    @objc optional func setShuffling     (_ shuffling: Bool)
 }
 
 // Protocol for Spotify track object
 @objc fileprivate protocol SpotifyTrack {
-    @objc optional var name: String { get }
-    @objc optional var artist: String { get }
-    @objc optional var album: String { get }
-    @objc optional var duration: Int { get }
+    @objc optional var name:       String { get }
+    @objc optional var artist:     String { get }
+    @objc optional var album:      String { get }
+    @objc optional var duration:   Int { get }
     @objc optional var artworkUrl: String { get }
 }
 

@@ -8,39 +8,49 @@
 
 import ScriptingBridge
 
+// Protocol for iTunes application queries
 @objc fileprivate protocol iTunesApplication {
+    // Track properties
     @objc optional var currentTrack: iTunesTrack { get }
+    
+    // Playback properties
     @objc optional var playerPosition: Double { get }
-    @objc optional var playerState: iTunesEPlS { get }
-    @objc optional var soundVolume: Int { get }
-    @objc optional var songRepeat: iTunesERpt { get }
+    @objc optional var playerState:    iTunesEPlS { get }
+    @objc optional var soundVolume:    Int { get }
+    @objc optional var songRepeat:     iTunesERpt { get }
     @objc optional var shuffleEnabled: Bool { get }
     
+    // Playback control functions
     @objc optional func playpause()
     @objc optional func nextTrack()
     @objc optional func previousTrack()
     
+    // Playback properties - setters
     @objc optional func setPlayerPosition(_ position: Double)
-    @objc optional func setSoundVolume(_ volume: Int)
-    @objc optional func setSongRepeat(_ songRepeat: iTunesERpt)
+    @objc optional func setSoundVolume   (_ volume: Int)
+    @objc optional func setSongRepeat    (_ songRepeat: iTunesERpt)
     @objc optional func setShuffleEnabled(_ shuffleEnabled: Bool)
 }
 
+// Protocol for iTunes track object
 @objc fileprivate protocol iTunesTrack {
-    @objc optional var name: String { get }
-    @objc optional var artist: String { get }
-    @objc optional var album: String { get }
+    @objc optional var name:     String { get }
+    @objc optional var artist:   String { get }
+    @objc optional var album:    String { get }
     @objc optional var duration: Double { get }
     @objc optional var artworks: [iTunesArtwork] { get }
 }
 
+// Protocol for iTunes artwork object
+// Every track provides an array of artworks
 @objc fileprivate protocol iTunesArtwork {
-    @objc optional var data: NSImage { get }
+    @objc optional var data:        NSImage { get }
     @objc optional var description: String { get }
 }
 
 extension SBObject: iTunesArtwork { }
 
+// Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }
 
 class iTunesHelper: PlayerHelper {

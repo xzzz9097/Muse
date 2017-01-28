@@ -10,17 +10,17 @@ import ScriptingBridge
 
 @objc fileprivate protocol VoxApplication {
     // Track properties
-    @objc optional var track: String { get }
-    @objc optional var artist: String { get }
-    @objc optional var album: String { get }
-    @objc optional var totalTime: Double { get }
+    @objc optional var track:        String { get }
+    @objc optional var artist:       String { get }
+    @objc optional var album:        String { get }
+    @objc optional var totalTime:    Double { get }
     @objc optional var artworkImage: NSImage { get }
     
     // Playback properties
-    @objc optional var currentTime: Double { get }
-    @objc optional var playerState: VoxEPlS { get }
+    @objc optional var currentTime:  Double { get }
+    @objc optional var playerState:  VoxEPlS { get }
     @objc optional var playerVolume: Double { get }
-    @objc optional var repeatState: VoxERpS { get }
+    @objc optional var repeatState:  VoxERpS { get }
     
     // Playback control functions
     @objc optional func playpause()
@@ -29,10 +29,10 @@ import ScriptingBridge
     @objc optional func shuffle()
     
     // Playback properties - setters
-    @objc optional func setCurrentTime(_ time: Double)
-    @objc optional func setPlayerState(_ state: VoxEPlS)
+    @objc optional func setCurrentTime (_ time: Double)
+    @objc optional func setPlayerState (_ state: VoxEPlS)
     @objc optional func setPlayerVolume(_ volume: Double)
-    @objc optional func setRepeatState(_ state: VoxERpS)
+    @objc optional func setRepeatState (_ state: VoxERpS)
 }
 
 // Protocols will implemented and populated through here
