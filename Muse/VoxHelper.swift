@@ -20,7 +20,7 @@ import ScriptingBridge
     @objc optional var currentTime:  Double { get }
     @objc optional var playerState:  VoxEPlS { get }
     @objc optional var playerVolume: Double { get }
-    @objc optional var repeatState:  VoxERpS { get }
+    @objc optional var repeatState:  VoxERpt { get }
     
     // Playback control functions
     @objc optional func playpause()
@@ -32,7 +32,7 @@ import ScriptingBridge
     @objc optional func setCurrentTime (_ time: Double)
     @objc optional func setPlayerState (_ state: VoxEPlS)
     @objc optional func setPlayerVolume(_ volume: Double)
-    @objc optional func setRepeatState (_ state: VoxERpS)
+    @objc optional func setRepeatState (_ state: VoxERpt)
 }
 
 // Protocols will implemented and populated through here
@@ -165,7 +165,7 @@ class VoxHelper: PlayerHelper {
         set {
             guard let application = application else { return }
             
-            let repeating: VoxERpS = newValue ? .repeatAll : .none
+            let repeating: VoxERpt = newValue ? .repeatAll : .none
             
             // Toggle repeating on the player
             application.setRepeatState!(repeating)

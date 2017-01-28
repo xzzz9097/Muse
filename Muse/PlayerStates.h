@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, VoxEPlS) {
 };
 
 /* Vox repeat states enum */
-typedef NS_ENUM(NSInteger, VoxERpS) {
+typedef NS_ENUM(NSInteger, VoxERpt) {
     none = 0,
     repeatOne = 1,
     repeatAll = 2
