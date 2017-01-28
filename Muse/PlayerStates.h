@@ -32,4 +32,20 @@ typedef NS_ENUM(NSInteger, VoxERpS) {
     repeatAll = 2
 };
 
+/* iTunes player states enum */
+typedef enum {
+    iTunesEPlSStopped = 'kPSS',
+    iTunesEPlSPlaying = 'kPSP',
+    iTunesEPlSPaused = 'kPSp',
+    iTunesEPlSFastForwarding = 'kPSF',
+    iTunesEPlSRewinding = 'kPSR'
+} iTunesEPlS;
+
+/* iTunes repeat states enum */
+typedef enum {
+    iTunesERptOff = 'kRpO',
+    iTunesERptOne = 'kRp1',
+    iTunesERptAll = 'kAll'
+} iTunesERpt;
+
 #endif /* PlayerStates_h */

@@ -151,6 +151,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
             setPlayerHelper(to: .spotify)
             return
         case kVK_ANSI_2:
+            setPlayerHelper(to: .itunes)
+        case kVK_ANSI_3:
             setPlayerHelper(to: .vox)
         default:
             super.keyDown(with: event)
@@ -441,8 +443,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func isClosing(with notification: NSNotification) -> Bool {
-        // This is only for Spotify!
-        guard notification.name.rawValue == SpotifyHelper.rawTrackChangedNotification else { return false }
+        // This is only for Spotify and iTunes!
+        // TODO: Find a way to let iTunes close without reopening
+        //       even if it sends a complete notification
+        guard   notification.name.rawValue == SpotifyHelper.rawTrackChangedNotification ||
+                notification.name.rawValue == iTunesHelper.rawTrackChangedNotification
+        else { return false }
         
         guard let userInfo = notification.userInfo else { return true }
         
