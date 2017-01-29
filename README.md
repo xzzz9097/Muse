@@ -14,3 +14,15 @@ An open-source Spotify and Vox controller with TouchBar support and system-wide 
 Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
 You'll be greeted with an album art window in the middle of the screen, and the playback controls on your TouchBar. Pressing the hotkey one more time makes them both disappear, and they also auto-hide when you focus another application. Bring up the window and press <kbd>command</kbd> + <kbd>q</kbd> or <kbd>esc</kbd> to quit the app.
 System-wide now playing controls are also accessible from the leftmost button of the control strip, just like iTunes and Safari ones.
+
+### Keyboard shortcuts
+Several handy shortcuts are provided when the popup window is open:
+
+|                Keystroke                |        Action         |
+|:---------------------------------------:|:---------------------:|
+|    <kbd>s</kbd> and <kbd>space</kbd>    |   toggle play/pause   |
+| <kbd>a</kbd> and <kbd>left arrow</kbd>  |    previous track     |
+| <kbd>d</kbd> and <kbd>right arrow</kbd> |      next track       |
+|              <kbd>w</kbd>               | focuses player window |
+|              <kbd>r</kbd>               |   toggles repeating   |
+|              <kbd>x</kbd>               |   toggles shuffling   |
