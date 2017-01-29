@@ -26,3 +26,7 @@ Several handy shortcuts are provided when the popup window is open:
 |              <kbd>w</kbd>               | focuses player window |
 |              <kbd>r</kbd>               |   toggles repeating   |
 |              <kbd>x</kbd>               |   toggles shuffling   |
+
+### Libraries
+- [NSImageColors](https://github.com/xzzz9097/NSImageColors) by @jathu
+- [DDHotKey](https://github.com/davedelong/DDHotKey) by @davedelong
