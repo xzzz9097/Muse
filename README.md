@@ -8,7 +8,7 @@ An open-source Spotify and Vox controller with TouchBar support and system-wide 
 <img src=Screenshots/TouchBar2.png width="1094">
 
 ### Download
-[1.1 beta 1](https://github.com/xzzz9097/Muse/releases/tag/v1.1-beta.1)
+[1.1 beta 2](https://github.com/xzzz9097/Muse/releases/tag/v1.1-beta.2)
 
 ### Usage
 Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
