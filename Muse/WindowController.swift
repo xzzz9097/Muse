@@ -463,7 +463,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
             // TODO: find a way to make it work when closing from playing state
             guard   let name = userInfo[iTunesNotificationTrackName]    as? String,
                     let state = userInfo[iTunesNotificationPlayerState] as? String
-            else { return false }
+            else { return userInfo.count < 2 }
             
             return  name == self.song.name &&
                     (state == iTunesNotificationPlayerStatePlaying) == isUIPlaying
