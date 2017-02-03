@@ -45,6 +45,12 @@ class WindowController: NSWindowController, NSWindowDelegate {
     let kMenuItemMaximumLength = 20
     // Constant for TouchBar slider bounds
     let xSliderBoundsThreshold: CGFloat = 25
+    
+    // iTunes notification fields
+    // TODO: move this in a better place
+    let iTunesNotificationTrackName          = "Name"
+    let iTunesNotificationPlayerState        = "Player State"
+    let iTunesNotificationPlayerStatePlaying = "Playing"
 
     // MARK: Outlets
     
@@ -443,18 +449,27 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func isClosing(with notification: NSNotification) -> Bool {
-        // This is only for Spotify and iTunes!
-        // TODO: Find a way to let iTunes close without reopening
-        //       even if it sends a complete notification
-        guard   notification.name.rawValue == SpotifyHelper.rawTrackChangedNotification ||
-                notification.name.rawValue == iTunesHelper.rawTrackChangedNotification
-        else { return false }
-        
         guard let userInfo = notification.userInfo else { return true }
         
-        // If the notification has only one item
-        // that's the PlayerStateStopped -> player is closing
-        return userInfo.count < 2
+        // This is only for Spotify and iTunes!
+        if notification.name.rawValue == SpotifyHelper.rawTrackChangedNotification {
+            // If the notification has only one item
+            // that's the PlayerStateStopped -> player is closing
+            return userInfo.count < 2
+        } else if notification.name.rawValue == iTunesHelper.rawTrackChangedNotification {
+            // For iTunes, since it sends a complete notification
+            // we must check its content is somehow different from
+            // last saved state (the one UI has)
+            // TODO: find a way to make it work when closing from playing state
+            guard   let name = userInfo[iTunesNotificationTrackName]    as? String,
+                    let state = userInfo[iTunesNotificationPlayerState] as? String
+            else { return false }
+            
+            return  name == self.song.name &&
+                    (state == iTunesNotificationPlayerStatePlaying) == isUIPlaying
+        }
+        
+        return false
     }
     
     func hookNotification(notification: NSNotification) {
