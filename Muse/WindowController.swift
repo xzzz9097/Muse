@@ -449,7 +449,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func isClosing(with notification: NSNotification) -> Bool {
-        guard let userInfo = notification.userInfo else { return true }
+        guard let userInfo = notification.userInfo else { return false }
         
         // This is only for Spotify and iTunes!
         if notification.name.rawValue == SpotifyHelper.rawTrackChangedNotification {
