@@ -12,6 +12,7 @@
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
 		0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E94F71E214A02000E0013 /* Double+Extensions.swift */; };
 		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
+		0C8E3BC11E3CC43900C8EBD1 /* iTunesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */; };
 		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
 		0C9A60C71DE75DCC0051CDC6 /* Imageable+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */; };
 		0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */; };
@@ -115,6 +116,7 @@
 		0C676BD41DF443AD00B75164 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0C676BD61DF443C900B75164 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WindowController+RemoteCommandCenter.swift"; sourceTree = "<group>"; };
+		0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesHelper.swift; sourceTree = "<group>"; };
 		0C9A60BD1DE6071F0051CDC6 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Imageable+Download.swift"; sourceTree = "<group>"; };
 		0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -241,6 +243,7 @@
 				0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */,
 				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
 				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
+				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
 				0C9B62321E1EAE9100660633 /* ButtonCell.swift */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
@@ -500,6 +503,7 @@
 				0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */,
 				0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */,
 				0CFF46971DE383A300A3BE8E /* SpotifyHelper.swift in Sources */,
+				0C8E3BC11E3CC43900C8EBD1 /* iTunesHelper.swift in Sources */,
 				0C9A60C71DE75DCC0051CDC6 /* Imageable+Download.swift in Sources */,
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */,

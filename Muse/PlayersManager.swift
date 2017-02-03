@@ -9,6 +9,7 @@
 // Available players
 enum PlayerID {
     case spotify
+    case itunes
     case vox
 }
 
@@ -31,6 +32,7 @@ class PlayersManager {
     
     // The players dictionary
     private let players: PlayersDictionary = [.spotify: SpotifyHelper.shared,
+                                              .itunes: iTunesHelper.shared,
                                               .vox: VoxHelper.shared]
     
     // MARK: Interaction functions
