@@ -39,6 +39,7 @@
 		0CFF46871DE3826300A3BE8E /* MuseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46861DE3826300A3BE8E /* MuseUITests.swift */; };
 		0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46941DE382BA00A3BE8E /* WindowController.swift */; };
 		0CFF46971DE383A300A3BE8E /* SpotifyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */; };
+		FD9F763CA855EFBC8846FCDC /* Pods_Muse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BDC604CADA41563E00527AC /* Pods_Muse.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,9 @@
 		0CFF46881DE3826300A3BE8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0CFF46941DE382BA00A3BE8E /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyHelper.swift; sourceTree = "<group>"; };
+		1E0C322245B2C90A7AFF4109 /* Pods-Muse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Muse.release.xcconfig"; path = "Pods/Target Support Files/Pods-Muse/Pods-Muse.release.xcconfig"; sourceTree = "<group>"; };
+		6BDC604CADA41563E00527AC /* Pods_Muse.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Muse.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A357F95C2564CE8DFC96DBCC /* Pods-Muse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Muse.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Muse/Pods-Muse.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 			files = (
 				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
+				FD9F763CA855EFBC8846FCDC /* Pods_Muse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +226,7 @@
 				0CFF46851DE3826300A3BE8E /* MuseUITests */,
 				0CFF46671DE3826300A3BE8E /* Products */,
 				7E9AA20CAC9772D1BED5DCE5 /* Frameworks */,
+				13E90AB099C71FADF4FD0063 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -288,6 +294,15 @@
 			path = MuseUITests;
 			sourceTree = "<group>";
 		};
+		13E90AB099C71FADF4FD0063 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A357F95C2564CE8DFC96DBCC /* Pods-Muse.debug.xcconfig */,
+				1E0C322245B2C90A7AFF4109 /* Pods-Muse.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7E9AA20CAC9772D1BED5DCE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +313,7 @@
 				0C9A60CA1DE76F990051CDC6 /* Quartz.framework */,
 				0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */,
 				0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */,
+				6BDC604CADA41563E00527AC /* Pods_Muse.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -309,9 +325,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0CFF468B1DE3826300A3BE8E /* Build configuration list for PBXNativeTarget "Muse" */;
 			buildPhases = (
+				7EA399383C680EA91AECE5D3 /* [CP] Check Pods Manifest.lock */,
 				0CFF46621DE3826300A3BE8E /* Sources */,
 				0CFF46631DE3826300A3BE8E /* Frameworks */,
 				0CFF46641DE3826300A3BE8E /* Resources */,
+				1A4CC0C78FE35E1A8380752A /* [CP] Embed Pods Frameworks */,
+				F4864ADC8C3C6DC2FFECCE72 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -491,6 +510,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1A4CC0C78FE35E1A8380752A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7EA399383C680EA91AECE5D3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F4864ADC8C3C6DC2FFECCE72 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Muse/Pods-Muse-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0CFF46621DE3826300A3BE8E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -662,6 +729,7 @@
 		};
 		0CFF468C1DE3826300A3BE8E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A357F95C2564CE8DFC96DBCC /* Pods-Muse.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -678,6 +746,7 @@
 		};
 		0CFF468D1DE3826300A3BE8E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1E0C322245B2C90A7AFF4109 /* Pods-Muse.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
