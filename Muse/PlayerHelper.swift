@@ -65,6 +65,10 @@ protocol PlayerHelper {
     
     func artwork() -> Any?
     
+    // MARK: Starring
+    
+    var starred: Bool { set get }
+    
     // MARK: Callbacks
     
     var playPauseHandler: () -> () { set get }
@@ -127,6 +131,14 @@ extension PlayerHelper {
         
         // Returns the icon of the player application
         return NSWorkspace.shared().icon(forFile: path)
+    }
+    
+    // MARK: Starring
+    
+    var starred: Bool {
+        set { }
+        
+        get { return false }
     }
     
     // MARK: Callback executors
