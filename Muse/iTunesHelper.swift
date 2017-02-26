@@ -11,7 +11,7 @@ import ScriptingBridge
 // Protocol for iTunes application queries
 @objc fileprivate protocol iTunesApplication {
     // Track properties
-    @objc optional var currentTrack: iTunesTrack { get }
+    @objc optional var currentTrack: iTunesTrackProtocol { get }
     
     // Playback properties
     @objc optional var playerPosition: Double { get }
@@ -33,22 +33,22 @@ import ScriptingBridge
 }
 
 // Protocol for iTunes track object
-@objc fileprivate protocol iTunesTrack {
+@objc fileprivate protocol iTunesTrackProtocol {
     @objc optional var name:     String { get }
     @objc optional var artist:   String { get }
     @objc optional var album:    String { get }
     @objc optional var duration: Double { get }
-    @objc optional var artworks: [iTunesArtwork] { get }
+    @objc optional var artworks: [iTunesArtworkProtocol] { get }
 }
 
 // Protocol for iTunes artwork object
 // Every track provides an array of artworks
-@objc fileprivate protocol iTunesArtwork {
+@objc fileprivate protocol iTunesArtworkProtocol {
     @objc optional var data:        NSImage { get }
     @objc optional var description: String { get }
 }
 
-extension SBObject: iTunesArtwork { }
+extension SBObject: iTunesArtworkProtocol { }
 
 // Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }

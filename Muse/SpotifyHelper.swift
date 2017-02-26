@@ -13,7 +13,7 @@ import ScriptingBridge
 // to be overridded and implemented by the bridge itself
 @objc fileprivate protocol SpotifyApplication {
     // Track properties
-    @objc optional var currentTrack: SpotifyTrack { get }
+    @objc optional var currentTrack: SpotifyTrackProtocol { get }
     
     // Playback properties
     @objc optional var playerPosition: Double { get }
@@ -35,7 +35,7 @@ import ScriptingBridge
 }
 
 // Protocol for Spotify track object
-@objc fileprivate protocol SpotifyTrack {
+@objc fileprivate protocol SpotifyTrackProtocol {
     @objc optional var name:       String { get }
     @objc optional var artist:     String { get }
     @objc optional var album:      String { get }
