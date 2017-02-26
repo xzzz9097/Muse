@@ -241,7 +241,6 @@ class iTunesHelper: PlayerHelper {
     
     // MARK: Starring
     
-    // TODO: Untested!
     var starred: Bool {
         set {
             guard   let application = application,

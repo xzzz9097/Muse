@@ -153,6 +153,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
             helper.shuffling = !helper.shuffling
         case kVK_ANSI_R:
             helper.repeating = !helper.repeating
+        case kVK_ANSI_L:
+            if helper.supportsStarring { helper.starred = !helper.starred }
         case kVK_ANSI_1:
             setPlayerHelper(to: .spotify)
             return
