@@ -29,6 +29,8 @@ protocol PlayerHelper {
     
     var doesSendPlayPauseNotification: Bool { get }
     
+    var supportsStarring: Bool { get }
+    
     // MARK: Song data
     
     var song: Song { get }

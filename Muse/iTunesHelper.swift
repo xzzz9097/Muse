@@ -65,6 +65,8 @@ class iTunesHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = true
     
+    let supportsStarring = false
+    
     // MARK: Song data
     
     var song: Song {

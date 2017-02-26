@@ -50,6 +50,8 @@ class VoxHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = false
     
+    let supportsStarring = false
+    
     // MARK: Song data
     
     var song: Song {
