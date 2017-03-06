@@ -45,7 +45,7 @@ extension WindowController {
     func prepareRemoteCommandCenter() {
         // Play/pause toggle
         remoteCommandCenter.playCommand.activate(self, action: #selector(togglePlayPause(event:)))
-        remoteCommandCenter.pauseCommand.activate(self, action: #selector(togglePlayPause(event:)))
+        remoteCommandCenter.togglePlayPauseCommand.activate((self), action:#selector(togglePlayPause(event:)))
         
         // Previous/next track toggle
         // Apparently these work only on 10.12.2+
