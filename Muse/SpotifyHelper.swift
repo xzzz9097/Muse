@@ -23,6 +23,8 @@ import ScriptingBridge
     @objc optional var shuffling:      Bool { get }
     
     // Playback control functions
+    @objc optional func play()
+    @objc optional func pause()
     @objc optional func playpause()
     @objc optional func nextTrack()
     @objc optional func previousTrack()
@@ -72,6 +74,18 @@ class SpotifyHelper: PlayerHelper {
     }
     
     // MARK: Playback controls
+    
+    func play() {
+        guard let application = application else { return }
+        
+        application.play!()
+    }
+    
+    func pause() {
+        guard let application = application else { return }
+        
+        application.pause!()
+    }
     
     func togglePlayPause() {
         guard let application = application else { return }

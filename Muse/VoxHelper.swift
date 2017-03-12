@@ -23,6 +23,8 @@ import ScriptingBridge
     @objc optional var repeatState:  VoxERpt { get }
     
     // Playback control functions
+    @objc optional func play()
+    @objc optional func pause()
     @objc optional func playpause()
     @objc optional func previous()
     @objc optional func next()
@@ -62,6 +64,18 @@ class VoxHelper: PlayerHelper {
     }
     
     // MARK: Playback controls
+    
+    func play() {
+        guard let application = application else { return }
+        
+        application.play!()
+    }
+    
+    func pause() {
+        guard let application = application else { return }
+        
+        application.pause!()
+    }
     
     func togglePlayPause() {
         guard let application = application else { return }
