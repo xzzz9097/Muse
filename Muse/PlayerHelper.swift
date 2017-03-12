@@ -37,6 +37,10 @@ protocol PlayerHelper {
     
     // MARK: Playback controls
     
+    func play()
+    
+    func pause()
+    
     func togglePlayPause()
     
     func nextTrack()

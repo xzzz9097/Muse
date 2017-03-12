@@ -21,6 +21,8 @@ import ScriptingBridge
     @objc optional var shuffleEnabled: Bool { get }
     
     // Playback control functions
+    @objc optional func playOnce(_ once: Bool)
+    @objc optional func pause()
     @objc optional func playpause()
     @objc optional func nextTrack()
     @objc optional func previousTrack()
@@ -86,6 +88,18 @@ class iTunesHelper: PlayerHelper {
     }
     
     // MARK: Playback controls
+    
+    func play() {
+        guard let application = application else { return }
+        
+        application.playOnce!(false)
+    }
+    
+    func pause() {
+        guard let application = application else { return }
+        
+        application.pause!()
+    }
     
     func togglePlayPause() {
         guard let application = application else { return }

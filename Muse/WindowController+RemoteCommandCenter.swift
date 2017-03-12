@@ -12,29 +12,67 @@ import MediaPlayer
 @available(OSX 10.12.2, *)
 extension WindowController {
     
-    // MARK: TouchBar playback controls
+    // MARK: TouchBar main playback controls
+    // Callbacks for play, pause and play/pause that also
+    // manually refresh playbackState in infoCenter
     
-    func togglePlayPause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        togglePlaybackState(reverse: true)
+    /**
+     Handles system play requests and the start of scrub event
+     */
+    func handlePlay(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        helper.play()
         
-        helper.togglePlayPause()
+        nowPlayingInfoCenter.playbackState = .playing
         
         return .success
     }
     
-    func changePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
+    /**
+     Handles system pause requests and the end of scrub event
+     */
+    func handlePause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        helper.pause()
+        
+        nowPlayingInfoCenter.playbackState = .paused
+        
+        return .success
+    }
+    
+    /**
+     Handles system play/pause toggle requests
+     */
+    func handleTogglePlayPause(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        helper.togglePlayPause()
+        
+        updatePlaybackState()
+        
+        return .success
+    }
+    
+    // MARK: TouchBar secondary playback controls
+    
+    /**
+     Handles system scrubbing requests
+     */
+    func handleChangePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
         helper.scrub(to: event.positionTime.rounded() / self.song.duration)
         
         return .success
     }
     
-    func previousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+    /**
+     Handles system previous track requests
+     */
+    func handlePreviousTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         helper.previousTrack()
         
         return .success
     }
     
-    func nextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+    /**
+     Handles system next track requests
+     */
+    func handleNextTrack(event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
         helper.nextTrack()
         
         return .success
@@ -44,16 +82,17 @@ extension WindowController {
     
     func prepareRemoteCommandCenter() {
         // Play/pause toggle
-        remoteCommandCenter.playCommand.activate(self, action: #selector(togglePlayPause(event:)))
-        remoteCommandCenter.pauseCommand.activate(self, action: #selector(togglePlayPause(event:)))
+        remoteCommandCenter.playCommand.activate(self, action: #selector(handlePlay(event:)))
+        remoteCommandCenter.pauseCommand.activate(self, action: #selector(handlePause(event:)))
+        remoteCommandCenter.togglePlayPauseCommand.activate(self, action: #selector(handleTogglePlayPause(event:)))
         
         // Previous/next track toggle
-        // Apparently these work only on 10.12.2+
-        remoteCommandCenter.previousTrackCommand.activate(self, action: #selector(previousTrack(event:)))
-        remoteCommandCenter.nextTrackCommand.activate(self, action: #selector(nextTrack(event:)))
+        // These work only on 10.12.2+
+        remoteCommandCenter.previousTrackCommand.activate(self, action: #selector(handlePreviousTrack(event:)))
+        remoteCommandCenter.nextTrackCommand.activate(self, action: #selector(handleNextTrack(event:)))
         
         // Scrub bar control
-        remoteCommandCenter.changePlaybackPositionCommand.activate(self, action: #selector(changePlaybackPosition(event:)))
+        remoteCommandCenter.changePlaybackPositionCommand.activate(self, action: #selector(handleChangePlaybackPosition(event:)))
     }
     
     // MARK: TouchBar info refresh
@@ -63,7 +102,7 @@ extension WindowController {
         // This fixes occasional stuck progress bar after track end
         nowPlayingInfoCenter.playbackState = .interrupted
         
-        togglePlaybackState()
+        updatePlaybackState()
         
         self.nowPlayingInfo = [
             MPMediaItemPropertyTitle: self.song.name,
@@ -84,12 +123,8 @@ extension WindowController {
         nowPlayingInfoCenter.nowPlayingInfo = self.nowPlayingInfo
     }
     
-    func togglePlaybackState(reverse: Bool = false) {
-        if reverse {
-            nowPlayingInfoCenter.playbackState = helper.isPlaying ? .paused : .playing
-        } else {
-            nowPlayingInfoCenter.playbackState = helper.isPlaying ? .playing : .paused
-        }
+    func updatePlaybackState() {
+        nowPlayingInfoCenter.playbackState = helper.isPlaying ? .playing : .paused
     }
     
 }
