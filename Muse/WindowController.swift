@@ -289,7 +289,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
         
-        // Initialize our watcher
+        // Initialize AEManager for URL handling
+        initEventManager()
+        
+        // Initialize notification watcher
         initNotificationWatchers()
         
         // Set custom window attributes
@@ -427,6 +430,26 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Pass controller to the block
         block(controller)
+    }
+    
+    // MARK: URL events handling
+    
+    func initEventManager() {
+        NSAppleEventManager.shared().setEventHandler(self,
+                                                     andSelector: #selector(handleURLEvent),
+                                                     forEventClass: AEEventClass(kInternetEventClass),
+                                                     andEventID: AEEventID(kAEGetURL))
+    }
+    
+    /**
+     Catches URLs with specific prefix ("muse://")
+     */
+    func handleURLEvent(event: NSAppleEventDescriptor,
+                        replyEvent: NSAppleEventDescriptor) {
+        if  let urlDescriptor = event.paramDescriptor(forKeyword: keyDirectObject),
+            let urlString     = urlDescriptor.stringValue {
+            let url = URL(string: urlString)
+        }
     }
     
     // MARK: Notification handling
