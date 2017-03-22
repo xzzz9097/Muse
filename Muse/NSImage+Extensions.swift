@@ -15,10 +15,11 @@ extension NSImage {
     
     static let shuffling    = NSImage(named: "DFRShuffle")!.forUI()
     static let repeating    = NSImage(named: "DFRRepeat")!.forUI()
+    static let like         = NSImage(named: "DFRLike")!.forUI()
+    static let liked        = NSImage(named: "DFRLiked")!.forUI()
     
     static let previous     = NSImage(named: NSImageNameTouchBarRewindTemplate)
     static let next         = NSImage(named: NSImageNameTouchBarFastForwardTemplate)
-    
     static let play         = NSImage(named: NSImageNameTouchBarPlayTemplate)
     static let pause        = NSImage(named: NSImageNameTouchBarPauseTemplate)
     
