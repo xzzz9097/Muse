@@ -687,6 +687,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
             likeButton.image = helper.liked ? .liked : .like
         } else {
             likeButton.isEnabled = false
+            
+            likeButton.image = .liked
         }
     }
     
