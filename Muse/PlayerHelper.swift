@@ -16,6 +16,7 @@ enum PlayerAction {
     case shuffling
     case repeating
     case scrubbing
+    case like
 }
 
 // Enum for the three possible player states
