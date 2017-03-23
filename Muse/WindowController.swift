@@ -57,6 +57,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var songArtworkTitleButton:     NSButton!
     @IBOutlet weak var songProgressSlider:         NSSlider!
     @IBOutlet weak var controlsSegmentedView:      NSSegmentedControl!
+    @IBOutlet weak var likeButtonItem:             NSTouchBarItem!
+    @IBOutlet weak var likeButton:                 NSButton!
     @IBOutlet weak var soundPopoverButton:         NSPopoverTouchBarItem!
     @IBOutlet weak var soundSlider:                NSSliderTouchBarItem!
     @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
@@ -132,6 +134,15 @@ class WindowController: NSWindowController, NSWindowDelegate {
     @IBAction func songArtworkTitleButtonClicked(_ sender: Any) {
         // Jump to player when the artwork on the TouchBar is tapped
         showPlayer()
+    }
+    
+    @IBAction func likeButtonClicked(_ sender: Any) {
+        // Reverse like on current track if supported
+        if helper.supportsStarring {
+            helper.starred = !helper.starred
+            
+            updateLikeButton()
+        }
     }
     
     // MARK: Key handlers
@@ -665,6 +676,17 @@ class WindowController: NSWindowController, NSWindowDelegate {
                                       repeatSelected: helper.repeating)
     }
     
+    func updateLikeButton() {
+        // Updates like button according to player support and track status
+        if helper.supportsStarring {
+            likeButton.isEnabled = true
+
+            likeButton.image = helper.starred ? .liked : .like
+        } else {
+            likeButton.isEnabled = false
+        }
+    }
+    
     func updateSoundPopoverButton(for volume: Int) {
         // Change the popover icon based on current volume
         if (volume > 70) {
@@ -744,6 +766,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 controller.updateFullSongArtworkView(with: image)
             }
         }
+        
+        updateLikeButton()
     }
     
     func updateArtworkColorAndSize(for image: NSImage) {
