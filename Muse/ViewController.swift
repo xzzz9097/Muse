@@ -23,6 +23,7 @@ class ViewController: NSViewController {
     var nextImage     = NSImage.next
     var shuffleImage  = NSImage.shuffling
     var repeatImage   = NSImage.repeating
+    var likeImage     = NSImage.like
     
     // Action view auto close
     let actionViewTimeout: TimeInterval = 0.75 // Timeout in seconds
@@ -213,6 +214,12 @@ class ViewController: NSViewController {
             } else {
                 actionImageView.image = repeatImage.tint(with: .lightGray)
             }
+        case .like:
+            if helper.liked {
+                actionImageView.image = likeImage
+            } else {
+                actionImageView.image = likeImage.tint(with: .lightGray)
+            }
         case .scrubbing:
             // Hide image view if scrubbing
             actionImageView.isHidden = true
@@ -267,6 +274,7 @@ class ViewController: NSViewController {
         nextImage     = nextImage?.tint(with: color)
         shuffleImage  = shuffleImage.tint(with: color)
         repeatImage   = repeatImage.tint(with: color)
+        likeImage     = likeImage.tint(with: color)
         
         // Color action image too
         actionImageView.image = actionImageView.image?.tint(with: color)
