@@ -60,7 +60,7 @@ class SpotifyHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = true
     
-    let supportsStarring = false
+    let supportsLiking = false
     
     // MARK: Song data
     

@@ -52,7 +52,7 @@ class VoxHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = false
     
-    let supportsStarring = false
+    let supportsLiking = false
     
     // MARK: Song data
     

@@ -138,8 +138,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     @IBAction func likeButtonClicked(_ sender: Any) {
         // Reverse like on current track if supported
-        if helper.supportsStarring {
-            helper.starred = !helper.starred
+        if helper.supportsLiking {
+            helper.liked = !helper.liked
             
             updateLikeButton()
         }
@@ -165,7 +165,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         case kVK_ANSI_R:
             helper.repeating = !helper.repeating
         case kVK_ANSI_L:
-            if helper.supportsStarring { helper.starred = !helper.starred }
+            if helper.supportsLiking { helper.liked = !helper.liked }
         case kVK_ANSI_1:
             setPlayerHelper(to: .spotify)
             return
@@ -678,10 +678,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func updateLikeButton() {
         // Updates like button according to player support and track status
-        if helper.supportsStarring {
+        if helper.supportsLiking {
             likeButton.isEnabled = true
 
-            likeButton.image = helper.starred ? .liked : .like
+            likeButton.image = helper.liked ? .liked : .like
         } else {
             likeButton.isEnabled = false
         }

@@ -72,7 +72,7 @@ class iTunesHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = true
     
-    let supportsStarring = true
+    let supportsLiking = true
     
     // MARK: Song data
     
@@ -255,7 +255,7 @@ class iTunesHelper: PlayerHelper {
     
     // MARK: Starring
     
-    var starred: Bool {
+    var liked: Bool {
         set {
             guard   let application = application,
                     let track = application.currentTrack

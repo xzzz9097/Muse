@@ -29,7 +29,7 @@ protocol PlayerHelper {
     
     var doesSendPlayPauseNotification: Bool { get }
     
-    var supportsStarring: Bool { get }
+    var supportsLiking: Bool { get }
     
     // MARK: Song data
     
@@ -71,7 +71,7 @@ protocol PlayerHelper {
     
     // MARK: Starring
     
-    var starred: Bool { set get }
+    var liked: Bool { set get }
     
     // MARK: Callbacks
     
@@ -139,7 +139,7 @@ extension PlayerHelper {
     
     // MARK: Starring
     
-    var starred: Bool {
+    var liked: Bool {
         set { }
         
         get { return false }
