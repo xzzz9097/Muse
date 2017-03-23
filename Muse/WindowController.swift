@@ -165,7 +165,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
         case kVK_ANSI_R:
             helper.repeating = !helper.repeating
         case kVK_ANSI_L:
-            if helper.supportsLiking { helper.liked = !helper.liked }
+            if helper.supportsLiking {
+                helper.liked = !helper.liked
+                updateLikeButton()
+            }
         case kVK_ANSI_1:
             setPlayerHelper(to: .spotify)
             return
