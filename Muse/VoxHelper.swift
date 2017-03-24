@@ -237,6 +237,8 @@ class VoxHelper: PlayerHelper {
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     
+    var likeChangedHandler: (Bool) -> () = { _ in }
+    
     // MARK: Application identifier
     
     static let BundleIdentifier = "com.coppertino.Vox"

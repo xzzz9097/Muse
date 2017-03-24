@@ -138,11 +138,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     @IBAction func likeButtonClicked(_ sender: Any) {
         // Reverse like on current track if supported
-        if helper.supportsLiking {
-            helper.liked = !helper.liked
-            
-            updateLikeButton()
-        }
+        if helper.supportsLiking { helper.liked = !helper.liked }
     }
     
     // MARK: Key handlers
@@ -165,10 +161,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         case kVK_ANSI_R:
             helper.repeating = !helper.repeating
         case kVK_ANSI_L:
-            if helper.supportsLiking {
-                helper.liked = !helper.liked
-                updateLikeButton()
-            }
+            if helper.supportsLiking { helper.liked = !helper.liked }
         case kVK_ANSI_1:
             setPlayerHelper(to: .spotify)
             return
@@ -288,6 +281,19 @@ class WindowController: NSWindowController, NSWindowDelegate {
                     controller.showLastActionView(for: .shuffling)
                 } else if repeatChanged {
                     controller.showLastActionView(for: .repeating)
+                }
+            }
+        }
+        
+        // Callback ofr PlayerHelper's like setter
+        helper.likeChangedHandler = { likeChanged in
+            // Update like button on TouchBar
+            self.updateLikeButton()
+            
+            // Send like action to VC
+            self.onViewController { controller in
+                if likeChanged {
+                    controller.showLastActionView(for: .like)
                 }
             }
         }

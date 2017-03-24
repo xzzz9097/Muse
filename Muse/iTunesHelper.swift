@@ -263,6 +263,9 @@ class iTunesHelper: PlayerHelper {
             
             // Stars the current track
             track.setLoved!(newValue)
+            
+            // Call the handler with new like value
+            likeChangedHandler(true)
         }
         
         get {
@@ -285,6 +288,8 @@ class iTunesHelper: PlayerHelper {
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
+    
+    var likeChangedHandler: (Bool) -> () = { _ in }
     
     // MARK: Application identifier
     

@@ -84,6 +84,8 @@ protocol PlayerHelper {
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () { set get }
     
+    var likeChangedHandler: (Bool) -> () { set get }
+    
     // MARK: Application identifier
     
     static var BundleIdentifier: String { get }

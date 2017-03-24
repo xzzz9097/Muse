@@ -249,6 +249,8 @@ class SpotifyHelper: PlayerHelper {
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     
+    var likeChangedHandler: (Bool) -> () = { _ in }
+    
     // MARK: Application identifier
     
     static let BundleIdentifier = "com.spotify.client"
