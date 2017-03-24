@@ -56,11 +56,23 @@ class SpotifyHelper: PlayerHelper {
     // The SBApplication object buond to the helper class
     private let application: SpotifyApplication? = SBApplication.init(bundleIdentifier: BundleIdentifier)
     
+    // The Swiftify object bound to the helper class
+    private var swiftify: SwiftifyHelper = SwiftifyHelper(with: ApplicationJsonURL)
+    
     // MARK: Player features
     
     let doesSendPlayPauseNotification = true
     
     let supportsLiking = false
+    
+    // MARK: Swiftify methods
+    
+    /**
+     Authorize Swiftify with Spotify Web API
+     */
+    func authorize() {
+        swiftify.authorize()
+    }
     
     // MARK: Song data
     
@@ -258,5 +270,9 @@ class SpotifyHelper: PlayerHelper {
     // MARK: Notification ID
     
     static let rawTrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
+    
+    // MARK: Resources
+    
+    private static let ApplicationJsonURL = Bundle.main.url(forResource: "application", withExtension: "json")
     
 }

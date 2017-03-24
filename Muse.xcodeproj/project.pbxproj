@@ -11,6 +11,7 @@
 		0C0FE5311E62C73600DFC6A7 /* Swiftify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0FE5301E62C73600DFC6A7 /* Swiftify.swift */; };
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
+		0C5098B81E859B1C006EC944 /* application.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5098B71E859B1C006EC944 /* application.json */; };
 		0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E94F71E214A02000E0013 /* Double+Extensions.swift */; };
 		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
 		0C8E3BC11E3CC43900C8EBD1 /* iTunesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */; };
@@ -115,6 +116,7 @@
 		0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extensions.swift"; sourceTree = "<group>"; };
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
+		0C5098B71E859B1C006EC944 /* application.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = application.json; sourceTree = "<group>"; };
 		0C5E94F71E214A02000E0013 /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		0C676BD41DF443AD00B75164 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0C676BD61DF443C900B75164 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -275,6 +277,7 @@
 				0CDD1ADA1DF04B560027661A /* SliderCell.swift */,
 				0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */,
 				0CFF46721DE3826300A3BE8E /* Info.plist */,
+				0C5098B71E859B1C006EC944 /* application.json */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */,
+				0C5098B81E859B1C006EC944 /* application.json in Resources */,
 				0CFF46711DE3826300A3BE8E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
