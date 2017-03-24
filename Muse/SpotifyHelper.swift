@@ -38,6 +38,7 @@ import ScriptingBridge
 
 // Protocol for Spotify track object
 @objc fileprivate protocol SpotifyTrackProtocol {
+    @objc optional var id:         String { get }
     @objc optional var name:       String { get }
     @objc optional var artist:     String { get }
     @objc optional var album:      String { get }
