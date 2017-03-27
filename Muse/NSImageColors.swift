@@ -101,7 +101,7 @@ extension NSImage {
      */
     var cgImage: CGImage {
         let imageData = self.tiffRepresentation
-        let source = CGImageSourceCreateWithData(imageData as! CFData, nil)
+        let source = CGImageSourceCreateWithData(imageData! as CFData, nil)
         let maskRef = CGImageSourceCreateImageAtIndex(source!, 0, nil)
         
         return maskRef!
@@ -317,4 +317,3 @@ extension NSImage {
     }
     
 }
-
