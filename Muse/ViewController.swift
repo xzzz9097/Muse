@@ -176,6 +176,10 @@ class ViewController: NSViewController {
         // Toggles visibility on popup views
         titleAlbumArtistSuperview.animator().isHidden = hidden
         controlsSuperview.animator().isHidden         = hidden
+        
+        // Hide overlay views
+        if !actionSuperview.isHidden { actionSuperview.animator().isHidden = !hidden }
+        if !titleSuperview.isHidden  { titleSuperview.animator().isHidden  = !hidden }
     }
     
     func prepareLastActionView() {
