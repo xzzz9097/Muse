@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="7104"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="12062"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.1" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
@@ -173,7 +173,7 @@
                                         </constraints>
                                         <buttonCell key="cell" type="push" bezelStyle="rounded" image="DFRLiked" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ai0-hx-f2r">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" usesAppearanceFont="YES"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="likeButtonClicked:" target="B8D-0N-5wS" id="IUi-8m-bYl"/>
@@ -265,7 +265,7 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
                                 <rect key="frame" x="0.0" y="229" width="275" height="46"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
                                         <rect key="frame" x="8" y="20" width="259" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="xpX-Vc-8U3"/>
@@ -276,7 +276,7 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OP7-ud-xJg">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OP7-ud-xJg">
                                         <rect key="frame" x="8" y="4" width="259" height="16"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="16" id="yrl-dt-D55"/>
@@ -396,17 +396,43 @@
                                     <constraint firstAttribute="height" constant="40" id="eTR-XI-53F"/>
                                 </constraints>
                             </customView>
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-B7-OOh">
+                                <rect key="frame" x="118" y="28" width="40" height="40"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcG-Ud-ij9">
+                                        <rect key="frame" x="8" y="11" width="24" height="19"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="POx-Wa-Afc"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" id="7lh-Aw-7B1">
+                                            <font key="font" metaFont="system" size="15"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="xcG-Ud-ij9" firstAttribute="leading" secondItem="xX2-B7-OOh" secondAttribute="leading" constant="10" id="3Kf-rA-hbw"/>
+                                    <constraint firstItem="xcG-Ud-ij9" firstAttribute="centerX" secondItem="xX2-B7-OOh" secondAttribute="centerX" id="8ej-1Q-GEM"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="9UG-D6-CuQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="xcG-Ud-ij9" secondAttribute="trailing" constant="10" id="Cyx-eO-icJ"/>
+                                    <constraint firstAttribute="height" constant="40" id="ezp-K8-r6L"/>
+                                    <constraint firstItem="xcG-Ud-ij9" firstAttribute="centerY" secondItem="xX2-B7-OOh" secondAttribute="centerY" id="o4w-3b-SZM"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="mIG-iE-c3d" secondAttribute="trailing" id="Mwp-ft-xJI"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Q9n-qe-kgS"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
+                            <constraint firstAttribute="bottom" secondItem="xX2-B7-OOh" secondAttribute="bottom" constant="28" id="cfX-Z3-IE0"/>
                             <constraint firstItem="8rY-c5-W6v" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cr5-PS-soL"/>
                             <constraint firstAttribute="trailing" secondItem="FL1-mx-O2f" secondAttribute="trailing" id="dyY-ER-2vM"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="e93-MX-3cq"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="lQK-h0-fKj"/>
                             <constraint firstAttribute="bottom" secondItem="8rY-c5-W6v" secondAttribute="bottom" id="oMd-Mq-LxE"/>
+                            <constraint firstItem="xX2-B7-OOh" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="oXa-qr-lnr"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="oXe-vP-81L"/>
                             <constraint firstAttribute="trailing" secondItem="8rY-c5-W6v" secondAttribute="trailing" id="q1z-pb-Dqu"/>
                             <constraint firstAttribute="bottom" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="rxH-43-xhF"/>
@@ -421,12 +447,13 @@
                         <outlet property="previousTrackButton" destination="l3h-iT-7mg" id="r1D-gC-p5A"/>
                         <outlet property="songProgressSlider" destination="Gf1-O0-WCI" id="hoa-yG-Fmh"/>
                         <outlet property="titleLabelView" destination="jg9-tH-5t7" id="94d-SB-9OY"/>
+                        <outlet property="titleTextField" destination="xcG-Ud-ij9" id="EBE-1t-Unw"/>
                         <outlet property="togglePlayPauseButton" destination="6Z3-b0-ujX" id="EAd-Yj-C4m"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="74.5" y="654.5"/>
         </scene>
     </scenes>
     <resources>

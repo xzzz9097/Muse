@@ -240,6 +240,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             self.onViewController { controller in
                 controller.showLastActionView(for: next ? .next : .previous)
+                
+                // Peek title of currently playing track
+                controller.showTitleView()
             }
         }
         
@@ -351,6 +354,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Sync shuffling and repeating segmented control
         prepareShuffleRepeatSegmentedView()
+        
+        // Peek title of currently playing track
+        self.onViewController { controller in
+            controller.showTitleView()
+        }
     }
     
     func prepareWindow() {

@@ -26,8 +26,12 @@ class ViewController: NSViewController {
     var likeImage     = NSImage.like
     
     // Action view auto close
-    let actionViewTimeout: TimeInterval = 0.75 // Timeout in seconds
-    var autoCloseTimer:    Timer        = Timer() // The timer
+    let actionViewTimeout:        TimeInterval = 0.75    // Timeout in seconds
+    var actionViewAutoCloseTimer: Timer        = Timer() // The timer
+    
+    // Title view auto close
+    let titleViewTImeout:         TimeInterval = 2       // Timeout in seconds
+    var titleViewAutoCloseTimer:  Timer = Timer()        // The timer
     
     // Preferences
     let shouldPeekControls = true // Hide/show controls on mouse hover
@@ -56,12 +60,14 @@ class ViewController: NSViewController {
     @IBOutlet weak var songProgressSlider:    NSSlider!
     @IBOutlet weak var actionImageView:       NSImageView!
     @IBOutlet weak var actionTextField:       NSTextField!
+    @IBOutlet weak var titleTextField: NSTextField!
     
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
     var controlsSuperview:         NSView!
     var actionSuperview:           NSView!
+    var titleSuperview:            NSView!
     
     // MARK: Actions
     
@@ -102,10 +108,12 @@ class ViewController: NSViewController {
         titleAlbumArtistSuperview = titleLabelView.superview
         controlsSuperview         = togglePlayPauseButton.superview
         actionSuperview           = actionImageView.superview
+        titleSuperview            = titleTextField.superview
         
         titleAlbumArtistSuperview.wantsLayer = true
         controlsSuperview.wantsLayer         = true
         actionSuperview.wantsLayer           = true
+        titleSuperview.wantsLayer            = true
     }
     
     override func viewWillAppear() {
@@ -115,6 +123,7 @@ class ViewController: NSViewController {
         prepareSongProgressSlider()
         prepareFullSongArtworkView()
         prepareLastActionView()
+        prepareTitleView()
     }
 
     override var representedObject: Any? {
@@ -181,7 +190,38 @@ class ViewController: NSViewController {
         setShadow(for: layer)
     }
     
+    func prepareTitleView() {
+        guard let layer = titleSuperview.layer else { return }
+        
+        // Set radius
+        layer.cornerRadius = 7.5
+        layer.masksToBounds = true
+    }
+    
     // MARK: UI activation
+    
+    func showTitleView(shouldClose: Bool = true) {
+        // Only show title info if mouse is not hovering
+        guard controlsSuperview.isHidden else { return }
+        
+        // Invalidate existing timers
+        // This prevents calls form precedent ones
+        titleViewAutoCloseTimer.invalidate()
+        
+        // Show the view
+        titleSuperview.animator().isHidden = false
+        
+        // This keeps time info visible while sliding
+        guard shouldClose else { return }
+        
+        // Restart the autoclose timer
+        titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTImeout,
+                                              repeats: false) { timer in
+            // Hide the view and invalidate the timer
+            self.titleSuperview.animator().isHidden = true
+            timer.invalidate()
+        }
+    }
     
     func showLastActionView(for action: PlayerAction, to time: Double = 0, shouldClose: Bool = true) {
         // Only show action info if mouse is not hovering
@@ -189,7 +229,7 @@ class ViewController: NSViewController {
         
         // Invalidate existing timers
         // This prevents calls from precedent ones
-        autoCloseTimer.invalidate()
+        actionViewAutoCloseTimer.invalidate()
         
         switch action {
         case .play:
@@ -238,7 +278,7 @@ class ViewController: NSViewController {
         guard shouldClose else { return }
         
         // Restart the autoclose timer
-        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: actionViewTimeout,
+        actionViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: actionViewTimeout,
                                               repeats: false) { timer in
             // Hide the view and invalidate the timer
             self.actionSuperview.animator().isHidden = true
@@ -295,11 +335,14 @@ class ViewController: NSViewController {
                                                for: CALayer.kBackgroundColorPath)
         actionSuperview.layer?.animateChange(to: backgroundColor!,
                                              for: CALayer.kBackgroundColorPath)
+        titleSuperview.layer?.animateChange(to: backgroundColor!,
+                                             for: CALayer.kBackgroundColorPath)
         
         // Set the text colors
         titleLabelView.textColor       = primaryColor
         albumArtistLabelView.textColor = secondaryColor
         actionTextField.textColor      = primaryColor
+        titleTextField.textColor       = primaryColor
         
         // Set color on the slider too
         if let cell = songProgressSlider.cell as? SliderCell {
@@ -314,6 +357,9 @@ class ViewController: NSViewController {
     
     func updateTitleAlbumArtistView(for song: Song) {
         titleLabelView.stringValue = song.name
+        
+        // ALso update title on popup view
+        titleTextField.stringValue = titleLabelView.stringValue
         
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
     }
