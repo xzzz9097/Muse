@@ -420,11 +420,32 @@
                                     <constraint firstItem="xcG-Ud-ij9" firstAttribute="centerY" secondItem="xX2-B7-OOh" secondAttribute="centerY" id="o4w-3b-SZM"/>
                                 </constraints>
                             </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-i3-rTV">
+                                <rect key="frame" x="0.0" y="0.0" width="275" height="2"/>
+                                <subviews>
+                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3IF-e0-Ota">
+                                        <rect key="frame" x="-2" y="-2" width="279" height="6"/>
+                                        <sliderCell key="cell" enabled="NO" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="VgS-Ob-lGq" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
+                                    </slider>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="5Mw-8i-HJ2"/>
+                                    <constraint firstItem="3IF-e0-Ota" firstAttribute="centerY" secondItem="Pz7-i3-rTV" secondAttribute="centerY" id="7fj-ht-IRX"/>
+                                    <constraint firstAttribute="trailing" secondItem="3IF-e0-Ota" secondAttribute="trailing" id="I1H-94-pHi"/>
+                                    <constraint firstItem="3IF-e0-Ota" firstAttribute="centerX" secondItem="Pz7-i3-rTV" secondAttribute="centerX" id="JGR-6y-Cs0"/>
+                                    <constraint firstItem="3IF-e0-Ota" firstAttribute="top" secondItem="Pz7-i3-rTV" secondAttribute="top" id="d95-af-0Kq"/>
+                                    <constraint firstItem="3IF-e0-Ota" firstAttribute="leading" secondItem="Pz7-i3-rTV" secondAttribute="leading" id="vrl-57-nKO"/>
+                                    <constraint firstAttribute="bottom" secondItem="3IF-e0-Ota" secondAttribute="bottom" id="yLW-XM-X0O"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Pz7-i3-rTV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Jcq-t5-TmF"/>
                             <constraint firstAttribute="trailing" secondItem="mIG-iE-c3d" secondAttribute="trailing" id="Mwp-ft-xJI"/>
+                            <constraint firstAttribute="trailing" secondItem="Pz7-i3-rTV" secondAttribute="trailing" id="Oo3-lL-iQ2"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Q9n-qe-kgS"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
+                            <constraint firstAttribute="bottom" secondItem="Pz7-i3-rTV" secondAttribute="bottom" id="XRl-jr-qnh"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
                             <constraint firstAttribute="bottom" secondItem="xX2-B7-OOh" secondAttribute="bottom" constant="28" id="cfX-Z3-IE0"/>
                             <constraint firstItem="8rY-c5-W6v" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cr5-PS-soL"/>
@@ -445,6 +466,7 @@
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>
                         <outlet property="nextTrackButton" destination="1xW-XK-zSM" id="CbI-95-0cP"/>
                         <outlet property="previousTrackButton" destination="l3h-iT-7mg" id="r1D-gC-p5A"/>
+                        <outlet property="songProgressBar" destination="3IF-e0-Ota" id="jVJ-Wl-Bww"/>
                         <outlet property="songProgressSlider" destination="Gf1-O0-WCI" id="hoa-yG-Fmh"/>
                         <outlet property="titleLabelView" destination="jg9-tH-5t7" id="94d-SB-9OY"/>
                         <outlet property="titleTextField" destination="xcG-Ud-ij9" id="EBE-1t-Unw"/>

@@ -60,7 +60,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var songProgressSlider:    NSSlider!
     @IBOutlet weak var actionImageView:       NSImageView!
     @IBOutlet weak var actionTextField:       NSTextField!
-    @IBOutlet weak var titleTextField: NSTextField!
+    @IBOutlet weak var titleTextField:        NSTextField!
+    @IBOutlet weak var songProgressBar:       NSSlider!
     
     // MARK: Superviews
     
@@ -121,6 +122,7 @@ class ViewController: NSViewController {
         setBackgroundAndShadow(for: controlsSuperview)
         
         prepareSongProgressSlider()
+        prepareSongProgressBar()
         prepareFullSongArtworkView()
         prepareLastActionView()
         prepareTitleView()
@@ -154,8 +156,19 @@ class ViewController: NSViewController {
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
         // Hide slider thumb
-        cell.knobImage = NSImage()
+        cell.knobImage   = NSImage()
         cell.knobVisible = false
+    }
+    
+    func prepareSongProgressBar() {
+        guard let cell = self.songProgressBar.cell as? SliderCell else { return }
+        
+        // Hide slider thumb
+        cell.knobImage   = NSImage()
+        cell.knobVisible = false
+        
+        // Remove corner radius
+        cell.radius = 0
     }
     
     func prepareFullSongArtworkView() {
@@ -176,6 +189,7 @@ class ViewController: NSViewController {
         // Toggles visibility on popup views
         titleAlbumArtistSuperview.animator().isHidden = hidden
         controlsSuperview.animator().isHidden         = hidden
+        songProgressBar.animator().isHidden           = !hidden
         
         // Hide overlay views
         if !actionSuperview.isHidden { actionSuperview.animator().isHidden = !hidden }
@@ -349,9 +363,14 @@ class ViewController: NSViewController {
         titleTextField.textColor       = primaryColor
         
         // Set color on the slider too
-        if let cell = songProgressSlider.cell as? SliderCell {
-            cell.backgroundColor = primaryColor!
-            cell.highlightColor  = secondaryColor!
+        if let sliderCell = songProgressSlider.cell as? SliderCell {
+            sliderCell.backgroundColor = primaryColor!
+            sliderCell.highlightColor  = secondaryColor!
+        }
+        
+        if let barCell = songProgressBar.cell as? SliderCell {
+            barCell.backgroundColor = primaryColor!
+            barCell.highlightColor  = secondaryColor!
         }
         
         // Set the color on the playback buttons
@@ -368,8 +387,12 @@ class ViewController: NSViewController {
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
     }
     
-    func updateSongProgressSlider(with position: Double) {        
+    func updateSongProgressSlider(with position: Double) {
+        // Update slider
         songProgressSlider.doubleValue = position
+        
+        // Update always on progress bar
+        songProgressBar.doubleValue = position
     }
     
 }
