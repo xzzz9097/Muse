@@ -58,7 +58,7 @@ class SpotifyHelper: PlayerHelper {
     private let application: SpotifyApplication? = SBApplication.init(bundleIdentifier: BundleIdentifier)
     
     // The Swiftify object bound to the helper class
-    private var swiftify: SwiftifyHelper = SwiftifyHelper(with: ApplicationJsonURL)
+    private var swiftify: SwiftifyHelper = SwiftifyHelper(with: ApplicationJsonURL, TokenJsonURL)
     
     // MARK: Player features
     
@@ -275,5 +275,7 @@ class SpotifyHelper: PlayerHelper {
     // MARK: Resources
     
     private static let ApplicationJsonURL = Bundle.main.url(forResource: "application", withExtension: "json")
+    
+    private static let TokenJsonURL = Bundle.main.url(forResource: "token", withExtension: "json")
     
 }
