@@ -245,6 +245,34 @@ public class SwiftifyHelper {
         }
         
         /**
+         Writes the contents of the token back to the JSON file.
+         This allows to save new data when a new token is received.
+         http://stackoverflow.com/questions/28768015/how-to-save-an-array-as-a-json-file-in-swift
+         */
+        func write(to path: URL?) {
+            guard let path = path else { return }
+            
+            do {
+                // Open the JSON file
+                var item = try JSON(Data(contentsOf: path))
+                
+                // Update it
+                item["access_token"].stringValue  = self.accessToken
+                item["expires_in"].intValue       = self.expiresIn
+                item["refresh_token"].stringValue = self.refreshToken
+                item["token_type"].stringValue    = self.tokenType
+                
+                // Open the file stream for writing
+                let file = try FileHandle(forUpdating: path)
+                
+                // Actually write back to the file
+                if let data = item.description.data(using: .utf8) { file.write(data) }
+            } catch {
+                // Item has not been updated
+            }
+        }
+        
+        /**
          Updates a token from a JSON, for instance after calling 'refreshToken',
          when only a new 'accessToken' is provided
          */
@@ -259,6 +287,16 @@ public class SwiftifyHelper {
          */
         var isExpired: Bool {
             return Date.timeIntervalSinceReferenceDate - saveTime > Double(expiresIn)
+        }
+        
+        /**
+         Returns true if the token is valid (aka not blank)
+         */
+        var isValid: Bool {
+            return  self.accessToken  != "" &&
+                self.expiresIn    != 0  &&
+                self.refreshToken != "" &&
+                self.tokenType    != ""
         }
         
         var description: NSString {
@@ -382,7 +420,12 @@ public class SwiftifyHelper {
                     self.token = self.generateToken(from: response)
                     
                     // Prints the token for debug
-                    if let token = self.token { debugPrint(token.description) }
+                    if let token = self.token {
+                        debugPrint(token.description)
+                        
+                        // Save token to JSON file
+                        token.write(to: self.tokenJsonURL)
+                    }
                 }
         }
     }
@@ -408,7 +451,10 @@ public class SwiftifyHelper {
      Returns if the helper is currently holding a token
      */
     public var hasToken: Bool {
-        return token != nil
+        guard let token = token else { return false }
+        
+        // Only return true if the token is actually valid
+        return token.isValid
     }
     
     /**
