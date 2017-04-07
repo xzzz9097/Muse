@@ -105,6 +105,18 @@ class SpotifyHelper: PlayerHelper {
                     duration: trackDuration)
     }
     
+    /**
+     Returns Spotify ID of the currently playing track.
+     Used for saving in user's library.
+     */
+    private var id: String {
+        guard   let application  = application,
+                let currentTrack = application.currentTrack,
+                let id           = currentTrack.id else { return "" }
+        
+        return id
+    }
+    
     // MARK: Playback controls
     
     func play() {
