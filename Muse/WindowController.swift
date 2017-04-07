@@ -475,8 +475,18 @@ class WindowController: NSWindowController, NSWindowDelegate {
     func handleURLEvent(event: NSAppleEventDescriptor,
                         replyEvent: NSAppleEventDescriptor) {
         if  let urlDescriptor = event.paramDescriptor(forKeyword: keyDirectObject),
-            let urlString     = urlDescriptor.stringValue {
-            let url = URL(string: urlString)
+            let urlString     = urlDescriptor.stringValue,
+            let urlComponents = URLComponents(string: urlString),
+            let queryItems    = (urlComponents.queryItems as [NSURLQueryItem]?) {
+            
+            // Get "code=" parameter from URL
+            // https://gist.github.com/gillesdemey/509bb8a1a8c576ea215a
+            let code = queryItems.filter({ (item) in item.name == "code" }).first?.value!
+            
+            // Send code to SpotifyHelper -> Swiftify
+            if let helper = helper as? SpotifyHelper, let authorizationCode = code {
+                helper.saveToken(from: authorizationCode)
+            }
         }
     }
     

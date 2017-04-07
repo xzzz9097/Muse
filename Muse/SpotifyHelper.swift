@@ -60,6 +60,16 @@ class SpotifyHelper: PlayerHelper {
     // The Swiftify object bound to the helper class
     private var swiftify: SwiftifyHelper = SwiftifyHelper(with: ApplicationJsonURL, TokenJsonURL)
     
+    private init() {
+        if !swiftify.hasToken {
+            // Try to authenticate if there's no token
+            swiftify.authorize()
+        } else {
+            // Refresh the token if present
+            swiftify.refreshToken { refreshed in }
+        }
+    }
+    
     // MARK: Player features
     
     let doesSendPlayPauseNotification = true
@@ -73,6 +83,13 @@ class SpotifyHelper: PlayerHelper {
      */
     func authorize() {
         swiftify.authorize()
+    }
+    
+    /**
+     Save token after authorization code has been received
+     */
+    func saveToken(from authorizationCode: String) {
+        swiftify.saveToken(from: authorizationCode)
     }
     
     // MARK: Song data
