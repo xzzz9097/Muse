@@ -114,7 +114,9 @@ class SpotifyHelper: PlayerHelper {
                 let currentTrack = application.currentTrack,
                 let id           = currentTrack.id else { return "" }
         
-        return id
+        // AppleScript returns "spotify:track:id"
+        // We need to cut the initial part of the string
+        return id.substring(from: id.index(id.startIndex, offsetBy: 14))
     }
     
     // MARK: Playback controls
