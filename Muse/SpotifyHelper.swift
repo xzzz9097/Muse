@@ -285,16 +285,24 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Starring
     
+    // The instance variable for like status
+    private var _liked = false
+    
     var liked: Bool {
         set {
             if newValue {
                 // Stars the current track
                 swiftify.save(trackId: id) { saved in
+                    // Update the ivar
+                    self._liked = true
+                    
                     // Call the handler with new like value
                     self.likeChangedHandler(saved)
                 }
             } else {
                 swiftify.delete(trackId: id) { deleted in
+                    self._liked = false
+                    
                     self.likeChangedHandler(deleted)
                 }
             }
@@ -302,7 +310,7 @@ class SpotifyHelper: PlayerHelper {
         
         get {
             // TODO: implement this
-            return false
+            return _liked
         }
     }
     
