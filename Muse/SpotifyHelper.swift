@@ -74,7 +74,7 @@ class SpotifyHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = true
     
-    let supportsLiking = false
+    let supportsLiking = true
     
     // MARK: Swiftify methods
     
@@ -279,6 +279,23 @@ class SpotifyHelper: PlayerHelper {
         guard let application = application else { return nil }
         
         return application.currentTrack?.artworkUrl
+    }
+    
+    // MARK: Starring
+    
+    var liked: Bool {
+        set {
+            // Stars the current track
+            swiftify.save(trackId: id) { saved in
+                // Call the handler with new like value
+                self.likeChangedHandler(saved)
+            }
+        }
+        
+        get {
+            // TODO: implement this
+            return false
+        }
     }
     
     // MARK: Callbacks
