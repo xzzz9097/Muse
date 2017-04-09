@@ -287,10 +287,16 @@ class SpotifyHelper: PlayerHelper {
     
     var liked: Bool {
         set {
-            // Stars the current track
-            swiftify.save(trackId: id) { saved in
-                // Call the handler with new like value
-                self.likeChangedHandler(saved)
+            if newValue {
+                // Stars the current track
+                swiftify.save(trackId: id) { saved in
+                    // Call the handler with new like value
+                    self.likeChangedHandler(saved)
+                }
+            } else {
+                swiftify.delete(trackId: id) { deleted in
+                    self.likeChangedHandler(deleted)
+                }
             }
         }
         
