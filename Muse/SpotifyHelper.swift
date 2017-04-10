@@ -123,7 +123,8 @@ class SpotifyHelper: PlayerHelper {
     private var id: String {
         guard   let application  = application,
                 let currentTrack = application.currentTrack,
-                let id           = currentTrack.id else { return "" }
+                let id           = currentTrack.id,
+                id.characters.count > 14 else { return "" }
         
         // AppleScript returns "spotify:track:id"
         // We need to cut the initial part of the string
