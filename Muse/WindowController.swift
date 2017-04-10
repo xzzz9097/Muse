@@ -705,7 +705,14 @@ class WindowController: NSWindowController, NSWindowDelegate {
     
     func updateLikeButton() {
         // Updates like button according to player support and track status
-        if helper.supportsLiking {
+        if let helper = helper as? SpotifyHelper {
+            likeButton.isEnabled = true
+            
+            // Spotify needs async saved loading from Web API 
+            helper.isSaved { saved in
+                self.likeButton.image = saved ? .liked : .like
+            }
+        } else if helper.supportsLiking {
             likeButton.isEnabled = true
 
             likeButton.image = helper.liked ? .liked : .like

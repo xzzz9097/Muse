@@ -92,6 +92,17 @@ class SpotifyHelper: PlayerHelper {
         swiftify.saveToken(from: authorizationCode)
     }
     
+    /**
+     Checks if a token is saved and reports thrugh a handler
+     */
+    func isSaved(completionHandler: @escaping (Bool) -> Void) {
+        swiftify.isSaved(trackId: id, completionHandler: { saved in
+            self._liked = saved
+            
+            completionHandler(saved)
+        })
+    }
+    
     // MARK: Song data
     
     var song: Song {
