@@ -286,7 +286,7 @@ class SpotifyHelper: PlayerHelper {
     // MARK: Starring
     
     // The instance variable for like status
-    private var _liked = false
+    private var _liked: Bool?
     
     var liked: Bool {
         set {
@@ -309,7 +309,8 @@ class SpotifyHelper: PlayerHelper {
         }
         
         get {
-            // TODO: implement this
+            guard let _liked = _liked else { return false }
+            
             return _liked
         }
     }
