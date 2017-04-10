@@ -57,6 +57,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var songArtworkTitleButton:     NSButton!
     @IBOutlet weak var songProgressSlider:         NSSlider!
     @IBOutlet weak var controlsSegmentedView:      NSSegmentedControl!
+    @IBOutlet weak var likeButtonItem:             NSTouchBarItem!
+    @IBOutlet weak var likeButton:                 NSButton!
     @IBOutlet weak var soundPopoverButton:         NSPopoverTouchBarItem!
     @IBOutlet weak var soundSlider:                NSSliderTouchBarItem!
     @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
@@ -134,6 +136,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
         showPlayer()
     }
     
+    @IBAction func likeButtonClicked(_ sender: Any) {
+        // Reverse like on current track if supported
+        if helper.supportsLiking { helper.liked = !helper.liked }
+    }
+    
     // MARK: Key handlers
     
     override func keyDown(with event: NSEvent) {
@@ -153,6 +160,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
             helper.shuffling = !helper.shuffling
         case kVK_ANSI_R:
             helper.repeating = !helper.repeating
+        case kVK_ANSI_L:
+            if helper.supportsLiking { helper.liked = !helper.liked }
         case kVK_ANSI_1:
             setPlayerHelper(to: .spotify)
             return
@@ -231,6 +240,9 @@ class WindowController: NSWindowController, NSWindowDelegate {
             
             self.onViewController { controller in
                 controller.showLastActionView(for: next ? .next : .previous)
+                
+                // Peek title of currently playing track
+                controller.showTitleView()
             }
         }
         
@@ -276,6 +288,19 @@ class WindowController: NSWindowController, NSWindowDelegate {
             }
         }
         
+        // Callback ofr PlayerHelper's like setter
+        helper.likeChangedHandler = { likeChanged in
+            // Update like button on TouchBar
+            self.updateLikeButton()
+            
+            // Send like action to VC
+            self.onViewController { controller in
+                if likeChanged {
+                    controller.showLastActionView(for: .like)
+                }
+            }
+        }
+        
         if let window = self.window, let delegate = self.delegate {
             // Callback for AppDelegate window toggled
             delegate.windowToggledHandler = { window.toggleVisibility() }
@@ -287,7 +312,10 @@ class WindowController: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
         
-        // Initialize our watcher
+        // Initialize AEManager for URL handling
+        initEventManager()
+        
+        // Initialize notification watcher
         initNotificationWatchers()
         
         // Set custom window attributes
@@ -326,6 +354,11 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Sync shuffling and repeating segmented control
         prepareShuffleRepeatSegmentedView()
+        
+        // Peek title of currently playing track
+        self.onViewController { controller in
+            controller.showTitleView()
+        }
     }
     
     func prepareWindow() {
@@ -425,6 +458,36 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         // Pass controller to the block
         block(controller)
+    }
+    
+    // MARK: URL events handling
+    
+    func initEventManager() {
+        NSAppleEventManager.shared().setEventHandler(self,
+                                                     andSelector: #selector(handleURLEvent),
+                                                     forEventClass: AEEventClass(kInternetEventClass),
+                                                     andEventID: AEEventID(kAEGetURL))
+    }
+    
+    /**
+     Catches URLs with specific prefix ("muse://")
+     */
+    func handleURLEvent(event: NSAppleEventDescriptor,
+                        replyEvent: NSAppleEventDescriptor) {
+        if  let urlDescriptor = event.paramDescriptor(forKeyword: keyDirectObject),
+            let urlString     = urlDescriptor.stringValue,
+            let urlComponents = URLComponents(string: urlString),
+            let queryItems    = (urlComponents.queryItems as [NSURLQueryItem]?) {
+            
+            // Get "code=" parameter from URL
+            // https://gist.github.com/gillesdemey/509bb8a1a8c576ea215a
+            let code = queryItems.filter({ (item) in item.name == "code" }).first?.value!
+            
+            // Send code to SpotifyHelper -> Swiftify
+            if let helper = helper as? SpotifyHelper, let authorizationCode = code {
+                helper.saveToken(from: authorizationCode)
+            }
+        }
     }
     
     // MARK: Notification handling
@@ -640,6 +703,26 @@ class WindowController: NSWindowController, NSWindowDelegate {
                                       repeatSelected: helper.repeating)
     }
     
+    func updateLikeButton() {
+        // Updates like button according to player support and track status
+        if let helper = helper as? SpotifyHelper {
+            likeButton.isEnabled = true
+            
+            // Spotify needs async saved loading from Web API 
+            helper.isSaved { saved in
+                self.likeButton.image = saved ? .liked : .like
+            }
+        } else if helper.supportsLiking {
+            likeButton.isEnabled = true
+
+            likeButton.image = helper.liked ? .liked : .like
+        } else {
+            likeButton.isEnabled = false
+            
+            likeButton.image = .liked
+        }
+    }
+    
     func updateSoundPopoverButton(for volume: Int) {
         // Change the popover icon based on current volume
         if (volume > 70) {
@@ -719,6 +802,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 controller.updateFullSongArtworkView(with: image)
             }
         }
+        
+        updateLikeButton()
     }
     
     func updateArtworkColorAndSize(for image: NSImage) {

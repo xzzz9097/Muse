@@ -16,6 +16,7 @@ enum PlayerAction {
     case shuffling
     case repeating
     case scrubbing
+    case like
 }
 
 // Enum for the three possible player states
@@ -28,6 +29,8 @@ protocol PlayerHelper {
     // MARK: Player features
     
     var doesSendPlayPauseNotification: Bool { get }
+    
+    var supportsLiking: Bool { get }
     
     // MARK: Song data
     
@@ -67,6 +70,10 @@ protocol PlayerHelper {
     
     func artwork() -> Any?
     
+    // MARK: Starring
+    
+    var liked: Bool { set get }
+    
     // MARK: Callbacks
     
     var playPauseHandler: () -> () { set get }
@@ -76,6 +83,8 @@ protocol PlayerHelper {
     var timeChangedHandler: (Bool, Double?) -> () { set get }
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () { set get }
+    
+    var likeChangedHandler: (Bool) -> () { set get }
     
     // MARK: Application identifier
     
@@ -129,6 +138,14 @@ extension PlayerHelper {
         
         // Returns the icon of the player application
         return NSWorkspace.shared().icon(forFile: path)
+    }
+    
+    // MARK: Starring
+    
+    var liked: Bool {
+        set { }
+        
+        get { return false }
     }
     
     // MARK: Callback executors

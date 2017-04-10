@@ -11,7 +11,7 @@ import ScriptingBridge
 // Protocol for iTunes application queries
 @objc fileprivate protocol iTunesApplication {
     // Track properties
-    @objc optional var currentTrack: iTunesTrack { get }
+    @objc optional var currentTrack: iTunesTrackProtocol { get }
     
     // Playback properties
     @objc optional var playerPosition: Double { get }
@@ -35,22 +35,27 @@ import ScriptingBridge
 }
 
 // Protocol for iTunes track object
-@objc fileprivate protocol iTunesTrack {
+@objc fileprivate protocol iTunesTrackProtocol {
+    // Track properties
     @objc optional var name:     String { get }
     @objc optional var artist:   String { get }
     @objc optional var album:    String { get }
     @objc optional var duration: Double { get }
-    @objc optional var artworks: [iTunesArtwork] { get }
+    @objc optional var artworks: [iTunesArtworkProtocol] { get }
+    @objc optional var loved:    Bool { get }
+    
+    // Track properties - setters
+    @objc optional func setLoved(_ loved: Bool)
 }
 
 // Protocol for iTunes artwork object
 // Every track provides an array of artworks
-@objc fileprivate protocol iTunesArtwork {
+@objc fileprivate protocol iTunesArtworkProtocol {
     @objc optional var data:        NSImage { get }
     @objc optional var description: String { get }
 }
 
-extension SBObject: iTunesArtwork { }
+extension SBObject: iTunesArtworkProtocol { }
 
 // Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }
@@ -66,6 +71,8 @@ class iTunesHelper: PlayerHelper {
     // MARK: Player features
     
     let doesSendPlayPauseNotification = true
+    
+    let supportsLiking = true
     
     // MARK: Song data
     
@@ -246,6 +253,32 @@ class iTunesHelper: PlayerHelper {
         return application.currentTrack?.artworks?[0].data
     }
     
+    // MARK: Starring
+    
+    var liked: Bool {
+        set {
+            guard   let application = application,
+                    let track = application.currentTrack
+            else { return }
+            
+            // Stars the current track
+            track.setLoved!(newValue)
+            
+            // Call the handler with new like value
+            likeChangedHandler(true)
+        }
+        
+        get {
+            guard   let application = application,
+                    let track = application.currentTrack,
+                    let loved = track.loved
+            else { return false }
+            
+            // Returns true if the current track is starred
+            return loved
+        }
+    }
+    
     // MARK: Callbacks
     
     var playPauseHandler: () -> () = { }
@@ -255,6 +288,8 @@ class iTunesHelper: PlayerHelper {
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
+    
+    var likeChangedHandler: (Bool) -> () = { _ in }
     
     // MARK: Application identifier
     

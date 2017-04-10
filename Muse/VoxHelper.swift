@@ -52,6 +52,8 @@ class VoxHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = false
     
+    let supportsLiking = false
+    
     // MARK: Song data
     
     var song: Song {
@@ -234,6 +236,8 @@ class VoxHelper: PlayerHelper {
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
+    
+    var likeChangedHandler: (Bool) -> () = { _ in }
     
     // MARK: Application identifier
     

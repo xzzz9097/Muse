@@ -13,7 +13,7 @@ import ScriptingBridge
 // to be overridded and implemented by the bridge itself
 @objc fileprivate protocol SpotifyApplication {
     // Track properties
-    @objc optional var currentTrack: SpotifyTrack { get }
+    @objc optional var currentTrack: SpotifyTrackProtocol { get }
     
     // Playback properties
     @objc optional var playerPosition: Double { get }
@@ -37,7 +37,8 @@ import ScriptingBridge
 }
 
 // Protocol for Spotify track object
-@objc fileprivate protocol SpotifyTrack {
+@objc fileprivate protocol SpotifyTrackProtocol {
+    @objc optional var id:         String { get }
     @objc optional var name:       String { get }
     @objc optional var artist:     String { get }
     @objc optional var album:      String { get }
@@ -56,9 +57,51 @@ class SpotifyHelper: PlayerHelper {
     // The SBApplication object buond to the helper class
     private let application: SpotifyApplication? = SBApplication.init(bundleIdentifier: BundleIdentifier)
     
+    // The Swiftify object bound to the helper class
+    private var swiftify: SwiftifyHelper = SwiftifyHelper(with: ApplicationJsonURL, TokenJsonURL)
+    
+    private init() {
+        if !swiftify.hasToken {
+            // Try to authenticate if there's no token
+            swiftify.authorize()
+        } else {
+            // Refresh the token if present
+            swiftify.refreshToken { refreshed in }
+        }
+    }
+    
     // MARK: Player features
     
     let doesSendPlayPauseNotification = true
+    
+    let supportsLiking = true
+    
+    // MARK: Swiftify methods
+    
+    /**
+     Authorize Swiftify with Spotify Web API
+     */
+    func authorize() {
+        swiftify.authorize()
+    }
+    
+    /**
+     Save token after authorization code has been received
+     */
+    func saveToken(from authorizationCode: String) {
+        swiftify.saveToken(from: authorizationCode)
+    }
+    
+    /**
+     Checks if a token is saved and reports thrugh a handler
+     */
+    func isSaved(completionHandler: @escaping (Bool) -> Void) {
+        swiftify.isSaved(trackId: id, completionHandler: { saved in
+            self._liked = saved
+            
+            completionHandler(saved)
+        })
+    }
     
     // MARK: Song data
     
@@ -71,6 +114,20 @@ class SpotifyHelper: PlayerHelper {
                     artist: currentTrack.artist!,
                     album: currentTrack.album!,
                     duration: trackDuration)
+    }
+    
+    /**
+     Returns Spotify ID of the currently playing track.
+     Used for saving in user's library.
+     */
+    private var id: String {
+        guard   let application  = application,
+                let currentTrack = application.currentTrack,
+                let id           = currentTrack.id else { return "" }
+        
+        // AppleScript returns "spotify:track:id"
+        // We need to cut the initial part of the string
+        return id.substring(from: id.index(id.startIndex, offsetBy: 14))
     }
     
     // MARK: Playback controls
@@ -237,6 +294,38 @@ class SpotifyHelper: PlayerHelper {
         return application.currentTrack?.artworkUrl
     }
     
+    // MARK: Starring
+    
+    // The instance variable for like status
+    private var _liked: Bool?
+    
+    var liked: Bool {
+        set {
+            if newValue {
+                // Stars the current track
+                swiftify.save(trackId: id) { saved in
+                    // Update the ivar
+                    self._liked = true
+                    
+                    // Call the handler with new like value
+                    self.likeChangedHandler(saved)
+                }
+            } else {
+                swiftify.delete(trackId: id) { deleted in
+                    self._liked = false
+                    
+                    self.likeChangedHandler(deleted)
+                }
+            }
+        }
+        
+        get {
+            guard let _liked = _liked else { return false }
+            
+            return _liked
+        }
+    }
+    
     // MARK: Callbacks
     
     var playPauseHandler: () -> () = { }
@@ -247,6 +336,8 @@ class SpotifyHelper: PlayerHelper {
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     
+    var likeChangedHandler: (Bool) -> () = { _ in }
+    
     // MARK: Application identifier
     
     static let BundleIdentifier = "com.spotify.client"
@@ -254,5 +345,11 @@ class SpotifyHelper: PlayerHelper {
     // MARK: Notification ID
     
     static let rawTrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
+    
+    // MARK: Resources
+    
+    private static let ApplicationJsonURL = Bundle.main.url(forResource: "application", withExtension: "json")
+    
+    private static let TokenJsonURL = Bundle.main.url(forResource: "token", withExtension: "json")
     
 }
