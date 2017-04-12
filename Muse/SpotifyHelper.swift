@@ -65,6 +65,9 @@ class SpotifyHelper: PlayerHelper {
             // Try to authenticate if there's no token
             swiftify.authorize()
         } else {
+            // Enable like support
+            self.supportsLiking = true
+            
             // Refresh the token if present
             swiftify.refreshToken { refreshed in }
         }
@@ -74,7 +77,7 @@ class SpotifyHelper: PlayerHelper {
     
     let doesSendPlayPauseNotification = true
     
-    let supportsLiking = true
+    var supportsLiking = false
     
     // MARK: Swiftify methods
     
@@ -90,6 +93,9 @@ class SpotifyHelper: PlayerHelper {
      */
     func saveToken(from authorizationCode: String) {
         swiftify.saveToken(from: authorizationCode)
+        
+        // Enable like support
+        self.supportsLiking = true
     }
     
     /**
