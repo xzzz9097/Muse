@@ -78,6 +78,12 @@
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="kk4-va-XnQ"/>
+                        <menuItem title="Check for updates..." id="Rjx-Kb-s7F">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="checkForUpdates:" target="tvw-ff-7tM" id="WQY-K3-ly3"/>
+                            </connections>
+                        </menuItem>
                         <menuItem title="Quit Muse" keyEquivalent="q" id="yNZ-Pt-Iyt">
                             <connections>
                                 <action selector="quitMenuItemClicked:" target="Voe-Tx-rLC" id="Weu-58-Vap"/>
@@ -86,6 +92,7 @@
                     </items>
                 </menu>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="tvw-ff-7tM" customClass="SUUpdater"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
