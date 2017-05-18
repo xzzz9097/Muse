@@ -48,6 +48,19 @@ extension NSColor {
         return (RGB[0] > 0.91 && RGB[1] > 0.91 && RGB[2] > 0.91) || (RGB[0] < 0.09 && RGB[1] < 0.09 && RGB[2] < 0.09)
     }
     
+    /**
+     Computates difference between two colors using the Euclidean formula
+     https://en.wikipedia.org/wiki/Color_difference
+     */
+    func distance(from compareColor: NSColor) -> CGFloat {
+        let first  = self.cgColor.components
+        let second = compareColor.cgColor.components
+        
+        return  pow(first[0] - second[0], 2.0) +
+                pow(first[1] - second[1], 2.0) +
+                pow(first[2] - second[2], 2.0)
+    }
+
     func isDistinct(compareColor: NSColor) -> Bool {
         let bg = self.cgColor.components
         let fg = compareColor.cgColor.components

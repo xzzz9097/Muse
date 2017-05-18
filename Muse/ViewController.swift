@@ -343,7 +343,12 @@ class ViewController: NSViewController {
         // This prevents view from getting too dark
         let backgroundColor = colors.background.blended(withFraction: 0.5, of: .lightGray)?.cgColor
         let primaryColor    = colors.primary.blended(withFraction: 0.5, of: .lightGray)
-        let secondaryColor  = colors.secondary.blended(withFraction: 0.5, of: .lightGray)
+        
+        let secondaryColor  = colors.secondary.distance(from: colors.primary) > colors.detail.distance(from: colors.primary) ?
+                              colors.secondary.blended(withFraction: 0.5, of: .lightGray) :
+                              colors.detail.blended(withFraction: 0.5, of: .lightGray)
+        
+        
         let buttonColor     = colors.primary.blended(withFraction: 0.5, of: .lightGray)
         
         // Set the superview background color and animate it
