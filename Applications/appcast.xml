@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+<channel>
+<title>Muse21</title>
+<item>
+<title>2.1</title>
+<pubDate>Sun, 21 May 2017 19:27:03 +0200</pubDate>
+<sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>
+<enclosure url="file:///Users/lyrae/Downloads/Muse21.zip" sparkle:version="10" sparkle:shortVersionString="2.1" length="4829301" type="application/octet-stream" sparkle:dsaSignature="MCwCFCbAjLBZJdeA/+43kERsGljsHbOHAhR7k9BuQGKUjiOyFpzn1U51mPG8ow=="/>
+</item>
+</channel></rss>
