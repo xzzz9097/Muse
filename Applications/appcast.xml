@@ -5,6 +5,6 @@
 <title>2.1</title>
 <pubDate>Sun, 21 May 2017 19:27:03 +0200</pubDate>
 <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>
-<enclosure url="file:///Users/lyrae/Downloads/Muse21.zip" sparkle:version="10" sparkle:shortVersionString="2.1" length="4829301" type="application/octet-stream" sparkle:dsaSignature="MCwCFCbAjLBZJdeA/+43kERsGljsHbOHAhR7k9BuQGKUjiOyFpzn1U51mPG8ow=="/>
+<enclosure url="https://raw.githubusercontent.com/xzzz9097/Muse/master/Applications/Muse21.zip" sparkle:version="10" sparkle:shortVersionString="2.1" length="4828216" type="application/octet-stream" sparkle:dsaSignature="MCwCFE1mqJaqVVwzHTeA9eJpBuJUBR+bAhRy7+vbzmzhtaU5vBWQTycaEBmI4A=="/>
 </item>
 </channel></rss>

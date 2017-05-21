@@ -5,7 +5,7 @@
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>SUFeedURL</key>
-	<string>file:///Users/lyrae/Downloads/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/xzzz9097/Muse/master/Applications/appcast.xml</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
