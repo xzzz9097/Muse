@@ -22,6 +22,7 @@
 		0C9B62271E1C357100660633 /* NSImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B62261E1C357100660633 /* NSImageColors.swift */; };
 		0C9B622C1E1D696400660633 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B622B1E1D696400660633 /* Animations.swift */; };
 		0C9B62331E1EAE9100660633 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B62321E1EAE9100660633 /* ButtonCell.swift */; };
+		0CA5FA621ED1DC9500248A91 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */; };
 		0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */; };
 		0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */; };
 		0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */; };
@@ -133,6 +134,7 @@
 		0C9B62261E1C357100660633 /* NSImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageColors.swift; sourceTree = "<group>"; };
 		0C9B622B1E1D696400660633 /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		0C9B62321E1EAE9100660633 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
+		0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerHelper.swift; sourceTree = "<group>"; };
 		0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MPRemoteCommand+Extensions.swift"; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */,
 				0CFF466D1DE3826300A3BE8E /* Assets.xcassets */,
 				0CFF466F1DE3826300A3BE8E /* Main.storyboard */,
+				0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */,
 				0CDD1ADA1DF04B560027661A /* SliderCell.swift */,
 				0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */,
 				0CFF46721DE3826300A3BE8E /* Info.plist */,
@@ -498,6 +501,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CA5FA621ED1DC9500248A91 /* dsa_pub.pem in Resources */,
 				0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */,
 				0C5098B81E859B1C006EC944 /* application.json in Resources */,
 				0CFF46711DE3826300A3BE8E /* Main.storyboard in Resources */,
