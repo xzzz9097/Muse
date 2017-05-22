@@ -12,6 +12,10 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
+    var bundleIdentifier: String {
+        return Bundle.main.bundleIdentifier!
+    }
+    
     // MARK: Properties
     
     let menuItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
@@ -43,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             true
         ).first else { return nil }
         
-        return NSURL(fileURLWithPath: path).appendingPathComponent("Muse")
+        return NSURL(fileURLWithPath: path).appendingPathComponent(bundleIdentifier)
     }
     
     /**
