@@ -34,6 +34,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared().terminate(self)
     }
     
+    // MARK: Data saving
+    
+    var applicationSupportURL: URL? {
+        guard let path = NSSearchPathForDirectoriesInDomains(
+            .applicationSupportDirectory,
+            .userDomainMask,
+            true
+        ).first else { return nil }
+        
+        return NSURL(fileURLWithPath: path).appendingPathComponent("Muse")
+    }
+    
+    /**
+     Checks if application support folder is present.
+     http://www.cocoabuilder.com/archive/cocoa/281310-creating-an-application-support-folder.html
+     */
+    func hasApplicationSupportFolder() -> Bool {
+        guard let url = applicationSupportURL else { return false }
+        
+        var isDirectory: ObjCBool = false
+        let exists = FileManager.default.fileExists(atPath: url.path,
+                                                    isDirectory: &isDirectory)
+        
+        return exists && isDirectory.boolValue
+    }
+    
     // MARK: Functions
     
     func attachMenuItem() {
