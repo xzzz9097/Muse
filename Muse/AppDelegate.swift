@@ -64,6 +64,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return exists && isDirectory.boolValue
     }
     
+    func createApplicationSupportFolder() {
+        guard let url = applicationSupportURL else { return }
+        
+        do {
+            try FileManager.default.createDirectory(at: url,
+                                                    withIntermediateDirectories: false,
+                                                    attributes: nil)
+        } catch {
+            // Application support folder can't be created
+        }
+    }
+    
     // MARK: Functions
     
     func attachMenuItem() {
@@ -80,6 +92,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Create the menu item
         attachMenuItem()
+        
+        // Create application support folder if necessary
+        if !hasApplicationSupportFolder { createApplicationSupportFolder() }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
