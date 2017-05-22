@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      Checks if application support folder is present.
      http://www.cocoabuilder.com/archive/cocoa/281310-creating-an-application-support-folder.html
      */
-    func hasApplicationSupportFolder() -> Bool {
+    var hasApplicationSupportFolder: Bool {
         guard let url = applicationSupportURL else { return false }
         
         var isDirectory: ObjCBool = false
