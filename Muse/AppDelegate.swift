@@ -12,11 +12,9 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    var bundleIdentifier: String {
+    static var bundleIdentifier: String {
         return Bundle.main.bundleIdentifier!
     }
-    
-    private var supportFiles = ["application.json", "token.json"]
     
     // MARK: Properties
     
@@ -42,7 +40,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Data saving
     
-    var applicationSupportURL: URL? {
+    private static var supportFiles = ["application.json", "token.json"]
+    
+    static var supportFilesURLs = supportFiles.map { file -> URL in
+        let res = String.init(file.split(separator: ".")[0])
+        let ext = String.init(file.split(separator: ".")[1])
+        
+        return Bundle.main.url(forResource: res, withExtension: ext)!
+    }
+    
+    static var applicationSupportURL: URL? {
         guard let path = NSSearchPathForDirectoriesInDomains(
             .applicationSupportDirectory,
             .userDomainMask,
@@ -57,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      http://www.cocoabuilder.com/archive/cocoa/281310-creating-an-application-support-folder.html
      */
     var hasApplicationSupportFolder: Bool {
-        guard let url = applicationSupportURL else { return false }
+        guard let url = AppDelegate.applicationSupportURL else { return false }
         
         var isDirectory: ObjCBool = false
         let exists = FileManager.default.fileExists(atPath: url.path,
@@ -69,10 +76,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /**
      Checks if application support files are present.
      */
-    var hasApplicationSupportFiles: Bool {
-        guard let url = applicationSupportURL else { return false }
+     var hasApplicationSupportFiles: Bool {
+        guard let url = AppDelegate.applicationSupportURL else { return false }
         
-        let filesExist = supportFiles.map { file in
+        let filesExist = AppDelegate.supportFiles.map { file in
             return FileManager.default
                 .fileExists(atPath: url.appendingPathComponent(file).path)
         }
@@ -81,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func createApplicationSupportFolder() {
-        guard let url = applicationSupportURL else { return }
+        guard let url = AppDelegate.applicationSupportURL else { return }
         
         do {
             try FileManager.default.createDirectory(at: url,
@@ -96,19 +103,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      Copies support files to application folder
      */
     func copyApplicationSupportFiles() {
-        guard let url = applicationSupportURL else { return }
+        guard let url = AppDelegate.applicationSupportURL else { return }
         
-        supportFiles.forEach { file in
-            let res = String.init(file.split(separator: ".")[0])
-            let ext = String.init(file.split(separator: ".")[1])
-            
-            guard let supportFile = Bundle.main.url(forResource:   res,
-                                                    withExtension: ext) else { return}
-            
-            let destination = url.path.appending("/\(file)")
+        AppDelegate.supportFilesURLs.forEach { fileURL in
+            let destination = url.path.appending("/\(fileURL.lastPathComponent)")
             
             do {
-                try FileManager.default.copyItem(atPath: supportFile.path,
+                try FileManager.default.copyItem(atPath: fileURL.path,
                                                  toPath: destination)
             } catch {
                 // Can't copy support files
