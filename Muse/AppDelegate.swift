@@ -92,6 +92,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    /**
+     Copies support files to application folder
+     */
+    func copyApplicationSupportFiles() {
+        guard let url = applicationSupportURL else { return }
+        
+        supportFiles.forEach { file in
+            let res = String.init(file.split(separator: ".")[0])
+            let ext = String.init(file.split(separator: ".")[1])
+            
+            guard let supportFile = Bundle.main.url(forResource:   res,
+                                                    withExtension: ext) else { return}
+            
+            let destination = url.path.appending("/\(file)")
+            
+            do {
+                try FileManager.default.copyItem(atPath: supportFile.path,
+                                                 toPath: destination)
+            } catch {
+                // Can't copy support files
+            }
+        }
+    }
+    
     // MARK: Functions
     
     func attachMenuItem() {
@@ -111,6 +135,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Create application support folder if necessary
         if !hasApplicationSupportFolder { createApplicationSupportFolder() }
+        
+        // Copy support files if necessary
+        if !hasApplicationSupportFiles  { copyApplicationSupportFiles() }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
