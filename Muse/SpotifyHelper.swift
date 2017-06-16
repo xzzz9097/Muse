@@ -49,6 +49,7 @@ import ScriptingBridge
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
+@available(OSX 10.12.2, *)
 class SpotifyHelper: PlayerHelper {
     
     // Singleton constructor
@@ -355,8 +356,8 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Resources
     
-    private static let ApplicationJsonURL = Bundle.main.url(forResource: "application", withExtension: "json")
+    private static let ApplicationJsonURL = AppDelegate.supportFilesURLs[0]
     
-    private static let TokenJsonURL = Bundle.main.url(forResource: "token", withExtension: "json")
+    private static let TokenJsonURL       = AppDelegate.supportFilesURLs[1]
     
 }

@@ -16,6 +16,7 @@ enum PlayerID {
 // Default player's id (Spotify)
 let defaultPlayerID: PlayerID = .spotify
 
+@available(OSX 10.12.2, *)
 class PlayersManager {
     
     // MARK: Constructors
