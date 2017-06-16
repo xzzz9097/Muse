@@ -16,6 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return Bundle.main.bundleIdentifier!
     }
     
+    private var supportFiles = ["application.json", "token.json"]
+    
     // MARK: Properties
     
     let menuItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
@@ -62,6 +64,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                     isDirectory: &isDirectory)
         
         return exists && isDirectory.boolValue
+    }
+    
+    /**
+     Checks if application support files are present.
+     */
+    var hasApplicationSupportFiles: Bool {
+        guard let url = applicationSupportURL else { return false }
+        
+        let filesExist = supportFiles.map { file in
+            return FileManager.default
+                .fileExists(atPath: url.appendingPathComponent(file).path)
+        }
+        
+        return !filesExist.contains(false)
     }
     
     func createApplicationSupportFolder() {
