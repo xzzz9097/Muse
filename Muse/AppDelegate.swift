@@ -42,7 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private static var supportFiles = ["application.json", "token.json"]
     
-    static var bundleFilesURLs = supportFiles.map { file -> URL in
+    var bundleFilesURLs = supportFiles.map { file -> URL in
         let res = String.init(file.split(separator: ".")[0])
         let ext = String.init(file.split(separator: ".")[1])
         
@@ -109,7 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func copyApplicationSupportFiles() {
         guard let url = AppDelegate.applicationSupportURL else { return }
         
-        AppDelegate.bundleFilesURLs.forEach { fileURL in
+        bundleFilesURLs.forEach { fileURL in
             let destination = url.path.appending("/\(fileURL.lastPathComponent)")
             
             do {
