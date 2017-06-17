@@ -30,7 +30,7 @@ class ViewController: NSViewController {
     var actionViewAutoCloseTimer: Timer        = Timer() // The timer
     
     // Title view auto close
-    let titleViewTImeout:         TimeInterval = 2       // Timeout in seconds
+    let titleViewTimeout:         TimeInterval = 2       // Timeout in seconds
     var titleViewAutoCloseTimer:  Timer = Timer()        // The timer
     
     // Preferences
@@ -233,7 +233,7 @@ class ViewController: NSViewController {
         guard shouldClose else { return }
         
         // Restart the autoclose timer
-        titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTImeout,
+        titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTimeout,
                                               repeats: false) { timer in
             // Hide the view and invalidate the timer
             self.titleSuperview.animator().isHidden = true
