@@ -35,6 +35,7 @@ class ViewController: NSViewController {
     
     // Preferences
     let shouldPeekControls = true // Hide/show controls on mouse hover
+    let shouldShowArtist   = true // Show artist in title popup view
     
     // MARK: Helpers
     
@@ -387,7 +388,9 @@ class ViewController: NSViewController {
         titleLabelView.stringValue = song.name
         
         // ALso update title on popup view
-        titleTextField.stringValue = titleLabelView.stringValue
+        titleTextField.stringValue = shouldShowArtist ?
+                                     "\(song.name) - \(song.artist)" :
+                                     song.name
         
         albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
     }
