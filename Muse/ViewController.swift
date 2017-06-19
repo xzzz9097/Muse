@@ -34,8 +34,8 @@ class ViewController: NSViewController {
     var titleViewAutoCloseTimer:  Timer = Timer()        // The timer
     
     // Preferences
-    let shouldPeekControls = true // Hide/show controls on mouse hover
-    let shouldShowArtist   = true // Show artist in title popup view
+    let shouldPeekControls = true  // Hide/show controls on mouse hover
+    let shouldShowArtist   = false // Show artist in title popup view
     
     // MARK: Helpers
     
