@@ -130,6 +130,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Save player state
         wasPlaying = helper.isPlaying
         
+        // Handle single touch events
+        helper.scrub(to: songProgressSlider.doubleValue)
+        
         // Pause player
         // so it doesn't mess with sliding
         helper.pause()
