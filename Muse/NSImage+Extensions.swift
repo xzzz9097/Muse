@@ -13,7 +13,7 @@ extension NSImage {
     
     static let menuBarIcon  = NSImage(named: "menuBarIcon")!.forUI()
     
-    static let defaultBg    = NSImage(named: "DefaultBackground")
+    static let defaultBg    = NSImage(named: "DefaultBackground")!
     
     static let shuffling    = NSImage(named: "DFRShuffle")!.forUI()
     static let repeating    = NSImage(named: "DFRRepeat")!.forUI()
