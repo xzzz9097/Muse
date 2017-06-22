@@ -11,7 +11,7 @@ import Carbon.HIToolbox
 import MediaPlayer
 
 @available(OSX 10.12.2, *)
-class WindowController: NSWindowController, NSWindowDelegate {
+class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: App delegate getter
     
@@ -55,7 +55,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
     // MARK: Outlets
     
     @IBOutlet weak var songArtworkTitleButton:     NSButton!
-    @IBOutlet weak var songProgressSlider:         NSSlider!
+    @IBOutlet weak var songProgressSlider:         Slider!
     @IBOutlet weak var controlsSegmentedView:      NSSegmentedControl!
     @IBOutlet weak var likeButtonItem:             NSTouchBarItem!
     @IBOutlet weak var likeButton:                 NSButton!
@@ -99,29 +99,6 @@ class WindowController: NSWindowController, NSWindowDelegate {
         }
     }
     
-    @IBAction func progressSliderValueChanged(_ sender: Any) {
-        guard   let slider = sender as? NSSlider,
-                let currentEvent = NSApplication.shared().currentEvent else { return }
-        
-        for event in currentEvent.touches(matching: .touching, in: slider) {
-            if event.isGoingOutOfXLowerBound(of: slider, with: xSliderBoundsThreshold) {
-                // Too far left in the slider -> jump to start
-                helper.scrub(to: 0)
-            } else if event.isGoingOutOfXUpperBound(of: slider, with: xSliderBoundsThreshold) {
-                // Too far right in the slider -> jump to end
-                helper.scrub(to: 0.99)
-            } else {
-                // Detected touch phase start
-                helper.scrub(to: slider.doubleValue, touching: true)
-            }
-        }
-        
-        for _ in currentEvent.touches(matching: .ended, in: slider) {
-            // Detected touch phase end
-            helper.scrub(to: slider.doubleValue)
-        }
-    }
-    
     @IBAction func soundSliderValueChanged(_ sender: Any) {
         guard let sliderItem = sender as? NSSliderTouchBarItem else { return }
         
@@ -139,6 +116,39 @@ class WindowController: NSWindowController, NSWindowDelegate {
     @IBAction func likeButtonClicked(_ sender: Any) {
         // Reverse like on current track if supported
         if helper.supportsLiking { helper.liked = !helper.liked }
+    }
+    
+    // MARK: SliderDelegate implementation
+    // Handles touch events from TouchBar song progres slider
+    
+    var wasPlaying = false
+    
+    /**
+     Handles 'touchesBegan' events from the slider
+     */
+    func didTouchesBegan() {
+        // Save player state
+        wasPlaying = helper.isPlaying
+        
+        // Pause player
+        // so it doesn't mess with sliding
+        helper.pause()
+    }
+    
+    /**
+     Handles 'touchesMoved events from the slider
+     */
+    func didTouchesMoved() {
+        // Set new position to the player
+        helper.scrub(to: songProgressSlider.doubleValue)
+    }
+    
+    /**
+     Handles 'touchesEnded' events from the slider
+     */
+    func didTouchesEnd() {
+        // Resume playing if needed
+        if wasPlaying { helper.play() }
     }
     
     // MARK: Key handlers
@@ -418,6 +428,8 @@ class WindowController: NSWindowController, NSWindowDelegate {
     }
     
     func prepareSongProgressSlider() {
+        songProgressSlider.delegate = self
+        
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
         cell.knobImage = .playhead

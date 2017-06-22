@@ -10,6 +10,8 @@ import Cocoa
 
 class Slider: NSSlider {
     
+    weak var delegate: SliderDelegate?
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
     }
@@ -23,19 +25,31 @@ class Slider: NSSlider {
     }
     
     override func touchesBegan(with event: NSEvent) {
+        super.touchesBegan(with: event)
         
-    }
-    
-    override func touchesEnded(with event: NSEvent) {
-        
+        delegate?.didTouchesBegan()
     }
     
     override func touchesMoved(with event: NSEvent) {
+        super.touchesMoved(with: event)
         
+        delegate?.didTouchesMoved()
+    }
+    
+    override func touchesEnded(with event: NSEvent) {
+        super.touchesEnded(with: event)
+        
+        delegate?.didTouchesEnd()
     }
     
     override func touchesCancelled(with event: NSEvent) {
-        
+        super.touchesCancelled(with: event)
     }
     
+}
+
+protocol SliderDelegate: class {
+    func didTouchesBegan()
+    func didTouchesMoved()
+    func didTouchesEnd()
 }
