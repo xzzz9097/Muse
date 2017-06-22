@@ -620,6 +620,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         didChangeValue(forKey: kSong)
         
+        updateSongProgressSlider()
+        
         updateAfterNotification()
     }
     
