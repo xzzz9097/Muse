@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16G16b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="12062"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12118"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13030.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13122.17"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.1" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
@@ -130,8 +130,8 @@
                                     <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="QBD-aJ-PkQ">
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="30"/>
                                         <subviews>
-                                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A3K-Ti-soQ">
-                                                <rect key="frame" x="8" y="-2" width="164" height="34"/>
+                                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A3K-Ti-soQ" customClass="Slider" customModule="Muse" customModuleProvider="target">
+                                                <rect key="frame" x="4" y="0.0" width="172" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="WkF-64-hT4"/>
                                                 </constraints>
@@ -152,8 +152,8 @@
                             </touchBarItem>
                             <touchBarItem id="qeI-1V-kBR">
                                 <viewController key="viewController" id="I3D-jY-SvG">
-                                    <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
-                                        <rect key="frame" x="0.0" y="-2" width="143" height="25"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
+                                        <rect key="frame" x="0.0" y="0.0" width="143" height="30"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -194,8 +194,8 @@
                                     <touchBarItems>
                                         <touchBarItem id="DmD-M5-F0o">
                                             <viewController key="viewController" id="Dyt-zM-9FW">
-                                                <segmentedControl key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
-                                                    <rect key="frame" x="0.0" y="-2" width="140" height="25"/>
+                                                <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
+                                                    <rect key="frame" x="0.0" y="0.0" width="140" height="30"/>
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
                                                         <font key="font" metaFont="system"/>
                                                         <segments>
@@ -212,7 +212,7 @@
                                                     </connections>
                                                 </segmentedControl>
                                             </viewController>
-                                            <size key="designTimeSize" width="140" height="22"/>
+                                            <size key="designTimeSize" width="140" height="30"/>
                                         </touchBarItem>
                                         <sliderTouchBarItem id="Xko-cM-C4Q">
                                             <sliderAccessory key="minimumValueAccessory" image="NSTouchBarAudioOutputVolumeLowTemplate" id="lpQ-pr-AXw">
@@ -375,7 +375,7 @@
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy">
                                 <rect key="frame" x="118" y="118" width="40" height="40"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8BH-TZ-iv9">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8BH-TZ-iv9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="TUP-uE-jeP">
                                             <font key="font" metaFont="system" size="15"/>
@@ -406,7 +406,7 @@
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-B7-OOh">
                                 <rect key="frame" x="118" y="28" width="40" height="40"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcG-Ud-ij9">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xcG-Ud-ij9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="POx-Wa-Afc"/>
