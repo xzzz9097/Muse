@@ -136,7 +136,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     /**
-     Handles 'touchesMoved events from the slider
+     Handles 'touchesMoved' events from the slider
      */
     func didTouchesMoved() {
         // Set new position to the player
@@ -149,6 +149,14 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func didTouchesEnd() {
         // Resume playing if needed
         if wasPlaying { helper.play() }
+    }
+    
+    /**
+     Handles 'touchesCancelled' events form the slider
+     */
+    func didTouchesCancel() {
+        // Same action as touch ended
+        didTouchesEnd()
     }
     
     // MARK: Key handlers

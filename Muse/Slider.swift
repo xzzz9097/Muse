@@ -44,6 +44,8 @@ class Slider: NSSlider {
     
     override func touchesCancelled(with event: NSEvent) {
         super.touchesCancelled(with: event)
+        
+        delegate?.didTouchesCancel()
     }
     
 }
@@ -52,4 +54,5 @@ protocol SliderDelegate: class {
     func didTouchesBegan()
     func didTouchesMoved()
     func didTouchesEnd()
+    func didTouchesCancel()
 }
