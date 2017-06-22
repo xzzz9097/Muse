@@ -143,13 +143,16 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      */
     func didTouchesMoved() {
         // Set new position to the player
-        helper.scrub(to: songProgressSlider.doubleValue)
+        helper.scrub(to: songProgressSlider.doubleValue, touching: true)
     }
     
     /**
      Handles 'touchesEnded' events from the slider
      */
     func didTouchesEnd() {
+        // Finalize and disable large knob
+        helper.scrub(to: songProgressSlider.doubleValue)
+        
         // Resume playing if needed
         if wasPlaying { helper.play() }
     }
