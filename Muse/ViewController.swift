@@ -318,7 +318,7 @@ class ViewController: NSViewController {
     func updateFullSongArtworkView(with object: Any?) {
         // Update the artwork view with an image URL
         if let url = object as? URL {
-            fullSongArtworkView.loadImage(from: url, fallback: .defaultBg, callback: { _ in })
+            fullSongArtworkView.loadImage(from: url, callback: { _ in })
         // Or an NSImage
         } else if let image = object as? NSImage {
             fullSongArtworkView.image = image

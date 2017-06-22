@@ -19,7 +19,7 @@ protocol Imageable: class {
     var image: NSImage? { get set }
     
     // Loading function declaration
-    func loadImage(from url: URL, fallback: NSImage, callback: @escaping (NSImage) -> ())
+    func loadImage(from url: URL, callback: @escaping (NSImage) -> ())
     
 }
 
@@ -28,7 +28,7 @@ extension Imageable {
     // Loading function implementation
     // Also receives and @escaping (run after func returns) closure
     // to update UI after download has finished
-    func loadImage(from url: URL, fallback: NSImage, callback: @escaping (NSImage) -> ()) {
+    func loadImage(from url: URL, callback: @escaping (NSImage) -> ()) {
         let session = URLSession.shared
         
         let downloadTask = session.downloadTask(with: url, completionHandler: {
@@ -50,15 +50,6 @@ extension Imageable {
                         })
                     }
                 }
-            } else {
-                // Fallback to the provided default image
-                DispatchQueue.main.async(execute: {
-                    if let strongSelf = self {
-                        strongSelf.image = fallback
-                        
-                        callback(fallback)
-                    }
-                })
             }
         })
         

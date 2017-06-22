@@ -791,7 +791,7 @@ class WindowController: NSWindowController, NSWindowDelegate {
         
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
-            songArtworkTitleButton.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
+            songArtworkTitleButton.loadImage(from: artworkURL, callback: { image in
                 self.updateArtworkColorAndSize(for: image)
                 
                 // Set image on ViewController when downloaded
@@ -800,14 +800,6 @@ class WindowController: NSWindowController, NSWindowDelegate {
                 }
             })
         } else if let image = helper.artwork() as? NSImage {
-            updateArtworkColorAndSize(for: image)
-            
-            onViewController { controller in
-                controller.updateFullSongArtworkView(with: image)
-            }
-        } else {
-            let image = NSImage.defaultBg
-            
             updateArtworkColorAndSize(for: image)
             
             onViewController { controller in
