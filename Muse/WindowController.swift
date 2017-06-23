@@ -833,6 +833,14 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             onViewController { controller in
                 controller.updateFullSongArtworkView(with: image)
             }
+        } else if   let descriptor = helper.artwork() as? NSAppleEventDescriptor,
+                    let image = NSImage(data: descriptor.data) {
+            // Handles PNG artwork images
+            updateArtworkColorAndSize(for: image)
+            
+            onViewController { controller in
+                controller.updateFullSongArtworkView(with: image)
+            }
         } else {
             let image = NSImage.defaultBg
             
