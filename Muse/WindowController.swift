@@ -132,16 +132,16 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Handle single touch events
         helper.scrub(to: songProgressSlider.doubleValue)
-        
-        // Pause player
-        // so it doesn't mess with sliding
-        helper.pause()
     }
     
     /**
      Handles 'touchesMoved' events from the slider
      */
     func didTouchesMoved() {
+        // Pause player
+        // so it doesn't mess with sliding
+        if helper.isPlaying { helper.pause() }
+        
         // Set new position to the player
         helper.scrub(to: songProgressSlider.doubleValue, touching: true)
     }
