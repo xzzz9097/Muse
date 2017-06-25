@@ -10,7 +10,7 @@ An open-source Spotify, iTunes and Vox controller with TouchBar support, system-
 <img src=Screenshots/TouchBar2.png width="1094">
 
 ### Download
-[2.1](https://github.com/xzzz9097/Muse/releases/tag/v2.1-beta.1)
+[2.2](https://github.com/xzzz9097/Muse/releases/tag/v2.2-beta.1)
 
 ### Usage
 Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
@@ -30,6 +30,7 @@ Several handy shortcuts are provided when the popup window is open:
 |              <kbd>r</kbd>               |   toggles repeating   |
 |              <kbd>x</kbd>               |   toggles shuffling   |
 |              <kbd>l</kbd>               |      likes track      |
+|              <kbd>i</kbd>               |      shows title      |
 |              <kbd>1</kbd>               |   controls Spotify    |
 |              <kbd>2</kbd>               |    controls iTunes    |
 |              <kbd>3</kbd>               |     controls Vox      |
