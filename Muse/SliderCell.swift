@@ -85,13 +85,13 @@ class SliderCell: NSSliderCell {
         var backgroundRect = rect
         var leftRect       = rect
         
-        // Apply the desired heigt
+        // Apply the desired height, with a 15% padding around fill
         backgroundRect.size.height = height
-        leftRect.size.height       = height
+        leftRect.size.height       = height - min(0.15 * height, 0.5)
         
         // Center the slider
         backgroundRect.origin.y = rect.midY - height / 2.0
-        leftRect.origin.y       = backgroundRect.origin.y
+        leftRect.origin.y       = rect.midY - leftRect.size.height / 2.0
         
         leftRect.size.width *= relativeKnobPosition()
         
