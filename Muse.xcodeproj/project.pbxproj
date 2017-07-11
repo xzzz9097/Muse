@@ -118,6 +118,7 @@
 		0C0FE5301E62C73600DFC6A7 /* Swiftify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swiftify.swift; sourceTree = "<group>"; };
 		0C1AA7011E97F95E00EC89C2 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
 		0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extensions.swift"; sourceTree = "<group>"; };
+		0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFRPrivateHeader.h; sourceTree = "<group>"; };
 		0C3750D01EFC29C700EE19AE /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
@@ -261,6 +262,7 @@
 				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
 				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
+				0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */,
 				0C9B62321E1EAE9100660633 /* ButtonCell.swift */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
 				0C9B622B1E1D696400660633 /* Animations.swift */,
