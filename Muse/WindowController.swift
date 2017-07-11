@@ -10,6 +10,12 @@ import Cocoa
 import Carbon.HIToolbox
 import MediaPlayer
 
+fileprivate extension NSTouchBarItemIdentifier {
+    static let controlStripButton = NSTouchBarItemIdentifier(
+        rawValue: "\(Bundle.main.bundleIdentifier!).TouchBarItem.controlStripButton"
+    )
+}
+
 @available(OSX 10.12.2, *)
 class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
@@ -335,6 +341,29 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
+    // MARK: TouchBar injection
+    
+    @objc func injectControlStripButton() {
+        DFRSystemModalShowsCloseBoxWhenFrontMost(true)
+        
+        let controlStripButton = NSCustomTouchBarItem(identifier: .controlStripButton)
+        
+        controlStripButton.view = NSButton(title: "♫",
+                                           target: self,
+                                           action: #selector(presentModalTouchBar))
+        
+        NSTouchBarItem.addSystemTrayItem(controlStripButton)
+        DFRElementSetControlStripPresenceForIdentifier(
+            NSTouchBarItemIdentifier.controlStripButton.rawValue, true
+        )
+    }
+    
+    func presentModalTouchBar() {
+        NSTouchBar.presentSystemModalFunctionBar(
+            touchBar,
+            systemTrayItemIdentifier: NSTouchBarItemIdentifier.controlStripButton.rawValue)
+    }
+    
     // MARK: UI preparation
     
     override func windowDidLoad() {
@@ -364,6 +393,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Load song at cold start
         prepareSong()
+        
+        // Append system-wide button in Control Strip
+        injectControlStripButton()
     }
     
     func windowDidBecomeKey(_ notification: Notification) {

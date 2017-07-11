@@ -11,6 +11,7 @@
 		0C0FE5311E62C73600DFC6A7 /* Swiftify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0FE5301E62C73600DFC6A7 /* Swiftify.swift */; };
 		0C1AA7021E97F95E00EC89C2 /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C1AA7011E97F95E00EC89C2 /* token.json */; };
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
+		0C3382CE1F14F39A000D74F9 /* DFRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */; };
 		0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3750D01EFC29C700EE19AE /* Slider.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
 		0C5098B81E859B1C006EC944 /* application.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5098B71E859B1C006EC944 /* application.json */; };
@@ -119,6 +120,7 @@
 		0C1AA7011E97F95E00EC89C2 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
 		0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extensions.swift"; sourceTree = "<group>"; };
 		0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFRPrivateHeader.h; sourceTree = "<group>"; };
+		0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = ../../../../System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<group>"; };
 		0C3750D01EFC29C700EE19AE /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C3382CE1F14F39A000D74F9 /* DFRFoundation.framework in Frameworks */,
 				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
 				FD9F763CA855EFBC8846FCDC /* Pods_Muse.framework in Frameworks */,
@@ -323,6 +326,7 @@
 		7E9AA20CAC9772D1BED5DCE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */,
 				0C676BD61DF443C900B75164 /* AVKit.framework */,
 				0C676BD41DF443AD00B75164 /* AVFoundation.framework */,
 				0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */,
@@ -558,7 +562,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F4864ADC8C3C6DC2FFECCE72 /* [CP] Copy Pods Resources */ = {
@@ -756,6 +760,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 				INFOPLIST_FILE = Muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
@@ -773,6 +781,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 				INFOPLIST_FILE = Muse/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
