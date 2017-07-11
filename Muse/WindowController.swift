@@ -69,6 +69,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     @IBOutlet weak var soundSlider:                NSSliderTouchBarItem!
     @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
     
+    // MARK: Vars
+    
+    let controlStripButton = NSCustomTouchBarItem(identifier: .controlStripButton)
+    
     var isSliding = false
     
     // MARK: Actions
@@ -343,10 +347,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: TouchBar injection
     
+    /**
+     Appends a system-wide button in NSTouchBar's control strip
+     */
     @objc func injectControlStripButton() {
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
-        
-        let controlStripButton = NSCustomTouchBarItem(identifier: .controlStripButton)
         
         controlStripButton.view = NSButton(title: "♫",
                                            target: self,
@@ -358,6 +363,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         )
     }
     
+    /**
+     Reveals the designated NSTouchBar when control strip button is pressed
+     */
     func presentModalTouchBar() {
         NSTouchBar.presentSystemModalFunctionBar(
             touchBar,
