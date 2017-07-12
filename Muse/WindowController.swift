@@ -446,12 +446,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
         
-        cell.knobImage = .playhead
-        cell.height    = 20
-        cell.radius    = 0
-        
-        cell.backgroundColor = NSColor(patternImage: NSImage.playbar!)
-        cell.highlightColor  = cell.backgroundColor
+        cell.isTouchBar = true
     }
     
     func prepareSongArtworkTitleButton() {
