@@ -120,43 +120,50 @@ extension NSImage {
         return maskRef!
     }
     
-    func resized(to newSize: CGSize) -> NSImage {
-        let temp = NSImage(size: newSize)
+    private func edit(size: NSSize? = nil,
+                      editCommand: @escaping (NSImage, NSSize) -> ()) -> NSImage {
+        let temp = NSImage(size: size ?? self.size)
         
         temp.lockFocus()
         
-        self.draw(in: NSMakeRect(0, 0, temp.size.width, temp.size.height))
+        editCommand(self, temp.size)
         
         temp.unlockFocus()
         
         let cgImage = temp.cgImage(forProposedRect: nil, context: nil, hints: nil)
         let bitmapImage = NSBitmapImageRep(cgImage: cgImage!)
         
-        let result = NSImage(size: newSize)
+        let result = NSImage(size: temp.size)
         result.addRepresentation(bitmapImage)
         
         return result
     }
     
+    /**
+     Resizes NSImage
+     - parameter newSize: the requested image size
+     - returns: self scaled to requested size
+     */
+    func resized(to newSize: CGSize) -> NSImage {
+        return self.edit(size: newSize) {
+            image, size in
+            image.draw(in: NSMakeRect(0, 0, size.width, size.height))
+        }
+    }
+    
+    /**
+     Changes NSImage alpha
+     - parameter alpha: the requested alpha value
+     - returns: self with requested alpha value
+     */
     func withAlpha(_ alpha: CGFloat) -> NSImage {
-        let temp = NSImage(size: self.size)
-        
-        temp.lockFocus()
-        
-        self.draw(in: NSMakeRect(0, 0, temp.size.width, temp.size.height),
-                  from: NSZeroRect,
-                  operation: .sourceOver,
-                  fraction: alpha)
-        
-        temp.unlockFocus()
-        
-        let cgImage = temp.cgImage(forProposedRect: nil, context: nil, hints: nil)
-        let bitmapImage = NSBitmapImageRep(cgImage: cgImage!)
-        
-        let result = NSImage(size: self.size)
-        result.addRepresentation(bitmapImage)
-        
-        return result
+        return self.edit {
+            image, size in
+            image.draw(in: NSMakeRect(0, 0, size.width, size.height),
+                       from: NSZeroRect,
+                       operation: .sourceOver,
+                       fraction: alpha)
+        }
     }
     
     /**
