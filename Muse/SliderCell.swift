@@ -66,6 +66,19 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // TouchBar mode switch
+    var isTouchBar: Bool = false {
+        didSet {
+            if isTouchBar, #available(OSX 10.12.2, *) {
+                knobImage       = .playhead
+                height          = 20
+                radius          = 0
+            } else if isTouchBar {
+                isTouchBar = false
+            }
+        }
+    }
+    
     // Time info
     var timeInfo: NSString = ""
     
@@ -77,6 +90,10 @@ class SliderCell: NSSliderCell {
     let infoColor       = NSColor.lightGray
     let infoFont        = NSFont.systemFont(ofSize: 17)
     let paraghraphStyle = NSMutableParagraphStyle()
+    
+    // TouchBar slider properties
+    private let barStep:  CGFloat = 2
+    private let barWidth: CGFloat = 1
     
     /**
      Draw the bars, setting custom height, colors and radius
@@ -94,6 +111,32 @@ class SliderCell: NSSliderCell {
         leftRect.origin.y       = rect.midY - leftRect.size.height / 2.0
         
         leftRect.size.width *= relativeKnobPosition()
+        
+        // Draw TouchBar slider
+        // (heavily) inspired by https://github.com/lhc70000/iina
+        if isTouchBar {
+            NSGraphicsContext.saveGraphicsState()
+            
+            NSBezierPath(roundedRect: backgroundRect, xRadius: 0, yRadius: 0).setClip()
+            let end = backgroundRect.width
+            
+            NSColor.labelColor.withAlphaComponent(0.25).setFill()
+            
+            var i: CGFloat = 0.0
+            while (i < end + barStep) {
+                let dest = NSRect(x: backgroundRect.origin.x + i,
+                                  y: backgroundRect.origin.y,
+                                  width: barWidth,
+                                  height: backgroundRect.height)
+                
+                NSBezierPath(rect: dest).fill()
+                i += barStep
+            }
+            
+            NSGraphicsContext.restoreGraphicsState()
+            
+            return
+        }
         
         // Create the drawing areas
         let backgroundColorArea = NSBezierPath(roundedRect: backgroundRect, xRadius: radius, yRadius: radius)
