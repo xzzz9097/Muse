@@ -724,6 +724,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         songProgressSlider.doubleValue = position / song.duration
         
+        let button = controlStripButton.view as? NSButton
+        button?.imagePosition = .imageOverlaps
+        button?.title = (position).secondsToMMSSString
+        
         // Also update native touchbar scrubber
         updateNowPlayingInfoElapsedPlaybackTime(with: position)
         
