@@ -404,6 +404,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Append system-wide button in Control Strip
         injectControlStripButton()
+        
+        // Update like button at cold start
+        updateLikeButtonColdStart()
     }
     
     func windowDidBecomeKey(_ notification: Notification) {
@@ -787,6 +790,13 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             likeButton.isEnabled = false
             
             likeButton.image = .liked
+        }
+    }
+    
+    func updateLikeButtonColdStart() {
+        // Fetches the like status after time delay
+        DispatchQueue.main.run(after: 200) {
+            self.updateLikeButton()
         }
     }
     
