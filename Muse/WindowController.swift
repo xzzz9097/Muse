@@ -904,6 +904,14 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // TODO: Move this elsewhere
         songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
         
+        let button = self.controlStripButton.view as? NSButton
+        button?.imagePosition = .imageOnly
+        button?.isBordered = false
+        button?.imageScaling = .scaleNone
+        button?.image = image.resized(to: NSMakeSize((button?.frame.width)!,
+                                                     (button?.frame.width)!)).withAlpha(0.5)
+        
+        
         // Fetch image colors
         // We also set an aggressive scaling size
         // to optimize performace and memory usage

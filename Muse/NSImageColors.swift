@@ -138,6 +138,27 @@ extension NSImage {
         return result
     }
     
+    func withAlpha(_ alpha: CGFloat) -> NSImage {
+        let temp = NSImage(size: self.size)
+        
+        temp.lockFocus()
+        
+        self.draw(in: NSMakeRect(0, 0, temp.size.width, temp.size.height),
+                  from: NSZeroRect,
+                  operation: .sourceOver,
+                  fraction: alpha)
+        
+        temp.unlockFocus()
+        
+        let cgImage = temp.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        let bitmapImage = NSBitmapImageRep(cgImage: cgImage!)
+        
+        let result = NSImage(size: self.size)
+        result.addRepresentation(bitmapImage)
+        
+        return result
+    }
+    
     /**
      Get `ImageColors` from the image asynchronously (in background thread).
      Discussion: Use smaller sizes for better performance at the cost of quality colors. Use larger sizes for better color sampling and quality at the cost of performance.
