@@ -353,7 +353,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     @objc func injectControlStripButton() {
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
         
-        controlStripButton.view = NSButton(title: "♫",
+        controlStripButton.view = NSButton(image: .menuBarIcon,
                                            target: self,
                                            action: #selector(presentModalTouchBar))
         
