@@ -432,7 +432,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         switch recognizer.state {
         case .began:
             // TODO: Add OSD notification
-            if recognizer.translation(in: controlStripButton).x > 0 {
+            // Reverse translation check (natural scroll)
+            if recognizer.translation(in: controlStripButton).x < 0 {
                 helper.nextTrack()
             } else {
                 helper.previousTrack()
