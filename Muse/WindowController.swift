@@ -377,8 +377,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                                       action: #selector(presentModalTouchBar))
         
         controlStripButton?.imagePosition = .imageOverlaps
-        controlStripButton?.isBordered = false
-        controlStripButton?.imageScaling = .scaleNone
+        controlStripButton?.isBordered    = false
+        controlStripButton?.imageScaling  = .scaleNone
     }
     
     /**
