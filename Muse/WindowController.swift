@@ -363,13 +363,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     @objc func injectControlStripButton() {
         prepareControlStripButton()
         
-        NSTouchBarItem.addSystemTrayItem(controlStripItem)
-        
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
-        DFRElementSetControlStripPresenceForIdentifier(
-            NSTouchBarItemIdentifier.controlStripButton.rawValue,
-            true
-        )
+        
+        controlStripItem.addToControlStrip()
     }
     
     func prepareControlStripButton() {

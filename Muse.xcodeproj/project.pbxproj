@@ -24,6 +24,7 @@
 		0C9B62271E1C357100660633 /* NSImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B62261E1C357100660633 /* NSImageColors.swift */; };
 		0C9B622C1E1D696400660633 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B622B1E1D696400660633 /* Animations.swift */; };
 		0C9B62331E1EAE9100660633 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B62321E1EAE9100660633 /* ButtonCell.swift */; };
+		0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */; };
 		0CA5FA621ED1DC9500248A91 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */; };
 		0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */; };
 		0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */; };
@@ -139,6 +140,7 @@
 		0C9B62261E1C357100660633 /* NSImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageColors.swift; sourceTree = "<group>"; };
 		0C9B622B1E1D696400660633 /* Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		0C9B62321E1EAE9100660633 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
+		0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFRPrivateHeader.m; sourceTree = "<group>"; };
 		0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerHelper.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
 				0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */,
+				0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */,
 				0C9B62321E1EAE9100660633 /* ButtonCell.swift */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
 				0C9B622B1E1D696400660633 /* Animations.swift */,
@@ -562,7 +565,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F4864ADC8C3C6DC2FFECCE72 /* [CP] Copy Pods Resources */ = {
@@ -611,6 +614,7 @@
 				0C9B62271E1C357100660633 /* NSImageColors.swift in Sources */,
 				0CEAEB391E14583500BD68D5 /* String+Extensions.swift in Sources */,
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
+				0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */,
 				0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */,
 				0CD2870E1E106D4600EF0E73 /* NSImage+Extensions.swift in Sources */,
 				0C9B622C1E1D696400660633 /* Animations.swift in Sources */,
