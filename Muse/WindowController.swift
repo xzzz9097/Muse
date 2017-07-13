@@ -376,6 +376,36 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         controlStripButton?.imagePosition = .imageOverlaps
         controlStripButton?.isBordered    = false
         controlStripButton?.imageScaling  = .scaleNone
+        
+        controlStripButton?.addGestureRecognizer(controlStripButtonPressureGestureRecognizer)
+    }
+    
+    /**
+     Recognizes long press gesture on the control strip button.
+     We use this to toggle play/pause from the system bar.
+     */
+    var controlStripButtonPressureGestureRecognizer: NSPressGestureRecognizer {
+        let recognizer = NSPressGestureRecognizer()
+        
+        recognizer.target = self
+        recognizer.action = #selector(controlStripButtonPressureGestureHandler(_:))
+        
+        recognizer.minimumPressDuration = 0.25
+        recognizer.allowedTouchTypes    = .direct  // Very important
+        
+        return recognizer
+    }
+    
+    func controlStripButtonPressureGestureHandler(_ sender: NSGestureRecognizer?) {
+        guard let state = sender?.state else { return }
+        
+        switch state {
+        case .began:
+            // TODO: Add OSD notification
+            helper.togglePlayPause()
+        default:
+            break
+        }
     }
     
     /**
