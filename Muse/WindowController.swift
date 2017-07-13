@@ -372,7 +372,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareControlStripButton() {
-        controlStripButton = NSButton(image: .menuBarIcon,
+        controlStripButton = NSButton(title: "♫",
                                       target: self,
                                       action: #selector(presentModalTouchBar))
         
