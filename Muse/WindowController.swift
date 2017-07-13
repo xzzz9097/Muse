@@ -68,6 +68,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     @IBOutlet weak var soundPopoverButton:         NSPopoverTouchBarItem!
     @IBOutlet weak var soundSlider:                NSSliderTouchBarItem!
     @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
+    @IBOutlet weak var soundPopoverTouchBar:       NSTouchBar!
     
     // MARK: Vars
     
@@ -425,6 +426,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Update like button at cold start
         updateLikeButtonColdStart()
+        
+        soundPopoverButton.popoverTouchBar = soundPopoverTouchBar
     }
     
     func windowDidBecomeKey(_ notification: Notification) {

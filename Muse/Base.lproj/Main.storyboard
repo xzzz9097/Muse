@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16G16b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13030.1"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13122.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13156.6"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.1" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
@@ -105,6 +105,9 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="200" height="200"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="TV5-eB-iAu"/>
+                        </connections>
                     </window>
                     <touchBar key="touchBar" id="QxI-eC-hym">
                         <touchBarItems>
@@ -131,7 +134,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="30"/>
                                         <subviews>
                                             <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A3K-Ti-soQ" customClass="Slider" customModule="Muse" customModuleProvider="target">
-                                                <rect key="frame" x="4" y="0.0" width="172" height="30"/>
+                                                <rect key="frame" x="8" y="-2" width="164" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="WkF-64-hT4"/>
                                                 </constraints>
@@ -154,6 +157,7 @@
                                 <viewController key="viewController" id="I3D-jY-SvG">
                                     <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
                                         <rect key="frame" x="0.0" y="0.0" width="143" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -196,6 +200,7 @@
                                             <viewController key="viewController" id="Dyt-zM-9FW">
                                                 <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
                                                     <rect key="frame" x="0.0" y="0.0" width="140" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
                                                         <font key="font" metaFont="system"/>
                                                         <segments>
@@ -245,6 +250,7 @@
                         <outlet property="songArtworkTitleButton" destination="e9d-da-gdW" id="2g0-eM-zKm"/>
                         <outlet property="songProgressSlider" destination="A3K-Ti-soQ" id="4Nk-Mn-OHi"/>
                         <outlet property="soundPopoverButton" destination="q5X-bl-SZL" id="UzC-Es-9MX"/>
+                        <outlet property="soundPopoverTouchBar" destination="hIg-FD-Eei" id="kWb-ju-ggh"/>
                         <outlet property="soundSlider" destination="Xko-cM-C4Q" id="Rnp-mC-6KB"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
