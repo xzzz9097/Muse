@@ -71,7 +71,16 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Vars
     
-    let controlStripButton = NSCustomTouchBarItem(identifier: .controlStripButton)
+    let controlStripItem = NSCustomTouchBarItem(identifier: .controlStripButton)
+    
+    weak var controlStripButton: NSButton? {
+        set {
+            controlStripItem.view = newValue!
+        }
+        get {
+            return controlStripItem.view as? NSButton
+        }
+    }
     
     var isSliding = false
     
@@ -351,16 +360,25 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      Appends a system-wide button in NSTouchBar's control strip
      */
     @objc func injectControlStripButton() {
+        prepareControlStripButton()
+        
+        NSTouchBarItem.addSystemTrayItem(controlStripItem)
+        
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
-        
-        controlStripButton.view = NSButton(image: .menuBarIcon,
-                                           target: self,
-                                           action: #selector(presentModalTouchBar))
-        
-        NSTouchBarItem.addSystemTrayItem(controlStripButton)
         DFRElementSetControlStripPresenceForIdentifier(
-            NSTouchBarItemIdentifier.controlStripButton.rawValue, true
+            NSTouchBarItemIdentifier.controlStripButton.rawValue,
+            true
         )
+    }
+    
+    func prepareControlStripButton() {
+        controlStripButton = NSButton(image: .menuBarIcon,
+                                      target: self,
+                                      action: #selector(presentModalTouchBar))
+        
+        controlStripButton?.imagePosition = .imageOverlaps
+        controlStripButton?.isBordered = false
+        controlStripButton?.imageScaling = .scaleNone
     }
     
     /**
@@ -724,9 +742,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         songProgressSlider.doubleValue = position / song.duration
         
-        let button = controlStripButton.view as? NSButton
-        button?.imagePosition = .imageOverlaps
-        button?.title = (position).secondsToMMSSString
+        controlStripButton?.title = position.secondsToMMSSString
         
         // Also update native touchbar scrubber
         updateNowPlayingInfoElapsedPlaybackTime(with: position)
@@ -908,12 +924,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // TODO: Move this elsewhere
         songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
         
-        let button = self.controlStripButton.view as? NSButton
-        button?.imagePosition = .imageOnly
-        button?.isBordered = false
-        button?.imageScaling = .scaleNone
-        button?.image = image.resized(to: NSMakeSize((button?.frame.width)!,
-                                                     (button?.frame.width)!)).withAlpha(0.5)
+        controlStripButton?.image = image.resized(
+            to: NSMakeSize((controlStripButton?.frame.width)!,
+                           (controlStripButton?.frame.width)!)
+            ).withAlpha(0.5)
         
         
         // Fetch image colors
