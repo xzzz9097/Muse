@@ -425,8 +425,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func controlStripButtonPanGestureHandler(_ sender: NSGestureRecognizer?) {
-        print("here!")
-        
         guard let recognizer = sender as? NSPanGestureRecognizer else { return }
         
         switch recognizer.state {
