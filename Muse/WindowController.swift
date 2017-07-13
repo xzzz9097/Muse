@@ -378,6 +378,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         controlStripButton?.imageScaling  = .scaleNone
         
         controlStripButton?.addGestureRecognizer(controlStripButtonPressureGestureRecognizer)
+        controlStripButton?.addGestureRecognizer(controlStripButtonPanGestureRecognizer)
     }
     
     /**
@@ -396,13 +397,46 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         return recognizer
     }
     
-    func controlStripButtonPressureGestureHandler(_ sender: NSGestureRecognizer?) {
-        guard let state = sender?.state else { return }
+    /**
+     Recognizes pan (aka touch drag) gestures on the control strip button.
+     We use this to jump to next/previous track.
+     */
+    var controlStripButtonPanGestureRecognizer: NSPanGestureRecognizer {
+        let recognizer = NSPanGestureRecognizer()
         
-        switch state {
+        recognizer.target = self
+        recognizer.action = #selector(controlStripButtonPanGestureHandler(_:))
+        
+        recognizer.allowedTouchTypes = .direct
+        
+        return recognizer
+    }
+    
+    func controlStripButtonPressureGestureHandler(_ sender: NSGestureRecognizer?) {
+        guard let recognizer = sender else { return }
+        
+        switch recognizer.state {
         case .began:
             // TODO: Add OSD notification
             helper.togglePlayPause()
+        default:
+            break
+        }
+    }
+    
+    func controlStripButtonPanGestureHandler(_ sender: NSGestureRecognizer?) {
+        print("here!")
+        
+        guard let recognizer = sender as? NSPanGestureRecognizer else { return }
+        
+        switch recognizer.state {
+        case .began:
+            // TODO: Add OSD notification
+            if recognizer.translation(in: controlStripButton).x > 0 {
+                helper.nextTrack()
+            } else {
+                helper.previousTrack()
+            }
         default:
             break
         }
