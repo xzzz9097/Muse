@@ -1013,10 +1013,14 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // TODO: Move this elsewhere
         songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
         
-        controlStripButton?.image = image.resized(
-            to: NSMakeSize((controlStripButton?.frame.width)!,
-                           (controlStripButton?.frame.width)!)
+        if image != .defaultBg {
+            controlStripButton?.image = image.resized(
+                to: NSMakeSize((controlStripButton?.frame.width)!,
+                               (controlStripButton?.frame.width)!)
             ).withAlpha(0.5)
+        } else {
+            controlStripButton?.image = nil
+        }
         
         
         // Fetch image colors
