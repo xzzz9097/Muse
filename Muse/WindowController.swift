@@ -948,19 +948,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         delegate.menuItem.title = shouldSetTitleOnMenuBar ? title : nil
     }
     
-    var artworkUrl: String = "" {
-        didSet {
-            songArtworkTitleButton.loadImage(from: URL(string:artworkUrl)!, fallback: .defaultBg, callback: { image in
-                self.updateArtworkColorAndSize(for: image)
-                
-                // Set image on ViewController when downloaded
-                self.onViewController { controller in
-                    controller.updateFullSongArtworkView(with: image)
-                }
-            })
-        }
-    }
-    
     func updateTouchBarUI() {
         songArtworkTitleButton.title = song.name.truncate(at: 15)
         songArtworkTitleButton.sizeToFit()
@@ -992,7 +979,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             onViewController { controller in
                 controller.updateFullSongArtworkView(with: image)
             }
-        }  else if song == Song() {
+        } else if !song.isValid {
             let image = NSImage.defaultBg
             
             updateArtworkColorAndSize(for: image)
