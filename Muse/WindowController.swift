@@ -804,10 +804,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         guard let delegate = self.delegate else { return }
         
         // Get the wrapped title
-        let title = " " + song.name.truncate(at: kMenuItemMaximumLength)
+        let title = "♫ " + song.name.truncate(at: kMenuItemMaximumLength)
         
         // Set the title on the menuBar if enabled
-        delegate.menuItem.title = shouldSetTitleOnMenuBar ? title : nil
+        delegate.menuItem.title = shouldSetTitleOnMenuBar ? title : "♫"
     }
     
     func updateTouchBarUI() {
