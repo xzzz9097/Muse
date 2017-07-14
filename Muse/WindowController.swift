@@ -514,6 +514,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Sync shuffling and repeating segmented control
         prepareShuffleRepeatSegmentedView()
         
+        // Update control strip button title
+        updateControlStripButton()
+        
         // Peek title of currently playing track
         self.onViewController { controller in
             controller.showTitleView()
