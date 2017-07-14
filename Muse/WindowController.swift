@@ -381,6 +381,14 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         controlStripButton?.addGestureRecognizer(controlStripButtonPanGestureRecognizer)
     }
     
+    func updateControlStripButton() {
+        if song.isValid && helper.isPlaying {
+            controlStripButton?.title = helper.playbackPosition.secondsToMMSSString
+        } else {
+            controlStripButton?.title = "♫"
+        }
+    }
+    
     /**
      Recognizes long press gesture on the control strip button.
      We use this to toggle play/pause from the system bar.
@@ -775,6 +783,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         } else {
             syncSongProgressSlider()
         }
+        
+        // Update control strip button title
+        updateControlStripButton()
     }
     
     func deinitSongTrackingTimer() {
