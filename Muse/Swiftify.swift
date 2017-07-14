@@ -400,6 +400,12 @@ public class SwiftifyHelper {
         }
     }
     
+    /**
+     Finds the first track on Spotify matching search results for
+     - parameter title: the title of the track
+     - parameter artist: the artist of the track
+     - parameter completionHandler: the handler that is executed with the track as parameter
+     */
     func getTrack(title: String,
                   artist: String,
                   completionHandler: @escaping (SpotifyTrack) -> Void) {
