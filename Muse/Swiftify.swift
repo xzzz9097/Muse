@@ -378,7 +378,7 @@ public class SwiftifyHelper {
                           headers: authorizationHeader(with: token))
             .responseJSON { response in
                 guard let response = response.result.value else { return }
-                                
+                
                 var results: [Any] = []
                 
                 let json = JSON(response)
