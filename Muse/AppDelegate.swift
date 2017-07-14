@@ -126,9 +126,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func attachMenuItem() {
         // Set the menu for the item
         menuItem.menu = menuBarMenu
-        
-        // Set the icon
-        menuItem.image = .menuBarIcon
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
