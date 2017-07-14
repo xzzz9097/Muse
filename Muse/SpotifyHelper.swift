@@ -334,6 +334,12 @@ class SpotifyHelper: PlayerHelper {
         }
     }
     
+    func fetchTrackInfo(title: String,
+                        artist: String,
+                        completionHandler: @escaping (SpotifyTrack) -> Void) {
+        swiftify.getTrack(title: title, artist: artist, completionHandler: completionHandler)
+    }
+    
     // MARK: Callbacks
     
     var playPauseHandler: () -> () = { }

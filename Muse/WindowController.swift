@@ -948,6 +948,19 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         delegate.menuItem.title = shouldSetTitleOnMenuBar ? title : nil
     }
     
+    var artworkUrl: String = "" {
+        didSet {
+            songArtworkTitleButton.loadImage(from: URL(string:artworkUrl)!, fallback: .defaultBg, callback: { image in
+                self.updateArtworkColorAndSize(for: image)
+                
+                // Set image on ViewController when downloaded
+                self.onViewController { controller in
+                    controller.updateFullSongArtworkView(with: image)
+                }
+            })
+        }
+    }
+    
     func updateTouchBarUI() {
         songArtworkTitleButton.title = song.name.truncate(at: 15)
         songArtworkTitleButton.sizeToFit()
@@ -959,7 +972,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             let artworkURL = URL(string: stringURL) {
             songArtworkTitleButton.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
                 self.updateArtworkColorAndSize(for: image)
-                
+         
                 // Set image on ViewController when downloaded
                 self.onViewController { controller in
                     controller.updateFullSongArtworkView(with: image)
@@ -979,7 +992,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             onViewController { controller in
                 controller.updateFullSongArtworkView(with: image)
             }
-        } else {
+        }  else if song == Song() {
             let image = NSImage.defaultBg
             
             updateArtworkColorAndSize(for: image)
@@ -987,8 +1000,21 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             onViewController { controller in
                 controller.updateFullSongArtworkView(with: image)
             }
+        } else {
+            SpotifyHelper.shared.fetchTrackInfo(title: self.song.name,
+                                                artist: self.song.artist)
+            { track in
+                self.songArtworkTitleButton.loadImage(from: URL(string:track.album.artUri)!, fallback: .defaultBg, callback: { image in
+                    self.updateArtworkColorAndSize(for: image)
+                    
+                    // Set image on ViewController when downloaded
+                    self.onViewController { controller in
+                        controller.updateFullSongArtworkView(with: image)
+                    }
+                })
+            }
         }
-        
+ 
         updateLikeButton()
     }
     

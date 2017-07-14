@@ -163,12 +163,14 @@ public struct SpotifyAlbum {
     public var id:     String
     public var uri:    String
     public var name:   String
+    public var artUri: String
     public var artist: SpotifyArtist
     
     init(from item: JSON) {
         self.id     = item["id"].stringValue
         self.uri    = item["uri"].stringValue
         self.name   = item["name"].stringValue
+        self.artUri = item["images"][0]["url"].stringValue
         self.artist = SpotifyArtist(from: item["artists"][0])
     }
 }
@@ -356,12 +358,27 @@ public class SwiftifyHelper {
     public func find(_ type: SpotifyItemType,
                      _ keyword: String,
                      completionHandler: @escaping ([Any]) -> Void) {
+        guard let token = self.token else { return }
+        
+        guard !token.isExpired else {
+            // If the token is expired, refresh it first
+            // Then try repeating the operation
+            refreshToken { refreshed in
+                if refreshed {
+                    self.find(type, keyword, completionHandler: completionHandler)
+                }
+            }
+            
+            return
+        }
+        
         Alamofire.request(SpotifyQuery.search.url,
                           method: .get,
-                          parameters: searchParameters(for: type, keyword))
+                          parameters: searchParameters(for: type, keyword),
+                          headers: authorizationHeader(with: token))
             .responseJSON { response in
                 guard let response = response.result.value else { return }
-                
+                                
                 var results: [Any] = []
                 
                 let json = JSON(response)
@@ -380,6 +397,16 @@ public class SwiftifyHelper {
                 }
                 
                 completionHandler(results)
+        }
+    }
+    
+    func getTrack(title: String,
+                  artist: String,
+                  completionHandler: @escaping (SpotifyTrack) -> Void) {
+        find(.track, "\(title) \(artist)") { results in
+            if let track = results.first as? SpotifyTrack {
+                completionHandler(track)
+            }
         }
     }
     
