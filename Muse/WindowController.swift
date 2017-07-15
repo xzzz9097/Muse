@@ -810,6 +810,17 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         delegate.menuItem.title = shouldSetTitleOnMenuBar ? title : "♫"
     }
     
+    var image: NSImage = .defaultBg {
+        didSet {
+            self.updateArtworkColorAndSize(for: image)
+            
+            // Set image on ViewController when downloaded
+            self.onViewController { controller in
+                controller.updateFullSongArtworkView(with: self.image)
+            }
+        }
+    }
+    
     func updateTouchBarUI() {
         songArtworkTitleButton.title = song.name.truncate(at: 15)
         songArtworkTitleButton.sizeToFit()
@@ -820,48 +831,28 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
             songArtworkTitleButton.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
-                self.updateArtworkColorAndSize(for: image)
-         
-                // Set image on ViewController when downloaded
-                self.onViewController { controller in
-                    controller.updateFullSongArtworkView(with: image)
-                }
+                self.image = image
             })
         } else if let image = helper.artwork() as? NSImage {
-            updateArtworkColorAndSize(for: image)
-            
-            onViewController { controller in
-                controller.updateFullSongArtworkView(with: image)
-            }
+            self.image = image
         } else if   let descriptor = helper.artwork() as? NSAppleEventDescriptor,
                     let image = NSImage(data: descriptor.data) {
             // Handles PNG artwork images
-            updateArtworkColorAndSize(for: image)
-            
-            onViewController { controller in
-                controller.updateFullSongArtworkView(with: image)
-            }
+            self.image = image
         } else if song.isValid {
+            // If we have song info but no cover
+            // we try fetching the image from Spotify servers
+            // providing title and artist name
+            // TODO: more testing!
             SpotifyHelper.shared.fetchTrackInfo(title: self.song.name,
                                                 artist: self.song.artist)
             { track in
                 self.songArtworkTitleButton.loadImage(from: URL(string:track.album.artUri)!, fallback: .defaultBg, callback: { image in
-                    self.updateArtworkColorAndSize(for: image)
-                    
-                    // Set image on ViewController when downloaded
-                    self.onViewController { controller in
-                        controller.updateFullSongArtworkView(with: image)
-                    }
+                    self.image = image
                 })
             }
         } else {
-            let image = NSImage.defaultBg
-            
-            updateArtworkColorAndSize(for: image)
-            
-            onViewController { controller in
-                controller.updateFullSongArtworkView(with: image)
-            }
+            self.image = NSImage.defaultBg
         }
  
         updateLikeButton()
