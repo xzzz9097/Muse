@@ -493,8 +493,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Update like button at cold start
         updateLikeButtonColdStart()
-        
-        soundPopoverButton.popoverTouchBar = soundPopoverTouchBar
     }
     
     func windowDidBecomeKey(_ notification: Notification) {
