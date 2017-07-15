@@ -369,7 +369,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareControlStripButton() {
-        controlStripButton = NSButton(title: "♫",
+        controlStripButton = NSButton(title: "11:11",
                                       target: self,
                                       action: #selector(presentModalTouchBar))
         
@@ -483,11 +483,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Prepare system-wide controls
         prepareRemoteCommandCenter()
         
-        // Load song at cold start
-        prepareSong()
-        
         // Append system-wide button in Control Strip
         injectControlStripButton()
+        
+        // Load song at cold start
+        prepareSong()
         
         // Update like button at cold start
         updateLikeButtonColdStart()
