@@ -978,15 +978,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             onViewController { controller in
                 controller.updateFullSongArtworkView(with: image)
             }
-        } else if !song.isValid {
-            let image = NSImage.defaultBg
-            
-            updateArtworkColorAndSize(for: image)
-            
-            onViewController { controller in
-                controller.updateFullSongArtworkView(with: image)
-            }
-        } else {
+        } else if song.isValid {
             SpotifyHelper.shared.fetchTrackInfo(title: self.song.name,
                                                 artist: self.song.artist)
             { track in
@@ -998,6 +990,14 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                         controller.updateFullSongArtworkView(with: image)
                     }
                 })
+            }
+        } else {
+            let image = NSImage.defaultBg
+            
+            updateArtworkColorAndSize(for: image)
+            
+            onViewController { controller in
+                controller.updateFullSongArtworkView(with: image)
             }
         }
  
