@@ -517,6 +517,21 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         self.onViewController { controller in
             controller.showTitleView()
         }
+        
+        toggleControlStripButton(visible: false)
+    }
+    
+    func windowDidResignKey(_ notification: Notification) {
+        toggleControlStripButton(visible: true)
+    }
+    
+    func toggleControlStripButton(visible: Bool) {
+        DispatchQueue.main.run(after: (visible ? 0 : 100)) {
+            DFRElementSetControlStripPresenceForIdentifier(
+                NSTouchBarItemIdentifier.controlStripButton.rawValue,
+                visible
+            )
+        }
     }
     
     func prepareWindow() {
