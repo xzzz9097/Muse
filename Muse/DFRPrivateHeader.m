@@ -14,8 +14,12 @@
 - (void)addToControlStrip {
     [NSTouchBarItem addSystemTrayItem:self];
     
+    [self toggleControlStripPresence:true];
+}
+
+- (void)toggleControlStripPresence:(BOOL)present {
     DFRElementSetControlStripPresenceForIdentifier(self.identifier,
-                                                   YES);
+                                                   present);
 }
 
 @end

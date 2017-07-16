@@ -114,7 +114,7 @@
                             <touchBarItem id="qKs-z8-kR4">
                                 <viewController key="viewController" id="953-Nr-7qT">
                                     <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e9d-da-gdW">
-                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="84" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="185" id="zdu-sg-Cu4"/>
                                         </constraints>
@@ -127,6 +127,7 @@
                                         </connections>
                                     </button>
                                 </viewController>
+                                <size key="designTimeSize" width="84" height="41"/>
                             </touchBarItem>
                             <touchBarItem id="yhh-Q7-Fkb">
                                 <viewController key="viewController" id="6bg-KI-7d7">
@@ -156,8 +157,7 @@
                             <touchBarItem id="qeI-1V-kBR">
                                 <viewController key="viewController" id="I3D-jY-SvG">
                                     <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
-                                        <rect key="frame" x="0.0" y="0.0" width="143" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="147" height="30"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -173,11 +173,11 @@
                                         </connections>
                                     </segmentedControl>
                                 </viewController>
-                                <size key="designTimeSize" width="143" height="30"/>
+                                <size key="designTimeSize" width="147" height="33"/>
                             </touchBarItem>
                             <touchBarItem id="cLV-ZL-91z">
                                 <viewController key="viewController" id="hXa-KK-Y1U">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7V8-h1-TfS">
+                                    <button key="view" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7V8-h1-TfS">
                                         <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="46" id="NM9-fe-Vo1"/>
@@ -199,7 +199,7 @@
                                         <touchBarItem id="DmD-M5-F0o">
                                             <viewController key="viewController" id="Dyt-zM-9FW">
                                                 <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
-                                                    <rect key="frame" x="0.0" y="0.0" width="140" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="144" height="33"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
                                                         <font key="font" metaFont="system"/>
@@ -227,7 +227,7 @@
                                                 <sliderAccessoryBehavior key="behavior" id="Zjn-xl-FRk"/>
                                             </sliderAccessory>
                                             <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daN-KH-YWE">
-                                                <rect key="frame" x="30" y="0.0" width="477" height="30"/>
+                                                <rect key="frame" x="30" y="0.0" width="477" height="19"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="250" id="frZ-X1-cv6"/>
                                                 </constraints>

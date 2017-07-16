@@ -22,6 +22,8 @@ extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 
 - (void)addToControlStrip;
 
+- (void)toggleControlStripPresence:(BOOL)present;
+
 @end
 
 @interface NSTouchBar ()

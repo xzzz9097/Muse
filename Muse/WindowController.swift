@@ -526,12 +526,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func toggleControlStripButton(visible: Bool) {
-        DispatchQueue.main.run(after: (visible ? 0 : 100)) {
-            DFRElementSetControlStripPresenceForIdentifier(
-                NSTouchBarItemIdentifier.controlStripButton.rawValue,
-                visible
-            )
-        }
+        controlStripButton?.animator().isHidden = !visible
+        
+        self.controlStripItem.toggleControlStripPresence(visible)
     }
     
     func prepareWindow() {
