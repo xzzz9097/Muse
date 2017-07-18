@@ -124,6 +124,8 @@ extension NSImage {
                       editCommand: @escaping (NSImage, NSSize) -> ()) -> NSImage {
         let temp = NSImage(size: size ?? self.size)
         
+        guard temp.size.width > 0, temp.size.height > 0 else { return self }
+        
         temp.lockFocus()
         
         editCommand(self, temp.size)
