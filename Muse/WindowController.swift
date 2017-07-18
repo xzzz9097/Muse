@@ -60,15 +60,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
 
     // MARK: Outlets
     
-    @IBOutlet weak var songArtworkTitleButton:     NSButton!
-    @IBOutlet weak var songProgressSlider:         Slider!
-    @IBOutlet weak var controlsSegmentedView:      NSSegmentedControl!
-    @IBOutlet weak var likeButtonItem:             NSTouchBarItem!
-    @IBOutlet weak var likeButton:                 NSButton!
-    @IBOutlet weak var soundPopoverButton:         NSPopoverTouchBarItem!
-    @IBOutlet weak var soundSlider:                NSSliderTouchBarItem!
-    @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
-    @IBOutlet weak var soundPopoverTouchBar:       NSTouchBar!
+    weak var songArtworkTitleButton:     NSButton?
+    weak var songProgressSlider:         Slider?
+    weak var controlsSegmentedView:      NSSegmentedControl?
+    weak var likeButtonItem:             NSTouchBarItem?
+    weak var likeButton:                 NSButton?
+    weak var soundPopoverButton:         NSPopoverTouchBarItem?
+    weak var soundSlider:                NSSliderTouchBarItem?
+    weak var shuffleRepeatSegmentedView: NSSegmentedControl?
+    weak var soundPopoverTouchBar:       NSTouchBar?
     
     // MARK: Vars
     
@@ -151,7 +151,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         wasPlaying = helper.isPlaying
         
         // Handle single touch events
-        helper.scrub(to: songProgressSlider.doubleValue)
+        helper.scrub(to: songProgressSlider?.doubleValue)
     }
     
     /**
@@ -163,7 +163,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         if helper.isPlaying { helper.pause() }
         
         // Set new position to the player
-        helper.scrub(to: songProgressSlider.doubleValue, touching: true)
+        helper.scrub(to: songProgressSlider?.doubleValue, touching: true)
     }
     
     /**
@@ -171,7 +171,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      */
     func didTouchesEnd() {
         // Finalize and disable large knob
-        helper.scrub(to: songProgressSlider.doubleValue)
+        helper.scrub(to: songProgressSlider?.doubleValue)
         
         // Resume playing if needed
         if wasPlaying { helper.play() }
@@ -300,7 +300,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             
             let time = value * self.song.duration
             
-            if let cell = self.songProgressSlider.cell as? SliderCell {
+            if let cell = self.songProgressSlider?.cell as? SliderCell {
                 // If we are sliding, show time near TouchBar slider knob
                 cell.knobImage   = touching ? nil : .playhead
                 cell.hasTimeInfo = touching
@@ -580,21 +580,21 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareButtons() {
-        controlsSegmentedView.setImage(.previous, forSegment: 0)
-        controlsSegmentedView.setImage(.play, forSegment: 1)
-        controlsSegmentedView.setImage(.next, forSegment: 2)
+        controlsSegmentedView?.setImage(.previous, forSegment: 0)
+        controlsSegmentedView?.setImage(.play, forSegment: 1)
+        controlsSegmentedView?.setImage(.next, forSegment: 2)
     }
     
     func prepareSongProgressSlider() {
-        songProgressSlider.delegate = self
+        songProgressSlider?.delegate = self
         
-        guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
+        guard let cell = self.songProgressSlider?.cell as? SliderCell else { return }
         
         cell.isTouchBar = true
     }
     
     func prepareSongArtworkTitleButton() {
-        songArtworkTitleButton.imagePosition = .imageLeading
+        songArtworkTitleButton?.imagePosition = .imageLeading
     }
     
     func prepareSoundSlider() {
@@ -603,15 +603,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         updateSoundPopoverButton(for: volume)
         
         // Set the player volume on the slider
-        soundSlider.slider.integerValue = volume
+        soundSlider?.slider.integerValue = volume
     }
 
     func prepareShuffleRepeatSegmentedView() {
         // Set image for 'shuffle' button
-        shuffleRepeatSegmentedView.setImage(.shuffling, forSegment: 0)
+        shuffleRepeatSegmentedView?.setImage(.shuffling, forSegment: 0)
         
         // Set image for 'repeat' button
-        shuffleRepeatSegmentedView.setImage(.repeating, forSegment: 1)
+        shuffleRepeatSegmentedView?.setImage(.repeating, forSegment: 1)
         
         updateShuffleRepeatSegmentedView()
     }
@@ -826,7 +826,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         let position = position > -1 ? position : helper.playbackPosition
         
-        songProgressSlider.doubleValue = position / song.duration
+        songProgressSlider?.doubleValue = position / song.duration
         
         controlStripButton?.title = position.secondsToMMSSString
         
@@ -851,7 +851,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateControlsAfterPlayPause() {
-        controlsSegmentedView.setImage(
+        controlsSegmentedView?.setImage(
             helper.isPlaying ? .pause : .play,
             forSegment: 1
         )
@@ -864,12 +864,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func setShuffleRepeatSegmentedView(shuffleSelected: Bool?, repeatSelected: Bool?) {
         // Select 'shuffle' button
         if let shuffleSelected = shuffleSelected {
-            shuffleRepeatSegmentedView.setSelected(shuffleSelected, forSegment: 0)
+            shuffleRepeatSegmentedView?.setSelected(shuffleSelected, forSegment: 0)
         }
         
         // Select 'repeat' button
         if let repeatSelected = repeatSelected {
-            shuffleRepeatSegmentedView.setSelected(repeatSelected, forSegment: 1)
+            shuffleRepeatSegmentedView?.setSelected(repeatSelected, forSegment: 1)
         }
     }
     
@@ -882,20 +882,20 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func updateLikeButton() {
         // Updates like button according to player support and track status
         if let helper = helper as? SpotifyHelper {
-            likeButton.isEnabled = true
+            likeButton?.isEnabled = true
             
             // Spotify needs async saved loading from Web API 
             helper.isSaved { saved in
-                self.likeButton.image = saved ? .liked : .like
+                self.likeButton?.image = saved ? .liked : .like
             }
         } else if helper.supportsLiking {
-            likeButton.isEnabled = true
+            likeButton?.isEnabled = true
 
-            likeButton.image = helper.liked ? .liked : .like
+            likeButton?.image = helper.liked ? .liked : .like
         } else {
-            likeButton.isEnabled = false
+            likeButton?.isEnabled = false
             
-            likeButton.image = .liked
+            likeButton?.image = .liked
         }
     }
     
@@ -909,11 +909,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func updateSoundPopoverButton(for volume: Int) {
         // Change the popover icon based on current volume
         if (volume > 70) {
-            soundPopoverButton.collapsedRepresentationImage = .volumeHigh
+            soundPopoverButton?.collapsedRepresentationImage = .volumeHigh
         } else if (volume > 30) {
-            soundPopoverButton.collapsedRepresentationImage = .volumeMedium
+            soundPopoverButton?.collapsedRepresentationImage = .volumeMedium
         } else {
-            soundPopoverButton.collapsedRepresentationImage = .volumeLow
+            soundPopoverButton?.collapsedRepresentationImage = .volumeLow
         }
     }
     
@@ -973,15 +973,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateTouchBarUI() {
-        songArtworkTitleButton.title = song.name.truncate(at: 15)
-        songArtworkTitleButton.sizeToFit()
+        songArtworkTitleButton?.title = song.name.truncate(at: 15)
+        songArtworkTitleButton?.sizeToFit()
         
-        controlsSegmentedView.setImage(helper.isPlaying ? .pause : .play,
+        controlsSegmentedView?.setImage(helper.isPlaying ? .pause : .play,
                                        forSegment: 1)
         
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
-            songArtworkTitleButton.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
+            songArtworkTitleButton?.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
                 self.image = image
             })
         } else if let image = helper.artwork() as? NSImage {
@@ -998,7 +998,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             SpotifyHelper.shared.fetchTrackInfo(title: self.song.name,
                                                 artist: self.song.artist)
             { track in
-                self.songArtworkTitleButton.loadImage(from: URL(string:track.album.artUri)!, fallback: .defaultBg, callback: { image in
+                self.songArtworkTitleButton?.loadImage(from: URL(string:track.album.artUri)!, fallback: .defaultBg, callback: { image in
                     self.image = image
                 })
             }
@@ -1012,7 +1012,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func updateArtworkColorAndSize(for image: NSImage) {
         // Resize image to fit TouchBar view
         // TODO: Move this elsewhere
-        songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
+        songArtworkTitleButton?.image = image.resized(to: NSMakeSize(30, 30))
         
         if image != .defaultBg {
             controlStripButton?.image = image.resized(
@@ -1029,7 +1029,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // to optimize performace and memory usage
         image.getColors(scaleDownSize: NSMakeSize(25, 25)) { colors in
             // Set colors on TouchBar button
-            self.songArtworkTitleButton.bezelColor = colors.primary.blended(withFraction: 0.5, of: .darkGray)
+            self.songArtworkTitleButton?.bezelColor = colors.primary.blended(withFraction: 0.5, of: .darkGray)
 
             // Set colors on main view
             self.onViewController { controller in
@@ -1040,7 +1040,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     var isUIPlaying: Bool {
         // Simple trick to know whether the UI is in 'play' mode
-        return controlsSegmentedView.image(forSegment: 1) == .pause
+        return controlsSegmentedView?.image(forSegment: 1) == .pause
     }
     
     func updateViewUI() {
