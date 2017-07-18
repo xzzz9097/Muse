@@ -453,7 +453,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      Reveals the designated NSTouchBar when control strip button is pressed
      */
     func presentModalTouchBar() {
-        window?.toggleVisibility()
+        NSTouchBar.presentSystemModalFunctionBar(
+            touchBar,
+            systemTrayItemIdentifier: NSTouchBarItemIdentifier.controlStripButton.rawValue)
     }
     
     // MARK: UI preparation
