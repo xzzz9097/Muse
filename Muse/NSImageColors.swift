@@ -123,6 +123,8 @@ extension NSImage {
     func resized(to newSize: CGSize) -> NSImage {
         let temp = NSImage(size: newSize)
         
+        guard temp.size.width > 0, temp.size.height > 0 else { return self }
+        
         temp.lockFocus()
         
         self.draw(in: NSMakeRect(0, 0, temp.size.width, temp.size.height))
