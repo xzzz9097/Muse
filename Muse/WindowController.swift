@@ -128,7 +128,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         updateSoundPopoverButton(for: helper.volume)
     }
     
-    @IBAction func songArtworkTitleButtonClicked(_ sender: Any) {
+    func songArtworkTitleButtonClicked(_ sender: NSButton) {
         // Jump to player when the artwork on the TouchBar is tapped
         showPlayer()
     }
@@ -494,7 +494,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Update like button at cold start
         updateLikeButtonColdStart()
     }
-    
+        
     func windowDidBecomeKey(_ notification: Notification) {
         // Try switching to another helper is song is blank
         // (that means previous player has been closed)
@@ -598,11 +598,13 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareSongArtworkTitleButton() {
+        songArtworkTitleButton?.target        = self
         songArtworkTitleButton?.cell          = ButtonCell()
         songArtworkTitleButton?.bezelStyle    = .rounded
         songArtworkTitleButton?.alignment     = .center
         songArtworkTitleButton?.font          = NSFont.systemFont(ofSize: 15.0)
         songArtworkTitleButton?.imagePosition = .imageLeading
+        songArtworkTitleButton?.action        = #selector(songArtworkTitleButtonClicked(_:))
     }
     
     func prepareSoundSlider() {
