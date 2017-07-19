@@ -87,10 +87,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Actions
     
-    @IBAction func controlsSegmentedViewClicked(_ sender: Any) {
-        guard let segmentedControl = sender as? NSSegmentedControl else { return }
-        
-        switch segmentedControl.selectedSegment {
+    func controlsSegmentedViewClicked(_ sender: NSSegmentedControl) {
+        switch sender.selectedSegment {
         case 0:
             helper.previousTrack()
         case 1:
@@ -584,6 +582,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareButtons() {
+        controlsSegmentedView?.segmentCount = 3
+        controlsSegmentedView?.segmentStyle = .separated
+        controlsSegmentedView?.trackingMode = .momentary
+        controlsSegmentedView?.action       = #selector(controlsSegmentedViewClicked(_:))
+        
         controlsSegmentedView?.setImage(.previous, forSegment: 0)
         controlsSegmentedView?.setImage(.play, forSegment: 1)
         controlsSegmentedView?.setImage(.next, forSegment: 2)

@@ -15,7 +15,7 @@ fileprivate extension NSTouchBarCustomizationIdentifier {
 fileprivate extension NSTouchBarItemIdentifier {
     static let songArtworkTitleButton     = NSTouchBarItemIdentifier("\(Bundle.main.bundleIdentifier!).touchBar.songArtworkTitle")
     static let songProgressSlider         = NSTouchBarItemIdentifier("\(Bundle.main.bundleIdentifier!).touchBar.songProgressSlider")
-    static let controlsSegmetedView       = NSTouchBarItemIdentifier("\(Bundle.main.bundleIdentifier!).touchBar.controlsSegmentedView")
+    static let controlsSegmentedView       = NSTouchBarItemIdentifier("\(Bundle.main.bundleIdentifier!).touchBar.controlsSegmentedView")
     static let likeButton                 = NSTouchBarItemIdentifier("\(Bundle.main.bundleIdentifier!).touchBar.likeButton")
     static let soundPopoverButton         = NSTouchBarItemIdentifier("\(Bundle.main.bundleIdentifier!).touchBar.soundPopoverButton")
     static let soundSlider                = NSTouchBarItemIdentifier("\(Bundle.main.bundleIdentifier!).touchBar.soundSlider")
@@ -32,7 +32,7 @@ extension WindowController: NSTouchBarDelegate {
         touchBar.customizationIdentifier = .windowBar
         touchBar.defaultItemIdentifiers = [.songArtworkTitleButton,
                                            .songProgressSlider,
-                                           .controlsSegmetedView,
+                                           .controlsSegmentedView,
                                            .likeButton,
                                            .soundPopoverButton]
         
@@ -64,6 +64,18 @@ extension WindowController: NSTouchBarDelegate {
                 item.view          = Slider()
                 songProgressSlider = item.view as? Slider
                 prepareSongProgressSlider()
+            }
+            return item
+        case .controlsSegmentedView:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.visibilityPriority = .high
+            if let view = controlsSegmentedView {
+                view.target = self
+                item.view   = view
+            } else {
+                item.view             = NSSegmentedControl()
+                controlsSegmentedView = item.view as? NSSegmentedControl
+                prepareButtons()
             }
             return item
         default:
