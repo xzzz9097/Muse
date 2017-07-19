@@ -44,9 +44,13 @@ extension WindowController: NSTouchBarDelegate {
         switch identifier {
         case .songArtworkTitleButton:
             let item  = NSCustomTouchBarItem(identifier: identifier)
-            item.view = NSButton(title: "", target: self, action: nil)
-            songArtworkTitleButton = item.view as? NSButton
-            prepareSongArtworkTitleButton()
+            if let view = songArtworkTitleButton {
+                item.view = view
+            } else {
+                item.view = NSButton(title: "", target: self, action: nil)
+                songArtworkTitleButton = item.view as? NSButton
+                prepareSongArtworkTitleButton()
+            }
             return item
         default:
             return nil
