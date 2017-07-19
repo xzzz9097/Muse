@@ -521,6 +521,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
         
         toggleControlStripButton(visible: false)
+        
+        // Invalidate TouchBar to make it reload
+        // This ensures it's always correctly displayed
+        touchBar = nil
     }
     
     func windowDidResignKey(_ notification: Notification) {
