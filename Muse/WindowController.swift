@@ -494,7 +494,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Update like button at cold start
         updateLikeButtonColdStart()
     }
-        
+    
     func windowDidBecomeKey(_ notification: Notification) {
         // Try switching to another helper is song is blank
         // (that means previous player has been closed)
@@ -590,11 +590,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareSongProgressSlider() {
+        songProgressSlider?.cell     = SliderCell()
         songProgressSlider?.delegate = self
         
-        guard let cell = self.songProgressSlider?.cell as? SliderCell else { return }
-        
-        cell.isTouchBar = true
+        if let cell = self.songProgressSlider?.cell as? SliderCell {
+            cell.isTouchBar = true
+        }
     }
     
     func prepareSongArtworkTitleButton() {

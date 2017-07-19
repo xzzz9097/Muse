@@ -55,6 +55,17 @@ extension WindowController: NSTouchBarDelegate {
                 prepareSongArtworkTitleButton()
             }
             return item
+        case .songProgressSlider:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            if let view = songProgressSlider {
+                view.target = self
+                item.view   = view
+            } else {
+                item.view          = Slider()
+                songProgressSlider = item.view as? Slider
+                prepareSongProgressSlider()
+            }
+            return item
         default:
             return nil
         }
