@@ -594,6 +594,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareSongArtworkTitleButton() {
+        songArtworkTitleButton?.cell          = ButtonCell()
+        songArtworkTitleButton?.bezelStyle    = .rounded
+        songArtworkTitleButton?.alignment     = .center
+        songArtworkTitleButton?.font          = NSFont.systemFont(ofSize: 15.0)
         songArtworkTitleButton?.imagePosition = .imageLeading
     }
     
