@@ -45,53 +45,29 @@ extension WindowController: NSTouchBarDelegate {
                   makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .songArtworkTitleButton:
-            let item  = NSCustomTouchBarItem(identifier: identifier)
-            if let view = songArtworkTitleButton {
-                // We reference current self
-                // to make the button action work
-                view.target = self
-                item.view   = view
-            } else {
-                item.view              = NSButton()
+            return createItem(identifier: identifier,
+                              view: songArtworkTitleButton) { item in
                 songArtworkTitleButton = item.view as? NSButton
                 prepareSongArtworkTitleButton()
             }
-            return item
         case .songProgressSlider:
-            let item = NSCustomTouchBarItem(identifier: identifier)
-            if let view = songProgressSlider {
-                view.target = self
-                item.view   = view
-            } else {
-                item.view          = Slider()
+            return createItem(identifier: identifier,
+                              view: songProgressSlider) { item in
                 songProgressSlider = item.view as? Slider
                 prepareSongProgressSlider()
             }
-            return item
         case .controlsSegmentedView:
-            let item = NSCustomTouchBarItem(identifier: identifier)
-            if let view = controlsSegmentedView {
-                view.target = self
-                item.view   = view
-            } else {
-                item.view             = NSSegmentedControl()
+            return createItem(identifier: identifier,
+                              view: controlsSegmentedView) { item in
                 controlsSegmentedView = item.view as? NSSegmentedControl
                 prepareButtons()
             }
-            return item
         case .likeButton:
-            let item = NSCustomTouchBarItem(identifier: identifier)
-            if let view = likeButton {
-                view.target = self
-                item.view   = view
-            } else {
-                item.view  = NSButton(title: "",
-                                      target: self,
-                                      action: #selector(likeButtonClicked(_:)))
+            return createItem(identifier: identifier,
+                              view: likeButton) { item in
                 likeButton = item.view as? NSButton
                 updateLikeButton()
             }
-            return item
         case .soundPopoverButton:
             let item = NSPopoverTouchBarItem(identifier: identifier)
             soundPopoverButton = item
@@ -101,6 +77,31 @@ extension WindowController: NSTouchBarDelegate {
         default:
             return nil
         }
+    }
+    
+    public func createItem(identifier: NSTouchBarItemIdentifier,
+                           view: NSView?,
+                           creationHandler: (NSTouchBarItem) -> ()) -> NSTouchBarItem {
+        let item = NSCustomTouchBarItem(identifier: identifier)
+        
+        if let view = view {
+            if let control = view as? NSControl { control.target = self }
+            item.view = view
+        } else {
+            switch identifier {
+            case .songArtworkTitleButton, .likeButton:
+                item.view = NSButton(title: "", target: self, action: nil)
+            case .songProgressSlider:
+                item.view = Slider()
+            case .controlsSegmentedView:
+                item.view = NSSegmentedControl()
+            default:
+                break
+            }
+            creationHandler(item)
+        }
+        
+        return item
     }
     
 }
