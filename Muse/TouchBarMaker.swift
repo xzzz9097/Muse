@@ -9,7 +9,8 @@
 import Cocoa
 
 fileprivate extension NSTouchBarCustomizationIdentifier {
-    static let windowBar = NSTouchBarCustomizationIdentifier("\(Bundle.main.bundleIdentifier!).windowBar")
+    static let windowBar  = NSTouchBarCustomizationIdentifier("\(Bundle.main.bundleIdentifier!).windowBar")
+    static let popoverBar = NSTouchBarCustomizationIdentifier("\(Bundle.main.bundleIdentifier!).popoverBar")
 }
 
 fileprivate extension NSTouchBarItemIdentifier {
@@ -41,33 +42,53 @@ extension WindowController: NSTouchBarDelegate {
         return touchBar
     }
     
+    var popoverBar: NSTouchBar? {
+        let touchBar = NSTouchBar()
+        
+        touchBar.delegate = self
+        touchBar.customizationIdentifier = .popoverBar
+        
+        return touchBar
+    }
+    
     func touchBar(_ touchBar: NSTouchBar,
                   makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+        guard let barIdentifier = touchBar.customizationIdentifier else { return nil }
+        
+        switch barIdentifier {
+        case .windowBar:
+            return touchBarItem(for: identifier)
+        default:
+            return nil
+        }
+    }
+    
+    func touchBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .songArtworkTitleButton:
             return createItem(identifier: identifier,
                               view: songArtworkTitleButton) { item in
-                songArtworkTitleButton = item.view as? NSButton
-                prepareSongArtworkTitleButton()
+                                songArtworkTitleButton = item.view as? NSButton
+                                prepareSongArtworkTitleButton()
             }
         case .songProgressSlider:
             return createItem(identifier: identifier,
                               view: songProgressSlider) { item in
-                songProgressSlider = item.view as? Slider
-                prepareSongProgressSlider()
+                                songProgressSlider = item.view as? Slider
+                                prepareSongProgressSlider()
             }
         case .controlsSegmentedView:
             return createItem(identifier: identifier,
                               view: controlsSegmentedView) { item in
-                controlsSegmentedView = item.view as? NSSegmentedControl
-                prepareButtons()
+                                controlsSegmentedView = item.view as? NSSegmentedControl
+                                prepareButtons()
             }
         case .likeButton:
             return createItem(identifier: identifier,
                               view: likeButton) { item in
-                likeButton         = item.view as? NSButton
-                likeButton?.action = #selector(likeButtonClicked(_:))
-                updateLikeButton()
+                                likeButton         = item.view as? NSButton
+                                likeButton?.action = #selector(likeButtonClicked(_:))
+                                updateLikeButton()
             }
         case .soundPopoverButton:
             let item = NSPopoverTouchBarItem(identifier: identifier)
