@@ -469,10 +469,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Set custom window attributes
         prepareWindow()
         
-        prepareButtons()
-        prepareSongProgressSlider()
-        prepareSongArtworkTitleButton()
-        
         // Register callbacks for PlayerHelper
         registerCallbacks()
         
@@ -485,9 +481,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Append system-wide button in Control Strip
         injectControlStripButton()
         
-        // Load song at cold start
-        prepareSong()
-        
         // Update like button at cold start
         updateLikeButtonColdStart()
     }
@@ -496,6 +489,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Try switching to another helper is song is blank
         // (that means previous player has been closed)
         // Or if helper is no longer available
+        // Also this loads song at cold start
         if song == Song() || !helper.isAvailable {
             setPlayerHelper(to: manager.designatedHelperID)
         }
