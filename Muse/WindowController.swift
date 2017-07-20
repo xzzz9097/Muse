@@ -583,6 +583,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         controlsSegmentedView?.setImage(.previous, forSegment: 0)
         controlsSegmentedView?.setImage(.play, forSegment: 1)
         controlsSegmentedView?.setImage(.next, forSegment: 2)
+        
+        (0..<(controlsSegmentedView?.segmentCount)!).forEach {
+            controlsSegmentedView?.setWidth(45.0, forSegment: $0)
+        }
     }
     
     func prepareSongProgressSlider() {
