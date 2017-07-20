@@ -63,7 +63,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     weak var songArtworkTitleButton:     NSButton?
     weak var songProgressSlider:         Slider?
     weak var controlsSegmentedView:      NSSegmentedControl?
-    weak var likeButtonItem:             NSTouchBarItem?
     weak var likeButton:                 NSButton?
     weak var soundPopoverButton:         NSPopoverTouchBarItem?
     weak var soundSlider:                NSSliderTouchBarItem?
@@ -131,7 +130,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         showPlayer()
     }
     
-    @IBAction func likeButtonClicked(_ sender: Any) {
+    func likeButtonClicked(_ sender: NSButton) {
         // Reverse like on current track if supported
         if helper.supportsLiking { helper.liked = !helper.liked }
     }

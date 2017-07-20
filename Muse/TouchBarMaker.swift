@@ -35,8 +35,7 @@ extension WindowController: NSTouchBarDelegate {
                                            .songProgressSlider,
                                            .fixedSpaceSmall,
                                            .controlsSegmentedView,
-                                           .likeButton,
-                                           .soundPopoverButton]
+                                           .likeButton]
         
         return touchBar
     }
@@ -70,7 +69,6 @@ extension WindowController: NSTouchBarDelegate {
             return item
         case .controlsSegmentedView:
             let item = NSCustomTouchBarItem(identifier: identifier)
-            item.visibilityPriority = .high
             if let view = controlsSegmentedView {
                 view.target = self
                 item.view   = view
@@ -78,6 +76,19 @@ extension WindowController: NSTouchBarDelegate {
                 item.view             = NSSegmentedControl()
                 controlsSegmentedView = item.view as? NSSegmentedControl
                 prepareButtons()
+            }
+            return item
+        case .likeButton:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            if let view = likeButton {
+                view.target = self
+                item.view   = view
+            } else {
+                item.view  = NSButton(title: "",
+                                      target: self,
+                                      action: #selector(likeButtonClicked(_:)))
+                likeButton = item.view as? NSButton
+                updateLikeButton()
             }
             return item
         default:
