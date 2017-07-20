@@ -35,7 +35,8 @@ extension WindowController: NSTouchBarDelegate {
                                            .songProgressSlider,
                                            .fixedSpaceSmall,
                                            .controlsSegmentedView,
-                                           .likeButton]
+                                           .likeButton,
+                                           .soundPopoverButton]
         
         return touchBar
     }
@@ -90,6 +91,12 @@ extension WindowController: NSTouchBarDelegate {
                 likeButton = item.view as? NSButton
                 updateLikeButton()
             }
+            return item
+        case .soundPopoverButton:
+            if let item = soundPopoverButton { return item }
+            let item = NSPopoverTouchBarItem(identifier: identifier)
+            soundPopoverButton = item
+            // TODO: Add popover TouchBar
             return item
         default:
             return nil
