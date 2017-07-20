@@ -608,9 +608,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     func prepareSoundSlider() {
         let volume = helper.volume
-        
-        updateSoundPopoverButton(for: volume)
-        
+
         // Set the player volume on the slider
         soundSlider?.slider.integerValue = volume
     }
