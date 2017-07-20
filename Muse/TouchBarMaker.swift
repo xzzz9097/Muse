@@ -31,7 +31,9 @@ extension WindowController: NSTouchBarDelegate {
         touchBar.delegate = self
         touchBar.customizationIdentifier = .windowBar
         touchBar.defaultItemIdentifiers = [.songArtworkTitleButton,
+                                           .fixedSpaceSmall,
                                            .songProgressSlider,
+                                           .fixedSpaceSmall,
                                            .controlsSegmentedView,
                                            .likeButton,
                                            .soundPopoverButton]
