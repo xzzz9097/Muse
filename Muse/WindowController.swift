@@ -618,6 +618,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
 
     func prepareShuffleRepeatSegmentedView() {
+        shuffleRepeatSegmentedView?.segmentCount = 2
+        shuffleRepeatSegmentedView?.segmentStyle = .separated
+        
         // Set image for 'shuffle' button
         shuffleRepeatSegmentedView?.setImage(.shuffling, forSegment: 0)
         

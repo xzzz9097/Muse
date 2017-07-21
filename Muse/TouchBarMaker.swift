@@ -50,7 +50,8 @@ extension WindowController: NSTouchBarDelegate {
         
         touchBar.delegate                = self
         touchBar.customizationIdentifier = .popoverBar
-        touchBar.defaultItemIdentifiers  = [.soundSlider]
+        touchBar.defaultItemIdentifiers  = [.shuffleRepeatSegmentedView,
+                                            .soundSlider]
         
         return touchBar
     }
@@ -115,6 +116,12 @@ extension WindowController: NSTouchBarDelegate {
                                 soundSlider = item as? NSSliderTouchBarItem
                                 prepareSoundSlider()
             }
+        case .shuffleRepeatSegmentedView:
+            return createItem(identifier: identifier,
+                              view: shuffleRepeatSegmentedView) { item in
+                                shuffleRepeatSegmentedView = item.view as? NSSegmentedControl
+                                prepareShuffleRepeatSegmentedView()
+            }
         default:
             return nil
         }
@@ -140,7 +147,7 @@ extension WindowController: NSTouchBarDelegate {
                 item.view = NSButton(title: "", target: self, action: nil)
             case .songProgressSlider:
                 item.view = Slider()
-            case .controlsSegmentedView:
+            case .controlsSegmentedView, .shuffleRepeatSegmentedView:
                 item.view = NSSegmentedControl()
             default:
                 break
