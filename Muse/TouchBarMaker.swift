@@ -109,6 +109,20 @@ extension WindowController: NSTouchBarDelegate {
         }
     }
     
+    func updatePopoverButtonForControlStrip() {
+        // TODO: handle long press in control strip (?)
+        let popoverButton     = soundPopoverButton?.collapsedRepresentation as? NSButton
+        popoverButton?.target = self
+        popoverButton?.action = #selector(openPopoverBar(_:))
+    }
+    
+    func openPopoverBar(_ sender: NSButton) {
+        NSTouchBar.presentSystemModalFunctionBar(
+            popoverBar,
+            systemTrayItemIdentifier: NSTouchBarItemIdentifier.soundPopoverButton.rawValue
+        )
+    }
+    
     func popoverBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .soundSlider:
