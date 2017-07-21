@@ -99,8 +99,9 @@ extension WindowController: NSTouchBarDelegate {
             }
         case .soundPopoverButton:
             let item = NSPopoverTouchBarItem(identifier: identifier)
-            soundPopoverButton                  = item
-            soundPopoverButton?.popoverTouchBar = popoverBar!
+            soundPopoverButton                       = item
+            soundPopoverButton?.popoverTouchBar      = popoverBar!
+            soundPopoverButton?.pressAndHoldTouchBar = popoverBar!
             updateSoundPopoverButton(for: helper.volume)
             return item
         default:
