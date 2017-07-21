@@ -99,18 +99,16 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    @IBAction func shuffleRepeatSegmentedViewClicked(_ sender: Any) {
-        guard let segmentedControl = sender as? NSSegmentedControl else { return }
-        
-        let selectedSegment = segmentedControl.selectedSegment
+    func shuffleRepeatSegmentedViewClicked(_ sender: NSSegmentedControl) {
+        let selectedSegment = sender.selectedSegment
         
         switch selectedSegment {
         case 0:
             // Toggle shuffling
-            helper.shuffling = segmentedControl.isSelected(forSegment: selectedSegment)
+            helper.shuffling = sender.isSelected(forSegment: selectedSegment)
         case 1:
             // Toggle repeating
-            helper.repeating = segmentedControl.isSelected(forSegment: selectedSegment)
+            helper.repeating = sender.isSelected(forSegment: selectedSegment)
         default:
             return
         }
@@ -624,6 +622,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func prepareShuffleRepeatSegmentedView() {
         shuffleRepeatSegmentedView?.segmentCount = 2
         shuffleRepeatSegmentedView?.segmentStyle = .separated
+        shuffleRepeatSegmentedView?.trackingMode = .selectAny
+        shuffleRepeatSegmentedView?.action       = #selector(shuffleRepeatSegmentedViewClicked(_:))
         
         // Set image for 'shuffle' button
         shuffleRepeatSegmentedView?.setImage(.shuffling, forSegment: 0)
