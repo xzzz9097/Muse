@@ -116,11 +116,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    @IBAction func soundSliderValueChanged(_ sender: Any) {
-        guard let sliderItem = sender as? NSSliderTouchBarItem else { return }
-        
+    @IBAction func soundSliderValueChanged(_ sender: NSSliderTouchBarItem) {        
         // Set the volume on the player
-        helper.volume = sliderItem.slider.integerValue
+        helper.volume = sender.slider.integerValue
         
         updateSoundPopoverButton(for: helper.volume)
     }
@@ -611,10 +609,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareSoundSlider() {
-        let volume = helper.volume
-
+        soundSlider?.slider.minValue = 0.0
+        soundSlider?.slider.maxValue = 100.0
+        soundSlider?.action          = #selector(soundSliderValueChanged(_:))
+        
         // Set the player volume on the slider
-        soundSlider?.slider.integerValue = volume
+        soundSlider?.slider.integerValue = helper.volume
     }
 
     func prepareShuffleRepeatSegmentedView() {
