@@ -613,6 +613,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         soundSlider?.slider.maxValue = 100.0
         soundSlider?.action          = #selector(soundSliderValueChanged(_:))
         
+        soundSlider?.minimumValueAccessory = NSSliderAccessory(image: NSImage.volumeLow!)
+        soundSlider?.maximumValueAccessory = NSSliderAccessory(image: NSImage.volumeHigh!)
+        soundSlider?.valueAccessoryWidth   = .wide
+        
         // Set the player volume on the slider
         soundSlider?.slider.integerValue = helper.volume
     }
