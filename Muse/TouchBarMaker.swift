@@ -73,37 +73,34 @@ extension WindowController: NSTouchBarDelegate {
     func touchBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .songArtworkTitleButton:
-            return createItem(identifier: identifier,
-                              view: songArtworkTitleButton) { item in
-                                songArtworkTitleButton = item.view as? NSButton
-                                prepareSongArtworkTitleButton()
+            return createItem(identifier: identifier, view: songArtworkTitleButton) { item in
+                songArtworkTitleButton = item.view as? NSButton
+                prepareSongArtworkTitleButton()
             }
         case .songProgressSlider:
-            return createItem(identifier: identifier,
-                              view: songProgressSlider) { item in
-                                songProgressSlider = item.view as? Slider
-                                prepareSongProgressSlider()
+            return createItem(identifier: identifier, view: songProgressSlider) { item in
+                songProgressSlider = item.view as? Slider
+                prepareSongProgressSlider()
             }
         case .controlsSegmentedView:
-            return createItem(identifier: identifier,
-                              view: controlsSegmentedView) { item in
-                                controlsSegmentedView = item.view as? NSSegmentedControl
-                                prepareButtons()
+            return createItem(identifier: identifier, view: controlsSegmentedView) { item in
+                controlsSegmentedView = item.view as? NSSegmentedControl
+                prepareButtons()
             }
         case .likeButton:
-            return createItem(identifier: identifier,
-                              view: likeButton) { item in
-                                likeButton         = item.view as? NSButton
-                                likeButton?.action = #selector(likeButtonClicked(_:))
-                                updateLikeButton()
+            return createItem(identifier: identifier, view: likeButton) { item in
+                likeButton         = item.view as? NSButton
+                likeButton?.action = #selector(likeButtonClicked(_:))
+                updateLikeButton()
             }
         case .soundPopoverButton:
-            let item = NSPopoverTouchBarItem(identifier: identifier)
-            soundPopoverButton                       = item
-            soundPopoverButton?.popoverTouchBar      = popoverBar!
-            soundPopoverButton?.pressAndHoldTouchBar = popoverBar!
-            updateSoundPopoverButton(for: helper.volume)
-            return item
+            //let item = NSPopoverTouchBarItem(identifier: identifier)
+            return createItem(identifier: identifier) { item in
+                soundPopoverButton                       = item as? NSPopoverTouchBarItem
+                soundPopoverButton?.popoverTouchBar      = popoverBar!
+                soundPopoverButton?.pressAndHoldTouchBar = popoverBar!
+                updateSoundPopoverButton(for: helper.volume)
+            }
         default:
             return nil
         }
@@ -126,16 +123,14 @@ extension WindowController: NSTouchBarDelegate {
     func popoverBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .soundSlider:
-            return createItem(identifier: identifier,
-                              view: nil) { item in
-                                soundSlider = item as? NSSliderTouchBarItem
-                                prepareSoundSlider()
+            return createItem(identifier: identifier) { item in
+                soundSlider = item as? NSSliderTouchBarItem
+                prepareSoundSlider()
             }
         case .shuffleRepeatSegmentedView:
-            return createItem(identifier: identifier,
-                              view: shuffleRepeatSegmentedView) { item in
-                                shuffleRepeatSegmentedView = item.view as? NSSegmentedControl
-                                prepareShuffleRepeatSegmentedView()
+            return createItem(identifier: identifier, view: shuffleRepeatSegmentedView) { item in
+                shuffleRepeatSegmentedView = item.view as? NSSegmentedControl
+                prepareShuffleRepeatSegmentedView()
             }
         default:
             return nil
@@ -143,34 +138,44 @@ extension WindowController: NSTouchBarDelegate {
     }
     
     public func createItem(identifier: NSTouchBarItemIdentifier,
-                           view: NSView?,
+                           view: NSView? = nil,
                            creationHandler: (NSTouchBarItem) -> ()) -> NSTouchBarItem {
-        if identifier == .soundSlider {
-            let item = NSSliderTouchBarItem(identifier: identifier)
+        var item: NSTouchBarItem = NSCustomTouchBarItem(identifier: identifier)
+        
+        switch identifier {
+        case .soundSlider:
+            item = NSSliderTouchBarItem(identifier: identifier)
+        case .soundPopoverButton:
+            item = NSPopoverTouchBarItem(identifier: identifier)
+        default:
+            break
+        }
+        
+        if identifier == .soundSlider || identifier == .soundPopoverButton {
             creationHandler(item)
             return item
         }
         
-        let item = NSCustomTouchBarItem(identifier: identifier)
+        guard let customItem = item as? NSCustomTouchBarItem else { return item }
         
         if let view = view {
             if let control = view as? NSControl { control.target = self }
-            item.view = view
+            customItem.view = view
         } else {
             switch identifier {
             case .songArtworkTitleButton, .likeButton:
-                item.view = NSButton(title: "", target: self, action: nil)
+                customItem.view = NSButton(title: "", target: self, action: nil)
             case .songProgressSlider:
-                item.view = Slider()
+                customItem.view = Slider()
             case .controlsSegmentedView, .shuffleRepeatSegmentedView:
-                item.view = NSSegmentedControl()
+                customItem.view = NSSegmentedControl()
             default:
                 break
             }
             creationHandler(item)
         }
         
-        return item
+        return customItem
     }
     
 }
