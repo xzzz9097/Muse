@@ -49,7 +49,6 @@ import ScriptingBridge
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
-@available(OSX 10.12.2, *)
 class SpotifyHelper: PlayerHelper {
     
     // Singleton constructor
