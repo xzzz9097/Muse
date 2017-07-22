@@ -114,7 +114,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    @IBAction func soundSliderValueChanged(_ sender: NSSliderTouchBarItem) {        
+    @IBAction func soundSliderValueChanged(_ sender: NSSliderTouchBarItem) {
         // Set the volume on the player
         helper.volume = sender.slider.integerValue
         

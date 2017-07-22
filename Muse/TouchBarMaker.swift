@@ -29,6 +29,10 @@ fileprivate extension NSTouchBarItemIdentifier {
 @available(OSX 10.12.2, *)
 extension WindowController: NSTouchBarDelegate {
     
+    /**
+     Override window touch bar creation method for customization
+     - returns: the main window NSTouchBar
+      */
     override func makeTouchBar() -> NSTouchBar? {
         let touchBar = NSTouchBar()
         
@@ -45,6 +49,10 @@ extension WindowController: NSTouchBarDelegate {
         return touchBar
     }
     
+    /**
+     Creates the popover touch bar with sound slider and shuffle/repeat controls
+     - returns: the popover NSTouchBar
+      */
     var popoverBar: NSTouchBar? {
         let touchBar = NSTouchBar()
         
@@ -56,6 +64,11 @@ extension WindowController: NSTouchBarDelegate {
         return touchBar
     }
     
+    /**
+     NSTouchBarDelegate implementation
+     - returns: the NSTouchBarItem for requested identifier,
+                generated for window bar or popover bar
+      */
     func touchBar(_ touchBar: NSTouchBar,
                   makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         guard let barIdentifier = touchBar.customizationIdentifier else { return nil }
@@ -70,6 +83,11 @@ extension WindowController: NSTouchBarDelegate {
         }
     }
     
+    /**
+     Creates touch bar items for window bar
+     - parameter identifier: the identifier of the requested item
+     - returns: the requested NSTouchBarItem
+      */
     func touchBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .songArtworkTitleButton:
@@ -106,20 +124,11 @@ extension WindowController: NSTouchBarDelegate {
         }
     }
     
-    func updatePopoverButtonForControlStrip() {
-        // TODO: handle long press in control strip (?)
-        let popoverButton     = soundPopoverButton?.collapsedRepresentation as? NSButton
-        popoverButton?.target = self
-        popoverButton?.action = #selector(openPopoverBar(_:))
-    }
-    
-    func openPopoverBar(_ sender: NSButton) {
-        NSTouchBar.presentSystemModalFunctionBar(
-            popoverBar,
-            systemTrayItemIdentifier: NSTouchBarItemIdentifier.soundPopoverButton.rawValue
-        )
-    }
-    
+    /**
+     Creates touch bar items for popover bar
+     - parameter identifier: the identifier of the requested item
+     - returns: the requested NSTouchBarItem
+      */
     func popoverBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .soundSlider:
@@ -137,6 +146,30 @@ extension WindowController: NSTouchBarDelegate {
         }
     }
     
+    func updatePopoverButtonForControlStrip() {
+        // We can't open a popover bar from a system modal NSTouchBar
+        // so we remap popover button action when necessary to open
+        // the popover bar as another system modal bar
+        // TODO: handle long press in control strip (?)
+        let popoverButton     = soundPopoverButton?.collapsedRepresentation as? NSButton
+        popoverButton?.target = self
+        popoverButton?.action = #selector(openPopoverBar(_:))
+    }
+    
+    func openPopoverBar(_ sender: NSButton) {
+        NSTouchBar.presentSystemModalFunctionBar(
+            popoverBar,
+            systemTrayItemIdentifier: NSTouchBarItemIdentifier.soundPopoverButton.rawValue
+        )
+    }
+    
+    /**
+     NSTouchBar item creation helper
+     - parameter identifier: the identifier of the requested item
+     - parameter view: the NSView in which item.view is stored in
+     - parameter creationHandler: the handler to execute when the item has been created
+     - returns: the requested NSTouchBarItem
+      */
     public func createItem(identifier: NSTouchBarItemIdentifier,
                            view: NSView? = nil,
                            creationHandler: (NSTouchBarItem) -> ()) -> NSTouchBarItem {
@@ -159,9 +192,13 @@ extension WindowController: NSTouchBarDelegate {
         guard let customItem = item as? NSCustomTouchBarItem else { return item }
         
         if let view = view {
+            // touch bar is being reloaded
+            // -> restore the archived NSView on the item and reset target
+            // TODO: handle disapppearences after system modal bar usage
             if let control = view as? NSControl { control.target = self }
             customItem.view = view
         } else {
+            // touch bar is being created for the first time
             switch identifier {
             case .songArtworkTitleButton, .likeButton:
                 customItem.view = NSButton(title: "", target: self, action: nil)
