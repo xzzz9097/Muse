@@ -330,15 +330,13 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
         
         // Callback ofr PlayerHelper's like setter
-        helper.likeChangedHandler = { likeChanged in
+        helper.likeChangedHandler = { liked in
             // Update like button on TouchBar
-            self.updateLikeButton()
+            self.updateLikeButton(newValue: liked)
             
             // Send like action to VC
             self.onViewController { controller in
-                if likeChanged {
-                    controller.showLastActionView(for: .like)
-                }
+                controller.showLastActionView(for: .like, liked: liked)
             }
         }
         
@@ -899,7 +897,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                                       repeatSelected: helper.repeating)
     }
     
-    func updateLikeButton() {
+    func updateLikeButton(newValue: Bool? = nil) {
+        if let liked = newValue {
+            likeButton?.image = liked ? .liked : .like
+            return
+        }
+        
         // Updates like button according to player support and track status
         if let helper = helper as? SpotifyHelper {
             likeButton?.isEnabled = true

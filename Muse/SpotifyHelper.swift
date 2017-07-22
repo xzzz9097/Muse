@@ -316,13 +316,14 @@ class SpotifyHelper: PlayerHelper {
                     self._liked = true
                     
                     // Call the handler with new like value
-                    self.likeChangedHandler(saved)
+                    // TODO: test this!
+                    self.likeChangedHandler(true)
                 }
             } else {
                 swiftify.delete(trackId: id) { deleted in
                     self._liked = false
                     
-                    self.likeChangedHandler(deleted)
+                    self.likeChangedHandler(false)
                 }
             }
         }

@@ -265,7 +265,7 @@ class iTunesHelper: PlayerHelper {
             track.setLoved!(newValue)
             
             // Call the handler with new like value
-            likeChangedHandler(true)
+            likeChangedHandler(newValue)
         }
         
         get {
