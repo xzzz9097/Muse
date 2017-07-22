@@ -8,7 +8,6 @@
 
 import Cocoa
 
-@available(OSX 10.12.2, *)
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
@@ -129,8 +128,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Enable TouchBar overlay
-        NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
+        // Enable TouchBar overlay if 10.12.2
+        if #available(OSX 10.12.2, *) {
+            NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
+        }
         
         // Create the menu item
         attachMenuItem()
