@@ -108,6 +108,7 @@ extension WindowController: NSTouchBarDelegate {
         case .likeButton:
             return createItem(identifier: identifier, view: likeButton) { item in
                 likeButton         = item.view as? NSButton
+                likeButton?.image  = .like
                 likeButton?.action = #selector(likeButtonClicked(_:))
                 updateLikeButton()
             }
