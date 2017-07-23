@@ -15,14 +15,27 @@ extension NSWindow {
         setVisibility(!self.isKeyWindow)
     }
     
-    func setVisibility(_ visible: Bool) {
+    func setVisibility(_ visible: Bool, animateClose: Bool = false) {
         // Toggles window visibility
         // Bringing the older app on top if necessary
         if visible {
             self.makeKeyAndOrderFront(self)
             NSApp.activate(ignoringOtherApps: true)
         } else {
-            NSApp.hide(self)
+            if animateClose {
+                // Fade out animation on window close
+                NSAnimationContext.beginGrouping()
+                NSAnimationContext.current().duration = 0.2
+                NSAnimationContext.runAnimationGroup(
+                { _ in self.animator().alphaValue = 0.0 }
+                ) {
+                    self.animator().alphaValue = 1.0
+                    NSApp.hide(self)
+                }
+                NSAnimationContext.endGrouping()
+            } else {
+                NSApp.hide(self)
+            }
         }
     }
     
