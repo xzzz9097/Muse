@@ -25,7 +25,7 @@ extension NSWindow {
             if animateClose {
                 // Fade out animation on window close
                 NSAnimationContext.beginGrouping()
-                NSAnimationContext.current().duration = 0.2
+                NSAnimationContext.current().duration = 0.4
                 NSAnimationContext.runAnimationGroup(
                 { _ in self.animator().alphaValue = 0.0 }
                 ) {

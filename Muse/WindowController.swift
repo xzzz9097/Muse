@@ -51,6 +51,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     let kMenuItemMaximumLength = 20
     // Constant for TouchBar slider bounds
     let xSliderBoundsThreshold: CGFloat = 25
+    // Show OSD on control strip button action
+    let shouldShowOSDForControlStripAction = false
     
     // iTunes notification fields
     // TODO: move this in a better place
@@ -416,8 +418,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         switch recognizer.state {
         case .began:
-            // TODO: Add OSD notification
             helper.togglePlayPause()
+            
+            if shouldShowOSDForControlStripAction {
+                window?.toggleVisibility()
+                startAutoClose()
+            }
         default:
             break
         }
@@ -428,12 +434,18 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         switch recognizer.state {
         case .began:
-            // TODO: Add OSD notification
             // Reverse translation check (natural scroll)
             if recognizer.translation(in: controlStripButton).x < 0 {
                 helper.nextTrack()
             } else {
                 helper.previousTrack()
+            }
+            
+            if shouldShowOSDForControlStripAction {
+                DispatchQueue.main.run(after: 100) {
+                    self.window?.toggleVisibility()
+                    self.startAutoClose()
+                }
             }
         default:
             break
@@ -547,19 +559,20 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         window.makeFirstResponder(self)
     }
     
-    func prepareAutoClose() {
+    func startAutoClose() {
         // Timer for auto-close
-        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
-            timer in
-            
+        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            // Increment count
             self.autoCloseCounter += 1
             
-            if self.autoCloseCounter == 10 {
+            if self.autoCloseCounter == 2 {
                 timer.invalidate()
                 
+                // Reset count and close the window
                 self.autoCloseCounter = 0
+                self.window?.setVisibility(false, animateClose: true)
             }
-        })
+        }
     }
     
     func prepareSong() {

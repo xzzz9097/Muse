@@ -26,7 +26,7 @@ class ViewController: NSViewController {
     var likeImage     = NSImage.like
     
     // Action view auto close
-    let actionViewTimeout:        TimeInterval = 0.75    // Timeout in seconds
+    let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
     var actionViewAutoCloseTimer: Timer        = Timer() // The timer
     
     // Title view auto close
