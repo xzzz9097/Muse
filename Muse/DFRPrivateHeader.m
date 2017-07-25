@@ -23,3 +23,17 @@
 }
 
 @end
+
+@implementation NSControlStripTouchBarItem
+
+- (void)setIsPresentInControlStrip:(BOOL)present {
+    _isPresentInControlStrip = present;
+    
+    if (present) {
+        [super addToControlStrip];
+    } else {
+        [super toggleControlStripPresence:false];
+    }
+}
+
+@end

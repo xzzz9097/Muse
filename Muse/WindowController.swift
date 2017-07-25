@@ -73,7 +73,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Vars
     
-    let controlStripItem = NSCustomTouchBarItem(identifier: .controlStripButton)
+    let controlStripItem = NSControlStripTouchBarItem(identifier: .controlStripButton)
     
     weak var controlStripButton: NSButton? {
         set {
@@ -360,7 +360,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
         
-        controlStripItem.addToControlStrip()
+        controlStripItem.isPresentInControlStrip = true
     }
     
     func prepareControlStripButton() {

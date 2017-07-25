@@ -32,3 +32,9 @@ extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 
 @end
 
+@interface NSControlStripTouchBarItem: NSCustomTouchBarItem
+
+@property (nonatomic) BOOL isPresentInControlStrip;
+
+@end
+
