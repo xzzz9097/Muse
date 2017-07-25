@@ -28,6 +28,13 @@ struct Song: Equatable {
         return name != ""
     }
     
+    /**
+     Invalidates the song variable by reinitializing it
+     */
+    mutating func invalidate() {
+        self = Song()
+    }
+    
     // MARK: Initializers
     
     init() {
