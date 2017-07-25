@@ -113,7 +113,6 @@ extension WindowController: NSTouchBarDelegate {
                 updateLikeButton()
             }
         case .soundPopoverButton:
-            //let item = NSPopoverTouchBarItem(identifier: identifier)
             return createItem(identifier: identifier) { item in
                 soundPopoverButton                       = item as? NSPopoverTouchBarItem
                 soundPopoverButton?.popoverTouchBar      = popoverBar!
