@@ -84,6 +84,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
+    var didPresentAsSystemModal = false
+    
     var isSliding = false
     
     // MARK: Actions
@@ -461,6 +463,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         NSTouchBar.presentSystemModalFunctionBar(
             touchBar,
             systemTrayItemIdentifier: NSTouchBarItemIdentifier.controlStripButton.rawValue)
+        
+        didPresentAsSystemModal = true
     }
     
     // MARK: UI preparation
@@ -523,7 +527,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Invalidate TouchBar to make it reload
         // This ensures it's always correctly displayed
-        touchBar = nil
+        // Only if system modal bar has been used
+        if didPresentAsSystemModal {
+            touchBar                = nil
+            didPresentAsSystemModal = false
+        }
     }
     
     func windowDidResignKey(_ notification: Notification) {
