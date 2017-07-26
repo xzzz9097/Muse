@@ -865,7 +865,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         songProgressSlider?.doubleValue = position / song.duration
         
-        controlStripButton?.title = position.secondsToMMSSString
+        if isUIPlaying {
+            controlStripButton?.title = position.secondsToMMSSString
+        }
         
         // Also update native touchbar scrubber
         updateNowPlayingInfoElapsedPlaybackTime(with: position)
