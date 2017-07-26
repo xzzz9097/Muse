@@ -31,6 +31,14 @@
                      systemTrayItemIdentifier:item.identifier];
 }
 
+- (void)dismissSystemModal {
+    [NSTouchBar dismissSystemModalFunctionBar:self];
+}
+
+- (void)minimizeSystemModal {
+    [NSTouchBar minimizeSystemModalFunctionBar:self];
+}
+
 @end
 
 @implementation NSControlStripTouchBarItem

@@ -233,7 +233,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func hotkeyAction() {
-        if let window = self.window { window.toggleVisibility() }
+        if let window = self.window {
+            if didPresentAsSystemModal {
+                // Dismiss system modal bar before opening the window
+                // touch bar gets broken otherwise
+                touchBar?.minimizeSystemModal()
+            }
+            
+            window.toggleVisibility()
+        }
     }
     
     func showPlayer() {
@@ -344,9 +352,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             }
         }
         
-        if let window = self.window, let delegate = self.delegate {
+        if let delegate = self.delegate {
             // Callback for AppDelegate window toggled
-            delegate.windowToggledHandler = { window.toggleVisibility() }
+            delegate.windowToggledHandler = hotkeyAction
         }
     }
     
