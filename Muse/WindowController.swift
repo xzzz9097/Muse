@@ -613,14 +613,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareSongProgressSlider() {
-        songProgressSlider?.cell     = SliderCell()
         songProgressSlider?.delegate = self
         songProgressSlider?.minValue = 0.0
         songProgressSlider?.maxValue = 1.0
-        
-        if let cell = self.songProgressSlider?.cell as? SliderCell {
-            cell.isTouchBar = true
-        }
     }
     
     func prepareSongArtworkTitleButton() {

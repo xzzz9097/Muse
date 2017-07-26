@@ -97,7 +97,7 @@ extension WindowController: NSTouchBarDelegate {
             }
         case .songProgressSlider:
             return createItem(identifier: identifier, view: songProgressSlider) { item in
-                songProgressSlider = item.view as? Slider
+                songProgressSlider = (item as? NSMediaSliderTouchBarItem)?.slider as? Slider
                 prepareSongProgressSlider()
             }
         case .controlsSegmentedView:
@@ -176,6 +176,8 @@ extension WindowController: NSTouchBarDelegate {
         var item: NSTouchBarItem = NSCustomTouchBarItem(identifier: identifier)
         
         switch identifier {
+        case .songProgressSlider:
+            item = NSMediaSliderTouchBarItem(identifier: identifier)
         case .soundSlider:
             item = NSSliderTouchBarItem(identifier: identifier)
         case .soundPopoverButton:
@@ -184,7 +186,9 @@ extension WindowController: NSTouchBarDelegate {
             break
         }
         
-        if identifier == .soundSlider || identifier == .soundPopoverButton {
+        if  identifier == .songProgressSlider ||
+            identifier == .soundSlider        ||
+            identifier == .soundPopoverButton {
             creationHandler(item)
             return item
         }
@@ -202,8 +206,6 @@ extension WindowController: NSTouchBarDelegate {
             switch identifier {
             case .songArtworkTitleButton, .likeButton:
                 customItem.view = NSButton(title: "", target: self, action: nil)
-            case .songProgressSlider:
-                customItem.view = Slider()
             case .controlsSegmentedView, .shuffleRepeatSegmentedView:
                 customItem.view = NSSegmentedControl()
             default:
