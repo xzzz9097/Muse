@@ -24,6 +24,15 @@
 
 @end
 
+@implementation NSTouchBar (DFRAccess)
+
+- (void)presentAsSystemModalForItem:(NSTouchBarItem *)item {
+    [NSTouchBar presentSystemModalFunctionBar:self
+                     systemTrayItemIdentifier:item.identifier];
+}
+
+@end
+
 @implementation NSControlStripTouchBarItem
 
 - (void)setIsPresentInControlStrip:(BOOL)present {

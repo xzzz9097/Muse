@@ -28,7 +28,14 @@ extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 
 @interface NSTouchBar ()
 
-+ (void)presentSystemModalFunctionBar:(NSTouchBar *)touchBar systemTrayItemIdentifier:(NSString *)identifier;
++ (void)presentSystemModalFunctionBar:(NSTouchBar *)touchBar
+             systemTrayItemIdentifier:(NSString *)identifier;
+
+@end
+
+@interface NSTouchBar (DFRAccess)
+
+- (void)presentAsSystemModalForItem:(NSTouchBarItem *)item;
 
 @end
 

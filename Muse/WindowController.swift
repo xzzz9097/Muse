@@ -460,9 +460,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func presentModalTouchBar() {
         updatePopoverButtonForControlStrip()
         
-        NSTouchBar.presentSystemModalFunctionBar(
-            touchBar,
-            systemTrayItemIdentifier: NSTouchBarItemIdentifier.controlStripButton.rawValue)
+        touchBar?.presentAsSystemModal(for: controlStripItem)
         
         didPresentAsSystemModal = true
     }
