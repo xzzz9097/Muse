@@ -81,7 +81,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     // Show OSD on control strip button action
-    let shouldShowOSDForControlStripAction = false
+    var shouldShowHUDForControlStripAction = false
     
     // MARK: Vars
     
@@ -371,6 +371,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                 self.shouldShowControlStripItem = !self.shouldShowControlStripItem
                 return self.shouldShowControlStripItem
             }
+            delegate.showHUDForControlStripActionHandler = {
+                self.shouldShowHUDForControlStripAction = !self.shouldShowHUDForControlStripAction
+                return self.shouldShowHUDForControlStripAction
+            }
         }
     }
     
@@ -449,7 +453,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         case .began:
             helper.togglePlayPause()
             
-            if shouldShowOSDForControlStripAction {
+            if shouldShowHUDForControlStripAction {
                 window?.toggleVisibility()
                 startAutoClose()
             }
@@ -470,7 +474,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                 helper.previousTrack()
             }
             
-            if shouldShowOSDForControlStripAction {
+            if shouldShowHUDForControlStripAction {
                 DispatchQueue.main.run(after: 100) {
                     self.window?.toggleVisibility()
                     self.startAutoClose()

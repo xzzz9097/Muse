@@ -92,6 +92,12 @@
                                             <action selector="showControlStripItemMenuItemClicked:" target="Ady-hI-5gd" id="2cj-GK-kJp"/>
                                         </connections>
                                     </menuItem>
+                                    <menuItem title="Show HUD for control strip action" id="O3t-ck-ZbM">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="showHUDForControlStripActionMenuItemClicked:" target="Ady-hI-5gd" id="Nzj-aa-djM"/>
+                                        </connections>
+                                    </menuItem>
                                 </items>
                             </menu>
                         </menuItem>

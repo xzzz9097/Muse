@@ -19,9 +19,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let menuItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
     
+    // TODO: do this without callbacks!
+    
     var windowToggledHandler: () -> () = { }
     
     var showControlStripItemHandler: () -> (Bool) = { return false }
+    
+    var showHUDForControlStripActionHandler: () -> (Bool) = { return false }
 
     // MARK: Outlets
     
@@ -41,6 +45,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func showControlStripItemMenuItemClicked(_ sender: NSMenuItem) {
         sender.state = showControlStripItemHandler() ? NSOnState : NSOffState
+    }
+    
+    @IBAction func showHUDForControlStripActionMenuItemClicked(_ sender: NSMenuItem) {
+        sender.state = showHUDForControlStripActionHandler() ? NSOnState : NSOffState
     }
     
     // MARK: Data saving
