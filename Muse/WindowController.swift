@@ -590,7 +590,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         window.collectionBehavior = .transient
         
         // Hide after losing focus
-        //window.hidesOnDeactivate = true
+        window.hidesOnDeactivate = true
         
         // Set the delegate
         window.delegate = self
