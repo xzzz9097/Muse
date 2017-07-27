@@ -51,8 +51,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     let kMenuItemMaximumLength = 20
     // Constant for TouchBar slider bounds
     let xSliderBoundsThreshold: CGFloat = 25
-    // Show OSD on control strip button action
-    let shouldShowOSDForControlStripAction = false
     
     // iTunes notification fields
     // TODO: move this in a better place
@@ -70,6 +68,20 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     weak var soundSlider:                NSSliderTouchBarItem?
     weak var shuffleRepeatSegmentedView: NSSegmentedControl?
     weak var soundPopoverTouchBar:       NSTouchBar?
+    
+    // MARK: Preferences
+    
+    // Show control strip item
+    var shouldShowControlStripItem = true {
+        didSet {
+            if let window = window, !window.isKeyWindow {
+                toggleControlStripButton(visible: shouldShowControlStripItem)
+            }
+        }
+    }
+    
+    // Show OSD on control strip button action
+    let shouldShowOSDForControlStripAction = false
     
     // MARK: Vars
     
@@ -354,7 +366,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         if let delegate = self.delegate {
             // Callback for AppDelegate window toggled
-            delegate.windowToggledHandler = hotkeyAction
+            delegate.windowToggledHandler        = hotkeyAction
+            delegate.showControlStripItemHandler = {
+                self.shouldShowControlStripItem = !self.shouldShowControlStripItem
+                return self.shouldShowControlStripItem
+            }
         }
     }
     
@@ -364,6 +380,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      Appends a system-wide button in NSTouchBar's control strip
      */
     @objc func injectControlStripButton() {
+        // Only inject control strip button if preference is enabled
+        guard shouldShowControlStripItem else { return }
+        
         prepareControlStripButton()
         
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
@@ -544,10 +563,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         toggleControlStripButton(visible: true)
     }
     
-    func toggleControlStripButton(visible: Bool) {
-        controlStripButton?.animator().isHidden = !visible
+    func toggleControlStripButton(visible: Bool = false) {
+        let shouldShow = visible && shouldShowControlStripItem
         
-        self.controlStripItem.toggleControlStripPresence(visible)
+        controlStripButton?.animator().isHidden = !shouldShow
+        
+        self.controlStripItem.toggleControlStripPresence(shouldShow)
     }
     
     func prepareWindow() {

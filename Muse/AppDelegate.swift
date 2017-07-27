@@ -20,6 +20,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let menuItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
     
     var windowToggledHandler: () -> () = { }
+    
+    var showControlStripItemHandler: () -> (Bool) = { return false }
 
     // MARK: Outlets
     
@@ -35,6 +37,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func quitMenuItemClicked(_ sender: Any) {
         // Quit the application
         NSApplication.shared().terminate(self)
+    }
+    
+    @IBAction func showControlStripItemMenuItemClicked(_ sender: NSMenuItem) {
+        sender.state = showControlStripItemHandler() ? NSOnState : NSOffState
     }
     
     // MARK: Data saving

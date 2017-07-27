@@ -82,6 +82,19 @@
                                 <action selector="checkForUpdates:" target="tvw-ff-7tM" id="WQY-K3-ly3"/>
                             </connections>
                         </menuItem>
+                        <menuItem title="Options" id="rrG-9k-WkS" userLabel="Options">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <menu key="submenu" id="hnE-2I-Fxe">
+                                <items>
+                                    <menuItem title="Show control strip button" state="on" id="1FW-Uh-J16">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="showControlStripItemMenuItemClicked:" target="Ady-hI-5gd" id="2cj-GK-kJp"/>
+                                        </connections>
+                                    </menuItem>
+                                </items>
+                            </menu>
+                        </menuItem>
                         <menuItem title="Quit Muse" keyEquivalent="q" id="yNZ-Pt-Iyt">
                             <connections>
                                 <action selector="quitMenuItemClicked:" target="Voe-Tx-rLC" id="Weu-58-Vap"/>
