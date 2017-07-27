@@ -34,7 +34,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     var song                           = Song()
     var nowPlayingInfo: [String : Any] = [:]
-    var autoCloseCounter               = 0
+    var autoCloseTimeout: TimeInterval = 1.5
     
     // MARK: Timers
     
@@ -81,7 +81,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     // Show OSD on control strip button action
-    var shouldShowHUDForControlStripAction = false
+    var shouldShowHUDForControlStripAction = true
     
     // MARK: Vars
     
@@ -454,7 +454,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             helper.togglePlayPause()
             
             if shouldShowHUDForControlStripAction {
-                window?.toggleVisibility()
+                window?.isVisibleAsHUD = true
                 startAutoClose()
             }
         default:
@@ -476,7 +476,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             
             if shouldShowHUDForControlStripAction {
                 DispatchQueue.main.run(after: 100) {
-                    self.window?.toggleVisibility()
+                    self.window?.isVisibleAsHUD = true
                     self.startAutoClose()
                 }
             }
@@ -590,7 +590,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         window.collectionBehavior = .transient
         
         // Hide after losing focus
-        window.hidesOnDeactivate = true
+        //window.hidesOnDeactivate = true
         
         // Set the delegate
         window.delegate = self
@@ -599,18 +599,16 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func startAutoClose() {
+        // Ensures any existing auto-close timer is cancelled
+        autoCloseTimer.invalidate()
+        
         // Timer for auto-close
-        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            // Increment count
-            self.autoCloseCounter += 1
+        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: autoCloseTimeout,
+                                              repeats: false) { timer in
+            timer.invalidate()
             
-            if self.autoCloseCounter == 2 {
-                timer.invalidate()
-                
-                // Reset count and close the window
-                self.autoCloseCounter = 0
-                self.window?.setVisibility(false, animateClose: true)
-            }
+            // Reset count and close the window
+            self.window?.isVisibleAsHUD = false
         }
     }
     

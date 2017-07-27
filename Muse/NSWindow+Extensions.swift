@@ -23,20 +23,45 @@ extension NSWindow {
             NSApp.activate(ignoringOtherApps: true)
         } else {
             if animateClose {
-                // Fade out animation on window close
-                NSAnimationContext.beginGrouping()
-                NSAnimationContext.current().duration = 0.4
-                NSAnimationContext.runAnimationGroup(
-                { _ in self.animator().alphaValue = 0.0 }
-                ) {
-                    self.animator().alphaValue = 1.0
-                    NSApp.hide(self)
-                }
-                NSAnimationContext.endGrouping()
+                self.fadeClose(duration: 0.4) { NSApp.hide(self) }
             } else {
                 NSApp.hide(self)
             }
         }
+    }
+    
+    var isVisibleAsHUD: Bool {
+        set {
+            if newValue {
+                self.level = NSScreenSaverWindowLevel
+                self.hidesOnDeactivate = false
+                self.orderFrontRegardless()
+            } else {
+                self.fadeClose(duration: 0.4) {
+                    self.level = NSNormalWindowLevel
+                    self.hidesOnDeactivate = true
+                }
+            }
+        }
+        
+        get {
+            return   self.level == NSScreenSaverWindowLevel &&
+                    !self.hidesOnDeactivate
+        }
+    }
+    
+    func fadeClose(duration: TimeInterval,
+                   completionHandler: @escaping () -> ()) {
+        NSAnimationContext.current().duration = duration
+        
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.runAnimationGroup(
+            { _ in self.animator().alphaValue = 0.0 },
+            completionHandler:
+            {      self.animator().alphaValue = 1.0
+                   completionHandler() }
+        )
+        NSAnimationContext.endGrouping()
     }
     
 }
