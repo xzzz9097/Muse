@@ -12,8 +12,21 @@ class ButtonCell: NSButtonCell {
     
     // MARK: Properties
     
+    // Has custom image drawing
+    var hasRoundedLeadingImage = true {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
     // Radius of the rounded NSImage
     var radius: CGFloat = 5.0 {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    var textColor = NSColor.alternateSelectedControlTextColor {
         didSet {
             self.controlView?.needsDisplay = true
         }
@@ -35,7 +48,8 @@ class ButtonCell: NSButtonCell {
      Creates the image at the very beginning of the button
      */
     override func imageRect(forBounds rect: NSRect) -> NSRect {
-        return NSMakeRect(0, 0, rect.height, rect.height)
+        return hasRoundedLeadingImage ? NSMakeRect(0, 0, rect.height, rect.height) :
+                                        super.imageRect(forBounds: rect)
     }
     
     /**
@@ -45,15 +59,24 @@ class ButtonCell: NSButtonCell {
         var frame = frame
         
         // Shift the title leftwards
-        frame.origin.x += xOriginShiftDelta
+        if hasRoundedLeadingImage { frame.origin.x += xOriginShiftDelta }
         
-        return super.drawTitle(title, withFrame: frame, in: controlView)
+        let string = NSMutableAttributedString(attributedString: title)
+        string.addAttribute(NSForegroundColorAttributeName,
+                            value: textColor,
+                            range: NSMakeRange(0, string.length))
+        
+        return super.drawTitle(string, withFrame: frame, in: controlView)
     }
     
     /**
      Draws the requested NSImage in a rounded rect
      */
     override func drawImage(_ image: NSImage, withFrame frame: NSRect, in controlView: NSView) {
+        guard hasRoundedLeadingImage else { return super.drawImage(image,
+                                                                   withFrame: frame,
+                                                                   in: controlView)}
+        
         NSGraphicsContext.saveGraphicsState()
         
         let path = NSBezierPath(roundedRect: frame, xRadius: radius, yRadius: radius)

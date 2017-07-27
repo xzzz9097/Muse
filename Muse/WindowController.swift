@@ -395,10 +395,18 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareControlStripButton() {
-        controlStripButton = NSButton(title: "11:11",
-                                      target: self,
-                                      action: #selector(presentModalTouchBar))
+        controlStripButton = NSButton()
         
+        let cell                          = ButtonCell()
+        cell.hasRoundedLeadingImage       = false
+        cell.textColor                    = NSColor.white.withAlphaComponent(0.8)
+        controlStripButton?.cell          = cell
+        
+        controlStripButton?.title         = "11:11"
+        controlStripButton?.target        = self
+        controlStripButton?.action        = #selector(presentModalTouchBar)
+        
+        controlStripButton?.font          = NSFont.systemFont(ofSize: 16.0)
         controlStripButton?.imagePosition = .imageOverlaps
         controlStripButton?.isBordered    = false
         controlStripButton?.imageScaling  = .scaleNone
@@ -1088,7 +1096,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             controlStripButton?.image = image.resized(
                 to: NSMakeSize((controlStripButton?.frame.width)!,
                                (controlStripButton?.frame.width)!)
-            ).withAlpha(0.5)
+            ).withAlpha(0.3)
         } else {
             controlStripButton?.image = nil
         }
