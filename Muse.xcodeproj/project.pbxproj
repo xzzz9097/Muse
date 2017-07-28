@@ -12,6 +12,7 @@
 		0C1AA7021E97F95E00EC89C2 /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C1AA7011E97F95E00EC89C2 /* token.json */; };
 		0C1B1F5F1F17C065009D4588 /* DFRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */; };
 		0C1F20EC1F2B21E50055ACAC /* NSCustomizableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */; };
+		0C1F20F41F2B9F3C0055ACAC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */; };
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
 		0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3750D01EFC29C700EE19AE /* Slider.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
@@ -123,6 +124,7 @@
 		0C0FE5301E62C73600DFC6A7 /* Swiftify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swiftify.swift; sourceTree = "<group>"; };
 		0C1AA7011E97F95E00EC89C2 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
 		0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCustomizableButton.swift; sourceTree = "<group>"; };
+		0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extensions.swift"; sourceTree = "<group>"; };
 		0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFRPrivateHeader.h; sourceTree = "<group>"; };
 		0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = ../../../../System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
 				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
 				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
+				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
 				0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */,
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
 				0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */,
@@ -628,6 +631,7 @@
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
 				0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */,
 				0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */,
+				0C1F20F41F2B9F3C0055ACAC /* Preferences.swift in Sources */,
 				0CD2870E1E106D4600EF0E73 /* NSImage+Extensions.swift in Sources */,
 				0C9B622C1E1D696400660633 /* Animations.swift in Sources */,
 				0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */,
