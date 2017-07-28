@@ -180,6 +180,7 @@ extension WindowController: NSTouchBarDelegate {
             item = NSSliderTouchBarItem(identifier: identifier)
         case .soundPopoverButton:
             item = NSPopoverTouchBarItem(identifier: identifier)
+            (item.view as? NSButton)?.addTouchBarButtonWidthConstraint()
         default:
             break
         }
@@ -208,12 +209,15 @@ extension WindowController: NSTouchBarDelegate {
                                                        action: nil,
                                                        hasRoundedLeadingImage: true)
             case .likeButton:
-                customItem.view = NSButton(title: "", target: self, action: nil)
+                let button = NSButton(title: "", target: self, action: nil)
+                button.addTouchBarButtonWidthConstraint()
+                customItem.view = button
             case .controlsSegmentedView, .shuffleRepeatSegmentedView:
                 customItem.view = NSSegmentedControl()
             default:
                 break
             }
+            
             creationHandler(item)
         }
         
@@ -221,3 +225,31 @@ extension WindowController: NSTouchBarDelegate {
     }
     
 }
+ 
+extension NSView {
+    
+    func widthConstraint(size: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: self,
+                                  attribute: .width,
+                                  relatedBy: .equal,
+                                  toItem: nil,
+                                  attribute: .width,
+                                  multiplier: 1.0,
+                                  constant: size)
+    }
+    
+    func addWidthConstraint(size: CGFloat) {
+        addConstraint(widthConstraint(size: size))
+    }
+    
+}
+
+extension NSButton {
+    
+    static let touchBarButtonWidth: CGFloat = 56.0
+    
+    func addTouchBarButtonWidthConstraint() {
+        addWidthConstraint(size: NSButton.touchBarButtonWidth)
+    }
+    
+ }
