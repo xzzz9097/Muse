@@ -13,7 +13,7 @@ class ButtonCell: NSButtonCell {
     // MARK: Properties
     
     // Has custom image drawing
-    var hasRoundedLeadingImage = true {
+    var hasRoundedLeadingImage = false {
         didSet {
             self.controlView?.needsDisplay = true
         }
