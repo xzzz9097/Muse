@@ -49,6 +49,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     let kShouldSetTitleOnMenuBar = true
     // Constant for setting menu title length
     let kMenuItemMaximumLength = 20
+    // Constant for setting song title maximum length in TouchBar button
+    let songTitleMaximumLength = 15
     // Constant for TouchBar slider bounds
     let xSliderBoundsThreshold: CGFloat = 25
     
@@ -1050,7 +1052,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateTouchBarUI() {
-        songArtworkTitleButton?.title = song.name.truncate(at: 12)
+        songArtworkTitleButton?.title = song.name.truncate(at: songTitleMaximumLength)
         songArtworkTitleButton?.sizeToFit()
         
         controlsSegmentedView?.setImage(helper.isPlaying ? .pause : .play,
