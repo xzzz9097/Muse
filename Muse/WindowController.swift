@@ -98,6 +98,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
+    // Hardcoded control strip item size
+    // frame.size returns a wrong value at cold start
+    let controlStripButtonSize = NSMakeSize(58.0, 58.0)
+    
     var didPresentAsSystemModal = false
     
     var isSliding = false
@@ -1094,10 +1098,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         songArtworkTitleButton?.image = image.resized(to: NSMakeSize(30, 30))
         
         if image != .defaultBg {
-            controlStripButton?.image = image.resized(
-                to: NSMakeSize((controlStripButton?.frame.width)!,
-                               (controlStripButton?.frame.width)!)
-            ).withAlpha(0.3)
+            controlStripButton?.image = image.resized(to: controlStripButtonSize)
+                                             .withAlpha(0.3)
         } else {
             controlStripButton?.image = nil
         }
