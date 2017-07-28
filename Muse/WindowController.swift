@@ -69,7 +69,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     weak var soundPopoverButton:         NSPopoverTouchBarItem?
     weak var soundSlider:                NSSliderTouchBarItem?
     weak var shuffleRepeatSegmentedView: NSSegmentedControl?
-    weak var soundPopoverTouchBar:       NSTouchBar?
     
     // MARK: Preferences
     
