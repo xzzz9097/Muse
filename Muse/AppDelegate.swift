@@ -172,6 +172,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func prepareMenuItems() {
         showControlStripButtonMenuItem.state = Preference(.controlStripItem).value as? Bool ?? false ?
                                                NSOnState : NSOffState
+        showControlStripHUDMenuItem.state    = Preference(.controlStripHUD).value as? Bool ?? false ?
+                                               NSOnState : NSOffState
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

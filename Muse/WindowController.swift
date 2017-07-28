@@ -88,7 +88,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     // Show OSD on control strip button action
-    var shouldShowHUDForControlStripAction = true
+    var shouldShowHUDForControlStripAction: Bool {
+        set {
+            Preference(.controlStripHUD).set(newValue)
+        }
+        
+        get {
+            return Preference(.controlStripHUD).value as? Bool ?? false
+        }
+    }
     
     // MARK: Vars
     
