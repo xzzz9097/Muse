@@ -626,6 +626,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareButtons() {
+        controlsSegmentedView?.target       = self
         controlsSegmentedView?.segmentCount = 3
         controlsSegmentedView?.segmentStyle = .separated
         controlsSegmentedView?.trackingMode = .momentary
