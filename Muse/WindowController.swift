@@ -664,6 +664,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareSoundSlider() {
+        soundSlider?.target          = self
         soundSlider?.slider.minValue = 0.0
         soundSlider?.slider.maxValue = 100.0
         soundSlider?.action          = #selector(soundSliderValueChanged(_:))
@@ -677,6 +678,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
 
     func prepareShuffleRepeatSegmentedView() {
+        shuffleRepeatSegmentedView?.target       = self
         shuffleRepeatSegmentedView?.segmentCount = 2
         shuffleRepeatSegmentedView?.segmentStyle = .separated
         shuffleRepeatSegmentedView?.trackingMode = .selectAny
