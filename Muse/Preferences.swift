@@ -14,7 +14,7 @@ struct Preference {
     
     let userDefaults = UserDefaults.standard
     
-    var key: PreferenceKey
+    let key: PreferenceKey
     
     enum Key: String {
         
@@ -34,11 +34,15 @@ struct Preference {
         
     }
     
+    init(_ key: PreferenceKey) {
+        self.key = key
+    }
+    
     func set(_ value: Any) {
         userDefaults.set(value, for: key)
     }
     
-    func get() -> Any? {
+    var value: Any? {
         return userDefaults.object(for: key)
     }
     

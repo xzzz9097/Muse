@@ -65,6 +65,8 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Muse" customModuleProvider="target">
                     <connections>
                         <outlet property="menuBarMenu" destination="3ym-64-pdK" id="XDT-Sh-nTN"/>
+                        <outlet property="showControlStripButtonMenuItem" destination="1FW-Uh-J16" id="NGK-q8-uRi"/>
+                        <outlet property="showControlStripHUDMenuItem" destination="O3t-ck-ZbM" id="DLl-6I-zaH"/>
                     </connections>
                 </customObject>
                 <menu id="3ym-64-pdK">

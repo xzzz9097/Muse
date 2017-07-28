@@ -30,6 +30,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: Outlets
     
     @IBOutlet weak var menuBarMenu: NSMenu!
+    @IBOutlet weak var showControlStripButtonMenuItem: NSMenuItem!
+    @IBOutlet weak var showControlStripHUDMenuItem: NSMenuItem!
     
     // MARK: Actions
     
@@ -155,6 +157,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Copy support files if necessary
         if !hasApplicationSupportFiles  { copyApplicationSupportFiles() }
+        
+        // Register dafault user preferences
+        registerDefaultPreferences()
+        
+        // Load menu items
+        prepareMenuItems()
+    }
+    
+    func registerDefaultPreferences() {
+        Preference.registerDefaults()
+    }
+    
+    func prepareMenuItems() {
+        showControlStripButtonMenuItem.state = Preference(.controlStripItem).value as? Bool ?? false ?
+                                               NSOnState : NSOffState
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

@@ -73,11 +73,17 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // MARK: Preferences
     
     // Show control strip item
-    var shouldShowControlStripItem = true {
-        didSet {
+    var shouldShowControlStripItem: Bool {
+        set {
+            Preference(.controlStripItem).set(newValue)
+        
             if let window = window, !window.isKeyWindow {
-                toggleControlStripButton(visible: shouldShowControlStripItem)
+                toggleControlStripButton(force: true, visible: newValue)
             }
+        }
+        
+        get {            
+            return Preference(.controlStripItem).value as? Bool ?? false
         }
     }
     
@@ -389,14 +395,13 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      Appends a system-wide button in NSTouchBar's control strip
      */
     @objc func injectControlStripButton() {
-        // Only inject control strip button if preference is enabled
-        guard shouldShowControlStripItem else { return }
-        
         prepareControlStripButton()
         
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
         
-        controlStripItem.isPresentInControlStrip = true
+        if shouldShowControlStripItem {
+            controlStripItem.isPresentInControlStrip = true
+        }
     }
     
     func prepareControlStripButton() {
@@ -577,12 +582,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         toggleControlStripButton(visible: true)
     }
     
-    func toggleControlStripButton(visible: Bool = false) {
-        let shouldShow = visible && shouldShowControlStripItem
+    func toggleControlStripButton(force: Bool = false, visible: Bool = false) {
+        let shouldShow = force ? visible : (visible && shouldShowControlStripItem)
         
-        controlStripButton?.animator().isHidden = !shouldShow
-        
-        self.controlStripItem.toggleControlStripPresence(shouldShow)
+        controlStripButton?.animator().isHidden  = !shouldShow
+        controlStripItem.isPresentInControlStrip = shouldShow
     }
     
     func prepareWindow() {
