@@ -92,7 +92,7 @@ extension WindowController: NSTouchBarDelegate {
         switch identifier {
         case .songArtworkTitleButton:
             return createItem(identifier: identifier, view: songArtworkTitleButton) { item in
-                songArtworkTitleButton = item.view as? NSButton
+                songArtworkTitleButton = item.view as? NSCustomizableButton
                 prepareSongArtworkTitleButton()
             }
         case .songProgressSlider:
@@ -204,7 +204,12 @@ extension WindowController: NSTouchBarDelegate {
         } else {
             // touch bar is being created for the first time
             switch identifier {
-            case .songArtworkTitleButton, .likeButton:
+            case .songArtworkTitleButton:
+                customItem.view = NSCustomizableButton(title: "",
+                                                       target: self,
+                                                       action: nil,
+                                                       hasRoundedLeadingImage: true)
+            case .likeButton:
                 customItem.view = NSButton(title: "", target: self, action: nil)
             case .controlsSegmentedView, .shuffleRepeatSegmentedView:
                 customItem.view = NSSegmentedControl()
