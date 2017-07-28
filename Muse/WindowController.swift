@@ -1049,7 +1049,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateTouchBarUI() {
-        songArtworkTitleButton?.title = song.name.truncate(at: 15)
+        songArtworkTitleButton?.title = song.name.truncate(at: 12)
         songArtworkTitleButton?.sizeToFit()
         
         controlsSegmentedView?.setImage(helper.isPlaying ? .pause : .play,
