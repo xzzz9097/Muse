@@ -180,6 +180,7 @@ extension WindowController: NSTouchBarDelegate {
             item = NSSliderTouchBarItem(identifier: identifier)
         case .soundPopoverButton:
             item = NSPopoverTouchBarItem(identifier: identifier)
+            (item.view as? NSButton)?.imagePosition = .imageOnly
             (item.view as? NSButton)?.addTouchBarButtonWidthConstraint()
         default:
             break
@@ -204,12 +205,18 @@ extension WindowController: NSTouchBarDelegate {
             // touch bar is being created for the first time
             switch identifier {
             case .songArtworkTitleButton:
-                customItem.view = NSCustomizableButton(title: "",
-                                                       target: self,
-                                                       action: nil,
-                                                       hasRoundedLeadingImage: true)
+                let button = NSCustomizableButton(title: "",
+                                                  target: self,
+                                                  action: nil,
+                                                  hasRoundedLeadingImage: true)
+                button.imagePosition = .imageLeading
+                button.addTouchBarButtonWidthConstraint()
+                customItem.view = button
             case .likeButton:
-                let button = NSButton(title: "", target: self, action: nil)
+                let button = NSButton(title: "",
+                                      target: self,
+                                      action: nil)
+                button.imagePosition = .imageOnly
                 button.addTouchBarButtonWidthConstraint()
                 customItem.view = button
             case .controlsSegmentedView, .shuffleRepeatSegmentedView:
@@ -228,28 +235,51 @@ extension WindowController: NSTouchBarDelegate {
  
 extension NSView {
     
-    func widthConstraint(size: CGFloat) -> NSLayoutConstraint {
+    func widthConstraint(relation: NSLayoutRelation,
+                         size: CGFloat) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: self,
                                   attribute: .width,
-                                  relatedBy: .equal,
+                                  relatedBy: relation,
                                   toItem: nil,
                                   attribute: .width,
                                   multiplier: 1.0,
                                   constant: size)
     }
     
-    func addWidthConstraint(size: CGFloat) {
-        addConstraint(widthConstraint(size: size))
+    func addWidthConstraint(relation: NSLayoutRelation = .equal,
+                            size: CGFloat) {
+        addConstraint(widthConstraint(relation: relation,
+                                      size: size))
     }
     
 }
-
+ 
+extension NSCellImagePosition {
+    
+    var touchBarDefaultSize: CGFloat {
+        switch self {
+        case .imageOnly:
+            return 56.0
+        case .imageLeading:
+            return 175.0
+        default:
+            return 150.0
+        }
+    }
+    
+}
+ 
 extension NSButton {
     
-    static let touchBarButtonWidth: CGFloat = 56.0
-    
     func addTouchBarButtonWidthConstraint() {
-        addWidthConstraint(size: NSButton.touchBarButtonWidth)
+        switch self.imagePosition {
+        case .imageLeading:
+            addWidthConstraint(relation: .lessThanOrEqual,
+                               size: self.imagePosition.touchBarDefaultSize)
+        default:
+            addWidthConstraint(relation: .equal,
+                               size: self.imagePosition.touchBarDefaultSize)
+        }
     }
     
  }

@@ -50,7 +50,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // Constant for setting menu title length
     let kMenuItemMaximumLength = 20
     // Constant for setting song title maximum length in TouchBar button
-    let songTitleMaximumLength = 15
+    let songTitleMaximumLength = 14
     // Constant for TouchBar slider bounds
     let xSliderBoundsThreshold: CGFloat = 25
     
