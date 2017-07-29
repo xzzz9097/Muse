@@ -82,10 +82,10 @@ extension Dictionary where Key == PreferenceKey {
     var userDefaultsCompatible: [String: Any] {
         var dictionary: [String: Any] = [:]
         
-        for (key, value) in zip(self.keys.map { $0.name }, self.values) {
-            dictionary[key] = value
+        zip(self.keys.map { $0.name }, self.values).forEach {
+            dictionary[$0] = $1
         }
-        
+                
         return dictionary
     }
     
