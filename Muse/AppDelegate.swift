@@ -26,12 +26,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var showControlStripItemHandler: () -> (Bool) = { return false }
     
     var showHUDForControlStripActionHandler: () -> (Bool) = { return false }
+    
+    var showSongTitleInMenuBarActionHandler: () -> (Bool) = { return false }
 
     // MARK: Outlets
     
     @IBOutlet weak var menuBarMenu: NSMenu!
     @IBOutlet weak var showControlStripButtonMenuItem: NSMenuItem!
     @IBOutlet weak var showControlStripHUDMenuItem: NSMenuItem!
+    @IBOutlet weak var showSongTitleMenuItem: NSMenuItem!
     
     // MARK: Actions
     
@@ -51,6 +54,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func showHUDForControlStripActionMenuItemClicked(_ sender: NSMenuItem) {
         sender.state = showHUDForControlStripActionHandler() ? NSOnState : NSOffState
+    }
+    
+    @IBAction func showSongTitleMenuItemClicked(_ sender: NSMenuItem) {
+        sender.state = showSongTitleInMenuBarActionHandler() ? NSOnState : NSOffState
     }
     
     // MARK: Data saving
@@ -173,6 +180,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         showControlStripButtonMenuItem.state = Preference(.controlStripItem).value as? Bool ?? false ?
                                                NSOnState : NSOffState
         showControlStripHUDMenuItem.state    = Preference(.controlStripHUD).value as? Bool ?? false ?
+                                               NSOnState : NSOffState
+        showSongTitleMenuItem.state          = Preference(.menuBarTitle).value as? Bool ?? false ?
                                                NSOnState : NSOffState
     }
     

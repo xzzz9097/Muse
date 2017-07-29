@@ -67,6 +67,7 @@
                         <outlet property="menuBarMenu" destination="3ym-64-pdK" id="XDT-Sh-nTN"/>
                         <outlet property="showControlStripButtonMenuItem" destination="1FW-Uh-J16" id="NGK-q8-uRi"/>
                         <outlet property="showControlStripHUDMenuItem" destination="O3t-ck-ZbM" id="DLl-6I-zaH"/>
+                        <outlet property="showSongTitleMenuItem" destination="qvj-jq-Q3C" id="iq4-XY-dsi"/>
                     </connections>
                 </customObject>
                 <menu id="3ym-64-pdK">
@@ -98,6 +99,12 @@
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
                                             <action selector="showHUDForControlStripActionMenuItemClicked:" target="Ady-hI-5gd" id="Nzj-aa-djM"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Song title in menu bar" state="on" id="qvj-jq-Q3C">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="showSongTitleMenuItemClicked:" target="Voe-Tx-rLC" id="utl-eQ-LU4"/>
                                         </connections>
                                     </menuItem>
                                 </items>

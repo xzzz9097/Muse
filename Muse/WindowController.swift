@@ -44,9 +44,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // MARK: Keys
     
     let kSong = "song"
-    // Constant for enabling title on menuBar
-    // should be defined in a preference
-    let kShouldSetTitleOnMenuBar = true
     // Constant for setting menu title length
     let kMenuItemMaximumLength = 20
     // Constant for setting song title maximum length in TouchBar button
@@ -95,6 +92,22 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         get {
             return Preference(.controlStripHUD).value as? Bool ?? false
+        }
+    }
+    
+    // Constant for enabling title on menuBar
+    var shouldSetTitleOnMenuBar: Bool {
+        set {
+            Preference(.menuBarTitle).set(newValue)
+            
+            updateMenuBar()
+        }
+        
+        get {
+            // Determines wheter the title on the menuBar should be set
+            return  Preference(.menuBarTitle).value as? Bool ?? false &&
+                    song.isValid &&
+                    helper.isPlaying
         }
     }
     
@@ -393,6 +406,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             delegate.showHUDForControlStripActionHandler = {
                 self.shouldShowHUDForControlStripAction = !self.shouldShowHUDForControlStripAction
                 return self.shouldShowHUDForControlStripAction
+            }
+            delegate.showSongTitleInMenuBarActionHandler = {
+                self.shouldSetTitleOnMenuBar = !self.shouldSetTitleOnMenuBar
+                return self.shouldSetTitleOnMenuBar
             }
         }
     }
@@ -1040,11 +1057,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         updateTouchBarUI()
         
         updateViewUI()
-    }
-    
-    var shouldSetTitleOnMenuBar: Bool {
-        // Determines wheter the title on the menuBar should be set
-        return kShouldSetTitleOnMenuBar && song.isValid && helper.isPlaying
     }
     
     func updateMenuBar() {
