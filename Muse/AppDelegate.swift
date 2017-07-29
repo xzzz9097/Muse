@@ -173,15 +173,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func registerDefaultPreferences() {
-        Preference.registerDefaults()
+        PreferenceKey.registerDefaults()
     }
     
     func prepareMenuItems() {
-        showControlStripButtonMenuItem.state = Preference(.controlStripItem).value as? Bool ?? false ?
+        showControlStripButtonMenuItem.state = Preference<Bool>(.controlStripItem).value ?
                                                NSOnState : NSOffState
-        showControlStripHUDMenuItem.state    = Preference(.controlStripHUD).value as? Bool ?? false ?
+        showControlStripHUDMenuItem.state    = Preference<Bool>(.controlStripHUD).value ?
                                                NSOnState : NSOffState
-        showSongTitleMenuItem.state          = Preference(.menuBarTitle).value as? Bool ?? false ?
+        showSongTitleMenuItem.state          = Preference<Bool>(.menuBarTitle).value ?
                                                NSOnState : NSOffState
     }
     

@@ -72,7 +72,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // Show control strip item
     var shouldShowControlStripItem: Bool {
         set {
-            Preference(.controlStripItem).set(newValue)
+            Preference<Bool>(.controlStripItem).set(newValue)
         
             if let window = window, !window.isKeyWindow {
                 toggleControlStripButton(force: true, visible: newValue)
@@ -80,32 +80,32 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
         
         get {            
-            return Preference(.controlStripItem).value as? Bool ?? false
+            return Preference<Bool>(.controlStripItem).value
         }
     }
     
     // Show OSD on control strip button action
     var shouldShowHUDForControlStripAction: Bool {
         set {
-            Preference(.controlStripHUD).set(newValue)
+            Preference<Bool>(.controlStripHUD).set(newValue)
         }
         
         get {
-            return Preference(.controlStripHUD).value as? Bool ?? false
+            return Preference<Bool>(.controlStripHUD).value
         }
     }
     
     // Constant for enabling title on menuBar
     var shouldSetTitleOnMenuBar: Bool {
         set {
-            Preference(.menuBarTitle).set(newValue)
+            Preference<Bool>(.menuBarTitle).set(newValue)
             
             updateMenuBar()
         }
         
         get {
             // Determines wheter the title on the menuBar should be set
-            return  Preference(.menuBarTitle).value as? Bool ?? false &&
+            return  Preference<Bool>(.menuBarTitle).value &&
                     song.isValid &&
                     helper.isPlaying
         }

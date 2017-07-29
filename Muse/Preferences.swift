@@ -8,42 +8,22 @@
 
 import Cocoa
 
-typealias PreferenceKey = Preference.Key
-
-struct Preference {
+enum PreferenceKey: String {
     
-    let userDefaults = UserDefaults.standard
+    case peekToolbarsOnHover = "peekToolbarsOnHover"
     
-    let key: PreferenceKey
+    case menuBarTitle = "menuBarTitle"
     
-    enum Key: String {
-        
-        typealias RawValue = String
-        
-        case peekToolbarsOnHover = "peekToolbarsOnHover"
-        
-        case menuBarTitle = "menuBarTitle"
-        
-        case controlStripItem = "controlStripItem"
-        
-        case controlStripHUD = "controlStripHUD"
-        
-        var name: RawValue {
-            return rawValue
-        }
-        
+    case controlStripItem = "controlStripItem"
+    
+    case controlStripHUD = "controlStripHUD"
+    
+    var name: RawValue {
+        return rawValue
     }
     
-    init(_ key: PreferenceKey) {
-        self.key = key
-    }
-    
-    func set(_ value: Any) {
-        userDefaults.set(value, for: key)
-    }
-    
-    var value: Any? {
-        return userDefaults.object(for: key)
+    var defaultValue: Any {
+        return PreferenceKey.defaults[self]!
     }
     
     static let defaults: [PreferenceKey: Any] = [.peekToolbarsOnHover: true,
@@ -53,6 +33,46 @@ struct Preference {
     
     static func registerDefaults() {
         UserDefaults.standard.register(defaults: defaults.userDefaultsCompatible)
+    }
+    
+}
+
+protocol Preferenceable {
+    
+    associatedtype ValueType
+    
+    var key: PreferenceKey { get }
+    
+}
+
+extension Preferenceable {
+    
+    var userDefaults: UserDefaults {
+        return UserDefaults.standard
+    }
+    
+    var value: ValueType {
+        return userDefaults.object(for: key) as? ValueType ?? defaultValue
+    }
+    
+    func set(_ value: ValueType) {
+        userDefaults.set(value, for: key)
+    }
+    
+    var defaultValue: ValueType {
+        return key.defaultValue as! ValueType
+    }
+    
+}
+
+struct Preference<T>: Preferenceable {
+
+    typealias ValueType = T
+    
+    var key: PreferenceKey
+    
+    init (_ key: PreferenceKey) {
+        self.key = key
     }
     
 }
