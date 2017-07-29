@@ -564,6 +564,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Update like button at cold start
         updateLikeButtonColdStart()
+        
+        // Show window
+        window?.setVisibility(true)
     }
     
     func windowDidBecomeKey(_ notification: Notification) {
