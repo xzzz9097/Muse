@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16G16b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="13030.1"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13122.17"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13156.6"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="the Touch Bar" message="Use a version of macOS with Touch Bar support." minToolsVersion="8.1" minSystemVersion="10.12.1" requiredIntegratedClassName="NSTouchBar"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -67,6 +65,9 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Muse" customModuleProvider="target">
                     <connections>
                         <outlet property="menuBarMenu" destination="3ym-64-pdK" id="XDT-Sh-nTN"/>
+                        <outlet property="showControlStripButtonMenuItem" destination="1FW-Uh-J16" id="NGK-q8-uRi"/>
+                        <outlet property="showControlStripHUDMenuItem" destination="O3t-ck-ZbM" id="DLl-6I-zaH"/>
+                        <outlet property="showSongTitleMenuItem" destination="qvj-jq-Q3C" id="iq4-XY-dsi"/>
                     </connections>
                 </customObject>
                 <menu id="3ym-64-pdK">
@@ -83,6 +84,31 @@
                             <connections>
                                 <action selector="checkForUpdates:" target="tvw-ff-7tM" id="WQY-K3-ly3"/>
                             </connections>
+                        </menuItem>
+                        <menuItem title="Options" id="rrG-9k-WkS" userLabel="Options">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <menu key="submenu" id="hnE-2I-Fxe">
+                                <items>
+                                    <menuItem title="Show control strip button" state="on" id="1FW-Uh-J16">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="showControlStripItemMenuItemClicked:" target="Ady-hI-5gd" id="2cj-GK-kJp"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Show HUD for control strip action" state="on" id="O3t-ck-ZbM">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="showHUDForControlStripActionMenuItemClicked:" target="Ady-hI-5gd" id="Nzj-aa-djM"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Song title in menu bar" state="on" id="qvj-jq-Q3C">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="showSongTitleMenuItemClicked:" target="Voe-Tx-rLC" id="utl-eQ-LU4"/>
+                                        </connections>
+                                    </menuItem>
+                                </items>
+                            </menu>
                         </menuItem>
                         <menuItem title="Quit Muse" keyEquivalent="q" id="yNZ-Pt-Iyt">
                             <connections>
@@ -105,147 +131,11 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="200" height="200"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="TV5-eB-iAu"/>
+                        </connections>
                     </window>
-                    <touchBar key="touchBar" id="QxI-eC-hym">
-                        <touchBarItems>
-                            <touchBarItem id="qKs-z8-kR4">
-                                <viewController key="viewController" id="953-Nr-7qT">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e9d-da-gdW">
-                                        <rect key="frame" x="0.0" y="0.0" width="72" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="185" id="zdu-sg-Cu4"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gQP-mU-VMl" customClass="ButtonCell" customModule="Muse" customModuleProvider="target">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system" size="15"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="songArtworkTitleButtonClicked:" target="B8D-0N-5wS" id="xch-WQ-jwO"/>
-                                        </connections>
-                                    </button>
-                                </viewController>
-                            </touchBarItem>
-                            <touchBarItem id="yhh-Q7-Fkb">
-                                <viewController key="viewController" id="6bg-KI-7d7">
-                                    <view key="view" translatesAutoresizingMaskIntoConstraints="NO" id="QBD-aJ-PkQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="180" height="30"/>
-                                        <subviews>
-                                            <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A3K-Ti-soQ" customClass="Slider" customModule="Muse" customModuleProvider="target">
-                                                <rect key="frame" x="4" y="0.0" width="172" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="WkF-64-hT4"/>
-                                                </constraints>
-                                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" tickMarkPosition="above" sliderType="linear" id="9KY-6x-rc5" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
-                                                <connections>
-                                                    <action selector="progressSliderValueChanged:" target="B8D-0N-5wS" id="CpU-N9-Xhx"/>
-                                                </connections>
-                                            </slider>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="A3K-Ti-soQ" firstAttribute="top" secondItem="QBD-aJ-PkQ" secondAttribute="top" id="5cz-7Y-ADI"/>
-                                            <constraint firstItem="A3K-Ti-soQ" firstAttribute="leading" secondItem="QBD-aJ-PkQ" secondAttribute="leading" constant="10" id="Gwt-Sq-ePm"/>
-                                            <constraint firstAttribute="trailing" secondItem="A3K-Ti-soQ" secondAttribute="trailing" constant="10" id="qMX-Pj-rVq"/>
-                                        </constraints>
-                                    </view>
-                                </viewController>
-                                <size key="designTimeSize" width="180" height="30"/>
-                            </touchBarItem>
-                            <touchBarItem id="qeI-1V-kBR">
-                                <viewController key="viewController" id="I3D-jY-SvG">
-                                    <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7UV-La-mul">
-                                        <rect key="frame" x="0.0" y="0.0" width="143" height="30"/>
-                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="momentary" id="HAH-GF-OyI">
-                                            <font key="font" metaFont="system"/>
-                                            <segments>
-                                                <segment width="45"/>
-                                                <segment width="45" tag="1"/>
-                                                <segment width="45">
-                                                    <nil key="label"/>
-                                                </segment>
-                                            </segments>
-                                        </segmentedCell>
-                                        <connections>
-                                            <action selector="controlsSegmentedViewClicked:" target="B8D-0N-5wS" id="65Q-wj-d6w"/>
-                                        </connections>
-                                    </segmentedControl>
-                                </viewController>
-                                <size key="designTimeSize" width="143" height="30"/>
-                            </touchBarItem>
-                            <touchBarItem id="cLV-ZL-91z">
-                                <viewController key="viewController" id="hXa-KK-Y1U">
-                                    <button key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7V8-h1-TfS">
-                                        <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="46" id="NM9-fe-Vo1"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="DFRLiked" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ai0-hx-f2r">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="likeButtonClicked:" target="B8D-0N-5wS" id="IUi-8m-bYl"/>
-                                        </connections>
-                                    </button>
-                                </viewController>
-                                <size key="designTimeSize" width="46" height="30"/>
-                            </touchBarItem>
-                            <touchBarPopoverItem collapsedRepresentationImage="NSTouchBarAudioOutputVolumeHighTemplate" collapsedRepresentationLabel="" supportsPressAndHold="YES" id="q5X-bl-SZL">
-                                <touchBar key="popoverTouchBar" id="hIg-FD-Eei">
-                                    <touchBarItems>
-                                        <touchBarItem id="DmD-M5-F0o">
-                                            <viewController key="viewController" id="Dyt-zM-9FW">
-                                                <segmentedControl key="view" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eRO-qI-4Ea">
-                                                    <rect key="frame" x="0.0" y="0.0" width="140" height="30"/>
-                                                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="separated" trackingMode="selectAny" id="HhS-nY-eIh">
-                                                        <font key="font" metaFont="system"/>
-                                                        <segments>
-                                                            <segment width="67">
-                                                                <nil key="label"/>
-                                                            </segment>
-                                                            <segment width="66" tag="1">
-                                                                <nil key="label"/>
-                                                            </segment>
-                                                        </segments>
-                                                    </segmentedCell>
-                                                    <connections>
-                                                        <action selector="shuffleRepeatSegmentedViewClicked:" target="B8D-0N-5wS" id="Byv-hn-ccK"/>
-                                                    </connections>
-                                                </segmentedControl>
-                                            </viewController>
-                                            <size key="designTimeSize" width="140" height="30"/>
-                                        </touchBarItem>
-                                        <sliderTouchBarItem id="Xko-cM-C4Q">
-                                            <sliderAccessory key="minimumValueAccessory" image="NSTouchBarAudioOutputVolumeLowTemplate" id="lpQ-pr-AXw">
-                                                <sliderAccessoryBehavior key="behavior" id="0JU-9J-YpY"/>
-                                            </sliderAccessory>
-                                            <sliderAccessory key="maximumValueAccessory" image="NSTouchBarAudioOutputVolumeHighTemplate" id="DlR-5k-fto">
-                                                <sliderAccessoryBehavior key="behavior" id="Zjn-xl-FRk"/>
-                                            </sliderAccessory>
-                                            <slider key="slider" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="daN-KH-YWE">
-                                                <rect key="frame" x="30" y="0.0" width="477" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="250" id="frZ-X1-cv6"/>
-                                                </constraints>
-                                                <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="2Em-Jg-2oK"/>
-                                            </slider>
-                                            <connections>
-                                                <action selector="soundSliderValueChanged:" target="B8D-0N-5wS" id="di4-Ai-SsL"/>
-                                            </connections>
-                                        </sliderTouchBarItem>
-                                    </touchBarItems>
-                                </touchBar>
-                            </touchBarPopoverItem>
-                        </touchBarItems>
-                    </touchBar>
                     <connections>
-                        <outlet property="controlsSegmentedView" destination="7UV-La-mul" id="jf8-ML-WVq"/>
-                        <outlet property="likeButton" destination="7V8-h1-TfS" id="qb4-sm-Cr6"/>
-                        <outlet property="likeButtonItem" destination="cLV-ZL-91z" id="O5u-El-bLR"/>
-                        <outlet property="shuffleRepeatSegmentedView" destination="eRO-qI-4Ea" id="Mmc-xh-fqT"/>
-                        <outlet property="songArtworkTitleButton" destination="e9d-da-gdW" id="2g0-eM-zKm"/>
-                        <outlet property="songProgressSlider" destination="A3K-Ti-soQ" id="4Nk-Mn-OHi"/>
-                        <outlet property="soundPopoverButton" destination="q5X-bl-SZL" id="UzC-Es-9MX"/>
-                        <outlet property="soundSlider" destination="Xko-cM-C4Q" id="Rnp-mC-6KB"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
@@ -485,9 +375,4 @@
             <point key="canvasLocation" x="74.5" y="654.5"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="DFRLiked" width="60" height="60"/>
-        <image name="NSTouchBarAudioOutputVolumeHighTemplate" width="23" height="30"/>
-        <image name="NSTouchBarAudioOutputVolumeLowTemplate" width="23" height="30"/>
-    </resources>
 </document>

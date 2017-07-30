@@ -10,6 +10,12 @@ import Cocoa
 import Carbon.HIToolbox
 import MediaPlayer
 
+fileprivate extension NSTouchBarItemIdentifier {
+    static let controlStripButton = NSTouchBarItemIdentifier(
+        rawValue: "\(Bundle.main.bundleIdentifier!).TouchBarItem.controlStripButton"
+    )
+}
+
 @available(OSX 10.12.2, *)
 class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
@@ -28,7 +34,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     var song                           = Song()
     var nowPlayingInfo: [String : Any] = [:]
-    var autoCloseCounter               = 0
+    var autoCloseTimeout: TimeInterval = 1.5
     
     // MARK: Timers
     
@@ -38,11 +44,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // MARK: Keys
     
     let kSong = "song"
-    // Constant for enabling title on menuBar
-    // should be defined in a preference
-    let kShouldSetTitleOnMenuBar = true
     // Constant for setting menu title length
     let kMenuItemMaximumLength = 20
+    // Constant for setting song title maximum length in TouchBar button
+    let songTitleMaximumLength = 14
     // Constant for TouchBar slider bounds
     let xSliderBoundsThreshold: CGFloat = 25
     
@@ -54,23 +59,83 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
 
     // MARK: Outlets
     
-    @IBOutlet weak var songArtworkTitleButton:     NSButton!
-    @IBOutlet weak var songProgressSlider:         Slider!
-    @IBOutlet weak var controlsSegmentedView:      NSSegmentedControl!
-    @IBOutlet weak var likeButtonItem:             NSTouchBarItem!
-    @IBOutlet weak var likeButton:                 NSButton!
-    @IBOutlet weak var soundPopoverButton:         NSPopoverTouchBarItem!
-    @IBOutlet weak var soundSlider:                NSSliderTouchBarItem!
-    @IBOutlet weak var shuffleRepeatSegmentedView: NSSegmentedControl!
+    weak var songArtworkTitleButton:     NSCustomizableButton?
+    weak var songProgressSlider:         Slider?
+    weak var controlsSegmentedView:      NSSegmentedControl?
+    weak var likeButton:                 NSButton?
+    weak var soundPopoverButton:         NSPopoverTouchBarItem?
+    weak var soundSlider:                NSSliderTouchBarItem?
+    weak var shuffleRepeatSegmentedView: NSSegmentedControl?
+    
+    // MARK: Preferences
+    
+    // Show control strip item
+    var shouldShowControlStripItem: Bool {
+        set {
+            Preference<Bool>(.controlStripItem).set(newValue)
+        
+            if let window = window, !window.isKeyWindow {
+                toggleControlStripButton(force: true, visible: newValue)
+            }
+        }
+        
+        get {            
+            return Preference<Bool>(.controlStripItem).value
+        }
+    }
+    
+    // Show OSD on control strip button action
+    var shouldShowHUDForControlStripAction: Bool {
+        set {
+            Preference<Bool>(.controlStripHUD).set(newValue)
+        }
+        
+        get {
+            return Preference<Bool>(.controlStripHUD).value
+        }
+    }
+    
+    // Constant for enabling title on menuBar
+    var shouldSetTitleOnMenuBar: Bool {
+        set {
+            Preference<Bool>(.menuBarTitle).set(newValue)
+            
+            updateMenuBar()
+        }
+        
+        get {
+            // Determines wheter the title on the menuBar should be set
+            return  Preference<Bool>(.menuBarTitle).value &&
+                    song.isValid &&
+                    helper.isPlaying
+        }
+    }
+    
+    // MARK: Vars
+    
+    let controlStripItem = NSControlStripTouchBarItem(identifier: .controlStripButton)
+    
+    weak var controlStripButton: NSCustomizableButton? {
+        set {
+            controlStripItem.view = newValue!
+        }
+        get {
+            return controlStripItem.view as? NSCustomizableButton
+        }
+    }
+    
+    // Hardcoded control strip item size
+    // frame.size returns a wrong value at cold start
+    let controlStripButtonSize = NSMakeSize(58.0, 58.0)
+    
+    var didPresentAsSystemModal = false
     
     var isSliding = false
     
     // MARK: Actions
     
-    @IBAction func controlsSegmentedViewClicked(_ sender: Any) {
-        guard let segmentedControl = sender as? NSSegmentedControl else { return }
-        
-        switch segmentedControl.selectedSegment {
+    func controlsSegmentedViewClicked(_ sender: NSSegmentedControl) {
+        switch sender.selectedSegment {
         case 0:
             helper.previousTrack()
         case 1:
@@ -82,38 +147,34 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    @IBAction func shuffleRepeatSegmentedViewClicked(_ sender: Any) {
-        guard let segmentedControl = sender as? NSSegmentedControl else { return }
-        
-        let selectedSegment = segmentedControl.selectedSegment
+    func shuffleRepeatSegmentedViewClicked(_ sender: NSSegmentedControl) {
+        let selectedSegment = sender.selectedSegment
         
         switch selectedSegment {
         case 0:
             // Toggle shuffling
-            helper.shuffling = segmentedControl.isSelected(forSegment: selectedSegment)
+            helper.shuffling = sender.isSelected(forSegment: selectedSegment)
         case 1:
             // Toggle repeating
-            helper.repeating = segmentedControl.isSelected(forSegment: selectedSegment)
+            helper.repeating = sender.isSelected(forSegment: selectedSegment)
         default:
             return
         }
     }
     
-    @IBAction func soundSliderValueChanged(_ sender: Any) {
-        guard let sliderItem = sender as? NSSliderTouchBarItem else { return }
-        
+    @IBAction func soundSliderValueChanged(_ sender: NSSliderTouchBarItem) {
         // Set the volume on the player
-        helper.volume = sliderItem.slider.integerValue
+        helper.volume = sender.slider.integerValue
         
         updateSoundPopoverButton(for: helper.volume)
     }
     
-    @IBAction func songArtworkTitleButtonClicked(_ sender: Any) {
+    func songArtworkTitleButtonClicked(_ sender: NSButton) {
         // Jump to player when the artwork on the TouchBar is tapped
         showPlayer()
     }
     
-    @IBAction func likeButtonClicked(_ sender: Any) {
+    func likeButtonClicked(_ sender: NSButton) {
         // Reverse like on current track if supported
         if helper.supportsLiking { helper.liked = !helper.liked }
     }
@@ -131,7 +192,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         wasPlaying = helper.isPlaying
         
         // Handle single touch events
-        helper.scrub(to: songProgressSlider.doubleValue)
+        helper.scrub(to: songProgressSlider?.doubleValue)
     }
     
     /**
@@ -143,7 +204,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         if helper.isPlaying { helper.pause() }
         
         // Set new position to the player
-        helper.scrub(to: songProgressSlider.doubleValue, touching: true)
+        helper.scrub(to: songProgressSlider?.doubleValue, touching: true)
     }
     
     /**
@@ -151,7 +212,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      */
     func didTouchesEnd() {
         // Finalize and disable large knob
-        helper.scrub(to: songProgressSlider.doubleValue)
+        helper.scrub(to: songProgressSlider?.doubleValue)
         
         // Resume playing if needed
         if wasPlaying { helper.play() }
@@ -216,7 +277,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func hotkeyAction() {
-        if let window = self.window { window.toggleVisibility() }
+        if let window = self.window {
+            if didPresentAsSystemModal {
+                // Dismiss system modal bar before opening the window
+                // touch bar gets broken otherwise
+                touchBar?.minimizeSystemModal()
+            }
+            
+            window.toggleVisibility()
+        }
     }
     
     func showPlayer() {
@@ -280,7 +349,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             
             let time = value * self.song.duration
             
-            if let cell = self.songProgressSlider.cell as? SliderCell {
+            if let cell = self.songProgressSlider?.cell as? SliderCell {
                 // If we are sliding, show time near TouchBar slider knob
                 cell.knobImage   = touching ? nil : .playhead
                 cell.hasTimeInfo = touching
@@ -317,22 +386,154 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
         
         // Callback ofr PlayerHelper's like setter
-        helper.likeChangedHandler = { likeChanged in
+        helper.likeChangedHandler = { liked in
             // Update like button on TouchBar
-            self.updateLikeButton()
+            self.updateLikeButton(newValue: liked)
             
             // Send like action to VC
             self.onViewController { controller in
-                if likeChanged {
-                    controller.showLastActionView(for: .like)
-                }
+                controller.showLastActionView(for: .like, liked: liked)
             }
         }
         
-        if let window = self.window, let delegate = self.delegate {
+        if let delegate = self.delegate {
             // Callback for AppDelegate window toggled
-            delegate.windowToggledHandler = { window.toggleVisibility() }
+            delegate.windowToggledHandler        = hotkeyAction
+            delegate.showControlStripItemHandler = {
+                self.shouldShowControlStripItem = !self.shouldShowControlStripItem
+                return self.shouldShowControlStripItem
+            }
+            delegate.showHUDForControlStripActionHandler = {
+                self.shouldShowHUDForControlStripAction = !self.shouldShowHUDForControlStripAction
+                return self.shouldShowHUDForControlStripAction
+            }
+            delegate.showSongTitleInMenuBarActionHandler = {
+                self.shouldSetTitleOnMenuBar = !self.shouldSetTitleOnMenuBar
+                return self.shouldSetTitleOnMenuBar
+            }
         }
+    }
+    
+    // MARK: TouchBar injection
+    
+    /**
+     Appends a system-wide button in NSTouchBar's control strip
+     */
+    @objc func injectControlStripButton() {
+        prepareControlStripButton()
+        
+        DFRSystemModalShowsCloseBoxWhenFrontMost(true)
+        
+        if shouldShowControlStripItem {
+            controlStripItem.isPresentInControlStrip = true
+        }
+    }
+    
+    func prepareControlStripButton() {
+        controlStripButton = NSCustomizableButton(
+            title: "11:11",
+            target: self,
+            action: #selector(presentModalTouchBar),
+            hasRoundedLeadingImage: false
+        )
+        
+        controlStripButton?.textColor     = NSColor.white.withAlphaComponent(0.8)
+        controlStripButton?.fontSize      = 16.0
+        controlStripButton?.imagePosition = .imageOverlaps
+        controlStripButton?.isBordered    = false
+        controlStripButton?.imageScaling  = .scaleNone
+        
+        controlStripButton?.addGestureRecognizer(controlStripButtonPressureGestureRecognizer)
+        controlStripButton?.addGestureRecognizer(controlStripButtonPanGestureRecognizer)
+    }
+    
+    func updateControlStripButton() {
+        if song.isValid && helper.isPlaying {
+            controlStripButton?.title = helper.playbackPosition.secondsToMMSSString
+        } else {
+            controlStripButton?.title = "♫"
+        }
+    }
+    
+    /**
+     Recognizes long press gesture on the control strip button.
+     We use this to toggle play/pause from the system bar.
+     */
+    var controlStripButtonPressureGestureRecognizer: NSPressGestureRecognizer {
+        let recognizer = NSPressGestureRecognizer()
+        
+        recognizer.target = self
+        recognizer.action = #selector(controlStripButtonPressureGestureHandler(_:))
+        
+        recognizer.minimumPressDuration = 0.25
+        recognizer.allowedTouchTypes    = .direct  // Very important
+        
+        return recognizer
+    }
+    
+    /**
+     Recognizes pan (aka touch drag) gestures on the control strip button.
+     We use this to jump to next/previous track.
+     */
+    var controlStripButtonPanGestureRecognizer: NSPanGestureRecognizer {
+        let recognizer = NSPanGestureRecognizer()
+        
+        recognizer.target = self
+        recognizer.action = #selector(controlStripButtonPanGestureHandler(_:))
+        
+        recognizer.allowedTouchTypes = .direct
+        
+        return recognizer
+    }
+    
+    func controlStripButtonPressureGestureHandler(_ sender: NSGestureRecognizer?) {
+        guard let recognizer = sender else { return }
+        
+        switch recognizer.state {
+        case .began:
+            helper.togglePlayPause()
+            
+            if shouldShowHUDForControlStripAction {
+                window?.isVisibleAsHUD = true
+                startAutoClose()
+            }
+        default:
+            break
+        }
+    }
+    
+    func controlStripButtonPanGestureHandler(_ sender: NSGestureRecognizer?) {
+        guard let recognizer = sender as? NSPanGestureRecognizer else { return }
+        
+        switch recognizer.state {
+        case .began:
+            // Reverse translation check (natural scroll)
+            if recognizer.translation(in: controlStripButton).x < 0 {
+                helper.nextTrack()
+            } else {
+                helper.previousTrack()
+            }
+            
+            if shouldShowHUDForControlStripAction {
+                DispatchQueue.main.run(after: 100) {
+                    self.window?.isVisibleAsHUD = true
+                    self.startAutoClose()
+                }
+            }
+        default:
+            break
+        }
+    }
+    
+    /**
+     Reveals the designated NSTouchBar when control strip button is pressed
+     */
+    func presentModalTouchBar() {
+        updatePopoverButtonForControlStrip()
+        
+        touchBar?.presentAsSystemModal(for: controlStripItem)
+        
+        didPresentAsSystemModal = true
     }
     
     // MARK: UI preparation
@@ -349,10 +550,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Set custom window attributes
         prepareWindow()
         
-        prepareButtons()
-        prepareSongProgressSlider()
-        prepareSongArtworkTitleButton()
-        
         // Register callbacks for PlayerHelper
         registerCallbacks()
         
@@ -362,14 +559,21 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Prepare system-wide controls
         prepareRemoteCommandCenter()
         
-        // Load song at cold start
-        prepareSong()
+        // Append system-wide button in Control Strip
+        injectControlStripButton()
+        
+        // Update like button at cold start
+        updateLikeButtonColdStart()
+        
+        // Show window
+        window?.setVisibility(true)
     }
     
     func windowDidBecomeKey(_ notification: Notification) {
         // Try switching to another helper is song is blank
         // (that means previous player has been closed)
         // Or if helper is no longer available
+        // Also this loads song at cold start
         if song == Song() || !helper.isAvailable {
             setPlayerHelper(to: manager.designatedHelperID)
         }
@@ -383,10 +587,34 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Sync shuffling and repeating segmented control
         prepareShuffleRepeatSegmentedView()
         
+        // Update control strip button title
+        updateControlStripButton()
+        
         // Peek title of currently playing track
         self.onViewController { controller in
             controller.showTitleView()
         }
+        
+        toggleControlStripButton(visible: false)
+        
+        // Invalidate TouchBar to make it reload
+        // This ensures it's always correctly displayed
+        // Only if system modal bar has been used
+        if didPresentAsSystemModal {
+            touchBar                = nil
+            didPresentAsSystemModal = false
+        }
+    }
+    
+    func windowDidResignKey(_ notification: Notification) {
+        toggleControlStripButton(visible: true)
+    }
+    
+    func toggleControlStripButton(force: Bool = false, visible: Bool = false) {
+        let shouldShow = force ? visible : (visible && shouldShowControlStripItem)
+        
+        controlStripButton?.animator().isHidden  = !shouldShow
+        controlStripItem.isPresentInControlStrip = shouldShow
     }
     
     func prepareWindow() {
@@ -412,19 +640,18 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         window.makeFirstResponder(self)
     }
     
-    func prepareAutoClose() {
+    func startAutoClose() {
+        // Ensures any existing auto-close timer is cancelled
+        autoCloseTimer.invalidate()
+        
         // Timer for auto-close
-        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
-            timer in
+        autoCloseTimer = Timer.scheduledTimer(withTimeInterval: autoCloseTimeout,
+                                              repeats: false) { timer in
+            timer.invalidate()
             
-            self.autoCloseCounter += 1
-            
-            if self.autoCloseCounter == 10 {
-                timer.invalidate()
-                
-                self.autoCloseCounter = 0
-            }
-        })
+            // Reset count and close the window
+            self.window?.isVisibleAsHUD = false
+        }
     }
     
     func prepareSong() {
@@ -436,38 +663,64 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func prepareButtons() {
-        controlsSegmentedView.setImage(.previous, forSegment: 0)
-        controlsSegmentedView.setImage(.play, forSegment: 1)
-        controlsSegmentedView.setImage(.next, forSegment: 2)
+        controlsSegmentedView?.target       = self
+        controlsSegmentedView?.segmentCount = 3
+        controlsSegmentedView?.segmentStyle = .separated
+        controlsSegmentedView?.trackingMode = .momentary
+        controlsSegmentedView?.action       = #selector(controlsSegmentedViewClicked(_:))
+        
+        controlsSegmentedView?.setImage(.previous, forSegment: 0)
+        controlsSegmentedView?.setImage(.play, forSegment: 1)
+        controlsSegmentedView?.setImage(.next, forSegment: 2)
+        
+        (0..<(controlsSegmentedView?.segmentCount)!).forEach {
+            controlsSegmentedView?.setWidth(45.0, forSegment: $0)
+        }
     }
     
     func prepareSongProgressSlider() {
-        songProgressSlider.delegate = self
-        
-        guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
-        
-        cell.isTouchBar = true
+        songProgressSlider?.delegate = self
+        songProgressSlider?.minValue = 0.0
+        songProgressSlider?.maxValue = 1.0
     }
     
     func prepareSongArtworkTitleButton() {
-        songArtworkTitleButton.imagePosition = .imageLeading
+        songArtworkTitleButton?.target        = self
+        songArtworkTitleButton?.bezelStyle    = .rounded
+        songArtworkTitleButton?.alignment     = .center
+        songArtworkTitleButton?.fontSize      = 16.0
+        songArtworkTitleButton?.imagePosition = .imageLeading
+        songArtworkTitleButton?.action        = #selector(songArtworkTitleButtonClicked(_:))
+        
+        songArtworkTitleButton?.hasRoundedLeadingImage = true
     }
     
     func prepareSoundSlider() {
-        let volume = helper.volume
+        soundSlider?.target          = self
+        soundSlider?.slider.minValue = 0.0
+        soundSlider?.slider.maxValue = 100.0
+        soundSlider?.action          = #selector(soundSliderValueChanged(_:))
         
-        updateSoundPopoverButton(for: volume)
+        soundSlider?.minimumValueAccessory = NSSliderAccessory(image: NSImage.volumeLow!)
+        soundSlider?.maximumValueAccessory = NSSliderAccessory(image: NSImage.volumeHigh!)
+        soundSlider?.valueAccessoryWidth   = .wide
         
         // Set the player volume on the slider
-        soundSlider.slider.integerValue = volume
+        soundSlider?.slider.integerValue = helper.volume
     }
 
     func prepareShuffleRepeatSegmentedView() {
+        shuffleRepeatSegmentedView?.target       = self
+        shuffleRepeatSegmentedView?.segmentCount = 2
+        shuffleRepeatSegmentedView?.segmentStyle = .separated
+        shuffleRepeatSegmentedView?.trackingMode = .selectAny
+        shuffleRepeatSegmentedView?.action       = #selector(shuffleRepeatSegmentedViewClicked(_:))
+        
         // Set image for 'shuffle' button
-        shuffleRepeatSegmentedView.setImage(.shuffling, forSegment: 0)
+        shuffleRepeatSegmentedView?.setImage(.shuffling, forSegment: 0)
         
         // Set image for 'repeat' button
-        shuffleRepeatSegmentedView.setImage(.repeating, forSegment: 1)
+        shuffleRepeatSegmentedView?.setImage(.repeating, forSegment: 1)
         
         updateShuffleRepeatSegmentedView()
     }
@@ -652,6 +905,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         } else {
             syncSongProgressSlider()
         }
+        
+        // Update control strip button title
+        updateControlStripButton()
     }
     
     func deinitSongTrackingTimer() {
@@ -679,7 +935,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         let position = position > -1 ? position : helper.playbackPosition
         
-        songProgressSlider.doubleValue = position / song.duration
+        songProgressSlider?.doubleValue = position / song.duration
+        
+        if isUIPlaying {
+            controlStripButton?.title = position.secondsToMMSSString
+        }
         
         // Also update native touchbar scrubber
         updateNowPlayingInfoElapsedPlaybackTime(with: position)
@@ -702,7 +962,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateControlsAfterPlayPause() {
-        controlsSegmentedView.setImage(
+        controlsSegmentedView?.setImage(
             helper.isPlaying ? .pause : .play,
             forSegment: 1
         )
@@ -715,12 +975,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func setShuffleRepeatSegmentedView(shuffleSelected: Bool?, repeatSelected: Bool?) {
         // Select 'shuffle' button
         if let shuffleSelected = shuffleSelected {
-            shuffleRepeatSegmentedView.setSelected(shuffleSelected, forSegment: 0)
+            shuffleRepeatSegmentedView?.setSelected(shuffleSelected, forSegment: 0)
         }
         
         // Select 'repeat' button
         if let repeatSelected = repeatSelected {
-            shuffleRepeatSegmentedView.setSelected(repeatSelected, forSegment: 1)
+            shuffleRepeatSegmentedView?.setSelected(repeatSelected, forSegment: 1)
         }
     }
     
@@ -730,34 +990,46 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                                       repeatSelected: helper.repeating)
     }
     
-    func updateLikeButton() {
+    func updateLikeButton(newValue: Bool? = nil) {
+        if let liked = newValue {
+            likeButton?.image = liked ? .liked : .like
+            return
+        }
+        
         // Updates like button according to player support and track status
         if let helper = helper as? SpotifyHelper {
-            likeButton.isEnabled = true
+            likeButton?.isEnabled = true
             
             // Spotify needs async saved loading from Web API 
             helper.isSaved { saved in
-                self.likeButton.image = saved ? .liked : .like
+                self.likeButton?.image = saved ? .liked : .like
             }
         } else if helper.supportsLiking {
-            likeButton.isEnabled = true
+            likeButton?.isEnabled = true
 
-            likeButton.image = helper.liked ? .liked : .like
+            likeButton?.image = helper.liked ? .liked : .like
         } else {
-            likeButton.isEnabled = false
+            likeButton?.isEnabled = false
             
-            likeButton.image = .liked
+            likeButton?.image = .liked
+        }
+    }
+    
+    func updateLikeButtonColdStart() {
+        // Fetches the like status after time delay
+        DispatchQueue.main.run(after: 200) {
+            self.updateLikeButton()
         }
     }
     
     func updateSoundPopoverButton(for volume: Int) {
         // Change the popover icon based on current volume
         if (volume > 70) {
-            soundPopoverButton.collapsedRepresentationImage = .volumeHigh
+            soundPopoverButton?.collapsedRepresentationImage = .volumeHigh
         } else if (volume > 30) {
-            soundPopoverButton.collapsedRepresentationImage = .volumeMedium
+            soundPopoverButton?.collapsedRepresentationImage = .volumeMedium
         } else {
-            soundPopoverButton.collapsedRepresentationImage = .volumeLow
+            soundPopoverButton?.collapsedRepresentationImage = .volumeLow
         }
     }
     
@@ -790,11 +1062,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         updateViewUI()
     }
     
-    var shouldSetTitleOnMenuBar: Bool {
-        // Determines wheter the title on the menuBar should be set
-        return kShouldSetTitleOnMenuBar && song.isValid && helper.isPlaying
-    }
-    
     func updateMenuBar() {
         guard let delegate = self.delegate else { return }
         
@@ -817,15 +1084,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateTouchBarUI() {
-        songArtworkTitleButton.title = song.name.truncate(at: 15)
-        songArtworkTitleButton.sizeToFit()
+        songArtworkTitleButton?.title = song.name.truncate(at: songTitleMaximumLength)
+        songArtworkTitleButton?.sizeToFit()
         
-        controlsSegmentedView.setImage(helper.isPlaying ? .pause : .play,
+        controlsSegmentedView?.setImage(helper.isPlaying ? .pause : .play,
                                        forSegment: 1)
         
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
-            songArtworkTitleButton.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
+            songArtworkTitleButton?.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
                 self.image = image
             })
         } else if let image = helper.artwork() as? NSImage {
@@ -842,7 +1109,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             SpotifyHelper.shared.fetchTrackInfo(title: self.song.name,
                                                 artist: self.song.artist)
             { track in
-                self.songArtworkTitleButton.loadImage(from: URL(string:track.album.artUri)!, fallback: .defaultBg, callback: { image in
+                self.songArtworkTitleButton?.loadImage(from: URL(string:track.album.artUri)!, fallback: .defaultBg, callback: { image in
                     self.image = image
                 })
             }
@@ -856,14 +1123,22 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func updateArtworkColorAndSize(for image: NSImage) {
         // Resize image to fit TouchBar view
         // TODO: Move this elsewhere
-        songArtworkTitleButton.image = image.resized(to: NSMakeSize(30, 30))
+        songArtworkTitleButton?.image = image.resized(to: NSMakeSize(30, 30))
+        
+        if image != .defaultBg {
+            controlStripButton?.image = image.resized(to: controlStripButtonSize)
+                                             .withAlpha(0.3)
+        } else {
+            controlStripButton?.image = nil
+        }
+        
         
         // Fetch image colors
         // We also set an aggressive scaling size
         // to optimize performace and memory usage
         image.getColors(scaleDownSize: NSMakeSize(25, 25)) { colors in
             // Set colors on TouchBar button
-            self.songArtworkTitleButton.bezelColor = colors.primary.blended(withFraction: 0.5, of: .darkGray)
+            self.songArtworkTitleButton?.bezelColor = colors.primary.blended(withFraction: 0.5, of: .darkGray)
 
             // Set colors on main view
             self.onViewController { controller in
@@ -874,7 +1149,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     var isUIPlaying: Bool {
         // Simple trick to know whether the UI is in 'play' mode
-        return controlsSegmentedView.image(forSegment: 1) == .pause
+        return controlsSegmentedView?.image(forSegment: 1) == .pause
     }
     
     func updateViewUI() {

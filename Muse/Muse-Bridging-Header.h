@@ -5,4 +5,4 @@
 #import "DDHotKeyTextField.h"
 #import "DDHotKeyUtilities.h"
 #import "PlayerStates.h"
-
+#import "DFRPrivateHeader.h"

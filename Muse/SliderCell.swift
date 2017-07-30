@@ -31,6 +31,13 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // The knob's left and right margin
+    var knobMargin: CGFloat = 2.0 {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
     // Colors
     var backgroundColor = NSColor.lightGray.withAlphaComponent(0.5) {
         didSet {
@@ -187,11 +194,11 @@ class SliderCell: NSSliderCell {
         
         rect.size = image.size
         
-        bounds = NSInsetRect(bounds, ceil(rect.size.width / 2), 0)
+        bounds = NSInsetRect(bounds, rect.size.width + knobMargin, 0)
 
         let absKnobPosition = self.relativeKnobPosition() * NSWidth(bounds) + NSMinX(bounds);
         
-        rect = NSOffsetRect(rect, absKnobPosition - NSMidX(rect) + 1, 0)
+        rect = NSOffsetRect(rect, absKnobPosition - NSMidX(rect), 0)
         
         return rect
     }

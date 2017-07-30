@@ -8,7 +8,6 @@
 
 import Cocoa
 
-@available(OSX 10.12.2, *)
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
@@ -20,11 +19,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let menuItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
     
+    // TODO: do this without callbacks!
+    
     var windowToggledHandler: () -> () = { }
+    
+    var showControlStripItemHandler: () -> (Bool) = { return false }
+    
+    var showHUDForControlStripActionHandler: () -> (Bool) = { return false }
+    
+    var showSongTitleInMenuBarActionHandler: () -> (Bool) = { return false }
 
     // MARK: Outlets
     
     @IBOutlet weak var menuBarMenu: NSMenu!
+    @IBOutlet weak var showControlStripButtonMenuItem: NSMenuItem!
+    @IBOutlet weak var showControlStripHUDMenuItem: NSMenuItem!
+    @IBOutlet weak var showSongTitleMenuItem: NSMenuItem!
     
     // MARK: Actions
     
@@ -36,6 +46,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func quitMenuItemClicked(_ sender: Any) {
         // Quit the application
         NSApplication.shared().terminate(self)
+    }
+    
+    @IBAction func showControlStripItemMenuItemClicked(_ sender: NSMenuItem) {
+        sender.state = showControlStripItemHandler() ? NSOnState : NSOffState
+    }
+    
+    @IBAction func showHUDForControlStripActionMenuItemClicked(_ sender: NSMenuItem) {
+        sender.state = showHUDForControlStripActionHandler() ? NSOnState : NSOffState
+    }
+    
+    @IBAction func showSongTitleMenuItemClicked(_ sender: NSMenuItem) {
+        sender.state = showSongTitleInMenuBarActionHandler() ? NSOnState : NSOffState
     }
     
     // MARK: Data saving
@@ -129,8 +151,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Enable TouchBar overlay
-        NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
+        // Enable TouchBar overlay if 10.12.2
+        if #available(OSX 10.12.2, *) {
+            NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
+        }
         
         // Create the menu item
         attachMenuItem()
@@ -140,6 +164,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Copy support files if necessary
         if !hasApplicationSupportFiles  { copyApplicationSupportFiles() }
+        
+        // Register dafault user preferences
+        registerDefaultPreferences()
+        
+        // Load menu items
+        prepareMenuItems()
+    }
+    
+    func registerDefaultPreferences() {
+        PreferenceKey.registerDefaults()
+    }
+    
+    func prepareMenuItems() {
+        showControlStripButtonMenuItem.state = Preference<Bool>(.controlStripItem).value ?
+                                               NSOnState : NSOffState
+        showControlStripHUDMenuItem.state    = Preference<Bool>(.controlStripHUD).value ?
+                                               NSOnState : NSOffState
+        showSongTitleMenuItem.state          = Preference<Bool>(.menuBarTitle).value ?
+                                               NSOnState : NSOffState
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

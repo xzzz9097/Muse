@@ -26,7 +26,7 @@ class ViewController: NSViewController {
     var likeImage     = NSImage.like
     
     // Action view auto close
-    let actionViewTimeout:        TimeInterval = 0.75    // Timeout in seconds
+    let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
     var actionViewAutoCloseTimer: Timer        = Timer() // The timer
     
     // Title view auto close
@@ -242,7 +242,10 @@ class ViewController: NSViewController {
         }
     }
     
-    func showLastActionView(for action: PlayerAction, to time: Double = 0, shouldClose: Bool = true) {
+    func showLastActionView(for action: PlayerAction,
+                            to time: Double = 0,
+                            shouldClose: Bool = true,
+                            liked: Bool = false) {
         // Only show action info if mouse is not hovering
         guard (controlsSuperview.isHidden || action == .repeating || action == .shuffling || action == .scrubbing) else { return }
         
@@ -274,7 +277,7 @@ class ViewController: NSViewController {
                 actionImageView.image = repeatImage.tint(with: .lightGray)
             }
         case .like:
-            if helper.liked {
+            if liked {
                 actionImageView.image = likeImage
             } else {
                 actionImageView.image = likeImage.tint(with: .lightGray)
