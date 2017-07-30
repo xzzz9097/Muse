@@ -77,16 +77,30 @@ struct Preference<T>: Preferenceable {
     
 }
 
+extension Dictionary {
+    
+    /**
+     Initializes a Dictionary from two given sequences by zipping them into one
+     - parameter sequence1: the first sequence
+     - parameter sequence2: the second sequence
+     */
+    init<A, B>(_ sequence1: A, _ sequence2: B)
+        where A: Sequence, B: Sequence, Key == A.Element, Value == B.Element {
+        self.init()
+        
+        zip(sequence1, sequence2).forEach { self[$0] = $1 }
+    }
+    
+}
+
 extension Dictionary where Key == PreferenceKey {
     
+    /**
+     UserDefaults needs string keys, so we build a new dicitionary
+     with PreferenceKey's rawValues
+     */
     var userDefaultsCompatible: [String: Any] {
-        var dictionary: [String: Any] = [:]
-        
-        zip(self.keys.map { $0.name }, self.values).forEach {
-            dictionary[$0] = $1
-        }
-                
-        return dictionary
+        return Dictionary<String, Any>(self.keys.map { $0.name }, self.values.map { $0 })
     }
     
 }
