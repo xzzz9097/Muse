@@ -89,33 +89,28 @@ extension WindowController: NSTouchBarDelegate {
     func touchBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .songArtworkTitleButton:
-            return createItem(identifier: identifier, view: songArtworkTitleButton) { item in
-                songArtworkTitleButton = item.view as? NSCustomizableButton
-                prepareSongArtworkTitleButton()
+            return createItem(identifier: identifier, store: &songArtworkTitleButton) { item in
+                self.prepareSongArtworkTitleButton()
             }
         case .songProgressSlider:
-            return createItem(identifier: identifier, view: songProgressSlider) { item in
-                songProgressSlider = (item as? NSMediaSliderTouchBarItem)?.slider as? Slider
-                prepareSongProgressSlider()
+            return createItem(identifier: identifier, store: &songProgressSlider) { item in
+                self.prepareSongProgressSlider()
             }
         case .controlsSegmentedView:
-            return createItem(identifier: identifier, view: controlsSegmentedView) { item in
-                controlsSegmentedView = item.view as? NSSegmentedControl
-                prepareButtons()
+            return createItem(identifier: identifier, store: &controlsSegmentedView) { item in
+                self.prepareButtons()
             }
         case .likeButton:
-            return createItem(identifier: identifier, view: likeButton) { item in
-                likeButton         = item.view as? NSButton
-                likeButton?.image  = .like
-                likeButton?.action = #selector(likeButtonClicked(_:))
-                updateLikeButton()
+            return createItem(identifier: identifier, store: &likeButton) { item in
+                self.likeButton?.image  = .like
+                self.likeButton?.action = #selector(self.likeButtonClicked(_:))
+                self.updateLikeButton()
             }
         case .soundPopoverButton:
-            return createItem(identifier: identifier) { item in
-                soundPopoverButton                       = item as? NSPopoverTouchBarItem
-                soundPopoverButton?.popoverTouchBar      = popoverBar!
-                soundPopoverButton?.pressAndHoldTouchBar = popoverBar!
-                updateSoundPopoverButton(for: helper.volume)
+            return createItem(identifier: identifier, store: &soundPopoverButton) { item in
+                self.soundPopoverButton?.popoverTouchBar      = self.popoverBar!
+                self.soundPopoverButton?.pressAndHoldTouchBar = self.popoverBar!
+                self.updateSoundPopoverButton(for: self.helper.volume)
             }
         default:
             return nil
@@ -130,14 +125,12 @@ extension WindowController: NSTouchBarDelegate {
     func popoverBarItem(for identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case .soundSlider:
-            return createItem(identifier: identifier) { item in
-                soundSlider = item as? NSSliderTouchBarItem
-                prepareSoundSlider()
+            return createItem(identifier: identifier, store: &soundSlider) { item in
+                self.prepareSoundSlider()
             }
         case .shuffleRepeatSegmentedView:
-            return createItem(identifier: identifier, view: shuffleRepeatSegmentedView) { item in
-                shuffleRepeatSegmentedView = item.view as? NSSegmentedControl
-                prepareShuffleRepeatSegmentedView()
+            return createItem(identifier: identifier, store: &shuffleRepeatSegmentedView) { item in
+                self.prepareShuffleRepeatSegmentedView()
             }
         default:
             return nil
@@ -168,9 +161,9 @@ extension WindowController: NSTouchBarDelegate {
      - parameter creationHandler: the handler to execute when the item has been created
      - returns: the requested NSTouchBarItem
       */
-    public func createItem(identifier: NSTouchBarItemIdentifier,
-                           view: NSView? = nil,
-                           creationHandler: (NSTouchBarItem) -> ()) -> NSTouchBarItem {
+    public func createItem<T>(identifier: NSTouchBarItemIdentifier,
+                              store: inout T?,
+                              creationHandler: @escaping (NSTouchBarItem) -> ()) -> NSTouchBarItem {
         var item: NSTouchBarItem = NSCustomTouchBarItem(identifier: identifier)
         
         switch identifier {
@@ -189,13 +182,16 @@ extension WindowController: NSTouchBarDelegate {
         if  identifier == .songProgressSlider ||
             identifier == .soundSlider        ||
             identifier == .soundPopoverButton {
-            creationHandler(item)
+            if let item = item as? T {
+                store = item
+            }
+            DispatchQueue.main.async { creationHandler(item) }
             return item
         }
         
         guard let customItem = item as? NSCustomTouchBarItem else { return item }
         
-        if let view = view {
+        if let store = store, let view = store as? NSView {
             // touch bar is being reloaded
             // -> restore the archived NSView on the item and reset target
             // TODO: handle disapppearences after system modal bar usage
@@ -225,7 +221,8 @@ extension WindowController: NSTouchBarDelegate {
                 break
             }
             
-            creationHandler(item)
+            if let view = item.view as? T { store = view }
+            DispatchQueue.main.async { creationHandler(item) }
         }
         
         return customItem
