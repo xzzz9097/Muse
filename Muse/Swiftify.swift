@@ -329,13 +329,21 @@ public class SwiftifyHelper {
         self.application = application
     }
     
-    public init(with applicationJsonURL: URL? = nil, _ tokenJsonURL: URL? = nil) {
+    public init(with applicationJsonURL: URL? = nil,
+                _ tokenJsonURL: URL?          = nil,
+                fallbackURL: URL?             = nil) {
         if let applicationURL = applicationJsonURL {
             do {
                 try self.application = SpotifyDeveloperApplication(from: JSON(Data(contentsOf: applicationURL)))
-                
                 self.applicationJsonURL = applicationURL
-            } catch { }
+            } catch {
+                if let applicationURL = fallbackURL {
+                    do {
+                        try self.application = SpotifyDeveloperApplication(from: JSON(Data(contentsOf: applicationURL)))
+                        self.applicationJsonURL = applicationURL
+                    } catch { }
+                }
+            }
         }
         
         if let tokenURL = tokenJsonURL {

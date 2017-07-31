@@ -58,7 +58,10 @@ class SpotifyHelper: PlayerHelper {
     private let application: SpotifyApplication? = SBApplication.init(bundleIdentifier: BundleIdentifier)
     
     // The Swiftify object bound to the helper class
-    private var swiftify: SwiftifyHelper = SwiftifyHelper(with: ApplicationJsonURL, TokenJsonURL)
+    private var swiftify: SwiftifyHelper = SwiftifyHelper(
+        with: ApplicationJsonURL,
+        TokenJsonURL,
+        fallbackURL: ApplicationFallbackURL)
     
     private init() {
         if !swiftify.hasToken {
@@ -92,10 +95,15 @@ class SpotifyHelper: PlayerHelper {
      Save token after authorization code has been received
      */
     func saveToken(from authorizationCode: String) {
-        swiftify.saveToken(from: authorizationCode)
+        print("saving token")
         
         // Enable like support
         self.supportsLiking = true
+        
+        swiftify.saveToken(from: authorizationCode)
+        
+        // Refresh the token if present
+        //swiftify.refreshToken { refreshed in }
     }
     
     /**
@@ -362,8 +370,10 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Resources
     
-    private static let ApplicationJsonURL = AppDelegate.supportFilesURLs[0]
+    private static let ApplicationJsonURL     = AppDelegate.supportFilesURLs[0]
     
-    private static let TokenJsonURL       = AppDelegate.supportFilesURLs[1]
+    private static let ApplicationFallbackURL = Bundle.main.url(forResource: "application", withExtension: "json")
+    
+    private static let TokenJsonURL           = AppDelegate.supportFilesURLs[1]
     
 }
