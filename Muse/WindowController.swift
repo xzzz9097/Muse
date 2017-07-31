@@ -682,6 +682,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         songProgressSlider?.delegate = self
         songProgressSlider?.minValue = 0.0
         songProgressSlider?.maxValue = 1.0
+        
+        if songProgressSlider?.doubleValue == 0.0 {
+            songProgressSlider?.doubleValue = helper.playbackPosition / song.duration
+        }
     }
     
     func prepareSongArtworkTitleButton() {
