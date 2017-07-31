@@ -95,15 +95,10 @@ class SpotifyHelper: PlayerHelper {
      Save token after authorization code has been received
      */
     func saveToken(from authorizationCode: String) {
-        print("saving token")
-        
         // Enable like support
         self.supportsLiking = true
         
         swiftify.saveToken(from: authorizationCode)
-        
-        // Refresh the token if present
-        //swiftify.refreshToken { refreshed in }
     }
     
     /**
