@@ -2,6 +2,7 @@
 
 An open-source Spotify, iTunes and Vox controller with TouchBar support, system-wide TouchBar controls (à la iTunes) and Spotify account integration.
 
+- [Control strip integration](https://www.youtube.com/watch?v=CdnKpR36cGU)
 - [Demo video (old release)](https://www.youtube.com/watch?v=1hxwfGBvghg)
 - [Spotify integration](https://www.youtube.com/watch?v=zW4QomjDNN8)
 
@@ -10,7 +11,14 @@ An open-source Spotify, iTunes and Vox controller with TouchBar support, system-
 <img src=Screenshots/TouchBar2.png width="1094">
 
 ### Download
-[2.2](https://github.com/xzzz9097/Muse/releases/tag/v2.2-beta.1)
+[3.0](https://github.com/xzzz9097/Muse/releases/tag/v3.0-beta.1)
+
+### Control strip integration
+Muse appends a permanent button to the control strip (right tray bar) of the TouchBar, displaying album art and playback time. You can tap it to reveal the full control bar, long press it to toggle play/pause and swipe on it to jump to next or previous track.
+
+### Installation
+The app is not code signed, so after trying to open it unsuccessfully (because of GateKeeper) head to System Preferences -> Security & Privacy and manually grant it permission.
+At first start you'll be prompted to log into your Spotify account. It's not strictly necessary but it allows adding/removing favourites to your library.
 
 ### Usage
 Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
