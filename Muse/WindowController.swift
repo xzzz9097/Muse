@@ -1087,22 +1087,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    func updateTouchBarUI() {
-        songArtworkTitleButton?.title = song.name.truncate(at: songTitleMaximumLength)
-        songArtworkTitleButton?.sizeToFit()
-        
-        controlsSegmentedView?.setImage(helper.isPlaying ? .pause : .play,
-                                       forSegment: 1)
-        
+    func fetchArtwork() {
         if  let stringURL = helper.artwork() as? String,
             let artworkURL = URL(string: stringURL) {
-            songArtworkTitleButton?.loadImage(from: artworkURL, fallback: .defaultBg, callback: { image in
-                self.image = image
-            })
+            NSImage.download(from: artworkURL,
+                             fallback: .defaultBg) { self.image = $0 }
         } else if let image = helper.artwork() as? NSImage {
             self.image = image
         } else if   let descriptor = helper.artwork() as? NSAppleEventDescriptor,
-                    let image = NSImage(data: descriptor.data) {
+            let image = NSImage(data: descriptor.data) {
             // Handles PNG artwork images
             self.image = image
         } else if song.isValid {
@@ -1113,13 +1106,22 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             SpotifyHelper.shared.fetchTrackInfo(title: self.song.name,
                                                 artist: self.song.artist)
             { track in
-                self.songArtworkTitleButton?.loadImage(from: URL(string:track.album.artUri)!, fallback: .defaultBg, callback: { image in
-                    self.image = image
-                })
+                NSImage.download(from: URL(string:track.album.artUri)!,
+                                 fallback: .defaultBg) { self.image = $0 }
             }
         } else {
             self.image = NSImage.defaultBg
         }
+    }
+    
+    func updateTouchBarUI() {
+        songArtworkTitleButton?.title = song.name.truncate(at: songTitleMaximumLength)
+        songArtworkTitleButton?.sizeToFit()
+        
+        controlsSegmentedView?.setImage(helper.isPlaying ? .pause : .play,
+                                       forSegment: 1)
+        
+        fetchArtwork()
  
         updateLikeButton()
     }

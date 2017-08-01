@@ -23,6 +23,33 @@ protocol Imageable: class {
     
 }
 
+extension NSImage {
+    
+    static func download(from url: URL,
+                         fallback: NSImage,
+                         callback: @escaping (NSImage) -> ()) {
+        let session = URLSession.shared
+        
+        let downloadTask = session.downloadTask(with: url, completionHandler: {
+             url, response, error in
+            
+            if error == nil && url != nil {
+                if let data = NSData(contentsOf: url!) {
+                    if let image = NSImage(data: data as Data) {
+                        DispatchQueue.main.async { callback(image) }
+                    }
+                }
+            } else {
+                // Fallback to the provided default image
+                DispatchQueue.main.async { callback(fallback) }
+            }
+        })
+        
+        downloadTask.resume()
+    }
+    
+}
+
 extension Imageable {
     
     // Loading function implementation
