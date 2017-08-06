@@ -132,6 +132,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     var isSliding = false
     
+    // Returns whether the UI is in play state
+    var isUIPlaying = false
+    
     // MARK: Actions
     
     func controlsSegmentedViewClicked(_ sender: NSSegmentedControl) {
@@ -966,10 +969,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateControlsAfterPlayPause() {
-        controlsSegmentedView?.setImage(
-            helper.isPlaying ? .pause : .play,
-            forSegment: 1
-        )
+        isUIPlaying = helper.isPlaying
+        
+        controlsSegmentedView?.setImage(isUIPlaying ? .pause : .play,
+                                        forSegment: 1)
         
         onViewController { controller in
             controller.updateButtons()
@@ -1061,6 +1064,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func updateUIAfterNotification() {
+        isUIPlaying = helper.isPlaying
+        
         updateTouchBarUI()
         
         updateViewUI()
@@ -1151,11 +1156,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                 controller.colorViews(with: colors)
             }
         }
-    }
-    
-    var isUIPlaying: Bool {
-        // Simple trick to know whether the UI is in 'play' mode
-        return controlsSegmentedView?.image(forSegment: 1) == .pause
     }
     
     func updateViewUI() {
