@@ -343,47 +343,45 @@ class ViewController: NSViewController {
     }
     
     func colorViews(with colors: ImageColors) {
-        // Blend the background color with 'lightGray'
-        // This prevents view from getting too dark
-        let backgroundColor = colors.background.blended(withFraction: 0.5, of: .lightGray)?.cgColor
-        let primaryColor    = colors.primary.blended(withFraction: 0.5, of: .lightGray)
+        let colors = [ colors.background, colors.primary, colors.secondary, colors.detail ]
+                .map { $0?.blended(withFraction: 0.5, of: .lightGray) }
         
-        let secondaryColor  = colors.secondary.distance(from: colors.primary) > colors.detail.distance(from: colors.primary) ?
-                              colors.secondary.blended(withFraction: 0.5, of: .lightGray) :
-                              colors.detail.blended(withFraction: 0.5, of: .lightGray)
+        guard   let backgroundColor = colors[0],
+                let primaryColor    = colors[1],
+                var secondaryColor  = colors[2],
+                let detailColor     = colors[3] else { return }
         
+        [backgroundColor, primaryColor, secondaryColor, detailColor].forEach {
+            $0.blended(withFraction: 0.5, of: .lightGray)
+        }
         
-        let buttonColor     = colors.primary.blended(withFraction: 0.5, of: .lightGray)
+        secondaryColor = secondaryColor.distance(from: primaryColor) >
+                            detailColor.distance(from: primaryColor) ? secondaryColor : detailColor
         
         // Set the superview background color and animate it
-        titleAlbumArtistSuperview.layer?.animateChange(to: backgroundColor!,
-                                                       for: CALayer.kBackgroundColorPath)
-        controlsSuperview.layer?.animateChange(to: backgroundColor!,
-                                               for: CALayer.kBackgroundColorPath)
-        actionSuperview.layer?.animateChange(to: backgroundColor!,
-                                             for: CALayer.kBackgroundColorPath)
-        titleSuperview.layer?.animateChange(to: backgroundColor!,
-                                             for: CALayer.kBackgroundColorPath)
+        [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview ].forEach {
+            $0?.layer?.animateChange(to: backgroundColor.cgColor, for: CALayer.kBackgroundColorPath)
+        }
         
         // Set the text colors
-        titleLabelView.textColor       = primaryColor
+        [ titleLabelView, actionTextField, titleTextField ].forEach {
+            $0?.textColor = primaryColor
+        }
         albumArtistLabelView.textColor = secondaryColor
-        actionTextField.textColor      = primaryColor
-        titleTextField.textColor       = primaryColor
         
         // Set color on the slider too
         if let sliderCell = songProgressSlider.cell as? SliderCell {
-            sliderCell.backgroundColor = primaryColor!
-            sliderCell.highlightColor  = secondaryColor!
+            sliderCell.backgroundColor = primaryColor
+            sliderCell.highlightColor  = secondaryColor
         }
         
         if let barCell = songProgressBar.cell as? SliderCell {
-            barCell.backgroundColor = primaryColor!
-            barCell.highlightColor  = secondaryColor!
+            barCell.backgroundColor = primaryColor
+            barCell.highlightColor  = secondaryColor
         }
         
         // Set the color on the playback buttons
-        colorButtonImages(with: buttonColor!)
+        colorButtonImages(with: primaryColor)
         updateButtons()
     }
     
