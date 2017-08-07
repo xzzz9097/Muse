@@ -343,6 +343,7 @@ class ViewController: NSViewController {
     }
     
     func colorViews(with colors: ImageColors) {
+        // Blend all colors with 50% of lightGray to avoid too contrasty views
         let colors = [ colors.background, colors.primary, colors.secondary, colors.detail ]
                 .map { $0?.blended(withFraction: 0.5, of: .lightGray) }
         
@@ -351,14 +352,11 @@ class ViewController: NSViewController {
                 var secondaryColor  = colors[2],
                 let detailColor     = colors[3] else { return }
         
-        [backgroundColor, primaryColor, secondaryColor, detailColor].forEach {
-            $0.blended(withFraction: 0.5, of: .lightGray)
-        }
-        
+        // Pick the more contrasting color compared to primary between secondary and detail
         secondaryColor = secondaryColor.distance(from: primaryColor) >
                             detailColor.distance(from: primaryColor) ? secondaryColor : detailColor
         
-        // Set the superview background color and animate it
+        // Set the superviews background color and animate it
         [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview ].forEach {
             $0?.layer?.animateChange(to: backgroundColor.cgColor, for: CALayer.kBackgroundColorPath)
         }
@@ -375,6 +373,7 @@ class ViewController: NSViewController {
             sliderCell.highlightColor  = secondaryColor
         }
         
+        // And on the progress bar
         if let barCell = songProgressBar.cell as? SliderCell {
             barCell.backgroundColor = primaryColor
             barCell.highlightColor  = secondaryColor
