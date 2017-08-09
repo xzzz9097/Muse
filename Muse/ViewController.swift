@@ -326,6 +326,15 @@ class ViewController: NSViewController {
         } else if let image = object as? NSImage {
             fullSongArtworkView.image = image
         }
+        
+        // If the image is not square we cut it instead of stretching it
+        if  let image = fullSongArtworkView.image,
+            image.size.width != image.size.height {
+            fullSongArtworkView.image = image.resized(
+                to: NSMakeSize(fullSongArtworkView.frame.width,
+                               fullSongArtworkView.frame.height)
+            )
+        }
     }
     
     func colorButtonImages(with color: NSColor) {
