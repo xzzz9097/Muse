@@ -16,14 +16,14 @@ class ViewController: NSViewController {
     
     // MARK: Properties
     
-    // Button images
-    var previousImage = NSImage.previous
-    var playImage     = NSImage.play
-    var pauseImage    = NSImage.pause
-    var nextImage     = NSImage.next
-    var shuffleImage  = NSImage.shuffling
-    var repeatImage   = NSImage.repeating
-    var likeImage     = NSImage.like
+    // Button images dictionary
+    var actionImages: [PlayerAction: NSImage] = [.previous:  NSImage.previous!,
+                                                 .play:      NSImage.play!,
+                                                 .pause:     NSImage.pause!,
+                                                 .next:      NSImage.next!,
+                                                 .shuffling: .shuffling,
+                                                 .repeating: .repeating,
+                                                 .like:      .like]
     
     // Action view auto close
     let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
@@ -253,34 +253,26 @@ class ViewController: NSViewController {
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
         
+        actionImageView.image = actionImages[action]
+        
+        // TODO: more testing
         switch action {
-        case .play:
-            actionImageView.image = playImage
-        case .pause:
-            actionImageView.image = pauseImage
-        case .previous:
-            actionImageView.image = previousImage
-        case .next:
-            actionImageView.image = nextImage
-        case .shuffling:
-            if helper.shuffling {
-                actionImageView.image = shuffleImage
-            } else {
-                // Let the user know if shuffle/repeat is disabled
-                // by setting a lighter color on the image
-                actionImageView.image = shuffleImage.tint(with: .lightGray)
+        case .shuffling, .repeating, .like:
+            var shouldTint = false
+            
+            // Determine if we should tint the action image with light gray
+            // to highlight off state for the action
+            // TODO: more visible highlighting method
+            switch action {
+            case .shuffling: shouldTint = !helper.shuffling
+            case .repeating: shouldTint = !helper.repeating
+            case .like:      shouldTint = !helper.liked
+            default: break
             }
-        case .repeating:
-            if helper.repeating {
-                actionImageView.image = repeatImage
-            } else {
-                actionImageView.image = repeatImage.tint(with: .lightGray)
-            }
-        case .like:
-            if liked {
-                actionImageView.image = likeImage
-            } else {
-                actionImageView.image = likeImage.tint(with: .lightGray)
+            
+            // Tint the image
+            if shouldTint {
+                actionImageView.image = actionImages[action]?.tint(with: .lightGray)
             }
         case .scrubbing:
             // Hide image view if scrubbing
@@ -288,6 +280,8 @@ class ViewController: NSViewController {
             
             // Set the string value formatted as MM:SS
             actionTextField.stringValue = time.secondsToMMSSString
+        default:
+            break
         }
         
         // Show image view if not scrubbing
@@ -313,9 +307,10 @@ class ViewController: NSViewController {
     
     func updateButtons() {
         // Initialize playback control buttons
-        previousTrackButton.image = previousImage
-        togglePlayPauseButton.image = helper.isPlaying ? pauseImage : playImage
-        nextTrackButton.image = nextImage
+        previousTrackButton.image   = actionImages[.previous]
+        togglePlayPauseButton.image = helper.isPlaying ?
+                                      actionImages[.pause] : actionImages[.play]
+        nextTrackButton.image       = actionImages[.next]
     }
     
     func updateFullSongArtworkView(with object: Any?) {
@@ -339,13 +334,7 @@ class ViewController: NSViewController {
     
     func colorButtonImages(with color: NSColor) {
         // Update button images with new color
-        previousImage = previousImage?.tint(with: color)
-        playImage     = playImage?.tint(with: color)
-        pauseImage    = pauseImage?.tint(with: color)
-        nextImage     = nextImage?.tint(with: color)
-        shuffleImage  = shuffleImage.tint(with: color)
-        repeatImage   = repeatImage.tint(with: color)
-        likeImage     = likeImage.tint(with: color)
+        actionImages = actionImages.mapValues { $0.tint(with: color) }
         
         // Color action image too
         actionImageView.image = actionImageView.image?.tint(with: color)
