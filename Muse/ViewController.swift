@@ -269,7 +269,7 @@ class ViewController: NSViewController {
             switch action {
             case .shuffling: shouldTint = !helper.shuffling
             case .repeating: shouldTint = !helper.repeating
-            case .like:      shouldTint = !helper.liked
+            case .like:      shouldTint = !liked
             default: break
             }
             
@@ -357,6 +357,20 @@ class ViewController: NSViewController {
         secondaryColor = secondaryColor.distance(from: primaryColor) >
                             detailColor.distance(from: primaryColor) ? secondaryColor : detailColor
         
+        var highlightColor = secondaryColor
+        
+        // Hotfix for unreadable slider highlight when I and II color are too similar
+        // We blend the highlight color with light or dark gray,
+        // for dark or light primary color respectively
+        if highlightColor.distance(from: primaryColor) < 0.02 {
+            if  highlightColor.distance(from: .lightGray) <
+                highlightColor.distance(from: .darkGray) {
+                highlightColor = secondaryColor.blended(withFraction: 0.5, of: .darkGray)!
+            } else {
+                highlightColor = secondaryColor.blended(withFraction: 0.5, of: .lightGray)!
+            }
+        }
+        
         // Set the superviews background color and animate it
         [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview ].forEach {
             $0?.layer?.animateChange(to: backgroundColor.cgColor, for: CALayer.kBackgroundColorPath)
@@ -371,13 +385,13 @@ class ViewController: NSViewController {
         // Set color on the slider too
         if let sliderCell = songProgressSlider.cell as? SliderCell {
             sliderCell.backgroundColor = primaryColor
-            sliderCell.highlightColor  = secondaryColor
+            sliderCell.highlightColor  = highlightColor
         }
         
         // And on the progress bar
         if let barCell = songProgressBar.cell as? SliderCell {
             barCell.backgroundColor = primaryColor
-            barCell.highlightColor  = secondaryColor
+            barCell.highlightColor  = highlightColor
         }
         
         // Set the color on the playback buttons
