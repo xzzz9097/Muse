@@ -235,19 +235,22 @@ class ViewController: NSViewController {
         
         // Restart the autoclose timer
         titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTimeout,
-                                              repeats: false) { timer in
+                                                       repeats: false) { timer in
             // Hide the view and invalidate the timer
             self.titleSuperview.animator().isHidden = true
             timer.invalidate()
         }
     }
     
-    func showLastActionView(for action: PlayerAction,
-                            to time: Double = 0,
+    func showLastActionView(for action:  PlayerAction,
+                            to time:     Double = 0,
                             shouldClose: Bool = true,
-                            liked: Bool = false) {
+                            liked:       Bool = false) {
         // Only show action info if mouse is not hovering
-        guard (controlsSuperview.isHidden || action == .repeating || action == .shuffling || action == .scrubbing) else { return }
+        guard ( controlsSuperview.isHidden ||
+                action == .repeating       ||
+                action == .shuffling       ||
+                action == .scrubbing ) else { return }
         
         // Invalidate existing timers
         // This prevents calls from precedent ones
@@ -295,7 +298,7 @@ class ViewController: NSViewController {
         
         // Restart the autoclose timer
         actionViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: actionViewTimeout,
-                                              repeats: false) { timer in
+                                                        repeats: false) { timer in
             // Hide the view and invalidate the timer
             self.actionSuperview.animator().isHidden = true
             self.actionTextField.stringValue = ""
