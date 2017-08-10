@@ -363,11 +363,10 @@ class ViewController: NSViewController {
         // We blend the highlight color with light or dark gray,
         // for dark or light primary color respectively
         if highlightColor.distance(from: primaryColor) < 0.02 {
-            if  highlightColor.distance(from: .lightGray) <
-                highlightColor.distance(from: .darkGray) {
-                highlightColor = secondaryColor.blended(withFraction: 0.5, of: .darkGray)!
-            } else {
+            if  highlightColor.isDarkColor {
                 highlightColor = secondaryColor.blended(withFraction: 0.5, of: .lightGray)!
+            } else {
+                highlightColor = secondaryColor.blended(withFraction: 0.5, of: .darkGray)!
             }
         }
         
