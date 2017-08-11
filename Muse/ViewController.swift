@@ -70,6 +70,7 @@ class ViewController: NSViewController {
     var controlsSuperview:         NSView!
     var actionSuperview:           NSView!
     var titleSuperview:            NSView!
+    @IBOutlet weak var actionBarSuperview: NSView!
     
     // MARK: Actions
     
@@ -112,10 +113,11 @@ class ViewController: NSViewController {
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview
         
-        titleAlbumArtistSuperview.wantsLayer = true
-        controlsSuperview.wantsLayer         = true
-        actionSuperview.wantsLayer           = true
-        titleSuperview.wantsLayer            = true
+        [titleAlbumArtistSuperview,
+         controlsSuperview,
+         actionSuperview,
+         titleSuperview,
+         actionBarSuperview].forEach { $0?.wantsLayer = true }
     }
     
     override func viewWillAppear() {
@@ -371,7 +373,7 @@ class ViewController: NSViewController {
         }
         
         // Set the superviews background color and animate it
-        [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview ].forEach {
+        [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview, actionBarSuperview ].forEach {
             $0?.layer?.animateChange(to: backgroundColor.cgColor, for: CALayer.kBackgroundColorPath)
         }
         

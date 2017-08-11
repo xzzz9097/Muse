@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13156.6" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13156.6"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -148,11 +148,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Muse" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="275" height="275"/>
+                        <rect key="frame" x="0.0" y="0.0" width="275" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FL1-mx-O2f" customClass="ImageView" customModule="Muse" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="275" height="275"/>
+                                <rect key="frame" x="0.0" y="25" width="275" height="275"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="275" id="Hlj-tU-niT"/>
                                     <constraint firstAttribute="width" constant="275" id="Ome-Fv-3Oe"/>
@@ -160,7 +160,7 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="MEf-4T-602"/>
                             </imageView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
-                                <rect key="frame" x="0.0" y="229" width="275" height="46"/>
+                                <rect key="frame" x="0.0" y="254" width="275" height="46"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
                                         <rect key="frame" x="8" y="20" width="259" height="20"/>
@@ -197,7 +197,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
-                                <rect key="frame" x="0.0" y="0.0" width="275" height="46"/>
+                                <rect key="frame" x="0.0" y="25" width="275" height="46"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">
                                         <rect key="frame" x="123" y="13" width="30" height="30"/>
@@ -263,7 +263,7 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy">
-                                <rect key="frame" x="118" y="118" width="40" height="40"/>
+                                <rect key="frame" x="118" y="143" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8BH-TZ-iv9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
@@ -294,7 +294,7 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-B7-OOh">
-                                <rect key="frame" x="118" y="28" width="40" height="40"/>
+                                <rect key="frame" x="118" y="53" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xcG-Ud-ij9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
@@ -318,7 +318,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-i3-rTV">
-                                <rect key="frame" x="0.0" y="0.0" width="275" height="2"/>
+                                <rect key="frame" x="0.0" y="25" width="275" height="2"/>
                                 <subviews>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3IF-e0-Ota">
                                         <rect key="frame" x="-2" y="-2" width="279" height="6"/>
@@ -335,6 +335,10 @@
                                     <constraint firstAttribute="bottom" secondItem="3IF-e0-Ota" secondAttribute="bottom" id="yLW-XM-X0O"/>
                                 </constraints>
                             </customView>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PwM-dZ-q5e">
+                                <rect key="frame" x="0.0" y="0.0" width="275" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </customView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Pz7-i3-rTV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Jcq-t5-TmF"/>
@@ -342,21 +346,23 @@
                             <constraint firstAttribute="trailing" secondItem="Pz7-i3-rTV" secondAttribute="trailing" id="Oo3-lL-iQ2"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Q9n-qe-kgS"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
-                            <constraint firstAttribute="bottom" secondItem="Pz7-i3-rTV" secondAttribute="bottom" id="XRl-jr-qnh"/>
+                            <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Ufp-2u-9Mc"/>
+                            <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="Pz7-i3-rTV" secondAttribute="bottom" id="XRl-jr-qnh"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
-                            <constraint firstAttribute="bottom" secondItem="xX2-B7-OOh" secondAttribute="bottom" constant="28" id="cfX-Z3-IE0"/>
+                            <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="xX2-B7-OOh" secondAttribute="bottom" constant="28" id="cfX-Z3-IE0"/>
                             <constraint firstItem="8rY-c5-W6v" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cr5-PS-soL"/>
                             <constraint firstAttribute="trailing" secondItem="FL1-mx-O2f" secondAttribute="trailing" id="dyY-ER-2vM"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="e93-MX-3cq"/>
-                            <constraint firstItem="L8t-8O-zhy" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="lQK-h0-fKj"/>
-                            <constraint firstAttribute="bottom" secondItem="8rY-c5-W6v" secondAttribute="bottom" id="oMd-Mq-LxE"/>
+                            <constraint firstItem="L8t-8O-zhy" firstAttribute="centerY" secondItem="FL1-mx-O2f" secondAttribute="centerY" id="lQK-h0-fKj"/>
+                            <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="8rY-c5-W6v" secondAttribute="bottom" id="oMd-Mq-LxE"/>
                             <constraint firstItem="xX2-B7-OOh" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="oXa-qr-lnr"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="oXe-vP-81L"/>
                             <constraint firstAttribute="trailing" secondItem="8rY-c5-W6v" secondAttribute="trailing" id="q1z-pb-Dqu"/>
-                            <constraint firstAttribute="bottom" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="rxH-43-xhF"/>
+                            <constraint firstAttribute="bottom" secondItem="FL1-mx-O2f" secondAttribute="bottom" constant="25" id="rxH-43-xhF"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="actionBarSuperview" destination="PwM-dZ-q5e" id="tbt-uu-V3e"/>
                         <outlet property="actionImageView" destination="n4M-1Y-2JZ" id="F3O-Co-NpG"/>
                         <outlet property="actionTextField" destination="8BH-TZ-iv9" id="jV7-Bf-Te1"/>
                         <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>
@@ -372,7 +378,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="74.5" y="654.5"/>
+            <point key="canvasLocation" x="74.5" y="654"/>
         </scene>
     </scenes>
 </document>
