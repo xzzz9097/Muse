@@ -63,6 +63,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var actionTextField:       NSTextField!
     @IBOutlet weak var titleTextField:        NSTextField!
     @IBOutlet weak var songProgressBar:       NSSlider!
+    @IBOutlet weak var likeButton:            NSButton!
     
     // MARK: Superviews
     
@@ -128,6 +129,7 @@ class ViewController: NSViewController {
         prepareSongProgressBar()
         prepareFullSongArtworkView()
         prepareLastActionView()
+        prepareActionBarButtons()
         prepareTitleView()
     }
 
@@ -209,6 +211,14 @@ class ViewController: NSViewController {
         // Set shadow
         actionSuperview.shadow = NSShadow()
         setShadow(for: layer)
+    }
+    
+    func prepareActionBarButtons() {
+        likeButton.image               = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
+        likeButton.imagePosition       = .imageOnly
+        likeButton.isBordered          = false
+        likeButton.layer?.cornerRadius = 4.0
+        likeButton.action              = #selector(WindowController.likeButtonClicked(_:))
     }
     
     func prepareTitleView() {
@@ -316,6 +326,16 @@ class ViewController: NSViewController {
         togglePlayPauseButton.image = helper.isPlaying ?
                                       actionImages[.pause] : actionImages[.play]
         nextTrackButton.image       = actionImages[.next]
+        
+        likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
+    }
+    
+    func updateLikeButton(liked: Bool) {
+        if liked {
+            likeButton.alphaValue = 1.0
+        } else {
+            likeButton.alphaValue = 0.5
+        }
     }
     
     func updateFullSongArtworkView(with object: Any?) {
@@ -398,6 +418,8 @@ class ViewController: NSViewController {
         // Set the color on the playback buttons
         colorButtonImages(with: primaryColor)
         updateButtons()
+        
+        likeButton.layer?.backgroundColor = highlightColor.cgColor
     }
     
     func updateTitleAlbumArtistView(for song: Song) {

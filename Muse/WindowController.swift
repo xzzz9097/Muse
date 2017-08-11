@@ -999,7 +999,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     func updateLikeButton(newValue: Bool? = nil) {
         if let liked = newValue {
-            likeButton?.image = liked ? .liked : .like
+            setLikeButton(value: liked)
             return
         }
         
@@ -1009,16 +1009,25 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             
             // Spotify needs async saved loading from Web API 
             helper.isSaved { saved in
-                self.likeButton?.image = saved ? .liked : .like
+                self.setLikeButton(value: saved)
             }
         } else if helper.supportsLiking {
             likeButton?.isEnabled = true
 
-            likeButton?.image = helper.liked ? .liked : .like
+            setLikeButton(value: helper.liked)
         } else {
             likeButton?.isEnabled = false
             
-            likeButton?.image = .liked
+            setLikeButton(value: true)
+        }
+    }
+    
+    func setLikeButton(value: Bool) {
+        likeButton?.image = value ? .liked : .like
+        
+        // Update VC's like button
+        self.onViewController { controller in
+            controller.updateLikeButton(liked: value)
         }
     }
     

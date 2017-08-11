@@ -335,16 +335,36 @@
                                     <constraint firstAttribute="bottom" secondItem="3IF-e0-Ota" secondAttribute="bottom" id="yLW-XM-X0O"/>
                                 </constraints>
                             </customView>
-                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PwM-dZ-q5e">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="PwM-dZ-q5e">
                                 <rect key="frame" x="0.0" y="0.0" width="275" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VuX-lD-nXe">
+                                        <rect key="frame" x="118" y="3" width="40" height="18"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="m8n-ql-cxA"/>
+                                            <constraint firstAttribute="height" constant="17" id="ndw-wu-Sp1"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" imagePosition="left" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="BPj-A0-CVU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="cellTitle"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="VuX-lD-nXe" firstAttribute="centerX" secondItem="PwM-dZ-q5e" secondAttribute="centerX" id="CbD-4p-MeL"/>
+                                    <constraint firstItem="VuX-lD-nXe" firstAttribute="centerY" secondItem="PwM-dZ-q5e" secondAttribute="centerY" id="i2Z-0S-cLj"/>
+                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="PwM-dZ-q5e" firstAttribute="trailing" secondItem="Pz7-i3-rTV" secondAttribute="trailing" id="A2k-GG-wbQ"/>
+                            <constraint firstItem="PwM-dZ-q5e" firstAttribute="top" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="HN3-hS-Wkh"/>
                             <constraint firstItem="Pz7-i3-rTV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Jcq-t5-TmF"/>
                             <constraint firstAttribute="trailing" secondItem="mIG-iE-c3d" secondAttribute="trailing" id="Mwp-ft-xJI"/>
                             <constraint firstAttribute="trailing" secondItem="Pz7-i3-rTV" secondAttribute="trailing" id="Oo3-lL-iQ2"/>
+                            <constraint firstAttribute="bottom" secondItem="PwM-dZ-q5e" secondAttribute="bottom" id="PGB-Qa-2Me"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Q9n-qe-kgS"/>
+                            <constraint firstItem="PwM-dZ-q5e" firstAttribute="leading" secondItem="Pz7-i3-rTV" secondAttribute="leading" id="Rdz-FE-iuS"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Ufp-2u-9Mc"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="Pz7-i3-rTV" secondAttribute="bottom" id="XRl-jr-qnh"/>
@@ -367,6 +387,7 @@
                         <outlet property="actionTextField" destination="8BH-TZ-iv9" id="jV7-Bf-Te1"/>
                         <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>
+                        <outlet property="likeButton" destination="VuX-lD-nXe" id="IGN-i4-3cc"/>
                         <outlet property="nextTrackButton" destination="1xW-XK-zSM" id="CbI-95-0cP"/>
                         <outlet property="previousTrackButton" destination="l3h-iT-7mg" id="r1D-gC-p5A"/>
                         <outlet property="songProgressBar" destination="3IF-e0-Ota" id="jVJ-Wl-Bww"/>
