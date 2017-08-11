@@ -64,6 +64,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var titleTextField:        NSTextField!
     @IBOutlet weak var songProgressBar:       NSSlider!
     @IBOutlet weak var likeButton:            NSButton!
+    @IBOutlet weak var shuffleButton:         NSButton!
+    @IBOutlet weak var repeatButton:          NSButton!
     
     // MARK: Superviews
     
@@ -214,11 +216,15 @@ class ViewController: NSViewController {
     }
     
     func prepareActionBarButtons() {
-        likeButton.image               = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
-        likeButton.imagePosition       = .imageOnly
-        likeButton.isBordered          = false
-        likeButton.layer?.cornerRadius = 4.0
-        likeButton.action              = #selector(WindowController.likeButtonClicked(_:))
+        [likeButton, shuffleButton, repeatButton].forEach {
+            $0?.imagePosition       = .imageOnly
+            $0?.isBordered          = false
+            $0?.layer?.cornerRadius = 4.0
+        }
+        
+        likeButton.action    = #selector(WindowController.likeButtonClicked(_:))
+        shuffleButton.action = #selector(WindowController.shuffleButtonClicked(_:))
+        repeatButton.action  = #selector(WindowController.repeatButtonClicked(_:))
     }
     
     func prepareTitleView() {
@@ -328,14 +334,23 @@ class ViewController: NSViewController {
         nextTrackButton.image       = actionImages[.next]
         
         likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
+        shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
+        repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
+    }
+    
+    func updateShuffleRepeatButtons() {
+        [shuffleButton, repeatButton].enumerated().forEach {
+            let enabled        = $0.offset == 0 ? helper.shuffling : helper.repeating
+            let alpha: CGFloat = enabled        ?                1 : 0.25
+            
+            $0.element?.layer?.backgroundColor = $0.element?.layer?.backgroundColor?
+                .copy(alpha: alpha)
+        }
     }
     
     func updateLikeButton(liked: Bool) {
-        if liked {
-            likeButton.alphaValue = 1.0
-        } else {
-            likeButton.alphaValue = 0.5
-        }
+        likeButton.layer?.backgroundColor = likeButton.layer?.backgroundColor?
+            .copy(alpha: liked ? 1 : 0.25)
     }
     
     func updateFullSongArtworkView(with object: Any?) {
@@ -394,7 +409,8 @@ class ViewController: NSViewController {
         
         // Set the superviews background color and animate it
         [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview, actionBarSuperview ].forEach {
-            $0?.layer?.animateChange(to: backgroundColor.cgColor, for: CALayer.kBackgroundColorPath)
+            $0?.layer?.animateChange(to: backgroundColor.cgColor,
+                                     for: CALayer.kBackgroundColorPath)
         }
         
         // Set the text colors
@@ -419,7 +435,17 @@ class ViewController: NSViewController {
         colorButtonImages(with: primaryColor)
         updateButtons()
         
-        likeButton.layer?.backgroundColor = highlightColor.cgColor
+        [likeButton, shuffleButton, repeatButton].forEach {
+            var alpha: CGFloat = 0.25
+            
+            // Check current alpha value before setting a new one
+            // TODO: debreak this
+            if let currentAlpha = $0?.layer?.backgroundColor?.alpha {
+                alpha = currentAlpha
+            }
+            
+            $0?.layer?.backgroundColor = highlightColor.cgColor.copy(alpha: alpha)
+        }
     }
     
     func updateTitleAlbumArtistView(for song: Song) {

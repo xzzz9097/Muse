@@ -156,12 +156,34 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         switch selectedSegment {
         case 0:
             // Toggle shuffling
-            helper.shuffling = sender.isSelected(forSegment: selectedSegment)
+            shuffleButtonClicked(sender)
         case 1:
             // Toggle repeating
-            helper.repeating = sender.isSelected(forSegment: selectedSegment)
+            repeatButtonClicked(sender)
         default:
             return
+        }
+    }
+    
+    func shuffleButtonClicked(_ sender: Any) {
+        switch sender {
+        case let segmented as NSSegmentedControl:
+            helper.shuffling = segmented.isSelected(forSegment: segmented.selectedSegment)
+        case _ as NSButton:
+            helper.shuffling = !helper.shuffling
+        default:
+            break
+        }
+    }
+    
+    func repeatButtonClicked(_ sender: Any) {
+        switch sender {
+        case let segmented as NSSegmentedControl:
+            helper.repeating = segmented.isSelected(forSegment: segmented.selectedSegment)
+        case _ as NSButton:
+            helper.repeating = !helper.repeating
+        default:
+            break
         }
     }
     
@@ -385,6 +407,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                 } else if repeatChanged {
                     controller.showLastActionView(for: .repeating)
                 }
+                
+                controller.updateShuffleRepeatButtons()
             }
         }
         
@@ -995,6 +1019,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Convenience call for updating the 'repeat' and 'shuffle' buttons
         setShuffleRepeatSegmentedView(shuffleSelected: helper.shuffling,
                                       repeatSelected: helper.repeating)
+        
+        onViewController { controller in
+            controller.updateShuffleRepeatButtons()
+        }
     }
     
     func updateLikeButton(newValue: Bool? = nil) {
