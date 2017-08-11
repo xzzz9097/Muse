@@ -53,14 +53,17 @@ extension NSColor {
      https://en.wikipedia.org/wiki/Color_difference
      */
     func distance(from compareColor: NSColor) -> CGFloat {
-        let first  = self.cgColor.components
-        let second = compareColor.cgColor.components
+        // We need to compare two colors in the same space
+        // otherwise runtime errors are thrown
+        guard let correctedCompare = compareColor.usingColorSpace(self.colorSpace) else { return 0.0 }
         
-        return  pow(first[0] - second[0], 2.0) +
-                pow(first[1] - second[1], 2.0) +
-                pow(first[2] - second[2], 2.0)
+        let first  = self.cgColor.components
+        let second = correctedCompare.cgColor.components
+        
+        // Sums square of each component's delta between first and second color
+        return zip(first, second).map { pow($0 - $1, 2.0) }.reduce(0) { $0 + $1 }
     }
-
+    
     func isDistinct(compareColor: NSColor) -> Bool {
         let bg = self.cgColor.components
         let fg = compareColor.cgColor.components
@@ -120,54 +123,23 @@ extension NSImage {
         return maskRef!
     }
     
-    private func edit(size: NSSize? = nil,
-                      editCommand: @escaping (NSImage, NSSize) -> ()) -> NSImage {
-        let temp = NSImage(size: size ?? self.size)
-        
-        guard temp.size.width > 0, temp.size.height > 0 else { return self }
-        
-        guard temp.size.width > 0, temp.size.height > 0 else { return self }
+    /**
+     Draws a CGImage of given size with content from NSImage instance
+     - parameter newSize: size of the new CGImage
+     */
+    func resizedCGImage(to newSize: CGSize) -> CGImage? {
+        let temp = NSImage(size: newSize)
         
         temp.lockFocus()
         
-        editCommand(self, temp.size)
+        self.draw(in:        NSMakeRect(0, 0, newSize.width, newSize.height),
+                  from:      NSMakeRect(0, 0, self.size.width, self.size.height),
+                  operation: NSCompositingOperation.sourceOver,
+                  fraction:  1.0)
         
         temp.unlockFocus()
         
-        let cgImage = temp.cgImage(forProposedRect: nil, context: nil, hints: nil)
-        let bitmapImage = NSBitmapImageRep(cgImage: cgImage!)
-        
-        let result = NSImage(size: temp.size)
-        result.addRepresentation(bitmapImage)
-        
-        return result
-    }
-    
-    /**
-     Resizes NSImage
-     - parameter newSize: the requested image size
-     - returns: self scaled to requested size
-     */
-    func resized(to newSize: CGSize) -> NSImage {
-        return self.edit(size: newSize) {
-            image, size in
-            image.draw(in: NSMakeRect(0, 0, size.width, size.height))
-        }
-    }
-    
-    /**
-     Changes NSImage alpha
-     - parameter alpha: the requested alpha value
-     - returns: self with requested alpha value
-     */
-    func withAlpha(_ alpha: CGFloat) -> NSImage {
-        return self.edit {
-            image, size in
-            image.draw(in: NSMakeRect(0, 0, size.width, size.height),
-                       from: NSZeroRect,
-                       operation: .sourceOver,
-                       fraction: alpha)
-        }
+        return temp.cgImage(forProposedRect: nil, context: nil, hints: nil)
     }
     
     /**
@@ -207,15 +179,15 @@ extension NSImage {
         
         var result = ImageColors()
         
-        let image = self.resized(to: scaleDownSize)
-        
-        let cgImage = image.cgImage
-        let width = cgImage.width
+        guard let cgImage = self.resizedCGImage(to: scaleDownSize) else {
+            fatalError("ImageColors.getColors failed: could not get cgImage")
+        }
+        let width  = cgImage.width
         let height = cgImage.height
         
-        let bytesPerPixel: Int = 4
-        let bytesPerRow: Int = width * bytesPerPixel
-        let bitsPerComponent: Int = 8
+        let blackColor = NSColor(red: 0, green: 0, blue: 0, alpha: 1)
+        let whiteColor = NSColor(red: 1, green: 1, blue: 1, alpha: 1)
+        
         let randomColorsThreshold = Int(CGFloat(height)*0.01)
         let sortedColorComparator: Comparator = { (main, other) -> ComparisonResult in
             let m = main as! PCCountedColor, o = other as! PCCountedColor
@@ -227,50 +199,35 @@ extension NSImage {
                 return ComparisonResult.orderedAscending
             }
         }
-        let blackColor = NSColor(red: 0, green: 0, blue: 0, alpha: 1)
-        let whiteColor = NSColor(red: 1, green: 1, blue: 1, alpha: 1)
         
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let raw = malloc(bytesPerRow * height)
-        defer {
-            free(raw)
+        guard let data = CFDataGetBytePtr(cgImage.dataProvider!.data) else {
+            fatalError("ImageColors.getColors failed: could not get cgImage data")
         }
-        let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue
-        guard let ctx = CGContext(data: raw, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else {
-            fatalError("ImageColors.getColors failed: could not create CGBitmapContext")
-        }
-        let drawingRect = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
-        ctx.draw(cgImage, in: drawingRect)
         
-        let data = ctx.data?.assumingMemoryBound(to: UInt8.self)
-        
-        let leftEdgeColors = NSCountedSet(capacity: height)
+        // Filter out and collect pixels from image
         let imageColors = NSCountedSet(capacity: width * height)
         
         for x in 0..<width {
             for y in 0..<height {
-                let pixel = ((width * y) + x) * bytesPerPixel
-                let color = NSColor(
-                    red: CGFloat((data?[pixel+1])!)/255,
-                    green: CGFloat((data?[pixel+2])!)/255,
-                    blue: CGFloat((data?[pixel+3])!)/255,
-                    alpha: 1
-                )
+                let pixel: Int = ((width * y) + x) * 4
                 
-                // A lot of images have white or black edges from crops, so ignore the first few pixels
-                if 5 <= x && x <= 10 {
-                    leftEdgeColors.add(color)
+                // Only consider pixels with 50% opacity or higher
+                if 127 <= data[pixel+3] {
+                    imageColors.add(NSColor(
+                        red: CGFloat(data[pixel+2])/255,
+                        green: CGFloat(data[pixel+1])/255,
+                        blue: CGFloat(data[pixel])/255,
+                        alpha: 1.0
+                    ))
                 }
-                
-                imageColors.add(color)
             }
         }
         
         // Get background color
-        var enumerator = leftEdgeColors.objectEnumerator()
-        var sortedColors = NSMutableArray(capacity: leftEdgeColors.count)
+        var enumerator = imageColors.objectEnumerator()
+        var sortedColors = NSMutableArray(capacity: imageColors.count)
         while let kolor = enumerator.nextObject() as? NSColor {
-            let colorCount = leftEdgeColors.count(for: kolor)
+            let colorCount = imageColors.count(for: kolor)
             if randomColorsThreshold < colorCount  {
                 sortedColors.add(PCCountedColor(color: kolor, count: colorCount))
             }
