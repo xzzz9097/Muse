@@ -439,8 +439,7 @@ class ViewController: NSViewController {
             var alpha: CGFloat = 0.25
             
             // Check current alpha value before setting a new one
-            // TODO: debreak this
-            if let currentAlpha = $0?.layer?.backgroundColor?.alpha {
+            if  let currentAlpha = $0?.layer?.backgroundColor?.alpha {
                 alpha = currentAlpha
             }
             

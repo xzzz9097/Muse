@@ -589,9 +589,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // Append system-wide button in Control Strip
         injectControlStripButton()
         
-        // Update like button at cold start
-        updateLikeButtonColdStart()
-        
         // Show window
         window?.setVisibility(true)
     }
@@ -631,6 +628,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             touchBar                = nil
             didPresentAsSystemModal = false
         }
+        
+        // Update like button when window becomes key
+        updateLikeButtonColdStart()
     }
     
     func windowDidResignKey(_ notification: Notification) {
