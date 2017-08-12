@@ -37,6 +37,12 @@ class ViewController: NSViewController {
     let shouldPeekControls = true  // Hide/show controls on mouse hover
     let shouldShowArtist   = false // Show artist in title popup view
     
+    var shouldShowActionBar = true {
+        didSet {
+            showActionBarView()
+        }
+    }
+    
     // MARK: Helpers
     
     var helper: PlayerHelper {
@@ -74,6 +80,10 @@ class ViewController: NSViewController {
     var actionSuperview:           NSView!
     var titleSuperview:            NSView!
     @IBOutlet weak var actionBarSuperview: NSView!
+    
+    var isActionSuperViewPresent: Bool {
+        return actionBarSuperview != nil
+    }
     
     // MARK: Actions
     
@@ -133,6 +143,8 @@ class ViewController: NSViewController {
         prepareLastActionView()
         prepareActionBarButtons()
         prepareTitleView()
+        
+        showActionBarView()
     }
 
     override var representedObject: Any? {
@@ -324,6 +336,29 @@ class ViewController: NSViewController {
         }
     }
     
+    func showActionBarView() {
+        // guard let window = view.window else { return }
+        if !shouldShowActionBar {
+            view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview, visible: false)
+        }
+        //view.window?.setFrameOrigin(NSMakePoint((view.window?.frame.origin.x)!,
+          //                                      (view.window?.frame.origin.y)! + 30))
+//        actionBarSuperview.isHidden = true
+//        actionBarSuperview.removeFromSuperview()
+//        view.window?.setContentSize(NSMakeSize(view.frame.size.width,
+//                                               view.frame.size.height - actionBarSuperview.frame.size.height))
+//        view.window?.contentView = view
+//        view.frame = NSMakeRect(view.frame.minX,
+//                                view.frame.minY - 30,
+//                                view.frame.width,
+//                                view.frame.height - 30)
+//        window.setFrame(NSMakeRect(window.frame.minX,
+//                                   window.frame.minY - 30,
+//                                   window.frame.width,
+//                                   window.frame.height - 30), display: true)
+        //view.window?.contentView = view
+    }
+    
     // MARK: UI refresh
     
     func updateButtons() {
@@ -333,9 +368,11 @@ class ViewController: NSViewController {
                                       actionImages[.pause] : actionImages[.play]
         nextTrackButton.image       = actionImages[.next]
         
-        likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
-        shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
-        repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
+        if isActionSuperViewPresent {
+            likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
+            shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
+            repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
+        }
     }
     
     func updateShuffleRepeatButtons() {
@@ -349,8 +386,10 @@ class ViewController: NSViewController {
     }
     
     func updateLikeButton(liked: Bool) {
-        likeButton.layer?.backgroundColor = likeButton.layer?.backgroundColor?
-            .copy(alpha: liked ? 1 : 0.25)
+        if isActionSuperViewPresent {
+            likeButton.layer?.backgroundColor = likeButton.layer?.backgroundColor?
+                .copy(alpha: liked ? 1 : 0.25)
+        }
     }
     
     func updateFullSongArtworkView(with object: Any?) {

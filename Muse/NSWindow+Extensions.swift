@@ -6,6 +6,13 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
+enum NSWindowShiftDirection {
+    case up
+    case down
+    case left
+    case right
+}
+
 extension NSWindow {
     
     // MARK: Extended functions
@@ -62,6 +69,24 @@ extension NSWindow {
                    completionHandler() }
         )
         NSAnimationContext.endGrouping()
+    }
+    
+    func shift(by value: CGFloat, direction: NSWindowShiftDirection) {
+        var x = self.frame.origin.x
+        var y = self.frame.origin.y
+        
+        switch direction {
+        case .up:
+            y -= value
+        case .down:
+            y += value
+        case .left:
+            x -= value
+        case .right:
+            x += value
+        }
+        
+        self.setFrameOrigin(NSMakePoint(x, y))
     }
     
 }
