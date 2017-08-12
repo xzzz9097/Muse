@@ -61,7 +61,7 @@ extension NSColor {
         let second = correctedCompare.cgColor.components
         
         // Sums square of each component's delta between first and second color
-        return zip(first, second).map { pow($0 - $1, 2.0) }.reduce(0) { $0 + $1 }
+        return zip(first, second).map { pow($0 - $1, 2.0) }.reduce(0, +)
     }
     
     func isDistinct(compareColor: NSColor) -> Bool {
