@@ -81,10 +81,6 @@ class ViewController: NSViewController {
     var titleSuperview:            NSView!
     var actionBarSuperview:        NSView!
     
-    var isActionSuperViewPresent: Bool {
-        return actionBarSuperview != nil
-    }
-    
     // MARK: Actions
     
     @IBAction func previousTrackButtonClicked(_ sender: Any) {
@@ -353,11 +349,9 @@ class ViewController: NSViewController {
                                       actionImages[.pause] : actionImages[.play]
         nextTrackButton.image       = actionImages[.next]
         
-        if isActionSuperViewPresent {
-            likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
-            shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
-            repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
-        }
+        likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
+        shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
+        repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
     }
     
     func updateShuffleRepeatButtons() {
@@ -371,10 +365,7 @@ class ViewController: NSViewController {
     }
     
     func updateLikeButton(liked: Bool) {
-        if isActionSuperViewPresent {
-            likeButton.layer?.backgroundColor = likeButton.layer?.backgroundColor?
-                .copy(alpha: liked ? 1 : 0.25)
-        }
+        likeButton.layer?.backgroundColor = likeButton.layer?.backgroundColor?.copy(alpha: liked ? 1 : 0.25)
     }
     
     func updateFullSongArtworkView(with object: Any?) {
