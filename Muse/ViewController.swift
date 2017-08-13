@@ -338,6 +338,8 @@ class ViewController: NSViewController {
     func showActionBarView() {
         view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview,
                                               visible: shouldShowActionBar)
+        
+        fullSongArtworkView.mouseTrackingArea = nil
     }
     
     // MARK: UI refresh

@@ -37,6 +37,8 @@ class ImageView: NSImageView {
     
     /* Tracking area initialization */
     override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        
         guard mouseTrackingArea == nil else {
             removeTrackingArea(mouseTrackingArea)
             return
