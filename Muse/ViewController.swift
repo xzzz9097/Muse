@@ -79,7 +79,7 @@ class ViewController: NSViewController {
     var controlsSuperview:         NSView!
     var actionSuperview:           NSView!
     var titleSuperview:            NSView!
-    @IBOutlet weak var actionBarSuperview: NSView!
+    var actionBarSuperview:        NSView!
     
     var isActionSuperViewPresent: Bool {
         return actionBarSuperview != nil
@@ -125,6 +125,9 @@ class ViewController: NSViewController {
         controlsSuperview         = togglePlayPauseButton.superview
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview
+        actionBarSuperview        = likeButton.superview
+        
+        actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
         
         [titleAlbumArtistSuperview,
          controlsSuperview,
@@ -337,26 +340,8 @@ class ViewController: NSViewController {
     }
     
     func showActionBarView() {
-        // guard let window = view.window else { return }
-        if !shouldShowActionBar {
-            view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview, visible: false)
-        }
-        //view.window?.setFrameOrigin(NSMakePoint((view.window?.frame.origin.x)!,
-          //                                      (view.window?.frame.origin.y)! + 30))
-//        actionBarSuperview.isHidden = true
-//        actionBarSuperview.removeFromSuperview()
-//        view.window?.setContentSize(NSMakeSize(view.frame.size.width,
-//                                               view.frame.size.height - actionBarSuperview.frame.size.height))
-//        view.window?.contentView = view
-//        view.frame = NSMakeRect(view.frame.minX,
-//                                view.frame.minY - 30,
-//                                view.frame.width,
-//                                view.frame.height - 30)
-//        window.setFrame(NSMakeRect(window.frame.minX,
-//                                   window.frame.minY - 30,
-//                                   window.frame.width,
-//                                   window.frame.height - 30), display: true)
-        //view.window?.contentView = view
+        view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview,
+                                              visible: shouldShowActionBar)
     }
     
     // MARK: UI refresh

@@ -409,7 +409,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="actionBarSuperview" destination="PwM-dZ-q5e" id="tbt-uu-V3e"/>
                         <outlet property="actionImageView" destination="n4M-1Y-2JZ" id="F3O-Co-NpG"/>
                         <outlet property="actionTextField" destination="8BH-TZ-iv9" id="jV7-Bf-Te1"/>
                         <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>

@@ -11,11 +11,16 @@ import Cocoa
 extension NSView {
     
     func toggleSubviewVisibilityAndResize(subview: NSView?, visible: Bool) {
-        guard let subview = subview, let window = window else { return }
+        guard   let subview = subview,
+                let window = window else { return }
+        
+        let currentlyVisible = subview.isDescendant(of: self)
+        
+        guard visible != currentlyVisible else { return }
         
         if visible {
-            self.addSubview(subview)
             self.frame.size.height += subview.frame.size.height
+            self.addSubview(subview)
         } else {
             subview.removeFromSuperview()
             self.frame.size.height -= subview.frame.size.height

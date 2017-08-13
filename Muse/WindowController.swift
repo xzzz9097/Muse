@@ -276,6 +276,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             onViewController { controller in
                 controller.showTitleView()
             }
+        case kVK_ANSI_B:
+            onViewController { controller in
+                controller.shouldShowActionBar = !controller.shouldShowActionBar
+            }
         case kVK_ANSI_1:
             setPlayerHelper(to: .spotify)
             return
