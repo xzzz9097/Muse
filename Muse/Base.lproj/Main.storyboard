@@ -385,27 +385,25 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="PwM-dZ-q5e" firstAttribute="trailing" secondItem="Pz7-i3-rTV" secondAttribute="trailing" id="A2k-GG-wbQ"/>
-                            <constraint firstItem="PwM-dZ-q5e" firstAttribute="top" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="HN3-hS-Wkh"/>
                             <constraint firstItem="Pz7-i3-rTV" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Jcq-t5-TmF"/>
                             <constraint firstAttribute="trailing" secondItem="mIG-iE-c3d" secondAttribute="trailing" id="Mwp-ft-xJI"/>
                             <constraint firstAttribute="trailing" secondItem="Pz7-i3-rTV" secondAttribute="trailing" id="Oo3-lL-iQ2"/>
-                            <constraint firstAttribute="bottom" secondItem="PwM-dZ-q5e" secondAttribute="bottom" id="PGB-Qa-2Me"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Q9n-qe-kgS"/>
                             <constraint firstItem="PwM-dZ-q5e" firstAttribute="leading" secondItem="Pz7-i3-rTV" secondAttribute="leading" id="Rdz-FE-iuS"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="Reo-SZ-GKF"/>
+                            <constraint firstAttribute="trailing" secondItem="FL1-mx-O2f" secondAttribute="trailing" id="UTF-2E-yqh"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Ufp-2u-9Mc"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="Pz7-i3-rTV" secondAttribute="bottom" id="XRl-jr-qnh"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="xX2-B7-OOh" secondAttribute="bottom" constant="28" id="cfX-Z3-IE0"/>
                             <constraint firstItem="8rY-c5-W6v" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="cr5-PS-soL"/>
-                            <constraint firstAttribute="trailing" secondItem="FL1-mx-O2f" secondAttribute="trailing" id="dyY-ER-2vM"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="e93-MX-3cq"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerY" secondItem="FL1-mx-O2f" secondAttribute="centerY" id="lQK-h0-fKj"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="8rY-c5-W6v" secondAttribute="bottom" id="oMd-Mq-LxE"/>
                             <constraint firstItem="xX2-B7-OOh" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="oXa-qr-lnr"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="oXe-vP-81L"/>
+                            <constraint firstItem="PwM-dZ-q5e" firstAttribute="top" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="onS-jp-nD4"/>
                             <constraint firstAttribute="trailing" secondItem="8rY-c5-W6v" secondAttribute="trailing" id="q1z-pb-Dqu"/>
-                            <constraint firstItem="PwM-dZ-q5e" firstAttribute="bottom" secondItem="FL1-mx-O2f" secondAttribute="bottom" constant="35" id="rxH-43-xhF"/>
                         </constraints>
                     </view>
                     <connections>
