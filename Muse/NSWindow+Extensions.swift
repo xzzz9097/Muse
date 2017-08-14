@@ -59,34 +59,48 @@ extension NSWindow {
     
     func fadeClose(duration: TimeInterval,
                    completionHandler: @escaping () -> ()) {
-        NSAnimationContext.current().duration = duration
-        
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.runAnimationGroup(
-            { _ in self.animator().alphaValue = 0.0 },
-            completionHandler:
-            {      self.animator().alphaValue = 1.0
-                   completionHandler() }
-        )
-        NSAnimationContext.endGrouping()
+        NSAnimationContext.runAnimationGroup( { context in
+            context.duration = duration
+            
+            self.animator().alphaValue = 0.0
+        }, completionHandler: {
+            self.animator().alphaValue = 1.0
+            completionHandler()
+        } )
     }
     
-    func shift(by value: CGFloat, direction: NSWindowShiftDirection) {
-        var x = self.frame.origin.x
-        var y = self.frame.origin.y
+    func shift(by value: CGFloat,
+               direction: NSWindowShiftDirection,
+               animate: Bool = false,
+               animationCompletionHandler: @escaping () -> () = { } ) {
+        var frame = self.frame
         
         switch direction {
         case .up:
-            y -= value
+            frame.origin.y    -= value
+            frame.size.height += value
         case .down:
-            y += value
+            frame.origin.y    += value
+            frame.size.height -= value
         case .left:
-            x -= value
+            frame.origin.x    -= value
+            frame.size.width  += value
         case .right:
-            x += value
+            frame.origin.x    += value
+            frame.size.width  -= value
         }
         
-        self.setFrameOrigin(NSMakePoint(x, y))
+        if !animate {
+            self.setFrame(frame, display: true, animate: false)
+            return
+        }
+        
+        NSAnimationContext.runAnimationGroup( { context in
+            context.duration                = 1/3
+            context.allowsImplicitAnimation = true
+            
+            self.setFrame(frame, display: true)
+        }, completionHandler: { _ in animationCompletionHandler() })
     }
     
 }
