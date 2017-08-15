@@ -24,6 +24,20 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // The color fill for the knob
+    var knobColor: NSColor? {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    // The knob's width
+    var knobWidth: CGFloat? {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
     // The knob's visibility
     var knobVisible: Bool = true {
         didSet {
@@ -118,7 +132,7 @@ class SliderCell: NSSliderCell {
         
         // Apply the desired height, with a 15% padding around fill
         backgroundRect.size.height = height
-        leftRect.size.height       = height - min(0.15 * height, 0.5)
+        leftRect.size.height       = height //- min(0.15 * height, 0.5)
         
         // Center the slider
         backgroundRect.origin.y = rect.midY - height / 2.0
@@ -169,24 +183,25 @@ class SliderCell: NSSliderCell {
      Draw the knob
      */
     override func drawKnob(_ knobRect: NSRect) {
-        guard let flipped = self.controlView?.isFlipped else {
-            super.drawKnob(knobRect)
+        if hasTimeInfo { drawInfo(near: knobRect) }
+        
+        if let color = knobColor {
+            color.drawSwatch(in: knobRect)
             return
         }
         
-        let rect = self.knobRect(flipped: flipped)
-        
-        if hasTimeInfo { drawInfo(near: rect) }
-        
-        guard let image = self.knobImage else {
-            super.drawKnob(knobRect)
+        if let image = knobImage {
+            // Determine wheter the knob will be visible
+            let fraction: CGFloat = knobVisible ? 1.0 : 0.0
+            
+            image.draw(in: knobRect,
+                       from: NSZeroRect,
+                       operation: .sourceOver,
+                       fraction: fraction)
             return
         }
         
-        // Determine wheter the knob will be visible
-        let fraction: CGFloat = knobVisible ? 1.0 : 0.0
-        
-        image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
+        super.drawKnob(knobRect)
     }
     
     /**
@@ -211,13 +226,17 @@ class SliderCell: NSSliderCell {
      Build the rect for our knob image
      */
     override func knobRect(flipped: Bool) -> NSRect {
-        guard let image = self.knobImage, var bounds = self.controlView?.bounds else {
-            return super.knobRect(flipped: flipped)
-        }
+        // Only run this if knob width or img is custom
+        guard   var bounds = self.controlView?.bounds, (knobImage != nil || knobWidth != nil)
+                else { return super.knobRect(flipped: flipped) }
         
         var rect = super.knobRect(flipped: flipped)
         
-        rect.size = image.size
+        if let image = knobImage {
+            rect.size = image.size
+        } else if let width = knobWidth {
+            rect.size.width = width
+        }
         
         bounds = NSInsetRect(bounds, rect.size.width + knobMargin, 0)
 
