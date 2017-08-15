@@ -178,21 +178,15 @@ class SliderCell: NSSliderCell {
             return
         }
         
-        // Create the drawing areas
-        let backgroundColorArea = NSBezierPath(roundedRect: backgroundRect,
-                                               xRadius: radius,
-                                               yRadius: radius)
-        let highlightColorArea  = NSBezierPath(roundedRect: leftRect,
-                                               xRadius: radius,
-                                               yRadius: radius)
-        
-        // Fill the background area
-        backgroundColor.setFill()
-        backgroundColorArea.fill()
-        
-        // Fill the active area
-        highlightColor.setFill()
-        highlightColorArea.fill()
+        // Fill the bars
+        [ ( backgroundRect, backgroundColor ), ( leftRect, highlightColor ) ].forEach {
+            $1.setFill()
+            
+            // Draw in the correct area with specified radius
+            NSBezierPath(roundedRect: $0,
+                         xRadius: radius,
+                         yRadius: radius).fill()
+        }
     }
     
     /**
