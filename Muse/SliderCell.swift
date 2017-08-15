@@ -85,6 +85,18 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // Bar fill margin fraction
+    // min: 0 - max: 0.5
+    // adds a fraction * height margin to left bar fill
+    var fillMarginFraction: CGFloat = 0.0 {
+        didSet {
+            // Make sure we're not over max value
+            if fillMarginFraction > 0.5 { fillMarginFraction = 0.5 }
+            
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
     // Time info switch
     var hasTimeInfo: Bool = false {
         didSet {
@@ -130,9 +142,9 @@ class SliderCell: NSSliderCell {
         var backgroundRect = rect
         var leftRect       = rect
         
-        // Apply the desired height, with a 15% padding around fill
+        // Apply the desired height, with a padding around fill if requested
         backgroundRect.size.height = height
-        leftRect.size.height       = height //- min(0.15 * height, 0.5)
+        leftRect.size.height       = height - ( fillMarginFraction * height )
         
         // Center the slider
         backgroundRect.origin.y = rect.midY - height / 2.0
@@ -167,8 +179,12 @@ class SliderCell: NSSliderCell {
         }
         
         // Create the drawing areas
-        let backgroundColorArea = NSBezierPath(roundedRect: backgroundRect, xRadius: radius, yRadius: radius)
-        let highlightColorArea  = NSBezierPath(roundedRect: leftRect, xRadius: radius, yRadius: radius)
+        let backgroundColorArea = NSBezierPath(roundedRect: backgroundRect,
+                                               xRadius: radius,
+                                               yRadius: radius)
+        let highlightColorArea  = NSBezierPath(roundedRect: leftRect,
+                                               xRadius: radius,
+                                               yRadius: radius)
         
         // Fill the background area
         backgroundColor.setFill()
