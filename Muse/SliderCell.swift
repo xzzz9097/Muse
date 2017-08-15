@@ -64,6 +64,13 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // Width
+    var width: CGFloat? {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
     // Time info switch
     var hasTimeInfo: Bool = false {
         didSet {
@@ -180,6 +187,24 @@ class SliderCell: NSSliderCell {
         let fraction: CGFloat = knobVisible ? 1.0 : 0.0
         
         image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
+    }
+    
+    /**
+     Build the main cell rect with specified width
+     */
+    override func barRect(flipped: Bool) -> NSRect {
+        if let width = width {
+            var rect = super.barRect(flipped: flipped)
+            
+            // Center the rect
+            rect.origin.x  -= ( width - rect.width ) / 2
+            // Set new size
+            rect.size.width = width
+            
+            return rect
+        }
+        
+        return super.barRect(flipped: flipped)
     }
     
     /**

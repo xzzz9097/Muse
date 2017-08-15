@@ -184,6 +184,8 @@ class ViewController: NSViewController {
         // Hide slider thumb
         cell.knobImage   = NSImage()
         cell.knobVisible = false
+        // Set correct bar width
+        cell.width       = view.frame.width
         
         // Remove corner radius
         cell.radius = 0
