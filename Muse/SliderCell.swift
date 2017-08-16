@@ -158,14 +158,13 @@ class SliderCell: NSSliderCell {
         if isTouchBar {
             barFill.setFill()
             
-            (0..<Int( backgroundRect.width / barStep ) + 1)
+            // Draw the vertical bars in the background rect
+            ( 0 ..< Int( backgroundRect.width / barStep ) + 1 )
                 .map { CGFloat($0) * barStep }
-                .forEach {
-                    NSBezierPath(rect: NSRect(x: backgroundRect.origin.x + $0,
-                                              y: backgroundRect.origin.y,
-                                              width: barWidth,
-                                              height: backgroundRect.height)).fill()
-            }
+                .forEach { NSBezierPath(rect: NSRect(x: backgroundRect.origin.x + $0,
+                                                     y: backgroundRect.origin.y,
+                                                     width: barWidth,
+                                                     height: backgroundRect.height)).fill() }
 
             return
         }
