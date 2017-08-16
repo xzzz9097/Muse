@@ -134,6 +134,7 @@ class SliderCell: NSSliderCell {
     // TouchBar slider properties
     private let barStep:  CGFloat = 2
     private let barWidth: CGFloat = 1
+    private let barFill           = NSColor.labelColor.withAlphaComponent(0.25)
     
     /**
      Draw the bars, setting custom height, colors and radius
@@ -153,28 +154,19 @@ class SliderCell: NSSliderCell {
         leftRect.size.width *= relativeKnobPosition()
         
         // Draw TouchBar slider
-        // (heavily) inspired by https://github.com/lhc70000/iina
+        // Inspired by https://github.com/lhc70000/iina
         if isTouchBar {
-            NSGraphicsContext.saveGraphicsState()
+            barFill.setFill()
             
-            NSBezierPath(roundedRect: backgroundRect, xRadius: 0, yRadius: 0).setClip()
-            let end = backgroundRect.width
-            
-            NSColor.labelColor.withAlphaComponent(0.25).setFill()
-            
-            var i: CGFloat = 0.0
-            while (i < end + barStep) {
-                let dest = NSRect(x: backgroundRect.origin.x + i,
-                                  y: backgroundRect.origin.y,
-                                  width: barWidth,
-                                  height: backgroundRect.height)
-                
-                NSBezierPath(rect: dest).fill()
-                i += barStep
+            (0..<Int( backgroundRect.width / barStep ) + 1)
+                .map { CGFloat($0) * barStep }
+                .forEach {
+                    NSBezierPath(rect: NSRect(x: backgroundRect.origin.x + $0,
+                                              y: backgroundRect.origin.y,
+                                              width: barWidth,
+                                              height: backgroundRect.height)).fill()
             }
-            
-            NSGraphicsContext.restoreGraphicsState()
-            
+
             return
         }
         
