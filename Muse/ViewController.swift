@@ -73,6 +73,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var shuffleButton:         NSButton!
     @IBOutlet weak var repeatButton:          NSButton!
     @IBOutlet var      actionTabView:         NSTabView!
+    @IBOutlet weak var actionPlayButton:      NSButton!
+    @IBOutlet weak var actionPreviousButton:  NSButton!
+    @IBOutlet weak var actionNextButton:      NSButton!
     
     // MARK: Superviews
     
@@ -228,7 +231,7 @@ class ViewController: NSViewController {
     }
     
     func prepareActionBarButtons() {
-        [likeButton, shuffleButton, repeatButton].forEach {
+        [likeButton, shuffleButton, repeatButton, actionPlayButton, actionPreviousButton, actionNextButton].forEach {
             $0?.imagePosition       = .imageOnly
             $0?.isBordered          = false
             $0?.layer?.cornerRadius = 4.0
@@ -237,6 +240,10 @@ class ViewController: NSViewController {
         likeButton.action    = #selector(WindowController.likeButtonClicked(_:))
         shuffleButton.action = #selector(WindowController.shuffleButtonClicked(_:))
         repeatButton.action  = #selector(WindowController.repeatButtonClicked(_:))
+        
+        actionPlayButton.action     = #selector(togglePlayPauseButtonClicked(_:))
+        actionPreviousButton.action = #selector(previousTrackButtonClicked(_:))
+        actionNextButton.action     = #selector(nextTrackButtonClicked(_:))
     }
     
     func prepareTitleView() {
@@ -362,6 +369,12 @@ class ViewController: NSViewController {
         likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
         shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
         repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
+        
+        actionPlayButton.image      = helper.isPlaying ?
+                                      actionImages[.pause]?.resized(to: NSMakeSize(8, 8)) :
+                                      actionImages[.play]?.resized(to: NSMakeSize(10, 10))
+        actionPreviousButton.image  = actionImages[.previous]?.resized(to: NSMakeSize(15, 15))
+        actionNextButton.image      = actionImages[.next]?.resized(to: NSMakeSize(15, 15))
     }
     
     func updateShuffleRepeatButtons() {
@@ -479,6 +492,10 @@ class ViewController: NSViewController {
                 }
                 
                 $0?.layer?.backgroundColor = highlightColor.cgColor.copy(alpha: alpha)
+            }
+            
+            [actionPlayButton, actionPreviousButton, actionNextButton].forEach {
+                $0?.layer?.backgroundColor = highlightColor.cgColor
             }
         }
     }
