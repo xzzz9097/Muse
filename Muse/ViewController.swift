@@ -37,7 +37,7 @@ class ViewController: NSViewController {
     let shouldPeekControls = true  // Hide/show controls on mouse hover
     let shouldShowArtist   = false // Show artist in title popup view
     
-    var shouldShowActionBar = true {
+    var shouldShowActionBar = false {
         didSet {
             showActionBarView()
         }
@@ -130,6 +130,8 @@ class ViewController: NSViewController {
          actionSuperview,
          titleSuperview,
          actionBarSuperview].forEach { $0?.wantsLayer = true }
+        
+        showActionBarView()
     }
     
     override func viewWillAppear() {
@@ -142,8 +144,6 @@ class ViewController: NSViewController {
         prepareLastActionView()
         prepareActionBarButtons()
         prepareTitleView()
-        
-        showActionBarView()
     }
 
     override var representedObject: Any? {
@@ -341,6 +341,11 @@ class ViewController: NSViewController {
         view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview,
                                               visible: shouldShowActionBar)
         
+        // Setup action bar buttons and colors
+        prepareActionBarButtons()
+        colorActionBar(background: titleSuperview.layer?.backgroundColor,
+                       highlight: (songProgressBar.cell as! SliderCell).highlightColor)
+        
         fullSongArtworkView.mouseTrackingArea = nil
     }
     
@@ -454,15 +459,26 @@ class ViewController: NSViewController {
         colorButtonImages(with: primaryColor)
         updateButtons()
         
-        [likeButton, shuffleButton, repeatButton].forEach {
-            var alpha: CGFloat = 0.25
-            
-            // Check current alpha value before setting a new one
-            if  let currentAlpha = $0?.layer?.backgroundColor?.alpha {
-                alpha = currentAlpha
+        colorActionBar(highlight: highlightColor)
+    }
+    
+    func colorActionBar(background: CGColor? = nil,
+                        highlight: NSColor? = nil) {
+        if let backgroundColor = background {
+            actionSuperview.layer?.backgroundColor = backgroundColor
+        }
+        
+        if let highlightColor = highlight {
+            [likeButton, shuffleButton, repeatButton].forEach {
+                var alpha: CGFloat = 0.25
+                
+                // Check current alpha value before setting a new one
+                if  let currentAlpha = $0?.layer?.backgroundColor?.alpha {
+                    alpha = currentAlpha
+                }
+                
+                $0?.layer?.backgroundColor = highlightColor.cgColor.copy(alpha: alpha)
             }
-            
-            $0?.layer?.backgroundColor = highlightColor.cgColor.copy(alpha: alpha)
         }
     }
     
