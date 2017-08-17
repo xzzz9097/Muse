@@ -342,9 +342,11 @@ class ViewController: NSViewController {
                                               visible: shouldShowActionBar)
         
         // Setup action bar buttons and colors
-        prepareActionBarButtons()
-        colorActionBar(background: titleSuperview.layer?.backgroundColor,
-                       highlight: (songProgressBar.cell as! SliderCell).highlightColor)
+        if shouldShowActionBar {
+            prepareActionBarButtons()
+            colorActionBar(background: titleSuperview.layer?.backgroundColor,
+                           highlight: (songProgressBar.cell as! SliderCell).highlightColor)
+        }
         
         fullSongArtworkView.mouseTrackingArea = nil
     }
