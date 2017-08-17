@@ -19,8 +19,7 @@ extension NSView {
     func toggleSubviewVisibilityAndResize(subview: NSView?,
                                           visible: Bool,
                                           animate: Bool = true) {
-        guard   let subview = subview,
-                let window = window else { return }
+        guard let subview = subview else { return }
         
         let currentlyVisible = subview.isDescendant(of: self)
         
@@ -30,19 +29,33 @@ extension NSView {
         if visible {
             // Show: only update frame size if we're not animating
             // but add the subview regardless to have a smooth entry animation
+            switch subview.frame.origin.y {
+            case 0.0:
+                // The subview's origin is too far up
+                // (e.g. it is first placed when view frame is in compressed mode)
+                // so we shift it down
+                subview.frame.origin.y -= subview.frame.size.height
+            case -subview.frame.size.height:
+                // The subview is arleady in the right origin, no need to move
+                break
+            default:
+                // TODO: implement this case (stopping the whole action
+                return
+            }
             if !animate { self.frame.size.height += subview.frame.size.height }
             self.addSubview(subview)
-        } else if !animate {
+        } else if !animate || window == nil {
             // Hide: only remove the subview and update view frame if we're not animating
+            // or if window object is not ready yet (e.g. in viewDidLoad)
             subview.removeFromSuperview()
             self.frame.size.height -= subview.frame.size.height
         }
         
         // Shift the window to the right position and, if animating, remove the subview
         // at the end of the transition to have it smoothly disappear
-        window.shift(by: subview.frame.size.height,
-                     direction: visible ? .up : .down,
-                     animate: animate) { if !visible { subview.removeFromSuperview() } }
+        window?.shift(by: subview.frame.size.height,
+                      direction: visible ? .up : .down,
+                      animate: animate) { if !visible { subview.removeFromSuperview() } }
     }
     
 }
