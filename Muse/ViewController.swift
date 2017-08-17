@@ -37,7 +37,7 @@ class ViewController: NSViewController {
     let shouldPeekControls = true  // Hide/show controls on mouse hover
     let shouldShowArtist   = false // Show artist in title popup view
     
-    var shouldShowActionBar = false {
+    var shouldShowActionBar = true {
         didSet {
             showActionBarView()
         }
@@ -72,6 +72,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var likeButton:            NSButton!
     @IBOutlet weak var shuffleButton:         NSButton!
     @IBOutlet weak var repeatButton:          NSButton!
+    @IBOutlet var      actionTabView:         NSTabView!
     
     // MARK: Superviews
     
@@ -79,7 +80,6 @@ class ViewController: NSViewController {
     var controlsSuperview:         NSView!
     var actionSuperview:           NSView!
     var titleSuperview:            NSView!
-    var actionBarSuperview:        NSView!
     
     // MARK: Actions
     
@@ -121,15 +121,14 @@ class ViewController: NSViewController {
         controlsSuperview         = togglePlayPauseButton.superview
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview
-        actionBarSuperview        = likeButton.superview
         
-        actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
+        actionTabView.translatesAutoresizingMaskIntoConstraints = true
         
         [titleAlbumArtistSuperview,
          controlsSuperview,
          actionSuperview,
          titleSuperview,
-         actionBarSuperview].forEach { $0?.wantsLayer = true }
+         actionTabView].forEach { $0?.wantsLayer = true }
         
         showActionBarView()
     }
@@ -338,7 +337,7 @@ class ViewController: NSViewController {
     }
     
     func showActionBarView() {
-        view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview,
+        view.toggleSubviewVisibilityAndResize(subview: actionTabView,
                                               visible: shouldShowActionBar)
         
         // Setup action bar buttons and colors
@@ -434,7 +433,7 @@ class ViewController: NSViewController {
         }
         
         // Set the superviews background color and animate it
-        [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview, actionBarSuperview ].forEach {
+        [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview, actionTabView ].forEach {
             $0?.layer?.animateChange(to: backgroundColor.cgColor,
                                      for: CALayer.kBackgroundColorPath)
         }
@@ -467,7 +466,7 @@ class ViewController: NSViewController {
     func colorActionBar(background: CGColor? = nil,
                         highlight: NSColor? = nil) {
         if let backgroundColor = background {
-            actionSuperview.layer?.backgroundColor = backgroundColor
+            actionTabView.layer?.backgroundColor = backgroundColor
         }
         
         if let highlightColor = highlight {
