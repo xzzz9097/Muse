@@ -325,7 +325,7 @@
                                     <constraint firstAttribute="trailing" secondItem="OP7-ud-xJg" secondAttribute="trailing" constant="10" id="smo-dz-dJ2"/>
                                 </constraints>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8rY-c5-W6v">
                                 <rect key="frame" x="0.0" y="35" width="275" height="46"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="6Z3-b0-ujX">
@@ -447,15 +447,18 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-i3-rTV">
-                                <rect key="frame" x="0.0" y="35" width="275" height="2"/>
+                                <rect key="frame" x="0.0" y="35" width="275" height="11"/>
                                 <subviews>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3IF-e0-Ota">
-                                        <rect key="frame" x="-2" y="-2" width="279" height="6"/>
-                                        <sliderCell key="cell" enabled="NO" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="VgS-Ob-lGq" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
+                                        <rect key="frame" x="-2" y="-2" width="279" height="15"/>
+                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="VgS-Ob-lGq" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
+                                        <connections>
+                                            <action selector="songProgressSliderValueChanged:" target="XfG-lQ-9wD" id="lgb-q5-zEW"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="5Mw-8i-HJ2"/>
+                                    <constraint firstAttribute="height" constant="11" id="5Mw-8i-HJ2"/>
                                     <constraint firstItem="3IF-e0-Ota" firstAttribute="centerY" secondItem="Pz7-i3-rTV" secondAttribute="centerY" id="7fj-ht-IRX"/>
                                     <constraint firstAttribute="trailing" secondItem="3IF-e0-Ota" secondAttribute="trailing" id="I1H-94-pHi"/>
                                     <constraint firstItem="3IF-e0-Ota" firstAttribute="centerX" secondItem="Pz7-i3-rTV" secondAttribute="centerX" id="JGR-6y-Cs0"/>
@@ -494,6 +497,7 @@
                         <outlet property="actionPlayButton" destination="LeJ-YN-J5r" id="XrG-MI-OPU"/>
                         <outlet property="actionPreviousButton" destination="Eef-uq-zvm" id="1vn-eC-Dse"/>
                         <outlet property="actionTabView" destination="VdQ-8J-q9u" id="pNV-fb-aNZ"/>
+                        <outlet property="actionTabViewHeight" destination="5Mw-8i-HJ2" id="iKX-90-Vw9"/>
                         <outlet property="actionTextField" destination="8BH-TZ-iv9" id="jV7-Bf-Te1"/>
                         <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>

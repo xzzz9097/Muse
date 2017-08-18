@@ -76,6 +76,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var actionPlayButton:      NSButton!
     @IBOutlet weak var actionPreviousButton:  NSButton!
     @IBOutlet weak var actionNextButton:      NSButton!
+    @IBOutlet weak var actionTabViewHeight:   NSLayoutConstraint!
     
     // MARK: Superviews
     
@@ -183,11 +184,10 @@ class ViewController: NSViewController {
     func prepareSongProgressBar() {
         guard let cell = self.songProgressBar.cell as? SliderCell else { return }
         
-        // Hide slider thumb
-        cell.knobImage   = NSImage()
-        cell.knobVisible = false
-        // Set correct bar width
+        // Customize slider thumb
         cell.width       = view.frame.width
+        cell.knobWidth   = 2.0
+        cell.height      = 11.0
         
         // Remove corner radius
         cell.radius = 0
@@ -210,8 +210,9 @@ class ViewController: NSViewController {
     func setControlViews(hidden: Bool) {
         // Toggles visibility on popup views
         titleAlbumArtistSuperview.animator().isHidden = hidden
-        controlsSuperview.animator().isHidden         = hidden
-        songProgressBar.animator().isHidden           = !hidden
+        
+        // Change progress bar height
+        actionTabViewHeight.animator().constant = hidden ? 2 : 11
         
         // Hide overlay views
         if !actionSuperview.isHidden { actionSuperview.animator().isHidden = !hidden }
@@ -371,10 +372,10 @@ class ViewController: NSViewController {
         repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
         
         actionPlayButton.image      = helper.isPlaying ?
-                                      actionImages[.pause]?.resized(to: NSMakeSize(8, 8)) :
-                                      actionImages[.play]?.resized(to: NSMakeSize(10, 10))
-        actionPreviousButton.image  = actionImages[.previous]?.resized(to: NSMakeSize(15, 15))
-        actionNextButton.image      = actionImages[.next]?.resized(to: NSMakeSize(15, 15))
+                                      actionImages[.pause]?.resized(to: NSMakeSize(7, 7)) :
+                                      actionImages[.play]?.resized(to: NSMakeSize(8, 8))
+        actionPreviousButton.image  = actionImages[.previous]?.resized(to: NSMakeSize(12, 12))
+        actionNextButton.image      = actionImages[.next]?.resized(to: NSMakeSize(12, 12))
     }
     
     func updateShuffleRepeatButtons() {
@@ -467,6 +468,7 @@ class ViewController: NSViewController {
         if let barCell = songProgressBar.cell as? SliderCell {
             barCell.backgroundColor = primaryColor
             barCell.highlightColor  = highlightColor
+            barCell.knobColor       = backgroundColor
         }
         
         // Set the color on the playback buttons
