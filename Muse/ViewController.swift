@@ -61,10 +61,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var fullSongArtworkView:   ImageView!
     @IBOutlet weak var titleLabelView:        NSTextField!
     @IBOutlet weak var albumArtistLabelView:  NSTextField!
-    @IBOutlet weak var previousTrackButton:   NSButton!
-    @IBOutlet weak var togglePlayPauseButton: NSButton!
-    @IBOutlet weak var nextTrackButton:       NSButton!
-    @IBOutlet weak var songProgressSlider:    NSSlider!
     @IBOutlet weak var actionImageView:       NSImageView!
     @IBOutlet weak var actionTextField:       NSTextField!
     @IBOutlet weak var titleTextField:        NSTextField!
@@ -81,7 +77,6 @@ class ViewController: NSViewController {
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
-    var controlsSuperview:         NSView!
     var actionSuperview:           NSView!
     var titleSuperview:            NSView!
     
@@ -122,14 +117,12 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         titleAlbumArtistSuperview = titleLabelView.superview
-        controlsSuperview         = togglePlayPauseButton.superview
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview
         
         actionTabView.translatesAutoresizingMaskIntoConstraints = true
         
         [titleAlbumArtistSuperview,
-         controlsSuperview,
          actionSuperview,
          titleSuperview,
          actionTabView].forEach { $0?.wantsLayer = true }
@@ -139,9 +132,7 @@ class ViewController: NSViewController {
     
     override func viewWillAppear() {
         setBackgroundAndShadow(for: titleAlbumArtistSuperview)
-        setBackgroundAndShadow(for: controlsSuperview)
         
-        prepareSongProgressSlider()
         prepareSongProgressBar()
         prepareFullSongArtworkView()
         prepareLastActionView()
@@ -171,14 +162,6 @@ class ViewController: NSViewController {
         layer.shadowColor = NSColor.controlShadowColor.cgColor
         layer.shadowRadius = 0.5
         layer.shadowOpacity = 1
-    }
-    
-    func prepareSongProgressSlider() {
-        guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
-        
-        // Hide slider thumb
-        cell.knobImage   = NSImage()
-        cell.knobVisible = false
     }
     
     func prepareSongProgressBar() {
@@ -259,7 +242,7 @@ class ViewController: NSViewController {
     
     func showTitleView(shouldClose: Bool = true) {
         // Only show title info if mouse is not hovering
-        guard controlsSuperview.isHidden else { return }
+        guard titleSuperview.isHidden else { return }
         
         // Invalidate existing timers
         // This prevents calls form precedent ones
@@ -285,7 +268,7 @@ class ViewController: NSViewController {
                             shouldClose: Bool = true,
                             liked:       Bool = false) {
         // Only show action info if mouse is not hovering
-        guard ( controlsSuperview.isHidden ||
+        guard ( titleSuperview.isHidden ||
                 action == .repeating       ||
                 action == .shuffling       ||
                 action == .scrubbing ) else { return }
@@ -362,10 +345,6 @@ class ViewController: NSViewController {
     
     func updateButtons() {
         // Initialize playback control buttons
-        previousTrackButton.image   = actionImages[.previous]
-        togglePlayPauseButton.image = helper.isPlaying ?
-                                      actionImages[.pause] : actionImages[.play]
-        nextTrackButton.image       = actionImages[.next]
         
         likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
         shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
@@ -447,7 +426,7 @@ class ViewController: NSViewController {
         }
         
         // Set the superviews background color and animate it
-        [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview, actionTabView ].forEach {
+        [ titleAlbumArtistSuperview, actionSuperview, titleSuperview, actionTabView ].forEach {
             $0?.layer?.animateChange(to: backgroundColor.cgColor,
                                      for: CALayer.kBackgroundColorPath)
         }
@@ -457,12 +436,6 @@ class ViewController: NSViewController {
             $0?.textColor = primaryColor
         }
         albumArtistLabelView.textColor = secondaryColor
-        
-        // Set color on the slider too
-        if let sliderCell = songProgressSlider.cell as? SliderCell {
-            sliderCell.backgroundColor = primaryColor
-            sliderCell.highlightColor  = highlightColor
-        }
         
         // And on the progress bar
         if let barCell = songProgressBar.cell as? SliderCell {
@@ -514,9 +487,6 @@ class ViewController: NSViewController {
     }
     
     func updateSongProgressSlider(with position: Double) {
-        // Update slider
-        songProgressSlider.doubleValue = position
-        
         // Update always on progress bar
         songProgressBar.doubleValue = position
     }
