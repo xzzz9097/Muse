@@ -15,10 +15,12 @@ extension NSView {
      - parameter subview: the view whose visibility will be toggled
      - parameter visible: hide (false) or show (true) the view
      - parameter animate: when true applies an animation to the hide/show transition
+     - parameter completionHandler: a closure to be run at the end of toggling
      */
     func toggleSubviewVisibilityAndResize(subview: NSView?,
                                           visible: Bool,
-                                          animate: Bool = true) {
+                                          animate: Bool = true,
+                                          completionHandler: @escaping () -> () = {}) {
         guard let subview = subview else { return }
         
         let currentlyVisible = subview.isDescendant(of: self)
@@ -49,13 +51,20 @@ extension NSView {
             // or if window object is not ready yet (e.g. in viewDidLoad)
             subview.removeFromSuperview()
             self.frame.size.height -= subview.frame.size.height
+            // Run the completion handler
+            completionHandler()
         }
         
         // Shift the window to the right position and, if animating, remove the subview
         // at the end of the transition to have it smoothly disappear
-        window?.shift(by: subview.frame.size.height,
-                      direction: visible ? .up : .down,
-                      animate: animate) { if !visible { subview.removeFromSuperview() } }
+        window?.shift(
+            by: subview.frame.size.height,
+            direction: visible ? .up : .down,
+            animate: animate
+        ) { // Finally remove subview for superview
+            if !visible { subview.removeFromSuperview() }
+            // Run the completion handler
+            completionHandler() }
     }
     
 }
