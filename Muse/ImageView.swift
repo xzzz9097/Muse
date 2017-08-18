@@ -51,6 +51,14 @@ class ImageView: NSImageView {
         
         self.addTrackingArea(mouseTrackingArea)
     }
+
+    func refreshMouseTrackingArea() {
+        if let area = mouseTrackingArea {
+            removeTrackingArea(area)
+        }
+        
+        mouseTrackingArea = nil
+    }
     
     /* Return an OptionSet with the needed mouse tracking flags */
     func mouseTrackingOptions() -> NSTrackingAreaOptions {

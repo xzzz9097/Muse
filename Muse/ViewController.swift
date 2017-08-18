@@ -191,15 +191,26 @@ class ViewController: NSViewController {
     }
     
     func setControlViews(hidden: Bool) {
-        // Toggles visibility on popup views
-        titleAlbumArtistSuperview.animator().isHidden = hidden
-        
         // Change progress bar height
         actionTabViewHeight.animator().constant = hidden ? 2 : 11
         
         // Hide overlay views
         if !actionSuperview.isHidden { actionSuperview.animator().isHidden = !hidden }
-        if !titleSuperview.isHidden  { titleSuperview.animator().isHidden  = !hidden }
+        
+        if hidden {
+            // Hide title view after 500ms
+            DispatchQueue.main.run(after: 500) {
+                self.titleSuperview.animator().isHidden = true
+            }
+        } else {
+            // Show title view
+            showTitleView(shouldClose: false)
+        }
+        
+        if !shouldShowActionBar {
+            // Toggle action bar if needed
+            showActionBarView(show: !hidden)
+        }
     }
     
     func prepareLastActionView() {
@@ -327,9 +338,13 @@ class ViewController: NSViewController {
         }
     }
     
-    func showActionBarView() {
-        view.toggleSubviewVisibilityAndResize(subview: actionTabView,
-                                              visible: shouldShowActionBar)
+    func showActionBarView(show: Bool? = nil) {
+        let show = show != nil ? show! : shouldShowActionBar
+        
+        view.toggleSubviewVisibilityAndResize(
+            subview: actionTabView,
+            visible: show
+        ) { self.fullSongArtworkView.refreshMouseTrackingArea() }
         
         // Setup action bar buttons and colors
         if shouldShowActionBar {
@@ -337,8 +352,6 @@ class ViewController: NSViewController {
             colorActionBar(background: titleSuperview.layer?.backgroundColor,
                            highlight: (songProgressBar.cell as! SliderCell).highlightColor)
         }
-        
-        fullSongArtworkView.mouseTrackingArea = nil
     }
     
     // MARK: UI refresh

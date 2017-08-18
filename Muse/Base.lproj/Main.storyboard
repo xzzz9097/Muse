@@ -381,10 +381,10 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-i3-rTV">
-                                <rect key="frame" x="0.0" y="35" width="275" height="11"/>
+                                <rect key="frame" x="0.0" y="35" width="275" height="2"/>
                                 <subviews>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3IF-e0-Ota">
-                                        <rect key="frame" x="-2" y="-2" width="279" height="15"/>
+                                        <rect key="frame" x="-2" y="-2" width="279" height="6"/>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="VgS-Ob-lGq" customClass="SliderCell" customModule="Muse" customModuleProvider="target"/>
                                         <connections>
                                             <action selector="songProgressSliderValueChanged:" target="XfG-lQ-9wD" id="lgb-q5-zEW"/>
@@ -392,7 +392,7 @@
                                     </slider>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="11" id="5Mw-8i-HJ2"/>
+                                    <constraint firstAttribute="height" constant="2" id="5Mw-8i-HJ2"/>
                                     <constraint firstItem="3IF-e0-Ota" firstAttribute="centerY" secondItem="Pz7-i3-rTV" secondAttribute="centerY" id="7fj-ht-IRX"/>
                                     <constraint firstAttribute="trailing" secondItem="3IF-e0-Ota" secondAttribute="trailing" id="I1H-94-pHi"/>
                                     <constraint firstItem="3IF-e0-Ota" firstAttribute="centerX" secondItem="Pz7-i3-rTV" secondAttribute="centerX" id="JGR-6y-Cs0"/>
