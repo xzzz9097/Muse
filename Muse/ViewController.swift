@@ -68,17 +68,20 @@ class ViewController: NSViewController {
     @IBOutlet weak var likeButton:            NSButton!
     @IBOutlet weak var shuffleButton:         NSButton!
     @IBOutlet weak var repeatButton:          NSButton!
-    @IBOutlet var      actionTabView:         NSTabView!
+    @IBOutlet weak var actionTabView:         NSTabView!
     @IBOutlet weak var actionPlayButton:      NSButton!
     @IBOutlet weak var actionPreviousButton:  NSButton!
     @IBOutlet weak var actionNextButton:      NSButton!
     @IBOutlet weak var actionTabViewHeight:   NSLayoutConstraint!
+    @IBOutlet weak var nextTabButton:         NSButton!
+    @IBOutlet weak var previousTabButton:     NSButton!
     
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
     var actionSuperview:           NSView!
     var titleSuperview:            NSView!
+    var actionBarSuperview:        NSView!
     
     // MARK: Actions
     
@@ -111,6 +114,14 @@ class ViewController: NSViewController {
         }
     }
     
+    func nextTabButtonClicked(sender: NSButton) {
+        actionTabView.selectNextTabViewItem(self)
+    }
+    
+    func previousTabButtonClicked(sender: NSButton) {
+        actionTabView.selectPreviousTabViewItem(self)
+    }
+    
     // MARK: UI preparation
     
     override func viewDidLoad() {
@@ -119,8 +130,9 @@ class ViewController: NSViewController {
         titleAlbumArtistSuperview = titleLabelView.superview
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview
+        actionBarSuperview        = actionTabView.superview
         
-        actionTabView.translatesAutoresizingMaskIntoConstraints = true
+        actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
         
         [titleAlbumArtistSuperview,
          actionSuperview,
@@ -229,7 +241,13 @@ class ViewController: NSViewController {
         [likeButton, shuffleButton, repeatButton, actionPlayButton, actionPreviousButton, actionNextButton].forEach {
             $0?.imagePosition       = .imageOnly
             $0?.isBordered          = false
+            $0?.wantsLayer          = true
             $0?.layer?.cornerRadius = 4.0
+        }
+        
+        [nextTabButton, previousTabButton].forEach {
+            $0?.wantsLayer = true
+            $0?.layer?.cornerRadius = 12.0
         }
         
         likeButton.action    = #selector(WindowController.likeButtonClicked(_:))
@@ -239,6 +257,9 @@ class ViewController: NSViewController {
         actionPlayButton.action     = #selector(togglePlayPauseButtonClicked(_:))
         actionPreviousButton.action = #selector(previousTrackButtonClicked(_:))
         actionNextButton.action     = #selector(nextTrackButtonClicked(_:))
+        
+        nextTabButton.action     = #selector(nextTabButtonClicked(sender:))
+        previousTabButton.action = #selector(previousTabButtonClicked(sender:))
     }
     
     func prepareTitleView() {
@@ -342,7 +363,7 @@ class ViewController: NSViewController {
         let show = show != nil ? show! : shouldShowActionBar
         
         view.toggleSubviewVisibilityAndResize(
-            subview: actionTabView,
+            subview: actionBarSuperview,
             visible: show
         ) { self.fullSongArtworkView.refreshMouseTrackingArea() }
         
@@ -482,7 +503,7 @@ class ViewController: NSViewController {
                 $0?.layer?.backgroundColor = highlightColor.cgColor.copy(alpha: alpha)
             }
             
-            [actionPlayButton, actionPreviousButton, actionNextButton].forEach {
+            [actionPlayButton, actionPreviousButton, actionNextButton, nextTabButton, previousTabButton].forEach {
                 $0?.layer?.backgroundColor = highlightColor.cgColor
             }
         }
