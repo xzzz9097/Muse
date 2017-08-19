@@ -374,10 +374,8 @@ class ViewController: NSViewController {
     func showActionBarView(show: Bool? = nil) {
         let show = show != nil ? show! : shouldShowActionBar
         
-        view.toggleSubviewVisibilityAndResize(
-            subview: actionBarSuperview,
-            visible: show
-        ) { self.mainView?.refreshMouseTrackingArea() }
+        view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview,
+                                              visible: show)
         
         // Setup action bar buttons and colors
         if shouldShowActionBar {
