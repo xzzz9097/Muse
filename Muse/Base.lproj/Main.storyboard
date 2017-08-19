@@ -147,7 +147,7 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Muse" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
+                    <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl" customClass="NSHoverableView" customModule="Muse" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="275" height="310"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -318,7 +318,7 @@
                                     <constraint firstItem="XVN-v6-Fch" firstAttribute="leading" secondItem="Ac2-hk-qvo" secondAttribute="leading" constant="20" id="xLS-gI-LfZ"/>
                                 </constraints>
                             </customView>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FL1-mx-O2f" customClass="ImageView" customModule="Muse" customModuleProvider="target">
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FL1-mx-O2f">
                                 <rect key="frame" x="0.0" y="35" width="275" height="275"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="275" id="Hlj-tU-niT"/>

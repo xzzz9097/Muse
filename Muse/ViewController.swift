@@ -58,7 +58,7 @@ class ViewController: NSViewController {
     
     // MARK: Outlets
 
-    @IBOutlet weak var fullSongArtworkView:   ImageView!
+    @IBOutlet weak var fullSongArtworkView:   NSImageView!
     @IBOutlet weak var titleLabelView:        NSTextField!
     @IBOutlet weak var albumArtistLabelView:  NSTextField!
     @IBOutlet weak var actionImageView:       NSImageView!
@@ -82,6 +82,10 @@ class ViewController: NSViewController {
     var actionSuperview:           NSView!
     var titleSuperview:            NSView!
     var actionBarSuperview:        NSView!
+    
+    var mainView: NSHoverableView? {
+        return self.view as? NSHoverableView
+    }
     
     // MARK: Actions
     
@@ -197,7 +201,7 @@ class ViewController: NSViewController {
         setControlViews(hidden: true)
         
         // Add callback to show/hide views when hovering (animating)
-        fullSongArtworkView.mouseHandler = { (mouseHovering: Bool) -> Void in
+        mainView?.mouseHandler = { (mouseHovering: Bool) -> Void in
             self.setControlViews(hidden: !mouseHovering)
         }
     }
@@ -365,7 +369,7 @@ class ViewController: NSViewController {
         view.toggleSubviewVisibilityAndResize(
             subview: actionBarSuperview,
             visible: show
-        ) { self.fullSongArtworkView.refreshMouseTrackingArea() }
+        ) { self.mainView?.refreshMouseTrackingArea() }
         
         // Setup action bar buttons and colors
         if shouldShowActionBar {

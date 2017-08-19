@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ImageView: NSImageView {
+class NSHoverableView: NSView {
     
     // Tracking area variable
     var mouseTrackingArea: NSTrackingArea!
