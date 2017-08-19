@@ -227,6 +227,9 @@ class ViewController: NSViewController {
             // Toggle action bar if needed
             showActionBarView(show: !hidden)
         }
+        
+        // Toggle tab navigation buttons
+        [nextTabButton, previousTabButton].forEach { $0?.animator().isHidden = hidden }
     }
     
     func prepareLastActionView() {
