@@ -29,7 +29,7 @@ class NSHoverableView: NSView {
     }
     
     /* Mouse exited function with its callback */
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with event: NSEvent) {        
         if let handler = mouseHandler {
             handler(false)
         }
@@ -39,9 +39,8 @@ class NSHoverableView: NSView {
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
         
-        guard mouseTrackingArea == nil else {
-            removeTrackingArea(mouseTrackingArea)
-            return
+        if let area = mouseTrackingArea {
+            removeTrackingArea(area)
         }
         
         mouseTrackingArea = NSTrackingArea.init(rect: self.bounds,

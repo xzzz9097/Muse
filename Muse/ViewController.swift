@@ -80,7 +80,7 @@ class ViewController: NSViewController {
     
     var titleAlbumArtistSuperview: NSView!
     var actionSuperview:           NSView!
-    var titleSuperview:            NSView!
+    var titleSuperview:            NSHoverableView!
     var actionBarSuperview:        NSView!
     
     var mainView: NSHoverableView? {
@@ -133,7 +133,7 @@ class ViewController: NSViewController {
 
         titleAlbumArtistSuperview = titleLabelView.superview
         actionSuperview           = actionImageView.superview
-        titleSuperview            = titleTextField.superview
+        titleSuperview            = titleTextField.superview as? NSHoverableView
         actionBarSuperview        = actionTabView.superview
         
         actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
@@ -275,6 +275,11 @@ class ViewController: NSViewController {
         // Set radius
         layer.cornerRadius = 7.5
         layer.masksToBounds = true
+        
+        titleSuperview.mouseHandler = { mouseHovering in
+            self.titleTextField.stringValue = !mouseHovering ?
+                self.titleLabelView.stringValue : self.albumArtistLabelView.stringValue
+        }
     }
     
     // MARK: UI activation
@@ -524,7 +529,7 @@ class ViewController: NSViewController {
                                      "\(song.name) - \(song.artist)" :
                                      song.name
         
-        albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
+        albumArtistLabelView.stringValue = "\(song.artist)"
     }
     
     func updateSongProgressSlider(with position: Double) {
