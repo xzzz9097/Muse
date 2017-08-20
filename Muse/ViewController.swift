@@ -69,9 +69,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var shuffleButton:         NSButton!
     @IBOutlet weak var repeatButton:          NSButton!
     @IBOutlet weak var actionTabView:         NSTabView!
-    @IBOutlet weak var actionPlayButton:      NSButton!
-    @IBOutlet weak var actionPreviousButton:  NSButton!
-    @IBOutlet weak var actionNextButton:      NSButton!
+    @IBOutlet weak var playButton:            NSButton!
+    @IBOutlet weak var previousButton:        NSButton!
+    @IBOutlet weak var nextButton:            NSButton!
     @IBOutlet weak var actionTabViewHeight:   NSLayoutConstraint!
     @IBOutlet weak var nextTabButton:         NSButton!
     @IBOutlet weak var previousTabButton:     NSButton!
@@ -248,7 +248,7 @@ class ViewController: NSViewController {
     }
     
     func prepareActionBarButtons() {
-        [likeButton, shuffleButton, repeatButton, actionPlayButton, actionPreviousButton, actionNextButton].forEach {
+        [likeButton, shuffleButton, repeatButton, playButton, previousButton, nextButton].forEach {
             $0?.imagePosition       = .imageOnly
             $0?.isBordered          = false
             $0?.wantsLayer          = true
@@ -264,9 +264,9 @@ class ViewController: NSViewController {
         shuffleButton.action = #selector(WindowController.shuffleButtonClicked(_:))
         repeatButton.action  = #selector(WindowController.repeatButtonClicked(_:))
         
-        actionPlayButton.action     = #selector(togglePlayPauseButtonClicked(_:))
-        actionPreviousButton.action = #selector(previousTrackButtonClicked(_:))
-        actionNextButton.action     = #selector(nextTrackButtonClicked(_:))
+        playButton.action     = #selector(togglePlayPauseButtonClicked(_:))
+        previousButton.action = #selector(previousTrackButtonClicked(_:))
+        nextButton.action     = #selector(nextTrackButtonClicked(_:))
         
         nextTabButton.action     = #selector(nextTabButtonClicked(sender:))
         previousTabButton.action = #selector(previousTabButtonClicked(sender:))
@@ -397,11 +397,11 @@ class ViewController: NSViewController {
         shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
         repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
         
-        actionPlayButton.image      = helper.isPlaying ?
-                                      actionImages[.pause]?.resized(to: NSMakeSize(7, 7)) :
-                                      actionImages[.play]?.resized(to: NSMakeSize(8, 8))
-        actionPreviousButton.image  = actionImages[.previous]?.resized(to: NSMakeSize(12, 12))
-        actionNextButton.image      = actionImages[.next]?.resized(to: NSMakeSize(12, 12))
+        playButton.image      = helper.isPlaying ?
+                                actionImages[.pause]?.resized(to: NSMakeSize(7, 7)) :
+                                actionImages[.play]?.resized(to: NSMakeSize(8, 8))
+        previousButton.image  = actionImages[.previous]?.resized(to: NSMakeSize(12, 12))
+        nextButton.image      = actionImages[.next]?.resized(to: NSMakeSize(12, 12))
     }
     
     func updateShuffleRepeatButtons() {
@@ -516,7 +516,7 @@ class ViewController: NSViewController {
                 $0?.layer?.backgroundColor = highlightColor.cgColor.copy(alpha: alpha)
             }
             
-            [actionPlayButton, actionPreviousButton, actionNextButton, nextTabButton, previousTabButton].forEach {
+            [playButton, previousButton, nextButton, nextTabButton, previousTabButton].forEach {
                 $0?.layer?.backgroundColor = highlightColor.cgColor
             }
         }

@@ -462,16 +462,16 @@
                     </view>
                     <connections>
                         <outlet property="actionImageView" destination="n4M-1Y-2JZ" id="F3O-Co-NpG"/>
-                        <outlet property="actionNextButton" destination="9eG-gy-d77" id="qB6-Ki-Seu"/>
-                        <outlet property="actionPlayButton" destination="LeJ-YN-J5r" id="XrG-MI-OPU"/>
-                        <outlet property="actionPreviousButton" destination="Eef-uq-zvm" id="1vn-eC-Dse"/>
                         <outlet property="actionTabView" destination="VdQ-8J-q9u" id="pNV-fb-aNZ"/>
                         <outlet property="actionTabViewHeight" destination="5Mw-8i-HJ2" id="iKX-90-Vw9"/>
                         <outlet property="actionTextField" destination="8BH-TZ-iv9" id="jV7-Bf-Te1"/>
                         <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>
                         <outlet property="likeButton" destination="VuX-lD-nXe" id="IGN-i4-3cc"/>
+                        <outlet property="nextButton" destination="9eG-gy-d77" id="qB6-Ki-Seu"/>
                         <outlet property="nextTabButton" destination="uxN-FM-Ew4" id="nwO-0t-7KU"/>
+                        <outlet property="playButton" destination="LeJ-YN-J5r" id="XrG-MI-OPU"/>
+                        <outlet property="previousButton" destination="Eef-uq-zvm" id="1vn-eC-Dse"/>
                         <outlet property="previousTabButton" destination="XVN-v6-Fch" id="5eb-Og-UUA"/>
                         <outlet property="repeatButton" destination="Ozc-M5-qX1" id="g9Q-sX-xdu"/>
                         <outlet property="shuffleButton" destination="jN5-2R-ZRB" id="tNG-Uh-1DX"/>
