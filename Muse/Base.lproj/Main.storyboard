@@ -395,12 +395,12 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-B7-OOh" customClass="NSHoverableView" customModule="Muse" customModuleProvider="target">
-                                <rect key="frame" x="118" y="63" width="40" height="40"/>
+                                <rect key="frame" x="118" y="59" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xcG-Ud-ij9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="POx-Wa-Afc"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="POx-Wa-Afc"/>
                                         </constraints>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" id="7lh-Aw-7B1">
                                             <font key="font" metaFont="system" size="15"/>
@@ -452,7 +452,7 @@
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="Ufp-2u-9Mc"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="Pz7-i3-rTV" secondAttribute="bottom" id="XRl-jr-qnh"/>
                             <constraint firstItem="FL1-mx-O2f" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="cLE-8M-ZLG"/>
-                            <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="xX2-B7-OOh" secondAttribute="bottom" constant="28" id="cfX-Z3-IE0"/>
+                            <constraint firstItem="FL1-mx-O2f" firstAttribute="bottom" secondItem="xX2-B7-OOh" secondAttribute="bottom" constant="24" id="cfX-Z3-IE0"/>
                             <constraint firstItem="Ac2-hk-qvo" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="dvz-fm-Ubo"/>
                             <constraint firstItem="mIG-iE-c3d" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="e93-MX-3cq"/>
                             <constraint firstItem="L8t-8O-zhy" firstAttribute="centerY" secondItem="FL1-mx-O2f" secondAttribute="centerY" id="lQK-h0-fKj"/>
