@@ -17,15 +17,13 @@ class ViewController: NSViewController {
     // MARK: Properties
     
     // Button images dictionary
-    var actionImages: [PlayerAction: NSImage] = [
-        .previous:  NSImage.previous!.resized(to: NSMakeSize(12, 12)),
-        .play:      NSImage.play!.resized(to: NSMakeSize(8, 8)),
-        .pause:     NSImage.pause!.resized(to: NSMakeSize(7, 7)),
-        .next:      NSImage.next!.resized(to: NSMakeSize(12, 12)),
-        .shuffling: NSImage.shuffling.resized(to: NSMakeSize(20, 20)),
-        .repeating: NSImage.repeating.resized(to: NSMakeSize(20, 20)),
-        .like:      NSImage.like.resized(to: NSMakeSize(15, 15))
-    ]
+    var actionImages: [PlayerAction: NSImage] = [.previous:  NSImage.previous!,
+                                                 .play:      NSImage.play!,
+                                                 .pause:     NSImage.pause!,
+                                                 .next:      NSImage.next!,
+                                                 .shuffling: .shuffling,
+                                                 .repeating: .repeating,
+                                                 .like:      .like]
     
     // Action view auto close
     let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
@@ -394,13 +392,17 @@ class ViewController: NSViewController {
     // MARK: UI refresh
     
     func updateButtons() {
-        // Update action buttons
-        playButton.image      = helper.isPlaying ? actionImages[.pause] : actionImages[.play]
-        previousButton.image  = actionImages[.previous]
-        nextButton.image      = actionImages[.next]
-        likeButton.image      = actionImages[.like]
-        shuffleButton.image   = actionImages[.shuffling]
-        repeatButton.image    = actionImages[.repeating]
+        // Initialize playback control buttons
+        
+        likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
+        shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
+        repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
+        
+        playButton.image      = helper.isPlaying ?
+                                actionImages[.pause]?.resized(to: NSMakeSize(7, 7)) :
+                                actionImages[.play]?.resized(to: NSMakeSize(8, 8))
+        previousButton.image  = actionImages[.previous]?.resized(to: NSMakeSize(12, 12))
+        nextButton.image      = actionImages[.next]?.resized(to: NSMakeSize(12, 12))
     }
     
     func updateShuffleRepeatButtons() {
