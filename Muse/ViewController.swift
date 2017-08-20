@@ -219,6 +219,9 @@ class ViewController: NSViewController {
                 self.titleSuperview.animator().isHidden = true
             }
         } else {
+            // Stop title view auto close timer
+            titleViewAutoCloseTimer.invalidate()
+            
             // Show title view
             showTitleView(shouldClose: false)
         }
