@@ -127,9 +127,25 @@ class SliderCell: NSSliderCell {
     let infoWidth:  CGFloat = 70.0
     
     // Info bar font attributes
-    let infoColor       = NSColor.lightGray
-    let infoFont        = NSFont.systemFont(ofSize: 17)
     let paraghraphStyle = NSMutableParagraphStyle()
+    
+    var infoFontLeftColor: NSColor = .lightGray {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    var infoFontRightColor: NSColor = .lightGray {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    var infoFontSize: CGFloat = 17.0 {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
     
     // TouchBar slider properties
     private let barStep:  CGFloat = 2
@@ -165,7 +181,7 @@ class SliderCell: NSSliderCell {
                                                      y: backgroundRect.origin.y,
                                                      width: barWidth,
                                                      height: backgroundRect.height)).fill() }
-
+            
             return
         }
         
@@ -229,7 +245,7 @@ class SliderCell: NSSliderCell {
     override func knobRect(flipped: Bool) -> NSRect {
         // Only run this if knob width or img is custom
         guard   var bounds = self.controlView?.bounds, (knobImage != nil || knobWidth != nil)
-                else { return super.knobRect(flipped: flipped) }
+            else { return super.knobRect(flipped: flipped) }
         
         var rect = super.knobRect(flipped: flipped)
         
@@ -240,7 +256,7 @@ class SliderCell: NSSliderCell {
         }
         
         bounds = NSInsetRect(bounds, rect.size.width + knobMargin, 0)
-
+        
         let absKnobPosition = self.relativeKnobPosition() * NSWidth(bounds) + NSMinX(bounds);
         
         rect = NSOffsetRect(rect, absKnobPosition - NSMidX(rect), 0)
@@ -293,10 +309,12 @@ class SliderCell: NSSliderCell {
      Font attributes for the info text
      */
     func infoFontAttributes(for rect: NSRect) -> [String: Any] {
-        paraghraphStyle.alignment = shouldInfoBeLeft(of: rect) ? .left : .right
+        let isLeftOfKnob = shouldInfoBeLeft(of: rect)
         
-        return [NSFontAttributeName: infoFont,
-                NSForegroundColorAttributeName: infoColor,
+        paraghraphStyle.alignment = isLeftOfKnob ? .left : .right
+        
+        return [NSFontAttributeName: NSFont.systemFont(ofSize: infoFontSize),
+                NSForegroundColorAttributeName: isLeftOfKnob ? infoFontLeftColor : infoFontRightColor,
                 NSParagraphStyleAttributeName: paraghraphStyle]
     }
     
