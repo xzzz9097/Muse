@@ -188,6 +188,7 @@ class ViewController: NSViewController {
         // Customize slider thumb
         cell.width       = view.frame.width
         cell.knobWidth   = 2.0
+        cell.knobMargin  = 0.0
         cell.height      = 11.0
         
         // Remove corner radius
