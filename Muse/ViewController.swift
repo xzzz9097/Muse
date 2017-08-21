@@ -308,9 +308,6 @@ class ViewController: NSViewController {
     // MARK: UI activation
     
     func showTitleView(shouldClose: Bool = true) {
-        // Only show title info if mouse is not hovering
-        guard titleSuperview.isHidden else { return }
-        
         // Invalidate existing timers
         // This prevents calls form precedent ones
         titleViewAutoCloseTimer.invalidate()
@@ -334,12 +331,6 @@ class ViewController: NSViewController {
                             to time:     Double = 0,
                             shouldClose: Bool = true,
                             liked:       Bool = false) {
-        // Only show action info if mouse is not hovering
-        guard ( titleSuperview.isHidden ||
-                action == .repeating       ||
-                action == .shuffling       ||
-                action == .scrubbing ) else { return }
-        
         // Invalidate existing timers
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
