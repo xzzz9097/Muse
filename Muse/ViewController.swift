@@ -40,6 +40,13 @@ fileprivate extension NSButton {
     }
 }
 
+enum MainViewMode {
+    
+    case compressed
+    case partiallyExpanded
+    case expanded
+}
+
 @available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
@@ -106,6 +113,8 @@ class ViewController: NSViewController {
     var mainView: NSHoverableView? {
         return self.view as? NSHoverableView
     }
+    
+    var mainViewMode: MainViewMode = .expanded
     
     // MARK: Actions
     
@@ -228,6 +237,12 @@ class ViewController: NSViewController {
     }
     
     func setControlViews(hidden: Bool) {
+        if hidden {
+            mainViewMode = shouldShowActionBar ? .partiallyExpanded : .compressed
+        } else {
+            mainViewMode = .expanded
+        }
+        
         // Change progress bar height
         actionTabViewHeight.animator().constant = hidden ? 2 : 11
         
@@ -316,7 +331,7 @@ class ViewController: NSViewController {
         titleSuperview.animator().isHidden = false
         
         // This keeps time info visible while sliding
-        guard shouldClose else { return }
+        guard shouldClose, mainViewMode != .expanded else { return }
         
         // Restart the autoclose timer
         titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTimeout,
