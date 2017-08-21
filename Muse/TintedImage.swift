@@ -44,7 +44,7 @@ extension NSImage {
 }
 
 protocol TintableImageView: class {
-        
+    
     var image: NSImage? { get set }
 }
 

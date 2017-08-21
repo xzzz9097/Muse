@@ -8,7 +8,7 @@
 
 // Defines a set of infos to inform the VC
 // about player events from the outside
-enum PlayerAction {
+enum PlayerAction: Int {
     case play
     case pause
     case previous

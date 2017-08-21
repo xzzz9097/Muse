@@ -10,6 +10,37 @@ import Cocoa
 import QuartzCore
 
 @available(OSX 10.12.2, *)
+fileprivate extension NSButton {
+    
+    static var playerActions: [PlayerAction: Selector] { return
+        [.play:      #selector(ViewController.togglePlayPauseButtonClicked(_:)),
+         .pause:     #selector(ViewController.togglePlayPauseButtonClicked(_:)),
+         .previous:  #selector(ViewController.previousTrackButtonClicked(_:)),
+         .next:      #selector(ViewController.nextTrackButtonClicked(_:)),
+         .shuffling: #selector(WindowController.shuffleButtonClicked(_:)),
+         .repeating: #selector(WindowController.repeatButtonClicked(_:)),
+         .like:      #selector(WindowController.likeButtonClicked(_:))]
+    }
+    
+    var playerAction: PlayerAction? {
+        set {
+            self.tag = newValue?.rawValue ?? -1
+            
+            if let action = newValue {
+                self.action              = NSButton.playerActions[action]
+                self.imagePreservingTint = action.smallImage
+            } else {
+                self.action = nil
+            }
+        }
+        
+        get {
+            return PlayerAction(rawValue: self.tag)
+        }
+    }
+}
+
+@available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
     // MARK: Properties
@@ -238,6 +269,13 @@ class ViewController: NSViewController {
     }
     
     func prepareActionBarButtons() {
+        playButton.playerAction     = .play
+        previousButton.playerAction = .previous
+        nextButton.playerAction     = .next
+        shuffleButton.playerAction  = .shuffling
+        repeatButton.playerAction   = .repeating
+        likeButton.playerAction     = .like
+        
         [likeButton, shuffleButton, repeatButton, playButton, previousButton, nextButton].forEach {
             $0?.imagePosition       = .imageOnly
             $0?.isBordered          = false
@@ -249,14 +287,6 @@ class ViewController: NSViewController {
             $0?.wantsLayer = true
             $0?.layer?.cornerRadius = 12.0
         }
-        
-        likeButton.action    = #selector(WindowController.likeButtonClicked(_:))
-        shuffleButton.action = #selector(WindowController.shuffleButtonClicked(_:))
-        repeatButton.action  = #selector(WindowController.repeatButtonClicked(_:))
-        
-        playButton.action     = #selector(togglePlayPauseButtonClicked(_:))
-        previousButton.action = #selector(previousTrackButtonClicked(_:))
-        nextButton.action     = #selector(nextTrackButtonClicked(_:))
         
         nextTabButton.action     = #selector(nextTabButtonClicked(sender:))
         previousTabButton.action = #selector(previousTabButtonClicked(sender:))
@@ -381,14 +411,7 @@ class ViewController: NSViewController {
     // MARK: UI refresh
     
     func updateButtons() {
-        likeButton.imagePreservingTint    = PlayerAction.like.smallImage
-        shuffleButton.imagePreservingTint = PlayerAction.shuffling.smallImage
-        repeatButton.imagePreservingTint  = PlayerAction.repeating.smallImage
-        
-        playButton.imagePreservingTint      = helper.isPlaying ?
-                                      PlayerAction.pause.smallImage : PlayerAction.play.smallImage
-        previousButton.imagePreservingTint  = PlayerAction.previous.smallImage
-        nextButton.imagePreservingTint      = PlayerAction.next.smallImage
+        playButton.playerAction = helper.isPlaying ? .pause : .play
     }
     
     func updateShuffleRepeatButtons() {
