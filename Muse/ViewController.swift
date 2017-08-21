@@ -27,8 +27,8 @@ fileprivate extension NSButton {
             self.tag = newValue?.rawValue ?? -1
             
             if let action = newValue {
-                self.action              = NSButton.playerActions[action]
-                self.imagePreservingTint = action.smallImage
+                self.action = NSButton.playerActions[action]
+                self.setImagePreservingTint(action.smallImage)
             } else {
                 self.action = nil
             }
@@ -335,7 +335,7 @@ class ViewController: NSViewController {
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
         
-        actionImageView.imagePreservingTint = action.image
+        actionImageView.setImagePreservingTint(action.image)
         
         // TODO: more testing
         switch action {
@@ -354,7 +354,7 @@ class ViewController: NSViewController {
             
             // Tint the image
             if shouldTint {
-                actionImageView.imagePreservingTint = actionImageView.image?.withAlpha(0.5)
+                actionImageView.setImagePreservingTint(actionImageView.image?.withAlpha(0.5))
             }
         case .scrubbing:
             // Hide image view if scrubbing
@@ -441,13 +441,13 @@ class ViewController: NSViewController {
     func colorButtonImages(with color: NSColor) {
         // Update button images with new color
         [playButton, previousButton, nextButton, likeButton, shuffleButton, repeatButton].forEach {
-            $0?.image = $0?.image?.tint(with: color)
+            $0?.tintedImage = $0?.image?.tint(with: color)
         }
         
         // Color action image too
         // We have to give a fallback image to ensure action image gets tinted at first start
         // Because it is not given a default value otherwise
-        actionImageView.image = (actionImageView.image ?? PlayerAction.play.image!).tint(with: color)
+        actionImageView.tintedImage = (actionImageView.image ?? PlayerAction.play.image!).tint(with: color)
     }
     
     func colorViews(with colors: ImageColors) {

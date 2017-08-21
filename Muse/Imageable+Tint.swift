@@ -10,6 +10,8 @@ import Cocoa
 
 class NSTintedImage: NSImage {
 
+    // The tint color applied to the image
+    // set when the NSTintedImage is created with NSImage.tint
     var tintColor: NSColor?
 }
 
@@ -51,36 +53,34 @@ extension NSImage {
     }
 }
 
-protocol TintableImageView: class {
+extension Imageable {
     
-    var image: NSImage? { get set }
-}
-
-extension TintableImageView {
-    
+    // The tint color applied to the current tintedImage (if any)
+    // We keep track of it to reapply the tint to new images as they're set
     var tintColor: NSColor? {
         return tintedImage?.tintColor
     }
     
+    // The tinted image
+    // retrieved by (optionally) casting the NSImage to NSTintedImage
     var tintedImage: NSTintedImage? {
-        return self.image as? NSTintedImage
-    }
-    
-    var imagePreservingTint: NSImage? {
         set {
-            if let color = tintColor {
-                self.image = newValue?.tint(with: color)
-            } else {
-                self.image = newValue
-            }
+            self.image = newValue
         }
         
         get {
-            return self.image
+            return self.image as? NSTintedImage
+        }
+    }
+    
+    /**
+     Sets a new image applying the current color tint to it
+     */
+    func setImagePreservingTint(_ image: NSImage?) {
+        if let color = tintColor {
+            self.image = image?.tint(with: color)
+        } else {
+            self.image = image
         }
     }
 }
-
-extension NSImageView: TintableImageView { }
-
-extension NSButton: TintableImageView { }
