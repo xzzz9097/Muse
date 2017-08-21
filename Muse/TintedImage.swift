@@ -22,19 +22,27 @@ extension NSImage {
      - returns: tinted 'NSImage'
      */
     func tint(with color: NSColor) -> NSTintedImage {
-        let tinted = NSTintedImage(cgImage: self.cgImage, size: self.size)
+        // Dont't start from self.cgImage because it may scale incorrectly
+        let tinted = NSTintedImage(size: self.size)
         
+        // Save the tint color in the NSTintedImage object
         tinted.tintColor = color
         
         // Image must not be template
         // otherwise system will override our tint
         tinted.isTemplate = false
         
+        // Lock the focus on the tinted image
+        // so graphics will be draw in its context
         tinted.lockFocus()
-        color.set()
         
-        // Tint the image
-        let imageRect = NSRect(origin: NSZeroPoint, size: self.size)
+        // First copy the current NSImage in the new tinted object
+        let imageRect = NSRect(origin: NSZeroPoint,
+                               size: self.size)
+        self.draw(in: imageRect)
+        
+        // Then apply the tint
+        color.set()
         NSRectFillUsingOperation(imageRect, .sourceAtop)
         
         tinted.unlockFocus()
