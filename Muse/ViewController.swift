@@ -9,21 +9,10 @@
 import Cocoa
 import QuartzCore
 
-// MARK: ViewController
-
 @available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
     // MARK: Properties
-    
-    // Button images dictionary
-    var actionImages: [PlayerAction: NSImage] = [.previous:  NSImage.previous!,
-                                                 .play:      NSImage.play!,
-                                                 .pause:     NSImage.pause!,
-                                                 .next:      NSImage.next!,
-                                                 .shuffling: .shuffling,
-                                                 .repeating: .repeating,
-                                                 .like:      .like]
     
     // Action view auto close
     let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
@@ -325,7 +314,7 @@ class ViewController: NSViewController {
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
         
-        actionImageView.image = actionImages[action]
+        actionImageView.imagePreservingTint = action.image
         
         // TODO: more testing
         switch action {
@@ -344,7 +333,7 @@ class ViewController: NSViewController {
             
             // Tint the image
             if shouldTint {
-                actionImageView.image = actionImages[action]?.tint(with: .lightGray)
+                actionImageView.imagePreservingTint = actionImageView.image?.withAlpha(0.5)
             }
         case .scrubbing:
             // Hide image view if scrubbing
@@ -392,17 +381,14 @@ class ViewController: NSViewController {
     // MARK: UI refresh
     
     func updateButtons() {
-        // Initialize playback control buttons
+        likeButton.imagePreservingTint    = PlayerAction.like.smallImage
+        shuffleButton.imagePreservingTint = PlayerAction.shuffling.smallImage
+        repeatButton.imagePreservingTint  = PlayerAction.repeating.smallImage
         
-        likeButton.image            = actionImages[.like]?.resized(to: NSMakeSize(15, 15))
-        shuffleButton.image         = actionImages[.shuffling]?.resized(to: NSMakeSize(20, 20))
-        repeatButton.image          = actionImages[.repeating]?.resized(to: NSMakeSize(20, 20))
-        
-        playButton.image      = helper.isPlaying ?
-                                actionImages[.pause]?.resized(to: NSMakeSize(7, 7)) :
-                                actionImages[.play]?.resized(to: NSMakeSize(8, 8))
-        previousButton.image  = actionImages[.previous]?.resized(to: NSMakeSize(12, 12))
-        nextButton.image      = actionImages[.next]?.resized(to: NSMakeSize(12, 12))
+        playButton.imagePreservingTint      = helper.isPlaying ?
+                                      PlayerAction.pause.smallImage : PlayerAction.play.smallImage
+        previousButton.imagePreservingTint  = PlayerAction.previous.smallImage
+        nextButton.imagePreservingTint      = PlayerAction.next.smallImage
     }
     
     func updateShuffleRepeatButtons() {
@@ -440,10 +426,14 @@ class ViewController: NSViewController {
     
     func colorButtonImages(with color: NSColor) {
         // Update button images with new color
-        actionImages = actionImages.mapValues { $0.tint(with: color) }
+        [playButton, previousButton, nextButton, likeButton, shuffleButton, repeatButton].forEach {
+            $0?.image = $0?.image?.tint(with: color)
+        }
         
         // Color action image too
-        actionImageView.image = actionImageView.image?.tint(with: color)
+        // We have to give a fallback image to ensure action image gets tinted at first start
+        // Because it is not given a default value otherwise
+        actionImageView.image = (actionImageView.image ?? PlayerAction.play.image!).tint(with: color)
     }
     
     func colorViews(with colors: ImageColors) {
@@ -493,8 +483,8 @@ class ViewController: NSViewController {
         }
         
         // Set the color on the playback buttons
-        colorButtonImages(with: primaryColor)
         updateButtons()
+        colorButtonImages(with: primaryColor)
         
         colorActionBar(highlight: highlightColor)
     }

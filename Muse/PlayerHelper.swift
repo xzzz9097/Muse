@@ -17,6 +17,48 @@ enum PlayerAction {
     case repeating
     case scrubbing
     case like
+    
+    @available(OSX 10.12.2, *)
+    var image: NSImage? {
+        switch self {
+        case .play:
+            return .play
+        case .pause:
+            return .pause
+        case .previous:
+            return .previous
+        case .next:
+            return .next
+        case .shuffling:
+            return .shuffling
+        case .repeating:
+            return .repeating
+        case .like:
+            return .like
+        default:
+            return nil
+        }
+    }
+    
+    @available(OSX 10.12.2, *)
+    var smallImage: NSImage? {
+        switch self {
+        case .play:
+            return image?.resized(to: NSMakeSize(8, 8))
+        case .pause:
+            return image?.resized(to: NSMakeSize(7, 7))
+        case .previous:
+            return image?.resized(to: NSMakeSize(12, 12))
+        case .next:
+            return image?.resized(to: NSMakeSize(12, 12))
+        case .shuffling, .repeating:
+            return image?.resized(to: NSMakeSize(20, 20))
+        case .like:
+            return image?.resized(to: NSMakeSize(15, 15))
+        default:
+            return image
+        }
+    }
 }
 
 // Enum for the three possible player states

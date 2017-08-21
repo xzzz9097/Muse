@@ -18,6 +18,7 @@
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
 		0C5098B81E859B1C006EC944 /* application.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5098B71E859B1C006EC944 /* application.json */; };
 		0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */; };
+		0C56FEDA1F4AB5E200A247CB /* TintedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56FED91F4AB5E200A247CB /* TintedImage.swift */; };
 		0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */; };
 		0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E94F71E214A02000E0013 /* Double+Extensions.swift */; };
 		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
@@ -134,6 +135,7 @@
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
 		0C5098B71E859B1C006EC944 /* application.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = application.json; sourceTree = "<group>"; };
 		0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
+		0C56FED91F4AB5E200A247CB /* TintedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintedImage.swift; sourceTree = "<group>"; };
 		0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarMaker.swift; sourceTree = "<group>"; };
 		0C5E94F71E214A02000E0013 /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		0C676BD41DF443AD00B75164 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -276,6 +278,7 @@
 				0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */,
 				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
 				0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */,
+				0C56FED91F4AB5E200A247CB /* TintedImage.swift */,
 				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
 				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
 				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
@@ -608,6 +611,7 @@
 				0C8162B81F29021300529F5E /* NSMediaSliderTouchBarItem.swift in Sources */,
 				0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */,
 				0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */,
+				0C56FEDA1F4AB5E200A247CB /* TintedImage.swift in Sources */,
 				0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */,
 				0C1F20EC1F2B21E50055ACAC /* NSCustomizableButton.swift in Sources */,
 				0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */,
