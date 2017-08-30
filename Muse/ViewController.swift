@@ -350,7 +350,9 @@ class ViewController: NSViewController {
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
         
-        actionImageView.setImagePreservingTint(action.image)
+        if let image = action.image {
+            actionImageView.setImagePreservingTint(image)
+        }
         
         // TODO: more testing
         switch action {
