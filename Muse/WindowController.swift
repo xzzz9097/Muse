@@ -844,6 +844,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
         
         trackSongProgress()
+        
+        // If window is not key, restore control strip button visibility
+        // TODO: add a preference for this
+        if let key = window?.isKeyWindow, !key {
+            toggleControlStripButton(visible: true)
+        }
     }
     
     func resetSong() {
