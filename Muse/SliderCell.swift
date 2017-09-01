@@ -24,6 +24,20 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // The color fill for the knob
+    var knobColor: NSColor? {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    // The knob's width
+    var knobWidth: CGFloat? {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
     // The knob's visibility
     var knobVisible: Bool = true {
         didSet {
@@ -64,6 +78,25 @@ class SliderCell: NSSliderCell {
         }
     }
     
+    // Width
+    var width: CGFloat? {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    // Bar fill margin fraction
+    // min: 0 - max: 0.5
+    // adds a fraction * height margin to left bar fill
+    var fillMarginFraction: CGFloat = 0.0 {
+        didSet {
+            // Make sure we're not over max value
+            if fillMarginFraction > 0.5 { fillMarginFraction = 0.5 }
+            
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
     // Time info switch
     var hasTimeInfo: Bool = false {
         didSet {
@@ -94,13 +127,30 @@ class SliderCell: NSSliderCell {
     let infoWidth:  CGFloat = 70.0
     
     // Info bar font attributes
-    let infoColor       = NSColor.lightGray
-    let infoFont        = NSFont.systemFont(ofSize: 17)
     let paraghraphStyle = NSMutableParagraphStyle()
+    
+    var infoFontLeftColor: NSColor = .lightGray {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    var infoFontRightColor: NSColor = .lightGray {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
+    
+    var infoFontSize: CGFloat = 17.0 {
+        didSet {
+            self.controlView?.needsDisplay = true
+        }
+    }
     
     // TouchBar slider properties
     private let barStep:  CGFloat = 2
     private let barWidth: CGFloat = 1
+    private let barFill           = NSColor.labelColor.withAlphaComponent(0.25)
     
     /**
      Draw the bars, setting custom height, colors and radius
@@ -109,9 +159,9 @@ class SliderCell: NSSliderCell {
         var backgroundRect = rect
         var leftRect       = rect
         
-        // Apply the desired height, with a 15% padding around fill
+        // Apply the desired height, with a padding around fill if requested
         backgroundRect.size.height = height
-        leftRect.size.height       = height - min(0.15 * height, 0.5)
+        leftRect.size.height       = height - ( fillMarginFraction * height )
         
         // Center the slider
         backgroundRect.origin.y = rect.midY - height / 2.0
@@ -120,82 +170,93 @@ class SliderCell: NSSliderCell {
         leftRect.size.width *= relativeKnobPosition()
         
         // Draw TouchBar slider
-        // (heavily) inspired by https://github.com/lhc70000/iina
+        // Inspired by https://github.com/lhc70000/iina
         if isTouchBar {
-            NSGraphicsContext.saveGraphicsState()
+            barFill.setFill()
             
-            NSBezierPath(roundedRect: backgroundRect, xRadius: 0, yRadius: 0).setClip()
-            let end = backgroundRect.width
-            
-            NSColor.labelColor.withAlphaComponent(0.25).setFill()
-            
-            var i: CGFloat = 0.0
-            while (i < end + barStep) {
-                let dest = NSRect(x: backgroundRect.origin.x + i,
-                                  y: backgroundRect.origin.y,
-                                  width: barWidth,
-                                  height: backgroundRect.height)
-                
-                NSBezierPath(rect: dest).fill()
-                i += barStep
-            }
-            
-            NSGraphicsContext.restoreGraphicsState()
+            // Draw the vertical bars in the background rect
+            ( 0 ..< Int( backgroundRect.width / barStep ) + 1 )
+                .map { CGFloat($0) * barStep }
+                .forEach { NSBezierPath(rect: NSRect(x: backgroundRect.origin.x + $0,
+                                                     y: backgroundRect.origin.y,
+                                                     width: barWidth,
+                                                     height: backgroundRect.height)).fill() }
             
             return
         }
         
-        // Create the drawing areas
-        let backgroundColorArea = NSBezierPath(roundedRect: backgroundRect, xRadius: radius, yRadius: radius)
-        let highlightColorArea  = NSBezierPath(roundedRect: leftRect, xRadius: radius, yRadius: radius)
-        
-        // Fill the background area
-        backgroundColor.setFill()
-        backgroundColorArea.fill()
-        
-        // Fill the active area
-        highlightColor.setFill()
-        highlightColorArea.fill()
+        // Fill the bars
+        [ ( backgroundRect, backgroundColor ), ( leftRect, highlightColor ) ].forEach {
+            $1.setFill()
+            
+            // Draw in the correct area with specified radius
+            NSBezierPath(roundedRect: $0,
+                         xRadius: radius,
+                         yRadius: radius).fill()
+        }
     }
     
     /**
      Draw the knob
      */
     override func drawKnob(_ knobRect: NSRect) {
-        guard let flipped = self.controlView?.isFlipped else {
-            super.drawKnob(knobRect)
+        if hasTimeInfo { drawInfo(near: knobRect) }
+        
+        if let color = knobColor {
+            color.drawSwatch(in: knobRect)
             return
         }
         
-        let rect = self.knobRect(flipped: flipped)
-        
-        if hasTimeInfo { drawInfo(near: rect) }
-        
-        guard let image = self.knobImage else {
-            super.drawKnob(knobRect)
+        if let image = knobImage {
+            // Determine wheter the knob will be visible
+            let fraction: CGFloat = knobVisible ? 1.0 : 0.0
+            
+            image.draw(in: knobRect,
+                       from: NSZeroRect,
+                       operation: .sourceOver,
+                       fraction: fraction)
             return
         }
         
-        // Determine wheter the knob will be visible
-        let fraction: CGFloat = knobVisible ? 1.0 : 0.0
+        super.drawKnob(knobRect)
+    }
+    
+    /**
+     Build the main cell rect with specified width
+     */
+    override func barRect(flipped: Bool) -> NSRect {
+        if let width = width {
+            var rect = super.barRect(flipped: flipped)
+            
+            // Center the rect
+            rect.origin.x  -= ( width - rect.width ) / 2
+            // Set new size
+            rect.size.width = width
+            
+            return rect
+        }
         
-        image.draw(in: rect, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
+        return super.barRect(flipped: flipped)
     }
     
     /**
      Build the rect for our knob image
      */
     override func knobRect(flipped: Bool) -> NSRect {
-        guard let image = self.knobImage, var bounds = self.controlView?.bounds else {
-            return super.knobRect(flipped: flipped)
-        }
+        // Only run this if knob width or img is custom
+        guard   var bounds = self.controlView?.bounds, (knobImage != nil || knobWidth != nil)
+            else { return super.knobRect(flipped: flipped) }
         
         var rect = super.knobRect(flipped: flipped)
         
-        rect.size = image.size
+        if let image = knobImage {
+            rect.size = image.size
+        } else if let width = knobWidth {
+            rect.size.width = width
+        }
         
         bounds = NSInsetRect(bounds, rect.size.width + knobMargin, 0)
-
+        
         let absKnobPosition = self.relativeKnobPosition() * NSWidth(bounds) + NSMinX(bounds);
         
         rect = NSOffsetRect(rect, absKnobPosition - NSMidX(rect), 0)
@@ -248,10 +309,12 @@ class SliderCell: NSSliderCell {
      Font attributes for the info text
      */
     func infoFontAttributes(for rect: NSRect) -> [String: Any] {
-        paraghraphStyle.alignment = shouldInfoBeLeft(of: rect) ? .left : .right
+        let isLeftOfKnob = shouldInfoBeLeft(of: rect)
         
-        return [NSFontAttributeName: infoFont,
-                NSForegroundColorAttributeName: infoColor,
+        paraghraphStyle.alignment = isLeftOfKnob ? .left : .right
+        
+        return [NSFontAttributeName: NSFont.systemFont(ofSize: infoFontSize),
+                NSForegroundColorAttributeName: isLeftOfKnob ? infoFontLeftColor : infoFontRightColor,
                 NSParagraphStyleAttributeName: paraghraphStyle]
     }
     

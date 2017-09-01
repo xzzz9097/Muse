@@ -20,10 +20,10 @@ extension NSImage {
     static let like         = NSImage(named: "DFRLike")!.forUI()
     static let liked        = NSImage(named: "DFRLiked")
     
-    static let previous     = NSImage(named: NSImageNameTouchBarRewindTemplate)
-    static let next         = NSImage(named: NSImageNameTouchBarFastForwardTemplate)
-    static let play         = NSImage(named: NSImageNameTouchBarPlayTemplate)
-    static let pause        = NSImage(named: NSImageNameTouchBarPauseTemplate)
+    static let previous     = NSImage(named: NSImageNameTouchBarRewindTemplate)!
+    static let next         = NSImage(named: NSImageNameTouchBarFastForwardTemplate)!
+    static let play         = NSImage(named: NSImageNameTouchBarPlayTemplate)!
+    static let pause        = NSImage(named: NSImageNameTouchBarPauseTemplate)!
     
     static let volumeLow    = NSImage(named: NSImageNameTouchBarAudioOutputVolumeLowTemplate)
     static let volumeMedium = NSImage(named: NSImageNameTouchBarAudioOutputVolumeMediumTemplate)
@@ -32,6 +32,10 @@ extension NSImage {
     static let playhead     = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
     static let playbar      = NSImage(named: "playbar")
     
+}
+
+extension NSImage {
+        
     // MARK: Extended functions
     
     /**
@@ -43,31 +47,6 @@ extension NSImage {
         self.isTemplate = true
         
         return self
-    }
-    
-    /**
-     Returns the grayscale image tinted with the specified color
-     http://stackoverflow.com/questions/1413135/tinting-a-grayscale-nsimage-or-ciimage
-     - parameter color: the provided tint color
-     - returns: tinted 'NSImage'
-     */
-    func tint(with color: NSColor) -> NSImage {
-        guard let tinted = self.copy() as? NSImage else { return self }
-        
-        // Image must not be template
-        // otherwise system will override our tint
-        tinted.isTemplate = false
-        
-        tinted.lockFocus()
-        color.set()
-        
-        // Tint the image
-        let imageRect = NSRect(origin: NSZeroPoint, size: self.size)
-        NSRectFillUsingOperation(imageRect, .sourceAtop)
-        
-        tinted.unlockFocus()
-        
-        return tinted
     }
     
     func edit(size: NSSize? = nil,

@@ -17,6 +17,8 @@
 		0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3750D01EFC29C700EE19AE /* Slider.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
 		0C5098B81E859B1C006EC944 /* application.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5098B71E859B1C006EC944 /* application.json */; };
+		0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */; };
+		0C56FEDA1F4AB5E200A247CB /* Imageable+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */; };
 		0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */; };
 		0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E94F71E214A02000E0013 /* Double+Extensions.swift */; };
 		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
@@ -40,7 +42,7 @@
 		0CEAEB391E14583500BD68D5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEAEB381E14583500BD68D5 /* String+Extensions.swift */; };
 		0CEAEB3D1E15A34400BD68D5 /* VoxHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEAEB3C1E15A34400BD68D5 /* VoxHelper.swift */; };
 		0CEAEB3F1E16624800BD68D5 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */; };
-		0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B7E31DF9772900CDD130 /* ImageView.swift */; };
+		0CF8B7E41DF9772900CDD130 /* NSHoverableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */; };
 		0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
@@ -132,6 +134,8 @@
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
 		0C5098B71E859B1C006EC944 /* application.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = application.json; sourceTree = "<group>"; };
+		0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
+		0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Imageable+Tint.swift"; sourceTree = "<group>"; };
 		0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarMaker.swift; sourceTree = "<group>"; };
 		0C5E94F71E214A02000E0013 /* Double+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		0C676BD41DF443AD00B75164 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -164,7 +168,7 @@
 		0CEAEB381E14583500BD68D5 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		0CEAEB3C1E15A34400BD68D5 /* VoxHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoxHelper.swift; sourceTree = "<group>"; };
 		0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
-		0CF8B7E31DF9772900CDD130 /* ImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSHoverableView.swift; sourceTree = "<group>"; };
 		0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -273,6 +277,8 @@
 				0C8162B71F29021300529F5E /* NSMediaSliderTouchBarItem.swift */,
 				0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */,
 				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
+				0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */,
+				0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */,
 				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
 				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
 				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
@@ -290,7 +296,7 @@
 				0C0FE5301E62C73600DFC6A7 /* Swiftify.swift */,
 				0C9B62261E1C357100660633 /* NSImageColors.swift */,
 				0C3750D01EFC29C700EE19AE /* Slider.swift */,
-				0CF8B7E31DF9772900CDD130 /* ImageView.swift */,
+				0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */,
 				0C0980561E2830E500FF9FE0 /* NSTouch+Extensions.swift */,
 				0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */,
 				0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */,
@@ -605,6 +611,7 @@
 				0C8162B81F29021300529F5E /* NSMediaSliderTouchBarItem.swift in Sources */,
 				0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */,
 				0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */,
+				0C56FEDA1F4AB5E200A247CB /* Imageable+Tint.swift in Sources */,
 				0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */,
 				0C1F20EC1F2B21E50055ACAC /* NSCustomizableButton.swift in Sources */,
 				0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */,
@@ -621,6 +628,7 @@
 				0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */,
 				0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */,
 				0CEAEB3F1E16624800BD68D5 /* DispatchQueue+Extensions.swift in Sources */,
+				0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */,
 				0C0980571E2830E500FF9FE0 /* NSTouch+Extensions.swift in Sources */,
 				0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */,
 				0CEAEB3D1E15A34400BD68D5 /* VoxHelper.swift in Sources */,
@@ -630,7 +638,7 @@
 				0CEAEB391E14583500BD68D5 /* String+Extensions.swift in Sources */,
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
 				0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */,
-				0CF8B7E41DF9772900CDD130 /* ImageView.swift in Sources */,
+				0CF8B7E41DF9772900CDD130 /* NSHoverableView.swift in Sources */,
 				0C1F20F41F2B9F3C0055ACAC /* Preferences.swift in Sources */,
 				0CD2870E1E106D4600EF0E73 /* NSImage+Extensions.swift in Sources */,
 				0C9B622C1E1D696400660633 /* Animations.swift in Sources */,

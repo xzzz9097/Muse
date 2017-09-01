@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ImageView: NSImageView {
+class NSHoverableView: NSView {
     
     // Tracking area variable
     var mouseTrackingArea: NSTrackingArea!
@@ -29,7 +29,7 @@ class ImageView: NSImageView {
     }
     
     /* Mouse exited function with its callback */
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with event: NSEvent) {        
         if let handler = mouseHandler {
             handler(false)
         }
@@ -37,9 +37,10 @@ class ImageView: NSImageView {
     
     /* Tracking area initialization */
     override func updateTrackingAreas() {
-        guard mouseTrackingArea == nil else {
-            removeTrackingArea(mouseTrackingArea)
-            return
+        super.updateTrackingAreas()
+        
+        if let area = mouseTrackingArea {
+            removeTrackingArea(area)
         }
         
         mouseTrackingArea = NSTrackingArea.init(rect: self.bounds,
@@ -48,6 +49,14 @@ class ImageView: NSImageView {
                                                 userInfo: nil)
         
         self.addTrackingArea(mouseTrackingArea)
+    }
+
+    func refreshMouseTrackingArea() {
+        if let area = mouseTrackingArea {
+            removeTrackingArea(area)
+        }
+        
+        mouseTrackingArea = nil
     }
     
     /* Return an OptionSet with the needed mouse tracking flags */

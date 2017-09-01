@@ -9,21 +9,48 @@
 import Cocoa
 import QuartzCore
 
-// MARK: ViewController
+@available(OSX 10.12.2, *)
+fileprivate extension NSButton {
+    
+    static var playerActions: [PlayerAction: Selector] { return
+        [.play:      #selector(ViewController.togglePlayPauseButtonClicked(_:)),
+         .pause:     #selector(ViewController.togglePlayPauseButtonClicked(_:)),
+         .previous:  #selector(ViewController.previousTrackButtonClicked(_:)),
+         .next:      #selector(ViewController.nextTrackButtonClicked(_:)),
+         .shuffling: #selector(WindowController.shuffleButtonClicked(_:)),
+         .repeating: #selector(WindowController.repeatButtonClicked(_:)),
+         .like:      #selector(WindowController.likeButtonClicked(_:))]
+    }
+    
+    var playerAction: PlayerAction? {
+        set {
+            self.tag = newValue?.rawValue ?? -1
+            
+            if let action = newValue {
+                self.action = NSButton.playerActions[action]
+                self.setImagePreservingTint(action.smallImage)
+            } else {
+                self.action = nil
+            }
+        }
+        
+        get {
+            return PlayerAction(rawValue: self.tag)
+        }
+    }
+}
+
+enum MainViewMode {
+    
+    case compressed
+    case partiallyExpanded
+    case expanded
+}
 
 @available(OSX 10.12.2, *)
 class ViewController: NSViewController {
     
     // MARK: Properties
-    
-    // Button images dictionary
-    var actionImages: [PlayerAction: NSImage] = [.previous:  NSImage.previous!,
-                                                 .play:      NSImage.play!,
-                                                 .pause:     NSImage.pause!,
-                                                 .next:      NSImage.next!,
-                                                 .shuffling: .shuffling,
-                                                 .repeating: .repeating,
-                                                 .like:      .like]
     
     // Action view auto close
     let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
@@ -36,6 +63,12 @@ class ViewController: NSViewController {
     // Preferences
     let shouldPeekControls = true  // Hide/show controls on mouse hover
     let shouldShowArtist   = false // Show artist in title popup view
+    
+    var shouldShowActionBar = true {
+        didSet {
+            showActionBarView()
+        }
+    }
     
     // MARK: Helpers
     
@@ -52,24 +85,36 @@ class ViewController: NSViewController {
     
     // MARK: Outlets
 
-    @IBOutlet weak var fullSongArtworkView:   ImageView!
+    @IBOutlet weak var fullSongArtworkView:   NSImageView!
     @IBOutlet weak var titleLabelView:        NSTextField!
     @IBOutlet weak var albumArtistLabelView:  NSTextField!
-    @IBOutlet weak var previousTrackButton:   NSButton!
-    @IBOutlet weak var togglePlayPauseButton: NSButton!
-    @IBOutlet weak var nextTrackButton:       NSButton!
-    @IBOutlet weak var songProgressSlider:    NSSlider!
     @IBOutlet weak var actionImageView:       NSImageView!
     @IBOutlet weak var actionTextField:       NSTextField!
     @IBOutlet weak var titleTextField:        NSTextField!
     @IBOutlet weak var songProgressBar:       NSSlider!
+    @IBOutlet weak var likeButton:            NSButton!
+    @IBOutlet weak var shuffleButton:         NSButton!
+    @IBOutlet weak var repeatButton:          NSButton!
+    @IBOutlet weak var actionTabView:         NSTabView!
+    @IBOutlet weak var playButton:            NSButton!
+    @IBOutlet weak var previousButton:        NSButton!
+    @IBOutlet weak var nextButton:            NSButton!
+    @IBOutlet weak var actionTabViewHeight:   NSLayoutConstraint!
+    @IBOutlet weak var nextTabButton:         NSButton!
+    @IBOutlet weak var previousTabButton:     NSButton!
     
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
-    var controlsSuperview:         NSView!
     var actionSuperview:           NSView!
-    var titleSuperview:            NSView!
+    var titleSuperview:            NSHoverableView!
+    var actionBarSuperview:        NSView!
+    
+    var mainView: NSHoverableView? {
+        return self.view as? NSHoverableView
+    }
+    
+    var mainViewMode: MainViewMode = .expanded
     
     // MARK: Actions
     
@@ -102,30 +147,41 @@ class ViewController: NSViewController {
         }
     }
     
+    func nextTabButtonClicked(sender: NSButton) {
+        actionTabView.selectNextTabViewItem(self)
+    }
+    
+    func previousTabButtonClicked(sender: NSButton) {
+        actionTabView.selectPreviousTabViewItem(self)
+    }
+    
     // MARK: UI preparation
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         titleAlbumArtistSuperview = titleLabelView.superview
-        controlsSuperview         = togglePlayPauseButton.superview
         actionSuperview           = actionImageView.superview
-        titleSuperview            = titleTextField.superview
+        titleSuperview            = titleTextField.superview as? NSHoverableView
+        actionBarSuperview        = actionTabView.superview
         
-        titleAlbumArtistSuperview.wantsLayer = true
-        controlsSuperview.wantsLayer         = true
-        actionSuperview.wantsLayer           = true
-        titleSuperview.wantsLayer            = true
+        actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
+        
+        [titleAlbumArtistSuperview,
+         actionSuperview,
+         titleSuperview,
+         actionTabView].forEach { $0?.wantsLayer = true }
+        
+        showActionBarView()
     }
     
     override func viewWillAppear() {
         setBackgroundAndShadow(for: titleAlbumArtistSuperview)
-        setBackgroundAndShadow(for: controlsSuperview)
         
-        prepareSongProgressSlider()
         prepareSongProgressBar()
         prepareFullSongArtworkView()
         prepareLastActionView()
+        prepareActionBarButtons()
         prepareTitleView()
     }
 
@@ -153,20 +209,14 @@ class ViewController: NSViewController {
         layer.shadowOpacity = 1
     }
     
-    func prepareSongProgressSlider() {
-        guard let cell = self.songProgressSlider.cell as? SliderCell else { return }
-        
-        // Hide slider thumb
-        cell.knobImage   = NSImage()
-        cell.knobVisible = false
-    }
-    
     func prepareSongProgressBar() {
         guard let cell = self.songProgressBar.cell as? SliderCell else { return }
         
-        // Hide slider thumb
-        cell.knobImage   = NSImage()
-        cell.knobVisible = false
+        // Customize slider thumb
+        cell.width       = view.frame.width
+        cell.knobWidth   = 2.0
+        cell.knobMargin  = 0.0
+        cell.height      = 11.0
         
         // Remove corner radius
         cell.radius = 0
@@ -181,20 +231,44 @@ class ViewController: NSViewController {
         setControlViews(hidden: true)
         
         // Add callback to show/hide views when hovering (animating)
-        fullSongArtworkView.mouseHandler = { (mouseHovering: Bool) -> Void in
+        mainView?.mouseHandler = { (mouseHovering: Bool) -> Void in
             self.setControlViews(hidden: !mouseHovering)
         }
     }
     
     func setControlViews(hidden: Bool) {
-        // Toggles visibility on popup views
-        titleAlbumArtistSuperview.animator().isHidden = hidden
-        controlsSuperview.animator().isHidden         = hidden
-        songProgressBar.animator().isHidden           = !hidden
+        if hidden {
+            mainViewMode = shouldShowActionBar ? .partiallyExpanded : .compressed
+        } else {
+            mainViewMode = .expanded
+        }
+        
+        // Change progress bar height
+        actionTabViewHeight.animator().constant = hidden ? 2 : 11
         
         // Hide overlay views
         if !actionSuperview.isHidden { actionSuperview.animator().isHidden = !hidden }
-        if !titleSuperview.isHidden  { titleSuperview.animator().isHidden  = !hidden }
+        
+        if hidden {
+            // Hide title view after 500ms
+            DispatchQueue.main.run(after: 500) {
+                self.titleSuperview.animator().isHidden = true
+            }
+        } else {
+            // Stop title view auto close timer
+            titleViewAutoCloseTimer.invalidate()
+            
+            // Show title view
+            showTitleView(shouldClose: false)
+        }
+        
+        if !shouldShowActionBar {
+            // Toggle action bar if needed
+            showActionBarView(show: !hidden)
+        }
+        
+        // Toggle tab navigation buttons
+        [nextTabButton, previousTabButton].forEach { $0?.animator().isHidden = hidden }
     }
     
     func prepareLastActionView() {
@@ -209,20 +283,46 @@ class ViewController: NSViewController {
         setShadow(for: layer)
     }
     
+    func prepareActionBarButtons() {
+        playButton.playerAction     = .play
+        previousButton.playerAction = .previous
+        nextButton.playerAction     = .next
+        shuffleButton.playerAction  = .shuffling
+        repeatButton.playerAction   = .repeating
+        likeButton.playerAction     = .like
+        
+        [likeButton, shuffleButton, repeatButton, playButton, previousButton, nextButton].forEach {
+            $0?.imagePosition       = .imageOnly
+            $0?.isBordered          = false
+            $0?.wantsLayer          = true
+            $0?.layer?.cornerRadius = 4.0
+        }
+        
+        [nextTabButton, previousTabButton].forEach {
+            $0?.wantsLayer = true
+            $0?.layer?.cornerRadius = 12.0
+        }
+        
+        nextTabButton.action     = #selector(nextTabButtonClicked(sender:))
+        previousTabButton.action = #selector(previousTabButtonClicked(sender:))
+    }
+    
     func prepareTitleView() {
         guard let layer = titleSuperview.layer else { return }
         
         // Set radius
         layer.cornerRadius = 7.5
         layer.masksToBounds = true
+        
+        titleSuperview.mouseHandler = { mouseHovering in
+            self.titleTextField.stringValue = !mouseHovering ?
+                self.titleLabelView.stringValue : self.albumArtistLabelView.stringValue
+        }
     }
     
     // MARK: UI activation
     
     func showTitleView(shouldClose: Bool = true) {
-        // Only show title info if mouse is not hovering
-        guard controlsSuperview.isHidden else { return }
-        
         // Invalidate existing timers
         // This prevents calls form precedent ones
         titleViewAutoCloseTimer.invalidate()
@@ -231,7 +331,7 @@ class ViewController: NSViewController {
         titleSuperview.animator().isHidden = false
         
         // This keeps time info visible while sliding
-        guard shouldClose else { return }
+        guard shouldClose, mainViewMode != .expanded else { return }
         
         // Restart the autoclose timer
         titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTimeout,
@@ -246,17 +346,13 @@ class ViewController: NSViewController {
                             to time:     Double = 0,
                             shouldClose: Bool = true,
                             liked:       Bool = false) {
-        // Only show action info if mouse is not hovering
-        guard ( controlsSuperview.isHidden ||
-                action == .repeating       ||
-                action == .shuffling       ||
-                action == .scrubbing ) else { return }
-        
         // Invalidate existing timers
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
         
-        actionImageView.image = actionImages[action]
+        if let image = action.image {
+            actionImageView.setImagePreservingTint(image)
+        }
         
         // TODO: more testing
         switch action {
@@ -275,7 +371,7 @@ class ViewController: NSViewController {
             
             // Tint the image
             if shouldTint {
-                actionImageView.image = actionImages[action]?.tint(with: .lightGray)
+                actionImageView.setImagePreservingTint(actionImageView.image?.withAlpha(0.5))
             }
         case .scrubbing:
             // Hide image view if scrubbing
@@ -306,14 +402,38 @@ class ViewController: NSViewController {
         }
     }
     
+    func showActionBarView(show: Bool? = nil) {
+        let show = show != nil ? show! : shouldShowActionBar
+        
+        view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview,
+                                              visible: show)
+        
+        // Setup action bar buttons and colors
+        if shouldShowActionBar {
+            prepareActionBarButtons()
+            colorActionBar(background: titleSuperview.layer?.backgroundColor,
+                           highlight: (songProgressBar.cell as! SliderCell).highlightColor)
+        }
+    }
+    
     // MARK: UI refresh
     
     func updateButtons() {
-        // Initialize playback control buttons
-        previousTrackButton.image   = actionImages[.previous]
-        togglePlayPauseButton.image = helper.isPlaying ?
-                                      actionImages[.pause] : actionImages[.play]
-        nextTrackButton.image       = actionImages[.next]
+        playButton.playerAction = helper.isPlaying ? .pause : .play
+    }
+    
+    func updateShuffleRepeatButtons() {
+        [shuffleButton, repeatButton].enumerated().forEach {
+            let enabled        = $0.offset == 0 ? helper.shuffling : helper.repeating
+            let alpha: CGFloat = enabled        ?                1 : 0.25
+            
+            $0.element?.layer?.backgroundColor = $0.element?.layer?.backgroundColor?
+                .copy(alpha: alpha)
+        }
+    }
+    
+    func updateLikeButton(liked: Bool) {
+        likeButton.layer?.backgroundColor = likeButton.layer?.backgroundColor?.copy(alpha: liked ? 1 : 0.25)
     }
     
     func updateFullSongArtworkView(with object: Any?) {
@@ -337,10 +457,14 @@ class ViewController: NSViewController {
     
     func colorButtonImages(with color: NSColor) {
         // Update button images with new color
-        actionImages = actionImages.mapValues { $0.tint(with: color) }
+        [playButton, previousButton, nextButton, likeButton, shuffleButton, repeatButton].forEach {
+            $0?.tintedImage = $0?.image?.tint(with: color)
+        }
         
         // Color action image too
-        actionImageView.image = actionImageView.image?.tint(with: color)
+        // We have to give a fallback image to ensure action image gets tinted at first start
+        // Because it is not given a default value otherwise
+        actionImageView.tintedImage = (actionImageView.image ?? PlayerAction.play.image!).tint(with: color)
     }
     
     func colorViews(with colors: ImageColors) {
@@ -371,8 +495,9 @@ class ViewController: NSViewController {
         }
         
         // Set the superviews background color and animate it
-        [ titleAlbumArtistSuperview, controlsSuperview, actionSuperview, titleSuperview ].forEach {
-            $0?.layer?.animateChange(to: backgroundColor.cgColor, for: CALayer.kBackgroundColorPath)
+        [ titleAlbumArtistSuperview, actionSuperview, titleSuperview, actionTabView ].forEach {
+            $0?.layer?.animateChange(to: backgroundColor.cgColor,
+                                     for: CALayer.kBackgroundColorPath)
         }
         
         // Set the text colors
@@ -381,21 +506,42 @@ class ViewController: NSViewController {
         }
         albumArtistLabelView.textColor = secondaryColor
         
-        // Set color on the slider too
-        if let sliderCell = songProgressSlider.cell as? SliderCell {
-            sliderCell.backgroundColor = primaryColor
-            sliderCell.highlightColor  = highlightColor
-        }
-        
         // And on the progress bar
         if let barCell = songProgressBar.cell as? SliderCell {
             barCell.backgroundColor = primaryColor
             barCell.highlightColor  = highlightColor
+            barCell.knobColor       = backgroundColor
         }
         
         // Set the color on the playback buttons
-        colorButtonImages(with: primaryColor)
         updateButtons()
+        colorButtonImages(with: primaryColor)
+        
+        colorActionBar(highlight: highlightColor)
+    }
+    
+    func colorActionBar(background: CGColor? = nil,
+                        highlight: NSColor? = nil) {
+        if let backgroundColor = background {
+            actionTabView.layer?.backgroundColor = backgroundColor
+        }
+        
+        if let highlightColor = highlight {
+            [likeButton, shuffleButton, repeatButton].forEach {
+                var alpha: CGFloat = 0.25
+                
+                // Check current alpha value before setting a new one
+                if  let currentAlpha = $0?.layer?.backgroundColor?.alpha {
+                    alpha = currentAlpha
+                }
+                
+                $0?.layer?.backgroundColor = highlightColor.cgColor.copy(alpha: alpha)
+            }
+            
+            [playButton, previousButton, nextButton, nextTabButton, previousTabButton].forEach {
+                $0?.layer?.backgroundColor = highlightColor.cgColor
+            }
+        }
     }
     
     func updateTitleAlbumArtistView(for song: Song) {
@@ -406,13 +552,10 @@ class ViewController: NSViewController {
                                      "\(song.name) - \(song.artist)" :
                                      song.name
         
-        albumArtistLabelView.stringValue = "\(song.artist) - \(song.album)"
+        albumArtistLabelView.stringValue = "\(song.artist)"
     }
     
     func updateSongProgressSlider(with position: Double) {
-        // Update slider
-        songProgressSlider.doubleValue = position
-        
         // Update always on progress bar
         songProgressBar.doubleValue = position
     }

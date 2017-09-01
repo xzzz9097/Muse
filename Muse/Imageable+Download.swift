@@ -17,10 +17,6 @@ protocol Imageable: class {
     // Every view that can set and get and set an image
     // has this variable, thus conforms to ImageDownload
     var image: NSImage? { get set }
-    
-    // Loading function declaration
-    func loadImage(from url: URL, fallback: NSImage, callback: @escaping (NSImage) -> ())
-    
 }
 
 extension NSImage {
