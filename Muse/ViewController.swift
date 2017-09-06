@@ -118,7 +118,7 @@ class ViewController: NSViewController {
         return self.view as? NSHoverableView
     }
     
-    var mainViewMode: MainViewMode = .expanded {
+    var mainViewMode: MainViewMode = .partiallyExpanded {
         didSet {
             updateViewsVisibility()
         }
