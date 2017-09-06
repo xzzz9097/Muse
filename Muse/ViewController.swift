@@ -45,6 +45,10 @@ enum MainViewMode {
     case compressed
     case partiallyExpanded
     case expanded
+    
+    var isHoveredMode: Bool {
+        return self == .expanded
+    }
 }
 
 @available(OSX 10.12.2, *)
@@ -114,7 +118,11 @@ class ViewController: NSViewController {
         return self.view as? NSHoverableView
     }
     
-    var mainViewMode: MainViewMode = .expanded
+    var mainViewMode: MainViewMode = .expanded {
+        didSet {
+            updateViewsVisibility()
+        }
+    }
     
     // MARK: Actions
     
@@ -228,20 +236,20 @@ class ViewController: NSViewController {
         
         guard self.shouldPeekControls else { return }
         
-        setControlViews(hidden: true)
+        updateViewsVisibility()
         
         // Add callback to show/hide views when hovering (animating)
-        mainView?.mouseHandler = { (mouseHovering: Bool) -> Void in
-            self.setControlViews(hidden: !mouseHovering)
+        mainView?.mouseHandler = { hovering in
+            if hovering {
+                self.mainViewMode = .expanded
+            } else {
+                self.mainViewMode = self.shouldShowActionBar ? .partiallyExpanded : .compressed
+            }
         }
     }
     
-    func setControlViews(hidden: Bool) {
-        if hidden {
-            mainViewMode = shouldShowActionBar ? .partiallyExpanded : .compressed
-        } else {
-            mainViewMode = .expanded
-        }
+    func updateViewsVisibility() {
+        let hidden = !mainViewMode.isHoveredMode
         
         // Change progress bar height
         actionTabViewHeight.animator().constant = hidden ? 2 : 11
