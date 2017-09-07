@@ -358,6 +358,25 @@ class ViewController: NSViewController {
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
         
+        // Only show last action view when the corresponding control is not visible
+        // TODO: improve this
+        switch action {
+        case .play, .pause, .next, .previous:
+            if  let selectedTabItem = actionTabView.selectedTabViewItem,
+                actionTabView.indexOfTabViewItem(selectedTabItem) == 0 {
+                return
+            }
+        case .shuffling, .repeating, .like:
+            if  let selectedTabItem = actionTabView.selectedTabViewItem,
+                actionTabView.indexOfTabViewItem(selectedTabItem) == 1 {
+                return
+            }
+        case .scrubbing:
+            if actionTabViewHeight.constant == 11 {
+                return
+            }
+        }
+        
         if let image = action.image {
             actionImageView.setImagePreservingTint(image)
         }
