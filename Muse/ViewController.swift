@@ -40,6 +40,37 @@ fileprivate extension NSButton {
     }
 }
 
+fileprivate extension NSTabView {
+    
+    // All the tabs in our tab view
+    // with the rawValue representing the index
+    enum Tab: Int {
+        case playbackControls, playbackOptions
+    }
+    
+    /**
+     Returns true when the specified tab is selected
+     - parameter tab: the specified tab, listed in the enum
+     */
+    func isSelected(_ tab: Tab) -> Bool {
+        guard let selected = selectedTabViewItem else { return false }
+        
+        return indexOfTabViewItem(selected) == tab.rawValue
+    }
+}
+
+fileprivate extension NSLayoutConstraint {
+    
+    enum SongProgressBarMode: Int {
+        case compressed = 2
+        case expanded   = 11
+    }
+    
+    var progressBarMode: SongProgressBarMode? {
+        return SongProgressBarMode(rawValue: Int(self.constant))
+    }
+}
+
 enum MainViewMode {
     
     case compressed
@@ -103,7 +134,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var playButton:            NSButton!
     @IBOutlet weak var previousButton:        NSButton!
     @IBOutlet weak var nextButton:            NSButton!
-    @IBOutlet weak var actionTabViewHeight:   NSLayoutConstraint!
+    @IBOutlet weak var songProgressBarHeight: NSLayoutConstraint!
     @IBOutlet weak var nextTabButton:         NSButton!
     @IBOutlet weak var previousTabButton:     NSButton!
     
@@ -252,7 +283,7 @@ class ViewController: NSViewController {
         let hidden = !mainViewMode.isHoveredMode
         
         // Change progress bar height
-        actionTabViewHeight.animator().constant = hidden ? 2 : 11
+        songProgressBarHeight.animator().constant = hidden ? 2 : 11
         
         // Hide overlay views
         if !actionSuperview.isHidden { actionSuperview.animator().isHidden = !hidden }
@@ -359,22 +390,13 @@ class ViewController: NSViewController {
         actionViewAutoCloseTimer.invalidate()
         
         // Only show last action view when the corresponding control is not visible
-        // TODO: improve this
         switch action {
         case .play, .pause, .next, .previous:
-            if  let selectedTabItem = actionTabView.selectedTabViewItem,
-                actionTabView.indexOfTabViewItem(selectedTabItem) == 0 {
-                return
-            }
+            if actionTabView.isSelected(.playbackControls) { return }
         case .shuffling, .repeating, .like:
-            if  let selectedTabItem = actionTabView.selectedTabViewItem,
-                actionTabView.indexOfTabViewItem(selectedTabItem) == 1 {
-                return
-            }
+            if actionTabView.isSelected(.playbackOptions) { return }
         case .scrubbing:
-            if actionTabViewHeight.constant == 11 {
-                return
-            }
+            if let mode = songProgressBarHeight.progressBarMode, mode == .expanded { return }
         }
         
         if let image = action.image {

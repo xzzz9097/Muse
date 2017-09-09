@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13168.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13189.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -463,7 +463,6 @@
                     <connections>
                         <outlet property="actionImageView" destination="n4M-1Y-2JZ" id="F3O-Co-NpG"/>
                         <outlet property="actionTabView" destination="VdQ-8J-q9u" id="pNV-fb-aNZ"/>
-                        <outlet property="actionTabViewHeight" destination="5Mw-8i-HJ2" id="iKX-90-Vw9"/>
                         <outlet property="actionTextField" destination="8BH-TZ-iv9" id="jV7-Bf-Te1"/>
                         <outlet property="albumArtistLabelView" destination="OP7-ud-xJg" id="HRE-UL-m8x"/>
                         <outlet property="fullSongArtworkView" destination="FL1-mx-O2f" id="1Ag-uS-RNC"/>
@@ -476,6 +475,7 @@
                         <outlet property="repeatButton" destination="Ozc-M5-qX1" id="g9Q-sX-xdu"/>
                         <outlet property="shuffleButton" destination="jN5-2R-ZRB" id="tNG-Uh-1DX"/>
                         <outlet property="songProgressBar" destination="3IF-e0-Ota" id="jVJ-Wl-Bww"/>
+                        <outlet property="songProgressBarHeight" destination="5Mw-8i-HJ2" id="iKX-90-Vw9"/>
                         <outlet property="titleLabelView" destination="jg9-tH-5t7" id="94d-SB-9OY"/>
                         <outlet property="titleTextField" destination="xcG-Ud-ij9" id="EBE-1t-Unw"/>
                     </connections>
