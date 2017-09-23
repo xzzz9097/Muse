@@ -84,8 +84,7 @@ extension Dictionary {
      - parameter sequence1: the first sequence
      - parameter sequence2: the second sequence
      */
-    init<A, B>(_ sequence1: A, _ sequence2: B)
-        where A: Sequence, B: Sequence, Key == A.Element, Value == B.Element {
+    init(_ sequence1: [Key], _ sequence2: [Value]) {
         self.init()
         
         zip(sequence1, sequence2).forEach { self[$0] = $1 }
