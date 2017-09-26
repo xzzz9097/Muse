@@ -1163,7 +1163,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             SpotifyHelper.shared.fetchTrackInfo(title: self.song.name,
                                                 artist: self.song.artist)
             { track in
-                NSImage.download(from: URL(string:track.album.artUri)!,
+                guard let album = track.album else { return }
+                
+                NSImage.download(from: URL(string: album.artUri)!,
                                  fallback: .defaultBg) { self.image = $0 }
             }
         } else {

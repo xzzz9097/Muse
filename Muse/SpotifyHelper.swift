@@ -8,6 +8,8 @@
 
 import ScriptingBridge
 
+import SpotifyKit
+
 // Protocol for Spotify application queries
 // These props. and funcs. are set to optional in order
 // to be overridded and implemented by the bridge itself
@@ -56,23 +58,26 @@ class SpotifyHelper: PlayerHelper {
     
     // The SBApplication object buond to the helper class
     private let application: SpotifyApplication? = SBApplication.init(bundleIdentifier: BundleIdentifier)
-    
-    // The Swiftify object bound to the helper class
-    private var swiftify: SwiftifyHelper = SwiftifyHelper(
-        with: ApplicationJsonURL,
-        TokenJsonURL,
-        fallbackURL: ApplicationFallbackURL)
+
+    // The SpotifyKit object bound to the helper class
+    private var spotifyManager = SpotifyManager(
+        with: SpotifyManager.SpotifyDeveloperApplication(
+            clientId: "fff95f1ce70e4dffb534bf9bbdf8da6d",
+            clientSecret: "d5757f19f36644d4b85b9f63abe0ef1f",
+            redirectUri: "muse://callback"
+        )
+    )
     
     private init() {
-        if !swiftify.hasToken {
+        if !spotifyManager.hasToken {
             // Try to authenticate if there's no token
-            swiftify.authorize()
+            spotifyManager.authorize()
         } else {
             // Enable like support
             self.supportsLiking = true
             
             // Refresh the token if present
-            swiftify.refreshToken { refreshed in }
+            spotifyManager.refreshToken { _ in }
         }
     }
     
@@ -88,7 +93,7 @@ class SpotifyHelper: PlayerHelper {
      Authorize Swiftify with Spotify Web API
      */
     func authorize() {
-        swiftify.authorize()
+        spotifyManager.authorize()
     }
     
     /**
@@ -98,18 +103,18 @@ class SpotifyHelper: PlayerHelper {
         // Enable like support
         self.supportsLiking = true
         
-        swiftify.saveToken(from: authorizationCode)
+        spotifyManager.saveToken(from: authorizationCode)
     }
     
     /**
      Checks if a token is saved and reports thrugh a handler
      */
     func isSaved(completionHandler: @escaping (Bool) -> Void) {
-        swiftify.isSaved(trackId: id, completionHandler: { saved in
+        spotifyManager.isSaved(trackId: id) { saved in
             self._liked = saved
             
             completionHandler(saved)
-        })
+        }
     }
     
     // MARK: Song data
@@ -313,7 +318,7 @@ class SpotifyHelper: PlayerHelper {
         set {
             if newValue {
                 // Stars the current track
-                swiftify.save(trackId: id) { saved in
+                spotifyManager.save(trackId: id) { saved in
                     // Update the ivar
                     self._liked = true
                     
@@ -322,7 +327,7 @@ class SpotifyHelper: PlayerHelper {
                     self.likeChangedHandler(true)
                 }
             } else {
-                swiftify.delete(trackId: id) { deleted in
+                spotifyManager.delete(trackId: id) { deleted in
                     self._liked = false
                     
                     self.likeChangedHandler(false)
@@ -340,7 +345,9 @@ class SpotifyHelper: PlayerHelper {
     func fetchTrackInfo(title: String,
                         artist: String,
                         completionHandler: @escaping (SpotifyTrack) -> Void) {
-        swiftify.getTrack(title: title, artist: artist, completionHandler: completionHandler)
+        spotifyManager.getTrack(title: title,
+                                artist: artist,
+                                completionHandler: completionHandler)
     }
     
     // MARK: Callbacks

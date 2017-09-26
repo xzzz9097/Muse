@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   SpotifyKit:
-    :commit: 26f37014cc3b35ccc25419eea9fe86f314ca34b6
+    :commit: ca3e95b7a69512062ecebf643be80f73d6c90939
     :git: https://github.com/xzzz9097/SpotifyKit.git
 
 SPEC CHECKSUMS:
