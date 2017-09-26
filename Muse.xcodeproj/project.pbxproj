@@ -223,7 +223,7 @@
 				0CCD27651DF01F440039ACDC /* DDHotKeyUtilities.m */,
 			);
 			name = DDHotKey;
-			path = Muse/DDHotKey;
+			path = Muse/Libraries/DDHotKey;
 			sourceTree = SOURCE_ROOT;
 		};
 		0CAD6F981DE4B3CF00736B00 /* Products */ = {
@@ -238,6 +238,114 @@
 				0CAD6FAE1DE4B3CF00736B00 /* SwiftyJSON tvOS Tests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0CFA8E231F7AE9F300D1AE83 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0CFA8E261F7AEAA700D1AE83 /* Controllers */,
+				0CFA8E271F7AEACA00D1AE83 /* Interface */,
+				0CFA8E251F7AEA5B00D1AE83 /* Extensions */,
+				0CFA8E281F7AEAE800D1AE83 /* Models */,
+				0CFA8E2A1F7AEB8100D1AE83 /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		0CFA8E251F7AEA5B00D1AE83 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */,
+				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
+				0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */,
+				0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */,
+				0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */,
+				0C5E94F71E214A02000E0013 /* Double+Extensions.swift */,
+				0C0980561E2830E500FF9FE0 /* NSTouch+Extensions.swift */,
+				0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */,
+				0CD2870D1E106D4600EF0E73 /* NSImage+Extensions.swift */,
+				0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */,
+				0C9B622B1E1D696400660633 /* Animations.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0CFA8E261F7AEAA700D1AE83 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0CFF46691DE3826300A3BE8E /* AppDelegate.swift */,
+				0CEAEB3C1E15A34400BD68D5 /* VoxHelper.swift */,
+				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
+				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
+				0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */,
+				0C48DA411E181C0B0059BA69 /* PlayersManager.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0CFA8E271F7AEACA00D1AE83 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				0C8162B71F29021300529F5E /* NSMediaSliderTouchBarItem.swift */,
+				0C9B62321E1EAE9100660633 /* ButtonCell.swift */,
+				0C3750D01EFC29C700EE19AE /* Slider.swift */,
+				0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */,
+				0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */,
+				0CDD1ADA1DF04B560027661A /* SliderCell.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		0CFA8E281F7AEAE800D1AE83 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
+				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
+				0C4943471DF8753500AE622E /* PlayerStates.h */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0CFA8E291F7AEB2D00D1AE83 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				0CFA8E2B1F7AEBF900D1AE83 /* DFRPrivate */,
+				0C9A60CD1DE79AE50051CDC6 /* DDHotKey */,
+				0C9B62261E1C357100660633 /* NSImageColors.swift */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		0CFA8E2A1F7AEB8100D1AE83 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */,
+				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
+				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
+				0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0CFA8E2B1F7AEBF900D1AE83 /* DFRPrivate */ = {
+			isa = PBXGroup;
+			children = (
+				0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */,
+				0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */,
+			);
+			path = DFRPrivate;
+			sourceTree = "<group>";
+		};
+		0CFA8E2C1F7AECA200D1AE83 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0CFF466D1DE3826300A3BE8E /* Assets.xcassets */,
+				0CFF466F1DE3826300A3BE8E /* Main.storyboard */,
+				0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */,
+				0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */,
+				0CFF46721DE3826300A3BE8E /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		0CFF465D1DE3826300A3BE8E = {
@@ -265,45 +373,9 @@
 		0CFF46681DE3826300A3BE8E /* Muse */ = {
 			isa = PBXGroup;
 			children = (
-				0C9A60CD1DE79AE50051CDC6 /* DDHotKey */,
-				0CFF46691DE3826300A3BE8E /* AppDelegate.swift */,
-				0CEAEB3C1E15A34400BD68D5 /* VoxHelper.swift */,
-				0C8162B71F29021300529F5E /* NSMediaSliderTouchBarItem.swift */,
-				0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */,
-				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
-				0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */,
-				0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */,
-				0CFF46961DE383A300A3BE8E /* SpotifyHelper.swift */,
-				0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */,
-				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
-				0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */,
-				0C4943471DF8753500AE622E /* PlayerStates.h */,
-				0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */,
-				0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */,
-				0C9B62321E1EAE9100660633 /* ButtonCell.swift */,
-				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
-				0C9B622B1E1D696400660633 /* Animations.swift */,
-				0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */,
-				0C48DA411E181C0B0059BA69 /* PlayersManager.swift */,
-				0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */,
-				0C5E94F71E214A02000E0013 /* Double+Extensions.swift */,
-				0C9B62261E1C357100660633 /* NSImageColors.swift */,
-				0C3750D01EFC29C700EE19AE /* Slider.swift */,
-				0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */,
-				0C0980561E2830E500FF9FE0 /* NSTouch+Extensions.swift */,
-				0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */,
-				0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */,
-				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
-				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
-				0CD2870D1E106D4600EF0E73 /* NSImage+Extensions.swift */,
-				0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */,
-				0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */,
-				0CFF466D1DE3826300A3BE8E /* Assets.xcassets */,
-				0CFF466F1DE3826300A3BE8E /* Main.storyboard */,
-				0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */,
-				0CDD1ADA1DF04B560027661A /* SliderCell.swift */,
-				0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */,
-				0CFF46721DE3826300A3BE8E /* Info.plist */,
+				0CFA8E291F7AEB2D00D1AE83 /* Libraries */,
+				0CFA8E231F7AE9F300D1AE83 /* Sources */,
+				0CFA8E2C1F7AECA200D1AE83 /* Resources */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -794,11 +866,11 @@
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 				);
-				INFOPLIST_FILE = Muse/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Muse/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Muse-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Resources/Muse-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -815,11 +887,11 @@
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 				);
-				INFOPLIST_FILE = Muse/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Muse/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Muse-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Resources/Muse-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
