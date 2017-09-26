@@ -68,37 +68,27 @@ class VoxHelper: PlayerHelper {
     // MARK: Playback controls
     
     func play() {
-        guard let application = application else { return }
-        
-        application.play!()
+        application?.play?()
     }
     
     func pause() {
-        guard let application = application else { return }
-        
-        application.pause!()
+        application?.pause?()
     }
     
     func togglePlayPause() {
-        guard let application = application else { return }
-        
-        application.playpause!()
+        application?.playpause?()
         
         execPlayPauseHandler()
     }
     
     func nextTrack() {
-        guard let application = application else { return }
-        
-        application.next!()
+        application?.next?()
         
         trackChangedHandler(true)
     }
     
     func previousTrack() {
-        guard let application = application else { return }
-        
-        application.previous!()
+        application?.previous?()
         
         trackChangedHandler(false)
     }
@@ -123,29 +113,19 @@ class VoxHelper: PlayerHelper {
     
     var playbackPosition: Double {
         set {
-            guard let application = application else { return }
-            
             // Set the position on the player
-            application.setCurrentTime!(newValue)
+            application?.setCurrentTime?(newValue)
         }
         
         get {
-            guard let application = application else { return 0 }
-            
-            guard let playbackPosition = application.currentTime else { return 0 }
-            
             // Return current playback position
-            return playbackPosition
+            return application?.currentTime ?? 0
         }
     }
     
     var trackDuration: Double {
-        guard let application = application else { return 0 }
-        
-        guard let trackDuration = application.totalTime else { return 0 }
-        
         // Return current track duration
-        return trackDuration
+        return application?.totalTime ?? 0
     }
     
     func scrub(to doubleValue: Double?, touching: Bool) {
@@ -160,40 +140,30 @@ class VoxHelper: PlayerHelper {
     
     var volume: Int {
         set {
-            guard let application = application else { return }
-            
             // Set the volume on the player
-            application.setPlayerVolume!(Double(newValue))
+            application?.setPlayerVolume?(Double(newValue))
         }
         
         get {
-            guard let application = application else { return 0 }
-            
-            guard let volume = application.playerVolume else { return 0 }
-            
             // Get current volume
             // casting to Integer because Vox provides a Double
-            return Int(volume)
+            return Int(application?.playerVolume ?? 0)
         }
     }
     
     var repeating: Bool {
         set {
-            guard let application = application else { return }
-            
             let repeating: VoxERpt = newValue ? .repeatAll : .none
             
             // Toggle repeating on the player
-            application.setRepeatState!(repeating)
+            application?.setRepeatState!(repeating)
             
             // Call the handler with new repeat value
             execShuffleRepeatChangedHandler(repeatChanged: true)
         }
         
         get {
-            guard let application = application else { return false }
-            
-            guard let repeating = application.repeatState else { return false }
+            guard let repeating = application?.repeatState else { return false }
             
             // Return current repeating status
             // 1: repeat one, 2: repeat all 
@@ -203,10 +173,8 @@ class VoxHelper: PlayerHelper {
     
     var shuffling: Bool {
         set {
-            guard let application = application else { return }
-            
             // Toggle shuffling on the player
-            application.shuffle!()
+            application?.shuffle?()
             
             // Call the handler with new shuffle value
             execShuffleRepeatChangedHandler(shuffleChanged: true)
@@ -222,9 +190,7 @@ class VoxHelper: PlayerHelper {
     // MARK: Artwork
     
     func artwork() -> Any? {
-        guard let application = application else { return nil }
-        
-        return application.artworkImage
+        return application?.artworkImage
     }
     
     // MARK: Callbacks

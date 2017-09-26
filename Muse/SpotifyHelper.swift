@@ -120,9 +120,7 @@ class SpotifyHelper: PlayerHelper {
     // MARK: Song data
     
     var song: Song {
-        guard let application = application else { return Song() }
-        
-        guard let currentTrack = application.currentTrack else { return Song() }
+        guard let currentTrack = application?.currentTrack else { return Song() }
         
         return Song(name: currentTrack.name!,
                     artist: currentTrack.artist!,
@@ -148,37 +146,27 @@ class SpotifyHelper: PlayerHelper {
     // MARK: Playback controls
     
     func play() {
-        guard let application = application else { return }
-        
-        application.play!()
+        application?.play?()
     }
     
     func pause() {
-        guard let application = application else { return }
-        
-        application.pause!()
+        application?.pause?()
     }
     
     func togglePlayPause() {
-        guard let application = application else { return }
-        
-        application.playpause!()
+        application?.playpause?()
         
         execPlayPauseHandler()
     }
     
     func nextTrack() {
-        guard let application = application else { return }
-        
-        application.nextTrack!()
+        application?.nextTrack?()
         
         trackChangedHandler(true)
     }
     
     func previousTrack() {
-        guard let application = application else { return }
-        
-        application.previousTrack!()
+        application?.previousTrack?()
         
         trackChangedHandler(false)
     }
@@ -203,32 +191,20 @@ class SpotifyHelper: PlayerHelper {
     
     var playbackPosition: Double {
         set {
-            guard let application = application else { return }
-            
             // Set the position on the player
-            application.setPlayerPosition!(newValue)
+            application?.setPlayerPosition!(newValue)
         }
         
         get {
-            guard let application = application else { return 0 }
-            
-            guard let playbackPosition = application.playerPosition else { return 0 }
-            
             // Return current playback position
-            return playbackPosition
+            return application?.playerPosition ?? 0
         }
     }
     
     var trackDuration: Double {
-        guard let application = application else { return 0 }
-        
-        guard   let currentTrack = application.currentTrack,
-                let trackDuration = currentTrack.duration
-        else { return 0 }
-        
         // Return current track duration
         // It needs a cast because 'duration' from ScriptingBridge is Int
-        return Double(trackDuration) / 1000
+        return Double(application?.currentTrack?.duration ?? 0) / 1000
     }
     
     func scrub(to doubleValue: Double?, touching: Bool) {
@@ -243,70 +219,50 @@ class SpotifyHelper: PlayerHelper {
     
     var volume: Int {
         set {
-            guard let application = application else { return }
-            
             // Set the volume on the player
-            application.setSoundVolume!(newValue)
+            application?.setSoundVolume?(newValue)
         }
         
         get {
-            guard let application = application else { return 0 }
-            
-            guard let volume = application.soundVolume else { return 0 }
-            
             // Get current volume
-            return volume
+            return application?.soundVolume ?? 0
         }
     }
     
     var repeating: Bool {
         set {
-            guard let application = application else { return }
-            
             // Toggle repeating on the player
-            application.setRepeating!(newValue)
+            application?.setRepeating?(newValue)
             
             // Call the handler with new repeat value
             execShuffleRepeatChangedHandler(repeatChanged: true)
         }
         
         get {
-            guard let application = application else { return false }
-            
-            guard let repeating = application.repeating else { return false }
-            
             // Return current repeating status
-            return repeating
+            return application?.repeating ?? false
         }
     }
     
     var shuffling: Bool {
         set {
-            guard let application = application else { return }
-            
             // Toggle shuffling on the player
-            application.setShuffling!(newValue)
+            application?.setShuffling?(newValue)
             
             // Call the handler with new shuffle value
             execShuffleRepeatChangedHandler(shuffleChanged: true)
         }
         
         get {
-            guard let application = application else { return false }
-            
-            guard let shuffling = application.shuffling else { return false }
-            
             // Return current shuffling status
-            return shuffling
+            return application?.shuffling ?? false
         }
     }
     
     // MARK: Artwork
     
     func artwork() -> Any? {
-        guard let application = application else { return nil }
-        
-        return application.currentTrack?.artworkUrl
+        return application?.currentTrack?.artworkUrl
     }
     
     // MARK: Starring
@@ -336,9 +292,7 @@ class SpotifyHelper: PlayerHelper {
         }
         
         get {
-            guard let _liked = _liked else { return false }
-            
-            return _liked
+            return _liked ?? false
         }
     }
     

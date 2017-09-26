@@ -77,9 +77,7 @@ class iTunesHelper: PlayerHelper {
     // MARK: Song data
     
     var song: Song {
-        guard let application = application else { return Song() }
-        
-        guard let currentTrack = application.currentTrack else { return Song() }
+        guard let currentTrack = application?.currentTrack else { return Song() }
         
         return Song(name: currentTrack.name!,
                     artist: currentTrack.artist!,
@@ -90,37 +88,27 @@ class iTunesHelper: PlayerHelper {
     // MARK: Playback controls
     
     func play() {
-        guard let application = application else { return }
-        
-        application.playOnce!(false)
+        application?.playOnce?(false)
     }
     
     func pause() {
-        guard let application = application else { return }
-        
-        application.pause!()
+        application?.pause?()
     }
     
     func togglePlayPause() {
-        guard let application = application else { return }
-        
-        application.playpause!()
+        application?.playpause?()
         
         execPlayPauseHandler()
     }
     
     func nextTrack() {
-        guard let application = application else { return }
-        
-        application.nextTrack!()
+        application?.nextTrack?()
         
         trackChangedHandler(true)
     }
     
     func previousTrack() {
-        guard let application = application else { return }
-        
-        application.previousTrack!()
+        application?.previousTrack?()
         
         trackChangedHandler(false)
     }
@@ -145,31 +133,19 @@ class iTunesHelper: PlayerHelper {
     
     var playbackPosition: Double {
         set {
-            guard let application = application else { return }
-            
             // Set the position on the player
-            application.setPlayerPosition!(newValue)
+            application?.setPlayerPosition?(newValue)
         }
         
         get {
-            guard let application = application else { return 0 }
-            
-            guard let playbackPosition = application.playerPosition else { return 0 }
-            
             // Return current playback position
-            return playbackPosition
+            return application?.playerPosition ?? 0
         }
     }
     
     var trackDuration: Double {
-        guard let application = application else { return 0 }
-        
-        guard   let currentTrack = application.currentTrack,
-                let trackDuration = currentTrack.duration
-        else { return 0 }
-        
         // Return current track duration
-        return trackDuration
+        return application?.currentTrack?.duration ?? 0
     }
     
     func scrub(to doubleValue: Double?, touching: Bool) {
@@ -184,39 +160,29 @@ class iTunesHelper: PlayerHelper {
     
     var volume: Int {
         set {
-            guard let application = application else { return }
-            
             // Set the volume on the player
-            application.setSoundVolume!(newValue)
+            application?.setSoundVolume?(newValue)
         }
         
         get {
-            guard let application = application else { return 0 }
-            
-            guard let volume = application.soundVolume else { return 0 }
-            
             // Get current volume
-            return volume
+            return application?.soundVolume ?? 0
         }
     }
     
     var repeating: Bool {
         set {
-            guard let application = application else { return }
-            
             let repeating: iTunesERpt = newValue ? iTunesERptAll : iTunesERptOff
             
             // Toggle repeating on the player
-            application.setSongRepeat!(repeating)
+            application?.setSongRepeat!(repeating)
             
             // Call the handler with new repeat value
             execShuffleRepeatChangedHandler(repeatChanged: true)
         }
         
         get {
-            guard let application = application else { return false }
-            
-            guard let repeating = application.songRepeat else { return false }
+            guard let repeating = application?.songRepeat else { return false }
             
             // Return current repeating status
             return repeating == iTunesERptOne || repeating == iTunesERptAll
@@ -225,57 +191,40 @@ class iTunesHelper: PlayerHelper {
     
     var shuffling: Bool {
         set {
-            guard let application = application else { return }
-            
             // Toggle shuffling on the player
-            application.setShuffleEnabled!(newValue)
+            application?.setShuffleEnabled?(newValue)
             
             // Call the handler with new shuffle value
             execShuffleRepeatChangedHandler(shuffleChanged: true)
         }
         
         get {
-            guard let application = application else { return false }
-            
-            guard let shuffling = application.shuffleEnabled else { return false }
-            
             // Return current shuffling status
-            return shuffling
+            return application?.shuffleEnabled ?? false
         }
     }
     
     // MARK: Artwork
     
     func artwork() -> Any? {
-        guard let application = application else { return nil }
-        
         // Returns the first available artwork
-        return application.currentTrack?.artworks?[0].data
+        return application?.currentTrack?.artworks?[0].data
     }
     
     // MARK: Starring
     
     var liked: Bool {
         set {
-            guard   let application = application,
-                    let track = application.currentTrack
-            else { return }
-            
             // Stars the current track
-            track.setLoved!(newValue)
+            application?.currentTrack?.setLoved?(newValue)
             
             // Call the handler with new like value
             likeChangedHandler(newValue)
         }
         
         get {
-            guard   let application = application,
-                    let track = application.currentTrack,
-                    let loved = track.loved
-            else { return false }
-            
             // Returns true if the current track is starred
-            return loved
+            return application?.currentTrack?.loved ?? false
         }
     }
     
