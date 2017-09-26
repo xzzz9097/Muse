@@ -8,14 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0C0980571E2830E500FF9FE0 /* NSTouch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0980561E2830E500FF9FE0 /* NSTouch+Extensions.swift */; };
-		0C1AA7021E97F95E00EC89C2 /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C1AA7011E97F95E00EC89C2 /* token.json */; };
 		0C1B1F5F1F17C065009D4588 /* DFRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */; };
 		0C1F20EC1F2B21E50055ACAC /* NSCustomizableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */; };
 		0C1F20F41F2B9F3C0055ACAC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */; };
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
 		0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3750D01EFC29C700EE19AE /* Slider.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
-		0C5098B81E859B1C006EC944 /* application.json in Resources */ = {isa = PBXBuildFile; fileRef = 0C5098B71E859B1C006EC944 /* application.json */; };
 		0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */; };
 		0C56FEDA1F4AB5E200A247CB /* Imageable+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */; };
 		0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */; };
@@ -122,7 +120,6 @@
 
 /* Begin PBXFileReference section */
 		0C0980561E2830E500FF9FE0 /* NSTouch+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTouch+Extensions.swift"; sourceTree = "<group>"; };
-		0C1AA7011E97F95E00EC89C2 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
 		0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCustomizableButton.swift; sourceTree = "<group>"; };
 		0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extensions.swift"; sourceTree = "<group>"; };
@@ -131,7 +128,6 @@
 		0C3750D01EFC29C700EE19AE /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
-		0C5098B71E859B1C006EC944 /* application.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = application.json; sourceTree = "<group>"; };
 		0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
 		0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Imageable+Tint.swift"; sourceTree = "<group>"; };
 		0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarMaker.swift; sourceTree = "<group>"; };
@@ -308,8 +304,6 @@
 				0CDD1ADA1DF04B560027661A /* SliderCell.swift */,
 				0C9A60CE1DE79B1B0051CDC6 /* Muse-Bridging-Header.h */,
 				0CFF46721DE3826300A3BE8E /* Info.plist */,
-				0C5098B71E859B1C006EC944 /* application.json */,
-				0C1AA7011E97F95E00EC89C2 /* token.json */,
 			);
 			path = Muse;
 			sourceTree = "<group>";
@@ -530,9 +524,7 @@
 			files = (
 				0CA5FA621ED1DC9500248A91 /* dsa_pub.pem in Resources */,
 				0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */,
-				0C5098B81E859B1C006EC944 /* application.json in Resources */,
 				0CFF46711DE3826300A3BE8E /* Main.storyboard in Resources */,
-				0C1AA7021E97F95E00EC89C2 /* token.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

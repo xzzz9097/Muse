@@ -370,12 +370,4 @@ class SpotifyHelper: PlayerHelper {
     
     static let rawTrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
     
-    // MARK: Resources
-    
-    private static let ApplicationJsonURL     = AppDelegate.supportFilesURLs[0]
-    
-    private static let ApplicationFallbackURL = Bundle.main.url(forResource: "application", withExtension: "json")
-    
-    private static let TokenJsonURL           = AppDelegate.supportFilesURLs[1]
-    
 }

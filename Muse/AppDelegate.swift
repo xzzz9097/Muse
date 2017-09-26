@@ -62,7 +62,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Data saving
     
-    private static var supportFiles = ["application.json", "token.json"]
+    private static var supportFiles = [String]()
     
     var bundleFilesURLs = supportFiles.map { file -> URL in
         let res = String.init(file.split(separator: ".")[0])
@@ -158,12 +158,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Create the menu item
         attachMenuItem()
-        
-        // Create application support folder if necessary
-        if !hasApplicationSupportFolder { createApplicationSupportFolder() }
-        
-        // Copy support files if necessary
-        if !hasApplicationSupportFiles  { copyApplicationSupportFiles() }
         
         // Register dafault user preferences
         registerDefaultPreferences()
