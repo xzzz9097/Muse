@@ -96,19 +96,18 @@ class VoxHelper: PlayerHelper {
     // MARK: Playback status
     
     var playerState: PlayerState {
-        guard let application = application else { return .stopped}
-        
         // Return current playback status ( R/O )
-        if application.playerState == .playing {
+        switch application?.playerState {
+        case .playing?:
             return .playing
-        } else if application.playerState == .paused {
+        case .paused?:
             return .paused
-        } else if application.playerState == .stopped {
+        case .stopped?:
+            return .stopped
+        default:
+            // By default return stopped status
             return .stopped
         }
-        
-        // By default return stopped status
-        return .stopped
     }
     
     var playbackPosition: Double {

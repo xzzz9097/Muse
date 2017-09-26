@@ -116,19 +116,18 @@ class iTunesHelper: PlayerHelper {
     // MARK: Playback status
     
     var playerState: PlayerState {
-        guard let application = application else { return .stopped }
-        
         // Return current playback status ( R/O )
-        if application.playerState == iTunesEPlSPlaying {
+        switch application?.playerState {
+        case iTunesEPlSPlaying?:
             return .playing
-        } else if application.playerState == iTunesEPlSPaused {
+        case iTunesEPlSPaused?:
             return .paused
-        } else if application.playerState == iTunesEPlSStopped {
+        case iTunesEPlSStopped?:
+            return .stopped
+        default:
+            // By default return stopped status
             return .stopped
         }
-        
-        // By default return stopped status
-        return .stopped
     }
     
     var playbackPosition: Double {

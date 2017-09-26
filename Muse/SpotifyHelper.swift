@@ -174,19 +174,18 @@ class SpotifyHelper: PlayerHelper {
     // MARK: Playback status
     
     var playerState: PlayerState {
-        guard let application = application else { return .stopped }
-        
         // Return current playback status ( R/O )
-        if application.playerState == SpotifyEPlSPlaying {
+        switch application?.playerState {
+        case SpotifyEPlSPlaying?:
             return .playing
-        } else if application.playerState == SpotifyEPlSPaused {
+        case SpotifyEPlSPaused?:
             return .paused
-        } else if application.playerState == SpotifyEPlSStopped {
+        case SpotifyEPlSStopped?:
+            return .stopped
+        default:
+            // By default return stopped status
             return .stopped
         }
-        
-        // By default return stopped status
-        return .stopped
     }
     
     var playbackPosition: Double {
