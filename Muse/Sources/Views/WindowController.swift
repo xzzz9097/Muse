@@ -366,11 +366,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     /**
      Callback for PlayerHelper's goTo(Bool, Double?)
      */
-    func timeChangedHandler(touching: Bool, doubleValue: Double?) {
-        guard let value = doubleValue else { return }
-        
-        let time = value * self.song.duration
-        
+    func timeChangedHandler(touching: Bool, time: Double) {
         if let cell = songProgressSlider?.cell as? SliderCell {
             // If we are sliding, show time near TouchBar slider knob
             cell.knobImage   = touching ? nil : .playhead
@@ -404,7 +400,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             case .previousTrack:
                 strongSelf.trackChangedHandler(next: false)
             case .scrub(let touching, let time):
-                strongSelf.timeChangedHandler(touching: touching, doubleValue: time)
+                strongSelf.timeChangedHandler(touching: touching, time: time)
             case .shuffling(let enabled):
                 strongSelf.setShuffleRepeatSegmentedView(shuffleSelected: enabled)
             case .repeating(let enabled):

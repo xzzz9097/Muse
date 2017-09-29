@@ -77,7 +77,7 @@ struct PlayerHelperNotification {
         case playPause
         case nextTrack
         case previousTrack
-        case scrub(Bool, Double?)
+        case scrub(Bool, Double)
         case shuffling(Bool)
         case repeating(Bool)
         case like(Bool)
@@ -219,7 +219,7 @@ extension PlayerHelper {
         self.internalScrub(to: doubleValue, touching: touching)
         
         // TODO: this may also require delayed execution
-        PlayerHelperNotification(.scrub(touching, doubleValue)).post()
+        PlayerHelperNotification(.scrub(touching, (doubleValue ?? 0) * trackDuration)).post()
     }
     
     // MARK: Playback options
