@@ -81,14 +81,10 @@ class VoxHelper: PlayerHelper {
     
     func internalNextTrack() {
         application?.next?()
-        
-        trackChangedHandler(true)
     }
     
     func internalPreviousTrack() {
         application?.previous?()
-        
-        trackChangedHandler(false)
     }
     
     // MARK: Playback status
@@ -191,8 +187,6 @@ class VoxHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-        
-    var trackChangedHandler: (Bool) -> () = { _ in }
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     

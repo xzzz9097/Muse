@@ -101,14 +101,10 @@ class iTunesHelper: PlayerHelper {
     
     func internalNextTrack() {
         application?.nextTrack?()
-        
-        trackChangedHandler(true)
     }
     
     func internalPreviousTrack() {
         application?.previousTrack?()
-        
-        trackChangedHandler(false)
     }
     
     // MARK: Playback status
@@ -226,8 +222,6 @@ class iTunesHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-        
-    var trackChangedHandler: (Bool) -> () = { _ in }
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     

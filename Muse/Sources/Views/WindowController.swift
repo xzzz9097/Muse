@@ -359,6 +359,20 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
+    // Callback for PlayerHelper's nextTrack() and previousTrack()
+    func trackChangedHandler(next: Bool) {
+        updateSongProgressSlider(with: 0)
+        
+        updateNowPlayingInfo()
+        
+        onViewController { controller in
+            controller.showLastActionView(for: next ? .next : .previous)
+            
+            // Peek title of currently playing track
+            controller.showTitleView()
+        }
+    }
+    
     func registerCallbacks() {
         PlayerHelperNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
@@ -366,21 +380,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             switch event {
             case .playPause:
                 strongSelf.playPauseHandler()
+            case .nextTrack:
+                strongSelf.trackChangedHandler(next: true)
+            case .previousTrack:
+                strongSelf.trackChangedHandler(next: false)
             default: break
-            }
-        }
-        
-        // Callback for PlayerHelper's nextTrack() and previousTrack()
-        helper.trackChangedHandler = { next in
-            self.updateSongProgressSlider(with: 0)
-            
-            self.updateNowPlayingInfo()
-            
-            self.onViewController { controller in
-                controller.showLastActionView(for: next ? .next : .previous)
-                
-                // Peek title of currently playing track
-                controller.showTitleView()
             }
         }
         

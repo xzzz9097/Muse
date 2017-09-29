@@ -159,14 +159,10 @@ class SpotifyHelper: PlayerHelper {
     
     func internalNextTrack() {
         application?.nextTrack?()
-        
-        trackChangedHandler(true)
     }
     
     func internalPreviousTrack() {
         application?.previousTrack?()
-        
-        trackChangedHandler(false)
     }
     
     // MARK: Playback status
@@ -302,9 +298,7 @@ class SpotifyHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-        
-    var trackChangedHandler: (Bool) -> () = { _ in }
-    
+
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }

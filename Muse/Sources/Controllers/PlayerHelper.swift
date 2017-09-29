@@ -168,9 +168,7 @@ protocol PlayerHelper {
     var liked: Bool { set get }
     
     // MARK: Callbacks
-    
-    var trackChangedHandler: (Bool) -> () { set get }
-    
+
     var timeChangedHandler: (Bool, Double?) -> () { set get }
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () { set get }
