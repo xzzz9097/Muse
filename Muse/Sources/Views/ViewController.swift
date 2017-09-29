@@ -229,6 +229,10 @@ class ViewController: NSViewController {
             case .previousTrack:
                 strongSelf.showLastActionView(for: .previous)
                 strongSelf.showTitleView()
+            case .scrub(let touching, let time):
+                strongSelf.showLastActionView(for: .scrubbing,
+                                              to: time,
+                                              shouldClose: !touching)
             case .shuffling(let shuffling):
                 strongSelf.showLastActionView(for: .shuffling)
                 strongSelf.updateShuffleRepeatButtons(shuffling: shuffling)

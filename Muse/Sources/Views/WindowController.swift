@@ -376,12 +376,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         updateSongProgressSlider(with: time)
         
-        onViewController { controller in
-            controller.showLastActionView(for: .scrubbing,
-                                          to: time,
-                                          shouldClose: !touching)
-        }
-        
         // Set 'isSliding' after a short delay
         // This prevents timer from resuming too early
         // after scrubbing, thus resetting the slider position
