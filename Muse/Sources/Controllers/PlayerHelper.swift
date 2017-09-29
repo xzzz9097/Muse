@@ -155,9 +155,9 @@ protocol PlayerHelper {
     
     var volume: Int { set get }
     
-    var repeating: Bool { set get }
+    var internalRepeating: Bool { set get }
     
-    var shuffling: Bool { set get }
+    var internalShuffling: Bool { set get }
     
     // MARK: Artwork
     
@@ -168,8 +168,6 @@ protocol PlayerHelper {
     var liked: Bool { set get }
     
     // MARK: Callbacks
-    
-    var shuffleRepeatChangedHandler: (Bool, Bool) -> () { set get }
     
     var likeChangedHandler: (Bool) -> () { set get }
     
@@ -220,7 +218,34 @@ extension PlayerHelper {
         // Override this in extension to provide default args
         self.internalScrub(to: doubleValue, touching: touching)
         
+        // TODO: this may also require delayed execution
         PlayerHelperNotification(.scrub(touching, doubleValue)).post()
+    }
+    
+    // MARK: Playback options
+    
+    var repeating: Bool {
+        set {
+            internalRepeating = newValue
+            
+            PlayerHelperNotification(.repeating(newValue)).post()
+        }
+
+        get {
+            return internalRepeating
+        }
+    }
+    
+    var shuffling: Bool {
+        set {
+            internalShuffling = newValue
+            
+            PlayerHelperNotification(.shuffling(newValue)).post()
+        }
+        
+        get {
+            return internalShuffling
+        }
     }
 }
 
@@ -269,16 +294,6 @@ extension PlayerHelper {
         set { }
         
         get { return false }
-    }
-    
-    // MARK: Callback executors
-    
-    // The time (in millis) after which
-    // the instructions will run
-    var delayTime: Int { return 5 }
-    
-    func execShuffleRepeatChangedHandler(shuffleChanged: Bool = false, repeatChanged: Bool = false) {
-        DispatchQueue.main.run(after: delayTime) { self.shuffleRepeatChangedHandler(shuffleChanged, repeatChanged) }
     }
     
     // MARK: Notification ID

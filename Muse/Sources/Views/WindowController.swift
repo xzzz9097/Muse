@@ -404,6 +404,23 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         DispatchQueue.main.run(after: 5) { self.isSliding = touching }
     }
     
+    /**
+     Callback for PlayerHelper's shuffe/repeat setters
+     */
+    func shuffleRepeatChangedHandler(shuffleChanged: Bool = false , repeatChanged: Bool = false) {
+        // Send shuffle/repeat action to VC
+        // TODO: move this in VC
+        self.onViewController { controller in
+            if shuffleChanged {
+                controller.showLastActionView(for: .shuffling)
+            } else if repeatChanged {
+                controller.showLastActionView(for: .repeating)
+            }
+            
+            controller.updateShuffleRepeatButtons()
+        }
+    }
+    
     func registerCallbacks() {
         PlayerHelperNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
@@ -417,24 +434,13 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                 strongSelf.trackChangedHandler(next: false)
             case .scrub(let touching, let time):
                 strongSelf.timeChangedHandler(touching: touching, doubleValue: time)
+            case .shuffling(let enabled):
+                strongSelf.setShuffleRepeatSegmentedView(shuffleSelected: enabled)
+                strongSelf.shuffleRepeatChangedHandler(shuffleChanged: true)
+            case .repeating(let enabled):
+                strongSelf.setShuffleRepeatSegmentedView(repeatSelected: enabled)
+                strongSelf.shuffleRepeatChangedHandler(repeatChanged: true)
             default: break
-            }
-        }
-        
-        // Callback for PlayerHelper's shuffe/repeat setters
-        helper.shuffleRepeatChangedHandler = { shuffleChanged, repeatChanged in
-            // Update shuffleRepeat segmented view with new values
-            self.updateShuffleRepeatSegmentedView()
-            
-            // Send shuffle/repeat action to VC
-            self.onViewController { controller in
-                if shuffleChanged {
-                    controller.showLastActionView(for: .shuffling)
-                } else if repeatChanged {
-                    controller.showLastActionView(for: .repeating)
-                }
-                
-                controller.updateShuffleRepeatButtons()
             }
         }
         
@@ -1040,7 +1046,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    func setShuffleRepeatSegmentedView(shuffleSelected: Bool?, repeatSelected: Bool?) {
+    func setShuffleRepeatSegmentedView(shuffleSelected: Bool? = nil, repeatSelected: Bool? = nil) {
         // Select 'shuffle' button
         if let shuffleSelected = shuffleSelected {
             shuffleRepeatSegmentedView?.setSelected(shuffleSelected, forSegment: 0)

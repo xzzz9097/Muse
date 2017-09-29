@@ -220,13 +220,10 @@ class SpotifyHelper: PlayerHelper {
         }
     }
     
-    var repeating: Bool {
+    var internalRepeating: Bool {
         set {
             // Toggle repeating on the player
             application?.setRepeating?(newValue)
-            
-            // Call the handler with new repeat value
-            execShuffleRepeatChangedHandler(repeatChanged: true)
         }
         
         get {
@@ -235,13 +232,10 @@ class SpotifyHelper: PlayerHelper {
         }
     }
     
-    var shuffling: Bool {
+    var internalShuffling: Bool {
         set {
             // Toggle shuffling on the player
             application?.setShuffling?(newValue)
-            
-            // Call the handler with new shuffle value
-            execShuffleRepeatChangedHandler(shuffleChanged: true)
         }
         
         get {
@@ -296,8 +290,6 @@ class SpotifyHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-    
-    var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     
     var likeChangedHandler: (Bool) -> () = { _ in }
     

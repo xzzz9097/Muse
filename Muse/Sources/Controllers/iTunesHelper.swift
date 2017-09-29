@@ -161,15 +161,12 @@ class iTunesHelper: PlayerHelper {
         }
     }
     
-    var repeating: Bool {
+    var internalRepeating: Bool {
         set {
             let repeating: iTunesERpt = newValue ? iTunesERptAll : iTunesERptOff
             
             // Toggle repeating on the player
             application?.setSongRepeat!(repeating)
-            
-            // Call the handler with new repeat value
-            execShuffleRepeatChangedHandler(repeatChanged: true)
         }
         
         get {
@@ -180,13 +177,10 @@ class iTunesHelper: PlayerHelper {
         }
     }
     
-    var shuffling: Bool {
+    var internalShuffling: Bool {
         set {
             // Toggle shuffling on the player
             application?.setShuffleEnabled?(newValue)
-            
-            // Call the handler with new shuffle value
-            execShuffleRepeatChangedHandler(shuffleChanged: true)
         }
         
         get {
@@ -220,9 +214,7 @@ class iTunesHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-    
-    var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
-    
+        
     var likeChangedHandler: (Bool) -> () = { _ in }
     
     // MARK: Application identifier

@@ -142,15 +142,12 @@ class VoxHelper: PlayerHelper {
         }
     }
     
-    var repeating: Bool {
+    var internalRepeating: Bool {
         set {
             let repeating: VoxERpt = newValue ? .repeatAll : .none
             
             // Toggle repeating on the player
             application?.setRepeatState!(repeating)
-            
-            // Call the handler with new repeat value
-            execShuffleRepeatChangedHandler(repeatChanged: true)
         }
         
         get {
@@ -162,13 +159,10 @@ class VoxHelper: PlayerHelper {
         }
     }
     
-    var shuffling: Bool {
+    var internalShuffling: Bool {
         set {
             // Toggle shuffling on the player
             application?.shuffle?()
-            
-            // Call the handler with new shuffle value
-            execShuffleRepeatChangedHandler(shuffleChanged: true)
         }
         
         get {
@@ -185,8 +179,6 @@ class VoxHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-        
-    var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     
     var likeChangedHandler: (Bool) -> () = { _ in }
     
