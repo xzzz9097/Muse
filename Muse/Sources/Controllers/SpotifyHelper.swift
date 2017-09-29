@@ -204,8 +204,6 @@ class SpotifyHelper: PlayerHelper {
         if !touching, let value = doubleValue {
             playbackPosition = value * trackDuration
         }
-        
-        timeChangedHandler(touching, doubleValue)
     }
     
     // MARK: Playback options
@@ -298,8 +296,6 @@ class SpotifyHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-
-    var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
     
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     

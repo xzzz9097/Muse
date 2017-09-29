@@ -359,7 +359,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    // Callback for PlayerHelper's nextTrack() and previousTrack()
+    /**
+     Callback for PlayerHelper's nextTrack() and previousTrack()
+     */
     func trackChangedHandler(next: Bool) {
         updateSongProgressSlider(with: 0)
         
@@ -373,6 +375,35 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
+    /**
+     Callback for PlayerHelper's goTo(Bool, Double?)
+     */
+    func timeChangedHandler(touching: Bool, doubleValue: Double?) {
+        guard let value = doubleValue else { return }
+        
+        let time = value * self.song.duration
+        
+        if let cell = songProgressSlider?.cell as? SliderCell {
+            // If we are sliding, show time near TouchBar slider knob
+            cell.knobImage   = touching ? nil : .playhead
+            cell.hasTimeInfo = touching
+            cell.timeInfo    = time.secondsToMMSSString as NSString
+        }
+        
+        updateSongProgressSlider(with: time)
+        
+        onViewController { controller in
+            controller.showLastActionView(for: .scrubbing,
+                                          to: time,
+                                          shouldClose: !touching)
+        }
+        
+        // Set 'isSliding' after a short delay
+        // This prevents timer from resuming too early
+        // after scrubbing, thus resetting the slider position
+        DispatchQueue.main.run(after: 5) { self.isSliding = touching }
+    }
+    
     func registerCallbacks() {
         PlayerHelperNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
@@ -384,35 +415,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                 strongSelf.trackChangedHandler(next: true)
             case .previousTrack:
                 strongSelf.trackChangedHandler(next: false)
+            case .scrub(let touching, let time):
+                strongSelf.timeChangedHandler(touching: touching, doubleValue: time)
             default: break
             }
-        }
-        
-        // Callback for PlayerHelper's goTo(Bool, Double?)
-        helper.timeChangedHandler = { touching, doubleValue in
-            guard let value = doubleValue else { return }
-            
-            let time = value * self.song.duration
-            
-            if let cell = self.songProgressSlider?.cell as? SliderCell {
-                // If we are sliding, show time near TouchBar slider knob
-                cell.knobImage   = touching ? nil : .playhead
-                cell.hasTimeInfo = touching
-                cell.timeInfo    = time.secondsToMMSSString as NSString
-            }
-            
-            self.updateSongProgressSlider(with: time)
-            
-            self.onViewController { controller in
-                controller.showLastActionView(for: .scrubbing,
-                                              to: time,
-                                              shouldClose: !touching)
-            }
-            
-            // Set 'isSliding' after a short delay
-            // This prevents timer from resuming too early
-            // after scrubbing, thus resetting the slider position
-            DispatchQueue.main.run(after: 5) { self.isSliding = touching }
         }
         
         // Callback for PlayerHelper's shuffe/repeat setters

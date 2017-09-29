@@ -125,8 +125,6 @@ class VoxHelper: PlayerHelper {
         if !touching, let value = doubleValue {
             playbackPosition = value * trackDuration
         }
-        
-        timeChangedHandler(touching, doubleValue)
     }
     
     // MARK: Playback options
@@ -187,9 +185,7 @@ class VoxHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-    
-    var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
-    
+        
     var shuffleRepeatChangedHandler: (Bool, Bool) -> () = { _, _ in }
     
     var likeChangedHandler: (Bool) -> () = { _ in }
