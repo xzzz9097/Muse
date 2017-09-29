@@ -903,7 +903,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // If window is not key, restore control strip button visibility
         // TODO: add a preference for this
-        if let key = window?.isKeyWindow, !key {
+        // TODO: improve control on when the button should be refreshed
+        if let key = window?.isKeyWindow, !key, !didPresentAsSystemModal {
             toggleControlStripButton(visible: true)
         }
     }
