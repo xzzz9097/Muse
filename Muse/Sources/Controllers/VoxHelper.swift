@@ -67,27 +67,27 @@ class VoxHelper: PlayerHelper {
     
     // MARK: Playback controls
     
-    func play() {
+    func internalPlay() {
         application?.play?()
     }
     
-    func pause() {
+    func internalPause() {
         application?.pause?()
     }
     
-    func togglePlayPause() {
+    func internalTogglePlayPause() {
         application?.playpause?()
         
         execPlayPauseHandler()
     }
     
-    func nextTrack() {
+    func internalNextTrack() {
         application?.next?()
         
         trackChangedHandler(true)
     }
     
-    func previousTrack() {
+    func internalPreviousTrack() {
         application?.previous?()
         
         trackChangedHandler(false)
@@ -127,7 +127,7 @@ class VoxHelper: PlayerHelper {
         return application?.totalTime ?? 0
     }
     
-    func scrub(to doubleValue: Double?, touching: Bool) {
+    func internalScrub(to doubleValue: Double?, touching: Bool) {
         if !touching, let value = doubleValue {
             playbackPosition = value * trackDuration
         }

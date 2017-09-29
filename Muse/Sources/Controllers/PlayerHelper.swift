@@ -131,15 +131,15 @@ protocol PlayerHelper {
     
     // MARK: Playback controls
     
-    func play()
+    func internalPlay()
     
-    func pause()
+    func internalPause()
     
-    func togglePlayPause()
+    func internalTogglePlayPause()
     
-    func nextTrack()
+    func internalNextTrack()
     
-    func previousTrack()
+    func internalPreviousTrack()
     
     // MARK: Playback status
     
@@ -149,7 +149,7 @@ protocol PlayerHelper {
     
     var trackDuration: Double { get }
     
-    func scrub(to doubleValue: Double?, touching: Bool)
+    func internalScrub(to doubleValue: Double?, touching: Bool)
     
     // MARK: Playback options
     
@@ -191,6 +191,46 @@ protocol PlayerHelper {
 
 extension PlayerHelper {
     
+    // MARK: Playback controls
+    
+    func play() {
+        self.internalPlay()
+    }
+    
+    func pause() {
+        self.internalPause()
+    }
+    
+    func togglePlayPause() {
+        self.internalTogglePlayPause()
+        
+        PlayerHelperNotification(.playPause).post()
+    }
+    
+    func nextTrack() {
+        self.internalNextTrack()
+        
+        PlayerHelperNotification(.nextTrack).post()
+    }
+    
+    func previousTrack() {
+        self.internalPreviousTrack()
+        
+        PlayerHelperNotification(.previousTrack).post()
+    }
+    
+    // MARK: Playback status
+    
+    func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
+        // Override this in extension to provide default args
+        self.internalScrub(to: doubleValue, touching: touching)
+        
+        PlayerHelperNotification(.scrub(touching, doubleValue)).post()
+    }
+}
+
+extension PlayerHelper {
+    
     // MARK: Player availability
     
     var isAvailable: Bool {
@@ -204,13 +244,6 @@ extension PlayerHelper {
     var isPlaying: Bool {
         // Returns if the player is playing a track
         return playerState == .playing
-    }
-    
-    func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
-        // Override this in extension to provide default args
-        self.scrub(to: doubleValue, touching: touching)
-        
-        PlayerHelperNotification(.scrub(touching, doubleValue)).post()
     }
     
     // MARK: App data

@@ -145,27 +145,27 @@ class SpotifyHelper: PlayerHelper {
     
     // MARK: Playback controls
     
-    func play() {
+    func internalPlay() {
         application?.play?()
     }
     
-    func pause() {
+    func internalPause() {
         application?.pause?()
     }
     
-    func togglePlayPause() {
+    func internalTogglePlayPause() {
         application?.playpause?()
         
         execPlayPauseHandler()
     }
     
-    func nextTrack() {
+    func internalNextTrack() {
         application?.nextTrack?()
         
         trackChangedHandler(true)
     }
     
-    func previousTrack() {
+    func internalPreviousTrack() {
         application?.previousTrack?()
         
         trackChangedHandler(false)
@@ -206,7 +206,7 @@ class SpotifyHelper: PlayerHelper {
         return Double(application?.currentTrack?.duration ?? 0) / 1000
     }
     
-    func scrub(to doubleValue: Double?, touching: Bool) {
+    func internalScrub(to doubleValue: Double?, touching: Bool) {
         if !touching, let value = doubleValue {
             playbackPosition = value * trackDuration
         }
