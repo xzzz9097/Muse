@@ -344,17 +344,29 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Callbacks
     
+    /**
+     Callback for PlayerHelper's togglePlayPause()
+     */
+    func playPauseHandler() {
+        if !helper.doesSendPlayPauseNotification {
+            handlePlayPause()
+            trackSongProgress()
+        }
+        
+        // TODO: move this in VC
+        onViewController { controller in
+            controller.showLastActionView(for: self.helper.isPlaying ? .play : .pause)
+        }
+    }
+    
     func registerCallbacks() {
-        // Callback for PlayerHelper's togglePlayPause()
-        helper.playPauseHandler = {
-            if !self.helper.doesSendPlayPauseNotification {
-                self.handlePlayPause()
-                
-                self.trackSongProgress()
-            }
+        PlayerHelperNotification.observe { [weak self] event in
+            guard let strongSelf = self else { return }
             
-            self.onViewController { controller in
-                controller.showLastActionView(for: self.helper.isPlaying ? .play : .pause)
+            switch event {
+            case .playPause:
+                strongSelf.playPauseHandler()
+            default: break
             }
         }
         
