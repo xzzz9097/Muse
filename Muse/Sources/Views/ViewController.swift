@@ -229,6 +229,12 @@ class ViewController: NSViewController {
             case .previousTrack:
                 strongSelf.showLastActionView(for: .previous)
                 strongSelf.showTitleView()
+            case .shuffling(let shuffling):
+                strongSelf.showLastActionView(for: .shuffling)
+                strongSelf.updateShuffleRepeatButtons(shuffling: shuffling)
+            case .repeating(let repeating):
+                strongSelf.showLastActionView(for: .repeating)
+                strongSelf.updateShuffleRepeatButtons(repeating: repeating)
             default: break
             }
         }
@@ -491,13 +497,15 @@ class ViewController: NSViewController {
         playButton.playerAction = helper.isPlaying ? .pause : .play
     }
     
-    func updateShuffleRepeatButtons() {
+    func updateShuffleRepeatButtons(shuffling: Bool? = nil, repeating: Bool? = nil) {
         [shuffleButton, repeatButton].enumerated().forEach {
-            let enabled        = $0.offset == 0 ? helper.shuffling : helper.repeating
-            let alpha: CGFloat = enabled        ?                1 : 0.25
+            let enabled         = $0.offset == 0 ?    shuffling : repeating
+            let alpha: CGFloat? = enabled != nil ? enabled! ? 1 : 0.25 : nil
             
-            $0.element?.layer?.backgroundColor = $0.element?.layer?.backgroundColor?
-                .copy(alpha: alpha)
+            if let alpha = alpha {
+                $0.element?.layer?.backgroundColor = $0.element?.layer?.backgroundColor?
+                    .copy(alpha: alpha)
+            }
         }
     }
     
