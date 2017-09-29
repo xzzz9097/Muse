@@ -169,8 +169,6 @@ protocol PlayerHelper {
     
     // MARK: Callbacks
     
-    var playPauseHandler: () -> () { set get }
-    
     var trackChangedHandler: (Bool) -> () { set get }
     
     var timeChangedHandler: (Bool, Double?) -> () { set get }
@@ -204,6 +202,7 @@ extension PlayerHelper {
     func togglePlayPause() {
         self.internalTogglePlayPause()
         
+        // TODO: a slight delay may be needed, was used with closure
         PlayerHelperNotification(.playPause).post()
     }
     
@@ -281,10 +280,6 @@ extension PlayerHelper {
     // The time (in millis) after which
     // the instructions will run
     var delayTime: Int { return 5 }
-    
-    func execPlayPauseHandler() {
-        DispatchQueue.main.run(after: delayTime) { self.playPauseHandler() }
-    }
     
     func execShuffleRepeatChangedHandler(shuffleChanged: Bool = false, repeatChanged: Bool = false) {
         DispatchQueue.main.run(after: delayTime) { self.shuffleRepeatChangedHandler(shuffleChanged, repeatChanged) }

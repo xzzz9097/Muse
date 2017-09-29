@@ -77,8 +77,6 @@ class VoxHelper: PlayerHelper {
     
     func internalTogglePlayPause() {
         application?.playpause?()
-        
-        execPlayPauseHandler()
     }
     
     func internalNextTrack() {
@@ -193,9 +191,7 @@ class VoxHelper: PlayerHelper {
     }
     
     // MARK: Callbacks
-    
-    var playPauseHandler: () -> () = { }
-    
+        
     var trackChangedHandler: (Bool) -> () = { _ in }
     
     var timeChangedHandler: (Bool, Double?) -> () = { _, _ in }
