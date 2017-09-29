@@ -66,6 +66,57 @@ enum PlayerState {
     case stopped, paused, playing
 }
 
+struct PlayerHelperNotification {
+    
+    static private let name = Notification.Name("museHelperNotification")
+    
+    static private let helperNotificationKey = "helperNotification"
+    
+    // Supported player helper events
+    enum Event {
+        case playPause
+        case nextTrack
+        case previousTrack
+        case scrub(Bool, Double?)
+        case shuffling(Bool)
+        case repeating(Bool)
+        case like(Bool)
+    }
+    
+    // The event associated with the notification
+    let event: Event
+    
+    init(_ event: Event) {
+        self.event = event
+    }
+    
+    /**
+     Posts the notification of the specified event
+     */
+    func post() {
+        NotificationCenter.default.post(
+            name: PlayerHelperNotification.name,
+            object: nil,
+            userInfo: [PlayerHelperNotification.helperNotificationKey: self])
+    }
+    
+    /**
+     Sets up an observer for the specified event
+     executing the given closure
+     */
+    static func observe(block: @escaping (Event) -> ()) {
+        NotificationCenter.default.addObserver(
+            forName: name,
+            object: nil,
+            queue: nil)
+        { notification in
+            if let helperNotification = notification.userInfo?[helperNotificationKey] as? PlayerHelperNotification {
+                block(helperNotification.event)
+            }
+        }
+    }
+}
+
 protocol PlayerHelper {
     
     // MARK: Player features
@@ -158,6 +209,8 @@ extension PlayerHelper {
     func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
         // Override this in extension to provide default args
         self.scrub(to: doubleValue, touching: touching)
+        
+        PlayerHelperNotification(.scrub(touching, doubleValue)).post()
     }
     
     // MARK: App data
