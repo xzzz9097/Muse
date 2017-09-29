@@ -212,6 +212,26 @@ class ViewController: NSViewController {
          actionTabView].forEach { $0?.wantsLayer = true }
         
         showActionBarView()
+        
+        registerObserver()
+    }
+    
+    func registerObserver() {
+        PlayerHelperNotification.observe { [weak self] event in
+            guard let strongSelf = self else { return }
+            
+            switch event {
+            case .playPause:
+                strongSelf.showLastActionView(for: strongSelf.helper.isPlaying ? .play : .pause)
+            case .nextTrack:
+                strongSelf.showLastActionView(for: .next)
+                strongSelf.showTitleView()
+            case .previousTrack:
+                strongSelf.showLastActionView(for: .previous)
+                strongSelf.showTitleView()
+            default: break
+            }
+        }
     }
     
     override func viewWillAppear() {

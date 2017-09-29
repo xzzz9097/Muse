@@ -352,11 +352,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             handlePlayPause()
             trackSongProgress()
         }
-        
-        // TODO: move this in VC
-        onViewController { controller in
-            controller.showLastActionView(for: self.helper.isPlaying ? .play : .pause)
-        }
     }
     
     /**
@@ -366,13 +361,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         updateSongProgressSlider(with: 0)
         
         updateNowPlayingInfo()
-        
-        onViewController { controller in
-            controller.showLastActionView(for: next ? .next : .previous)
-            
-            // Peek title of currently playing track
-            controller.showTitleView()
-        }
     }
     
     /**
