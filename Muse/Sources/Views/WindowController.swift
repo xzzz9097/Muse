@@ -201,7 +201,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     func likeButtonClicked(_ sender: NSButton) {
         // Reverse like on current track if supported
-        if helper.supportsLiking { helper.liked = !helper.liked }
+        if var helper = helper as? LikablePlayerHelper {
+            helper.liked = !helper.liked
+        }
     }
     
     // MARK: SliderDelegate implementation
@@ -271,7 +273,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         case kVK_ANSI_R:
             helper.repeating = !helper.repeating
         case kVK_ANSI_L:
-            if helper.supportsLiking { helper.liked = !helper.liked }
+            if var helper = helper as? LikablePlayerHelper {
+                helper.liked = !helper.liked
+            }
         case kVK_ANSI_I:
             onViewController { controller in
                 controller.showTitleView()
@@ -382,6 +386,16 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         DispatchQueue.main.run(after: 5) { self.isSliding = touching }
     }
     
+    func likeChangedHandler(liked: Bool) {
+        // Update like button on TouchBar
+        self.updateLikeButton(newValue: liked)
+        
+        // Send like action to VC
+        self.onViewController { controller in
+            controller.showLastActionView(for: .like, liked: liked)
+        }
+    }
+    
     func registerCallbacks() {
         PlayerHelperNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
@@ -399,18 +413,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                 strongSelf.setShuffleRepeatSegmentedView(shuffleSelected: enabled)
             case .repeating(let enabled):
                 strongSelf.setShuffleRepeatSegmentedView(repeatSelected: enabled)
-            default: break
-            }
-        }
-        
-        // Callback ofr PlayerHelper's like setter
-        helper.likeChangedHandler = { liked in
-            // Update like button on TouchBar
-            self.updateLikeButton(newValue: liked)
-            
-            // Send like action to VC
-            self.onViewController { controller in
-                controller.showLastActionView(for: .like, liked: liked)
+            case .like(let liked):
+                strongSelf.likeChangedHandler(liked: liked)
             }
         }
         
@@ -1042,7 +1046,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             helper.isSaved { saved in
                 self.setLikeButton(value: saved)
             }
-        } else if helper.supportsLiking {
+        } else if let helper = helper as? LikablePlayerHelper {
             likeButton?.isEnabled = true
 
             setLikeButton(value: helper.liked)

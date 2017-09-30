@@ -51,7 +51,7 @@ import SpotifyKit
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
-class SpotifyHelper: PlayerHelper, InternalPlayerHelper {
+class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper {
     
     // Singleton constructor
     static let shared = SpotifyHelper()
@@ -73,9 +73,6 @@ class SpotifyHelper: PlayerHelper, InternalPlayerHelper {
             // Try to authenticate if there's no token
             spotifyManager.authorize()
         } else {
-            // Enable like support
-            self.supportsLiking = true
-            
             // Refresh the token if present
             spotifyManager.refreshToken { _ in }
         }
@@ -84,8 +81,6 @@ class SpotifyHelper: PlayerHelper, InternalPlayerHelper {
     // MARK: Player features
     
     let doesSendPlayPauseNotification = true
-    
-    var supportsLiking = false
     
     // MARK: Swiftify methods
     
@@ -100,9 +95,6 @@ class SpotifyHelper: PlayerHelper, InternalPlayerHelper {
      Save token after authorization code has been received
      */
     func saveToken(from authorizationCode: String) {
-        // Enable like support
-        self.supportsLiking = true
-        
         spotifyManager.saveToken(from: authorizationCode)
     }
     
@@ -255,31 +247,30 @@ class SpotifyHelper: PlayerHelper, InternalPlayerHelper {
     // The instance variable for like status
     private var _liked: Bool?
     
-    var liked: Bool {
-        set {
-            if newValue {
-                // Stars the current track
-                spotifyManager.save(trackId: id) { saved in
+    func internalSetLiked(_ liked: Bool, completionHandler: @escaping (Bool) -> ()) {
+        switch liked {
+        case true:
+            spotifyManager.save(trackId: id) { [weak self] saved in
+                if saved {
                     // Update the ivar
-                    self._liked = true
-                    
-                    // Call the handler with new like value
-                    // TODO: test this!
-                    self.likeChangedHandler(true)
+                    self?._liked = true
+                    // Run the handler
+                    completionHandler(true)
                 }
-            } else {
-                spotifyManager.delete(trackId: id) { deleted in
-                    self._liked = false
-                    
-                    self.likeChangedHandler(false)
+            }
+        case false:
+            spotifyManager.delete(trackId: id) { [weak self] deleted in
+                if deleted {
+                    // Update the ivar
+                    self?._liked = false
+                    // Run the handler
+                    completionHandler(false)
                 }
             }
         }
-        
-        get {
-            return _liked ?? false
-        }
     }
+    
+    var internalLiked: Bool { return _liked ?? false }
     
     func fetchTrackInfo(title: String,
                         artist: String,
@@ -288,10 +279,6 @@ class SpotifyHelper: PlayerHelper, InternalPlayerHelper {
                                 artist: artist,
                                 completionHandler: completionHandler)
     }
-    
-    // MARK: Callbacks
-    
-    var likeChangedHandler: (Bool) -> () = { _ in }
     
     // MARK: Application identifier
     

@@ -52,8 +52,6 @@ class VoxHelper: PlayerHelper, InternalPlayerHelper {
     
     let doesSendPlayPauseNotification = false
     
-    let supportsLiking = false
-    
     // MARK: Song data
     
     var song: Song {
@@ -177,10 +175,6 @@ class VoxHelper: PlayerHelper, InternalPlayerHelper {
     func artwork() -> Any? {
         return application?.artworkImage
     }
-    
-    // MARK: Callbacks
-    
-    var likeChangedHandler: (Bool) -> () = { _ in }
     
     // MARK: Application identifier
     

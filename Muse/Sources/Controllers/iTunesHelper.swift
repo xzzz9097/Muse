@@ -60,7 +60,7 @@ extension SBObject: iTunesArtworkProtocol { }
 // Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }
 
-class iTunesHelper: PlayerHelper, InternalPlayerHelper {
+class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper {
     
     // SIngleton constructor
     static let shared = iTunesHelper()
@@ -71,8 +71,6 @@ class iTunesHelper: PlayerHelper, InternalPlayerHelper {
     // MARK: Player features
     
     let doesSendPlayPauseNotification = true
-    
-    let supportsLiking = true
     
     // MARK: Song data
     
@@ -198,24 +196,15 @@ class iTunesHelper: PlayerHelper, InternalPlayerHelper {
     
     // MARK: Starring
     
-    var liked: Bool {
-        set {
-            // Stars the current track
-            application?.currentTrack?.setLoved?(newValue)
-            
-            // Call the handler with new like value
-            likeChangedHandler(newValue)
-        }
+    func internalSetLiked(_ liked: Bool, completionHandler: @escaping (Bool) -> ()) {
+        // Stars the current track
+        application?.currentTrack?.setLoved?(liked)
         
-        get {
-            // Returns true if the current track is starred
-            return application?.currentTrack?.loved ?? false
-        }
+        // Calls the handler
+        completionHandler(liked)
     }
     
-    // MARK: Callbacks
-        
-    var likeChangedHandler: (Bool) -> () = { _ in }
+    var internalLiked: Bool { return application?.currentTrack?.loved ?? false }
     
     // MARK: Application identifier
     

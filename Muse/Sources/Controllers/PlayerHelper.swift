@@ -146,8 +146,6 @@ protocol PlayerHelper {
     
     var doesSendPlayPauseNotification: Bool { get }
     
-    var supportsLiking: Bool { get }
-    
     // MARK: Song data
     
     var song: Song { get }
@@ -186,14 +184,6 @@ protocol PlayerHelper {
     
     func artwork() -> Any?
     
-    // MARK: Starring
-    
-    var liked: Bool { set get }
-    
-    // MARK: Callbacks
-    
-    var likeChangedHandler: (Bool) -> () { set get }
-    
     // MARK: Application identifier
     
     static var BundleIdentifier: String { get }
@@ -202,6 +192,20 @@ protocol PlayerHelper {
     
     static var rawTrackChangedNotification: String { get }
     
+}
+
+protocol LikableInternalPlayerHelper {
+    
+    func internalSetLiked(_ liked: Bool, completionHandler: @escaping (Bool) -> ())
+    
+    var internalLiked: Bool { get }
+}
+
+protocol LikablePlayerHelper {
+    
+    // MARK: Starring
+    
+    var liked: Bool { set get }
 }
 
 extension PlayerHelper where Self: InternalPlayerHelper {
@@ -274,6 +278,31 @@ extension PlayerHelper where Self: InternalPlayerHelper {
 
 extension PlayerHelper {
     
+    var liked: Bool {
+        set { }
+        get { return false }
+    }
+}
+
+extension PlayerHelper where Self: LikableInternalPlayerHelper {
+    
+    // MARK: Starring
+    
+    var liked: Bool {
+        set {
+            internalSetLiked(newValue) { liked in
+                PlayerHelperNotification(.like(liked)).post()
+            }
+        }
+        
+        get {
+            return internalLiked
+        }
+    }
+}
+
+extension PlayerHelper {
+    
     // MARK: Player availability
     
     var isAvailable: Bool {
@@ -309,14 +338,6 @@ extension PlayerHelper {
         
         // Returns the icon of the player application
         return NSWorkspace.shared().icon(forFile: path)
-    }
-    
-    // MARK: Starring
-    
-    var liked: Bool {
-        set { }
-        
-        get { return false }
     }
     
     // MARK: Notification ID
