@@ -60,7 +60,7 @@ extension SBObject: iTunesArtworkProtocol { }
 // Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }
 
-class iTunesHelper: PlayerHelper {
+class iTunesHelper: PlayerHelper, InternalPlayerHelper {
     
     // SIngleton constructor
     static let shared = iTunesHelper()

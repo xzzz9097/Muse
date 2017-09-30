@@ -181,7 +181,7 @@ class ViewController: NSViewController {
             
             if currentEvent.type == .leftMouseUp {
                 // Detected mouse up
-                helper.scrub(to: slider.doubleValue)
+                helper.scrub(to: slider.doubleValue, touching: false)
             }
         }
     }

@@ -217,7 +217,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         wasPlaying = helper.isPlaying
         
         // Handle single touch events
-        helper.scrub(to: songProgressSlider?.doubleValue)
+        helper.scrub(to: songProgressSlider?.doubleValue, touching: false)
     }
     
     /**
@@ -237,7 +237,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      */
     func didTouchesEnd() {
         // Finalize and disable large knob
-        helper.scrub(to: songProgressSlider?.doubleValue)
+        helper.scrub(to: songProgressSlider?.doubleValue, touching: false)
         
         // Resume playing if needed
         if wasPlaying { helper.play() }

@@ -40,7 +40,7 @@ import ScriptingBridge
 // Protocols will implemented and populated through here
 extension SBApplication: VoxApplication { }
 
-class VoxHelper: PlayerHelper {
+class VoxHelper: PlayerHelper, InternalPlayerHelper {
     
     // Singleton contructor
     static let shared = VoxHelper()

@@ -51,7 +51,7 @@ import SpotifyKit
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
-class SpotifyHelper: PlayerHelper {
+class SpotifyHelper: PlayerHelper, InternalPlayerHelper {
     
     // Singleton constructor
     static let shared = SpotifyHelper()

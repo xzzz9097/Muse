@@ -117,6 +117,29 @@ struct PlayerHelperNotification {
     }
 }
 
+// An internal protocol that contains all the playback control functions
+// This allows us to keeps these functions obscured from PlayerHelper objects
+// but to call them through desired and exposed functions
+// see -> extension PlayerHelper where Self: InternalPlayerHelper
+protocol InternalPlayerHelper {
+    
+    func internalPlay()
+    
+    func internalPause()
+    
+    func internalTogglePlayPause()
+    
+    func internalNextTrack()
+    
+    func internalPreviousTrack()
+    
+    func internalScrub(to doubleValue: Double?, touching: Bool)
+    
+    var internalRepeating: Bool { set get }
+    
+    var internalShuffling: Bool { set get }
+}
+
 protocol PlayerHelper {
     
     // MARK: Player features
@@ -131,15 +154,15 @@ protocol PlayerHelper {
     
     // MARK: Playback controls
     
-    func internalPlay()
+    func play()
     
-    func internalPause()
+    func pause()
     
-    func internalTogglePlayPause()
+    func togglePlayPause()
     
-    func internalNextTrack()
+    func nextTrack()
     
-    func internalPreviousTrack()
+    func previousTrack()
     
     // MARK: Playback status
     
@@ -149,15 +172,15 @@ protocol PlayerHelper {
     
     var trackDuration: Double { get }
     
-    func internalScrub(to doubleValue: Double?, touching: Bool)
+    func scrub(to doubleValue: Double?, touching: Bool)
     
     // MARK: Playback options
     
     var volume: Int { set get }
     
-    var internalRepeating: Bool { set get }
+    var repeating: Bool { set get }
     
-    var internalShuffling: Bool { set get }
+    var shuffling: Bool { set get }
     
     // MARK: Artwork
     
@@ -181,7 +204,7 @@ protocol PlayerHelper {
     
 }
 
-extension PlayerHelper {
+extension PlayerHelper where Self: InternalPlayerHelper {
     
     // MARK: Playback controls
     
@@ -214,7 +237,7 @@ extension PlayerHelper {
     
     // MARK: Playback status
     
-    func scrub(to doubleValue: Double? = nil, touching: Bool = false) {
+    func scrub(to doubleValue: Double? = nil, touching: Bool) {
         // Override this in extension to provide default args
         self.internalScrub(to: doubleValue, touching: touching)
         

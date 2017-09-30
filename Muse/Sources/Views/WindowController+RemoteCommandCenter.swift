@@ -55,7 +55,7 @@ extension WindowController {
      Handles system scrubbing requests
      */
     func handleChangePlaybackPosition(event: MPChangePlaybackPositionCommandEvent) -> MPRemoteCommandHandlerStatus {
-        helper.scrub(to: event.positionTime.rounded() / self.song.duration)
+        helper.scrub(to: event.positionTime.rounded() / self.song.duration, touching: false)
         
         return .success
     }
