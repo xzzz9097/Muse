@@ -386,16 +386,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         DispatchQueue.main.run(after: 5) { self.isSliding = touching }
     }
     
-    func likeChangedHandler(liked: Bool) {
-        // Update like button on TouchBar
-        self.updateLikeButton(newValue: liked)
-        
-        // Send like action to VC
-        self.onViewController { controller in
-            controller.showLastActionView(for: .like, liked: liked)
-        }
-    }
-    
     func registerCallbacks() {
         PlayerHelperNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
@@ -414,7 +404,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             case .repeating(let enabled):
                 strongSelf.setShuffleRepeatSegmentedView(repeatSelected: enabled)
             case .like(let liked):
-                strongSelf.likeChangedHandler(liked: liked)
+                // Update like button on TouchBar
+                strongSelf.updateLikeButton(newValue: liked)
             }
         }
         

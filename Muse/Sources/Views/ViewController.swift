@@ -239,7 +239,8 @@ class ViewController: NSViewController {
             case .repeating(let repeating):
                 strongSelf.showLastActionView(for: .repeating)
                 strongSelf.updateShuffleRepeatButtons(repeating: repeating)
-            default: break
+            case .like(let liked):
+                strongSelf.showLastActionView(for: .like, liked: liked)
             }
         }
     }
