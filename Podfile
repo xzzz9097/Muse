@@ -10,8 +10,6 @@ target 'Muse' do
   pod 'Sparkle'
 
   # Pods for Swiftify
-  pod 'Alamofire', '~> 4.3'
-  pod 'SwiftyJSON'
   pod 'SpotifyKit', :git => 'https://github.com/xzzz9097/SpotifyKit.git'
 
 end
