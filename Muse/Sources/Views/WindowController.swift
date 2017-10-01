@@ -135,6 +135,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // Returns whether the UI is in play state
     var isUIPlaying = false
     
+    // If an event is sent from TouchBar control strip button should not be refreshed
+    // Set to true at event sent, reset to false after notification is received
+    var eventSentFromApp = false
+
     // MARK: Actions
     
     func controlsSegmentedViewClicked(_ sender: NSSegmentedControl) {
@@ -390,6 +394,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         PlayerHelperNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
             
+            strongSelf.eventSentFromApp = true
+            
             switch event {
             case .playPause:
                 strongSelf.playPauseHandler()
@@ -406,6 +412,13 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             case .like(let liked):
                 // Update like button on TouchBar
                 strongSelf.updateLikeButton(newValue: liked)
+            }
+            
+            // Reset event sent variable for events that don't send a notification
+            switch event {
+            case .scrub(_, _), .shuffling(_), .repeating(_), .like(_):
+                strongSelf.eventSentFromApp = false
+            default: break
             }
         }
         
@@ -620,6 +633,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func windowDidResignKey(_ notification: Notification) {
+        // Make sure we reset sent event variable
+        eventSentFromApp = false
+        
         toggleControlStripButton(visible: true)
     }
     
@@ -858,9 +874,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // If window is not key, restore control strip button visibility
         // TODO: add a preference for this
         // TODO: improve control on when the button should be refreshed
-        if let key = window?.isKeyWindow, !key, !didPresentAsSystemModal {
+        if let key = window?.isKeyWindow, !key, !eventSentFromApp {
             toggleControlStripButton(visible: true)
         }
+        
+        // Reset event sending check
+        eventSentFromApp = false
     }
     
     func resetSong() {
