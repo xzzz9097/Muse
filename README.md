@@ -1,4 +1,4 @@
-## <img src=Muse/Assets.xcassets/AppIcon.appiconset/icon-512@2x.png width="32"> Muse
+## <img src=Muse/Resources/Assets.xcassets/AppIcon.appiconset/icon-512@2x.png width="32"> Muse
 
 An open-source Spotify, iTunes and Vox controller with TouchBar support, system-wide TouchBar controls (à la iTunes) and Spotify account integration.
 
@@ -44,6 +44,6 @@ Several handy shortcuts are provided when the popup window is open:
 |              <kbd>3</kbd>               |     controls Vox      |
 
 ### Libraries
-- [Swiftify](https://github.com/xzzz9097/Swiftify) by @xzzz9097
+- [SpotifyKit](https://github.com/xzzz9097/SpotifyKit) by @xzzz9097
 - [NSImageColors](https://github.com/xzzz9097/NSImageColors) by @jathu
 - [DDHotKey](https://github.com/davedelong/DDHotKey) by @davedelong
