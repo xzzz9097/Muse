@@ -43,6 +43,12 @@ Several handy shortcuts are provided when the popup window is open:
 |              <kbd>2</kbd>               |    controls iTunes    |
 |              <kbd>3</kbd>               |     controls Vox      |
 
+### Build
+The project is not code-signed, just clone the repository, install the pods and open the workspace file.
+```
+git clone https://github.com/xzzz9097/Muse && cd Muse/ && pod install && open Muse.xcworkspace
+```
+
 ### Libraries
 - [SpotifyKit](https://github.com/xzzz9097/SpotifyKit) by @xzzz9097
 - [NSImageColors](https://github.com/xzzz9097/NSImageColors) by @jathu
