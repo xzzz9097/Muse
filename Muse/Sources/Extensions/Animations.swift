@@ -48,3 +48,21 @@ extension CALayer {
     }
     
 }
+
+extension CAShapeLayer {
+    
+    static func circleLayerMask(radius: CGFloat, center: NSPoint) -> CAShapeLayer {
+        let layer = CAShapeLayer()
+        
+        layer.path = NSBezierPath.circle(radius: radius, center: center).cgPath
+        
+        return layer
+    }
+}
+
+extension CALayer {
+    
+    func maskToCircle(radius: CGFloat, center: NSPoint) {
+        self.mask = CAShapeLayer.circleLayerMask(radius: radius, center: center)
+    }
+}

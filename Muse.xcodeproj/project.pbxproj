@@ -20,6 +20,7 @@
 		0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E94F71E214A02000E0013 /* Double+Extensions.swift */; };
 		0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */; };
 		0C8162B81F29021300529F5E /* NSMediaSliderTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8162B71F29021300529F5E /* NSMediaSliderTouchBarItem.swift */; };
+		0C8B16791F82A31C0009BE7B /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8B16781F82A31C0009BE7B /* NSBezierPath+CGPath.swift */; };
 		0C8E3BC11E3CC43900C8EBD1 /* iTunesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */; };
 		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
 		0C9A60C71DE75DCC0051CDC6 /* Imageable+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */; };
@@ -136,6 +137,7 @@
 		0C676BD61DF443C900B75164 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WindowController+RemoteCommandCenter.swift"; sourceTree = "<group>"; };
 		0C8162B71F29021300529F5E /* NSMediaSliderTouchBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMediaSliderTouchBarItem.swift; sourceTree = "<group>"; };
+		0C8B16781F82A31C0009BE7B /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesHelper.swift; sourceTree = "<group>"; };
 		0C9A60BD1DE6071F0051CDC6 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Imageable+Download.swift"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			children = (
 				0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */,
 				0CEAEB381E14583500BD68D5 /* String+Extensions.swift */,
+				0C8B16781F82A31C0009BE7B /* NSBezierPath+CGPath.swift */,
 				0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */,
 				0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */,
 				0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */,
@@ -710,6 +713,7 @@
 				0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */,
 				0CF8B7E41DF9772900CDD130 /* NSHoverableView.swift in Sources */,
 				0C1F20F41F2B9F3C0055ACAC /* Preferences.swift in Sources */,
+				0C8B16791F82A31C0009BE7B /* NSBezierPath+CGPath.swift in Sources */,
 				0CD2870E1E106D4600EF0E73 /* NSImage+Extensions.swift in Sources */,
 				0C9B622C1E1D696400660633 /* Animations.swift in Sources */,
 				0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */,

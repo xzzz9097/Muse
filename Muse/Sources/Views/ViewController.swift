@@ -369,8 +369,7 @@ class ViewController: NSViewController {
         }
         
         [nextTabButton, previousTabButton].forEach {
-            $0?.wantsLayer = true
-            $0?.layer?.cornerRadius = 12.0
+            $0?.circleShaped(scale: 1/5)
         }
         
         nextTabButton.action     = #selector(nextTabButtonClicked(sender:))

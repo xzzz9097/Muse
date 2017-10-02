@@ -66,5 +66,17 @@ extension NSView {
             // Run the completion handler
             completionHandler() }
     }
+}
+
+extension NSView {
     
+    func circleShaped(scale: CGFloat) {
+        self.wantsLayer = true
+        
+        let radius = self.frame.size.width * scale
+        let center = NSMakePoint(self.frame.size.width  / 2,
+                                 self.frame.size.height / 2)
+        
+        self.layer?.maskToCircle(radius: radius, center: center)
+    }
 }
