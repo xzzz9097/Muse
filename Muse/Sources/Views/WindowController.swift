@@ -1037,8 +1037,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         setShuffleRepeatSegmentedView(shuffleSelected: helper.shuffling,
                                       repeatSelected: helper.repeating)
         
-        onViewController { controller in
-            controller.updateShuffleRepeatButtons()
+        onViewController { [weak self] controller in
+            controller.updateShuffleRepeatButtons(shuffling: self?.helper.shuffling,
+                                                  repeating: self?.helper.repeating)
         }
     }
     
