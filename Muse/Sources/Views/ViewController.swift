@@ -13,13 +13,13 @@ import QuartzCore
 fileprivate extension NSButton {
     
     static var playerActions: [PlayerAction: Selector] { return
-        [.play:      #selector(ViewController.togglePlayPauseButtonClicked(_:)),
-         .pause:     #selector(ViewController.togglePlayPauseButtonClicked(_:)),
-         .previous:  #selector(ViewController.previousTrackButtonClicked(_:)),
-         .next:      #selector(ViewController.nextTrackButtonClicked(_:)),
-         .shuffling: #selector(WindowController.shuffleButtonClicked(_:)),
-         .repeating: #selector(WindowController.repeatButtonClicked(_:)),
-         .like:      #selector(WindowController.likeButtonClicked(_:))]
+        [.play:             #selector(ViewController.togglePlayPauseButtonClicked(_:)),
+         .pause:            #selector(ViewController.togglePlayPauseButtonClicked(_:)),
+         .previous:         #selector(ViewController.previousTrackButtonClicked(_:)),
+         .next:             #selector(ViewController.nextTrackButtonClicked(_:)),
+         .shuffling(false): #selector(WindowController.shuffleButtonClicked(_:)),
+         .repeating(false): #selector(WindowController.repeatButtonClicked(_:)),
+         .like(false):      #selector(WindowController.likeButtonClicked(_:))]
     }
     
     var playerAction: PlayerAction? {
@@ -225,24 +225,24 @@ class ViewController: NSViewController {
                 strongSelf.showLastActionView(for: .play)
             case .pause:
                 strongSelf.showLastActionView(for: .pause)
-            case .nextTrack:
+            case .next:
                 strongSelf.showLastActionView(for: .next)
                 strongSelf.showTitleView()
-            case .previousTrack:
+            case .previous:
                 strongSelf.showLastActionView(for: .previous)
                 strongSelf.showTitleView()
             case .scrub(let touching, let time):
-                strongSelf.showLastActionView(for: .scrubbing,
+                strongSelf.showLastActionView(for: event,
                                               to: time,
                                               shouldClose: !touching)
             case .shuffling(let shuffling):
-                strongSelf.showLastActionView(for: .shuffling)
+                strongSelf.showLastActionView(for: event)
                 strongSelf.updateShuffleRepeatButtons(shuffling: shuffling)
             case .repeating(let repeating):
-                strongSelf.showLastActionView(for: .repeating)
+                strongSelf.showLastActionView(for: event)
                 strongSelf.updateShuffleRepeatButtons(repeating: repeating)
             case .like(let liked):
-                strongSelf.showLastActionView(for: .like, liked: liked)
+                strongSelf.showLastActionView(for: event, liked: liked)
             }
         }
     }
@@ -359,9 +359,9 @@ class ViewController: NSViewController {
         playButton.playerAction     = .play
         previousButton.playerAction = .previous
         nextButton.playerAction     = .next
-        shuffleButton.playerAction  = .shuffling
-        repeatButton.playerAction   = .repeating
-        likeButton.playerAction     = .like
+        shuffleButton.playerAction  = .shuffling(false)
+        repeatButton.playerAction   = .repeating(false)
+        likeButton.playerAction     = .like(false)
         
         [likeButton, shuffleButton, repeatButton, playButton, previousButton, nextButton].forEach {
             $0?.imagePosition       = .imageOnly
@@ -427,7 +427,7 @@ class ViewController: NSViewController {
             if actionTabView.isSelected(.playbackControls) { return }
         case .shuffling, .repeating, .like:
             if actionTabView.isSelected(.playbackOptions) { return }
-        case .scrubbing:
+        case .scrub:
             if let mode = songProgressBarHeight.progressBarMode, mode == .expanded { return }
         }
         
@@ -454,7 +454,7 @@ class ViewController: NSViewController {
             if shouldTint {
                 actionImageView.setImagePreservingTint(actionImageView.image?.withAlpha(0.5))
             }
-        case .scrubbing:
+        case .scrub:
             // Hide image view if scrubbing
             actionImageView.isHidden = true
             
@@ -465,7 +465,7 @@ class ViewController: NSViewController {
         }
         
         // Show image view if not scrubbing
-        if action != .scrubbing { actionImageView.isHidden = false }
+        if case .scrub = action { } else { actionImageView.isHidden = false }
         
         // Show the view
         actionSuperview.animator().isHidden = false

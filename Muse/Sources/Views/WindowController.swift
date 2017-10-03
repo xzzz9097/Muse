@@ -399,9 +399,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             switch event {
             case .play, .pause:
                 strongSelf.playPauseHandler()
-            case .nextTrack:
+            case .next:
                 strongSelf.trackChangedHandler(next: true)
-            case .previousTrack:
+            case .previous:
                 strongSelf.trackChangedHandler(next: false)
             case .scrub(let touching, let time):
                 strongSelf.timeChangedHandler(touching: touching, time: time)
