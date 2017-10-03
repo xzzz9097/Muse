@@ -221,8 +221,10 @@ class ViewController: NSViewController {
             guard let strongSelf = self else { return }
             
             switch event {
-            case .playPause:
-                strongSelf.showLastActionView(for: strongSelf.helper.isPlaying ? .play : .pause)
+            case .play:
+                strongSelf.showLastActionView(for: .play)
+            case .pause:
+                strongSelf.showLastActionView(for: .pause)
             case .nextTrack:
                 strongSelf.showLastActionView(for: .next)
                 strongSelf.showTitleView()

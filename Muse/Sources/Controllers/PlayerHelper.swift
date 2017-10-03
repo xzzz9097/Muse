@@ -74,7 +74,8 @@ struct PlayerHelperNotification {
     
     // Supported player helper events
     enum Event {
-        case playPause
+        case play
+        case pause
         case nextTrack
         case previousTrack
         case scrub(Bool, Double)
@@ -224,7 +225,7 @@ extension PlayerHelper where Self: InternalPlayerHelper {
         self.internalTogglePlayPause()
         
         // TODO: a slight delay may be needed, was used with closure
-        PlayerHelperNotification(.playPause).post()
+        PlayerHelperNotification(isPlaying ? .play : .pause).post()
     }
     
     func nextTrack() {

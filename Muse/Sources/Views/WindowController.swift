@@ -397,7 +397,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             strongSelf.eventSentFromApp = true
             
             switch event {
-            case .playPause:
+            case .play, .pause:
                 strongSelf.playPauseHandler()
             case .nextTrack:
                 strongSelf.trackChangedHandler(next: true)
