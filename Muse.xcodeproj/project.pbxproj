@@ -13,6 +13,8 @@
 		0C1F20F41F2B9F3C0055ACAC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */; };
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
 		0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3750D01EFC29C700EE19AE /* Slider.swift */; };
+		0C474DB31F839BEB0067BC8C /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */; };
+		0C474DB51F839C720067BC8C /* PlayerNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB41F839C720067BC8C /* PlayerNotification.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
 		0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */; };
 		0C56FEDA1F4AB5E200A247CB /* Imageable+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */; };
@@ -127,6 +129,8 @@
 		0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFRPrivateHeader.h; sourceTree = "<group>"; };
 		0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = ../../../../System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<group>"; };
 		0C3750D01EFC29C700EE19AE /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
+		0C474DB41F839C720067BC8C /* PlayerNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNotification.swift; sourceTree = "<group>"; };
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
 		0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
@@ -304,6 +308,8 @@
 			children = (
 				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
 				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
+				0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */,
+				0C474DB41F839C720067BC8C /* PlayerNotification.swift */,
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
 			);
 			path = Models;
@@ -709,6 +715,8 @@
 				0C9B62331E1EAE9100660633 /* ButtonCell.swift in Sources */,
 				0C9B62271E1C357100660633 /* NSImageColors.swift in Sources */,
 				0CEAEB391E14583500BD68D5 /* String+Extensions.swift in Sources */,
+				0C474DB51F839C720067BC8C /* PlayerNotification.swift in Sources */,
+				0C474DB31F839BEB0067BC8C /* PlayerEvent.swift in Sources */,
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
 				0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */,
 				0CF8B7E41DF9772900CDD130 /* NSHoverableView.swift in Sources */,

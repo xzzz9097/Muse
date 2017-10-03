@@ -217,7 +217,7 @@ class ViewController: NSViewController {
     }
     
     func registerObserver() {
-        PlayerHelperNotification.observe { [weak self] event in
+        PlayerNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
             
             switch event {

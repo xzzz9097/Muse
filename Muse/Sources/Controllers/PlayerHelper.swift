@@ -6,148 +6,9 @@
 //  Copyright © 2016 Edge Apps. All rights reserved.
 //
 
-// Defines a set of infos to inform the VC
-// about player events from the outside
-typealias PlayerAction = PlayerHelperNotification.Event
-
 // Enum for the three possible player states
 enum PlayerState {
     case stopped, paused, playing
-}
-
-struct PlayerHelperNotification {
-    
-    static private let name = Notification.Name("museHelperNotification")
-    
-    static private let helperNotificationKey = "helperNotification"
-    
-    // Supported player helper events
-    enum Event {
-        case play
-        case pause
-        case next
-        case previous
-        case scrub(Bool, Double)
-        case shuffling(Bool)
-        case repeating(Bool)
-        case like(Bool)
-    }
-    
-    // The event associated with the notification
-    let event: Event
-    
-    init(_ event: Event) {
-        self.event = event
-    }
-    
-    /**
-     Posts the notification of the specified event
-     */
-    func post() {
-        NotificationCenter.default.post(
-            name: PlayerHelperNotification.name,
-            object: nil,
-            userInfo: [PlayerHelperNotification.helperNotificationKey: self])
-    }
-    
-    /**
-     Sets up an observer for the specified event
-     executing the given closure
-     */
-    static func observe(block: @escaping (Event) -> ()) {
-        NotificationCenter.default.addObserver(
-            forName: name,
-            object: nil,
-            queue: nil)
-        { notification in
-            if let helperNotification = notification.userInfo?[helperNotificationKey] as? PlayerHelperNotification {
-                block(helperNotification.event)
-            }
-        }
-    }
-}
-
-@available(OSX 10.12.2, *)
-extension PlayerHelperNotification.Event {
-    
-    var image: NSImage? {
-        switch self {
-        case .play:
-            return .play
-        case .pause:
-            return .pause
-        case .previous:
-            return .previous
-        case .next:
-            return .next
-        case .shuffling:
-            return .shuffling
-        case .repeating:
-            return .repeating
-        case .like:
-            return .like
-        default:
-            return nil
-        }
-    }
-
-    var smallImage: NSImage? {
-        switch self {
-        case .play:
-            return image?.resized(to: NSMakeSize(8, 8))
-        case .pause:
-            return image?.resized(to: NSMakeSize(7, 7))
-        case .previous:
-            return image?.resized(to: NSMakeSize(12, 12))
-        case .next:
-            return image?.resized(to: NSMakeSize(12, 12))
-        case .shuffling, .repeating:
-            return image?.resized(to: NSMakeSize(20, 20))
-        case .like:
-            return image?.resized(to: NSMakeSize(15, 15))
-        default:
-            return image
-        }
-    }
-}
-
-extension PlayerHelperNotification.Event: RawRepresentable {
-    
-    typealias RawValue = Int
-    
-    init?(rawValue: Int) {
-        switch rawValue {
-        case 0: self = .play
-        case 1: self = .pause
-        case 2: self = .previous
-        case 3: self = .next
-        case 4: self = .shuffling(false)
-        case 5: self = .repeating(false)
-        case 6: self = .like(false)
-        case 7: self = .scrub(false, 0)
-        default: return nil
-        }
-    }
-    
-    var rawValue: Int {
-        switch self {
-        case .play: return 0
-        case .pause: return 1
-        case .previous: return 2
-        case .next: return 3
-        case .shuffling: return 4
-        case .repeating: return 5
-        case .like: return 6
-        case .scrub: return 7
-        }
-    }
-}
-
-extension PlayerHelperNotification.Event: Hashable {
-    
-    var hashValue: Int {
-        return self.rawValue
-    }
 }
 
 // An internal protocol that contains all the playback control functions
@@ -257,19 +118,19 @@ extension PlayerHelper where Self: InternalPlayerHelper {
         self.internalTogglePlayPause()
         
         // TODO: a slight delay may be needed, was used with closure
-        PlayerHelperNotification(isPlaying ? .play : .pause).post()
+        PlayerNotification(isPlaying ? .play : .pause).post()
     }
     
     func nextTrack() {
         self.internalNextTrack()
         
-        PlayerHelperNotification(.next).post()
+        PlayerNotification(.next).post()
     }
     
     func previousTrack() {
         self.internalPreviousTrack()
         
-        PlayerHelperNotification(.previous).post()
+        PlayerNotification(.previous).post()
     }
     
     // MARK: Playback status
@@ -279,7 +140,7 @@ extension PlayerHelper where Self: InternalPlayerHelper {
         self.internalScrub(to: doubleValue, touching: touching)
         
         // TODO: this may also require delayed execution
-        PlayerHelperNotification(.scrub(touching, (doubleValue ?? 0) * trackDuration)).post()
+        PlayerNotification(.scrub(touching, (doubleValue ?? 0) * trackDuration)).post()
     }
     
     // MARK: Playback options
@@ -288,7 +149,7 @@ extension PlayerHelper where Self: InternalPlayerHelper {
         set {
             internalRepeating = newValue
             
-            PlayerHelperNotification(.repeating(newValue)).post()
+            PlayerNotification(.repeating(newValue)).post()
         }
 
         get {
@@ -300,7 +161,7 @@ extension PlayerHelper where Self: InternalPlayerHelper {
         set {
             internalShuffling = newValue
             
-            PlayerHelperNotification(.shuffling(newValue)).post()
+            PlayerNotification(.shuffling(newValue)).post()
         }
         
         get {
@@ -324,7 +185,7 @@ extension PlayerHelper where Self: LikableInternalPlayerHelper {
     var liked: Bool {
         set {
             internalSetLiked(newValue) { liked in
-                PlayerHelperNotification(.like(liked)).post()
+                PlayerNotification(.like(liked)).post()
             }
         }
         

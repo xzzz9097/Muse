@@ -391,7 +391,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     func registerCallbacks() {
-        PlayerHelperNotification.observe { [weak self] event in
+        PlayerNotification.observe { [weak self] event in
             guard let strongSelf = self else { return }
             
             strongSelf.eventSentFromApp = true
