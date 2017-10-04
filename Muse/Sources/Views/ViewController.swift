@@ -292,10 +292,11 @@ class ViewController: NSViewController {
         updateViewsVisibility()
         
         // Add callback to show/hide views when hovering (animating)
-        mainView?.mouseHandler = { hovering in
-            if hovering {
+        mainView?.onMouseHoverStateChange = { state in
+            switch state {
+            case .entered:
                 self.mainViewMode = .expanded
-            } else {
+            case .exited:
                 self.mainViewMode = self.shouldShowActionBar ? .partiallyExpanded : .compressed
             }
         }
@@ -374,8 +375,8 @@ class ViewController: NSViewController {
         layer.cornerRadius = 7.5
         layer.masksToBounds = true
         
-        titleSuperview.mouseHandler = { mouseHovering in
-            self.titleTextField.stringValue = !mouseHovering ?
+        titleSuperview.onMouseHoverStateChange = { state in
+            self.titleTextField.stringValue = state == .exited ?
                 self.titleLabelView.stringValue : self.albumArtistLabelView.stringValue
         }
     }

@@ -8,49 +8,47 @@
 
 import Cocoa
 
+extension NSTrackingAreaOptions {
+    
+    // An OptionSet with the needed mouse tracking flags
+    static var defaultMouse: NSTrackingAreaOptions {
+        return [.mouseEnteredAndExited, .activeAlways]
+    }
+}
+
+enum NSViewMouseHoverState {
+    
+    case entered
+    case exited
+}
+
 class NSHoverableView: NSView {
     
-    // Tracking area variable
     var mouseTrackingArea: NSTrackingArea!
     
-    // Clousure for mouseEntered and mouseExited callbacks
-    // Will be set after initialization (e.g. in ViewController)
-    var mouseHandler: ((Bool) -> Void)!
-
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-    }
+    var onMouseHoverStateChange: ((NSViewMouseHoverState) -> ())?
     
-    /* Mouse entered function with its callback */
     override func mouseEntered(with event: NSEvent) {
-        if let handler = mouseHandler {
-            handler(true)
-        }
+        onMouseHoverStateChange?(.entered)
     }
     
-    /* Mouse exited function with its callback */
-    override func mouseExited(with event: NSEvent) {        
-        if let handler = mouseHandler {
-            handler(false)
-        }
+    override func mouseExited(with event: NSEvent) {
+        onMouseHoverStateChange?(.exited)
     }
     
-    /* Tracking area initialization */
     override func updateTrackingAreas() {
-        super.updateTrackingAreas()
-        
         if let area = mouseTrackingArea {
             removeTrackingArea(area)
         }
         
         mouseTrackingArea = NSTrackingArea.init(rect: self.bounds,
-                                                options: mouseTrackingOptions(),
+                                                options: .defaultMouse,
                                                 owner: self,
                                                 userInfo: nil)
         
         self.addTrackingArea(mouseTrackingArea)
     }
-
+    
     func refreshMouseTrackingArea() {
         if let area = mouseTrackingArea {
             removeTrackingArea(area)
@@ -58,10 +56,4 @@ class NSHoverableView: NSView {
         
         mouseTrackingArea = nil
     }
-    
-    /* Return an OptionSet with the needed mouse tracking flags */
-    func mouseTrackingOptions() -> NSTrackingAreaOptions {
-        return [.mouseEnteredAndExited, .activeAlways]
-    }
-    
 }
