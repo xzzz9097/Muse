@@ -53,12 +53,4 @@ class NSHoverableView: NSView, NSMouseHoverableView {
         
         self.addTrackingArea(mouseTrackingArea)
     }
-    
-    func refreshMouseTrackingArea() {
-        if let area = mouseTrackingArea {
-            removeTrackingArea(area)
-        }
-        
-        mouseTrackingArea = nil
-    }
 }
