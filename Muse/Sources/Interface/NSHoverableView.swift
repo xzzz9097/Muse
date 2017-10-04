@@ -22,9 +22,14 @@ enum NSViewMouseHoverState {
     case exited
 }
 
-class NSHoverableView: NSView {
+protocol NSMouseHoverableView {
     
-    var mouseTrackingArea: NSTrackingArea!
+    var onMouseHoverStateChange: ((NSViewMouseHoverState) -> ())? { set get }
+}
+
+class NSHoverableView: NSView, NSMouseHoverableView {
+    
+    private var mouseTrackingArea: NSTrackingArea!
     
     var onMouseHoverStateChange: ((NSViewMouseHoverState) -> ())?
     
