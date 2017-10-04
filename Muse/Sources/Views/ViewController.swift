@@ -218,32 +218,21 @@ class ViewController: NSViewController {
     
     func registerObserver() {
         PlayerNotification.observe { [weak self] event in
-            guard let strongSelf = self else { return }
-            
             switch event {
-            case .play:
-                strongSelf.showLastActionView(for: .play)
-            case .pause:
-                strongSelf.showLastActionView(for: .pause)
-            case .next:
-                strongSelf.showLastActionView(for: .next)
-                strongSelf.showTitleView()
-            case .previous:
-                strongSelf.showLastActionView(for: .previous)
-                strongSelf.showTitleView()
-            case .scrub(let touching, let time):
-                strongSelf.showLastActionView(for: event,
-                                              to: time,
+            case .next, .previous:
+                self?.showTitleView()
+            case .scrub(let touching, _):
+                self?.showLastActionView(for: event,
                                               shouldClose: !touching)
+                return
             case .shuffling(let shuffling):
-                strongSelf.showLastActionView(for: event)
-                strongSelf.updateShuffleRepeatButtons(shuffling: shuffling)
+                self?.updateShuffleRepeatButtons(shuffling: shuffling)
             case .repeating(let repeating):
-                strongSelf.showLastActionView(for: event)
-                strongSelf.updateShuffleRepeatButtons(repeating: repeating)
-            case .like(let liked):
-                strongSelf.showLastActionView(for: event, liked: liked)
+                self?.updateShuffleRepeatButtons(repeating: repeating)
+            default: break
             }
+            
+            self?.showLastActionView(for: event)
         }
     }
     
@@ -414,9 +403,7 @@ class ViewController: NSViewController {
     }
     
     func showLastActionView(for action:  PlayerAction,
-                            to time:     Double = 0,
-                            shouldClose: Bool = true,
-                            liked:       Bool = false) {
+                            shouldClose: Bool = true) {
         // Invalidate existing timers
         // This prevents calls from precedent ones
         actionViewAutoCloseTimer.invalidate()
@@ -444,9 +431,9 @@ class ViewController: NSViewController {
             // to highlight off state for the action
             // TODO: more visible highlighting method
             switch action {
-            case .shuffling: shouldTint = !helper.shuffling
-            case .repeating: shouldTint = !helper.repeating
-            case .like:      shouldTint = !liked
+            case .shuffling(let shuffling): shouldTint = !shuffling
+            case .repeating(let repeating): shouldTint = !repeating
+            case .like(let liked):          shouldTint = !liked
             default: break
             }
             
@@ -454,7 +441,7 @@ class ViewController: NSViewController {
             if shouldTint {
                 actionImageView.setImagePreservingTint(actionImageView.image?.withAlpha(0.5))
             }
-        case .scrub:
+        case .scrub(_, let time):
             // Hide image view if scrubbing
             actionImageView.isHidden = true
             
