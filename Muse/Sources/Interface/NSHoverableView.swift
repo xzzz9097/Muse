@@ -22,12 +22,65 @@ enum NSViewMouseHoverState {
     case exited
 }
 
+enum NSScrollDirection {
+    
+    case left
+    case right
+    case up
+    case down
+    
+    init?(_ event: NSEvent) {
+        let deltaX = Int(event.scrollingDeltaX)
+        let deltaY = Int(event.scrollingDeltaY)
+        
+        guard deltaX != 0 || deltaY != 0 else { return nil }
+        
+        // WARNING: presumes natural scrolling!
+        // TODO:    implement classic scrolling
+        if abs(deltaX) > abs(deltaY) {
+            switch deltaX {
+            case Int.min..<0:
+                self = .right
+            case 0..<Int.max:
+                self = .left
+            default:
+                return nil
+            }
+        } else {
+            switch deltaY {
+            case Int.min..<0:
+                self = .down
+            case 0..<Int.max:
+                self = .up
+            default:
+                return nil
+            }
+        }
+    }
+}
+
+struct NSScrollEvent {
+    
+    var direction: NSScrollDirection?
+    
+    init(initialEvent: NSEvent) {
+        direction = NSScrollDirection(initialEvent)
+    }
+}
+
 protocol NSMouseHoverableView {
     
     var onMouseHoverStateChange: ((NSViewMouseHoverState) -> ())? { set get }
 }
 
-class NSHoverableView: NSView, NSMouseHoverableView {
+protocol NSMouseScrollableView {
+    
+    var onMouseScrollEvent: ((NSScrollEvent) -> ())? { set get }
+}
+
+class NSHoverableView: NSView, NSMouseHoverableView, NSMouseScrollableView {
+    
+    // MARK: Hovering
     
     private var mouseTrackingArea: NSTrackingArea!
     
@@ -52,5 +105,15 @@ class NSHoverableView: NSView, NSMouseHoverableView {
                                                 userInfo: nil)
         
         self.addTrackingArea(mouseTrackingArea)
+    }
+    
+    // MARK: Scrolling
+    
+    var onMouseScrollEvent: ((NSScrollEvent) -> ())?
+    
+    override func scrollWheel(with event: NSEvent) {
+        if event.phase.contains(.began) {
+            onMouseScrollEvent?(NSScrollEvent(initialEvent: event))
+        }
     }
 }

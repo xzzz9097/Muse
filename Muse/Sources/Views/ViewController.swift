@@ -300,6 +300,19 @@ class ViewController: NSViewController {
                 self.mainViewMode = self.shouldShowActionBar ? .partiallyExpanded : .compressed
             }
         }
+        
+        mainView?.onMouseScrollEvent = { [weak self] event in
+            guard let direction = event.direction else { return }
+            
+            switch direction {
+            case .left:
+                self?.helper.previousTrack()
+            case .right:
+                self?.helper.nextTrack()
+            default:
+                break
+            }
+        }
     }
     
     func updateViewsVisibility() {
