@@ -260,6 +260,17 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // MARK: Key handlers
     
     override func keyDown(with event: NSEvent) {
+        // TODO: implement all key combos in this switch
+        switch KeyCombination(event.modifierFlags, event.keyCode) {
+        case KeyCombination(.command, kVK_ANSI_1):
+            onViewController { $0.goToActionTab(at: 0) }
+            return
+        case KeyCombination(.command, kVK_ANSI_2):
+            onViewController { $0.goToActionTab(at: 1) }
+            return
+        default: break
+        }
+        
         // Catch key events
         switch Int(event.keyCode) {
         case kVK_Escape:

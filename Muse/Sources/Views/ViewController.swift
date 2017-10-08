@@ -186,12 +186,16 @@ class ViewController: NSViewController {
         }
     }
     
-    func nextTabButtonClicked(sender: NSButton) {
+    func goToNextActionTab() {
         actionTabView.selectNextTabViewItem(self)
     }
     
-    func previousTabButtonClicked(sender: NSButton) {
+    func goToPreviousActionTab() {
         actionTabView.selectPreviousTabViewItem(self)
+    }
+    
+    func goToActionTab(at index: Int) {
+        actionTabView.selectTabViewItem(at: index)
     }
     
     // MARK: UI preparation
@@ -377,8 +381,8 @@ class ViewController: NSViewController {
             $0?.circleShaped(scale: 1/5)
         }
         
-        nextTabButton.action     = #selector(nextTabButtonClicked(sender:))
-        previousTabButton.action = #selector(previousTabButtonClicked(sender:))
+        nextTabButton.action     = #selector(goToNextActionTab)
+        previousTabButton.action = #selector(goToPreviousActionTab)
     }
     
     func prepareTitleView() {
