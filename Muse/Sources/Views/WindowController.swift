@@ -260,54 +260,30 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // MARK: Key handlers
     
     override func keyDown(with event: NSEvent) {
-        // TODO: implement all key combos in this switch
         switch KeyCombination(event.modifierFlags, event.keyCode) {
-        case KeyCombination(.command, kVK_ANSI_1):
-            onViewController { $0.goToActionTab(at: 0) }
-            return
-        case KeyCombination(.command, kVK_ANSI_2):
-            onViewController { $0.goToActionTab(at: 1) }
-            return
-        default: break
-        }
-        
-        // Catch key events
-        switch Int(event.keyCode) {
-        case kVK_Escape:
-            if let window = self.window { window.setVisibility(false) }
-        case kVK_LeftArrow, kVK_ANSI_A:
-            helper.previousTrack()
-        case kVK_Space, kVK_ANSI_S:
-            helper.togglePlayPause()
-        case kVK_RightArrow, kVK_ANSI_D:
-            helper.nextTrack()
-        case kVK_Return, kVK_ANSI_W:
-            showPlayer()
-        case kVK_ANSI_X:
-            helper.shuffling = !helper.shuffling
-        case kVK_ANSI_R:
-            helper.repeating = !helper.repeating
-        case kVK_ANSI_L:
-            if var helper = helper as? LikablePlayerHelper {
-                helper.liked = !helper.liked
-            }
-        case kVK_ANSI_I:
-            onViewController { controller in
-                controller.showTitleView()
-            }
-        case kVK_ANSI_B:
-            onViewController { controller in
-                controller.shouldShowActionBar = !controller.shouldShowActionBar
-            }
-        case kVK_ANSI_1:
+        case KeyCombination(.command, kVK_ANSI_S):
             setPlayerHelper(to: .spotify)
-            return
-        case kVK_ANSI_2:
+        case KeyCombination(.command, kVK_ANSI_I):
             setPlayerHelper(to: .itunes)
-        case kVK_ANSI_3:
+        case KeyCombination(.command, kVK_ANSI_V):
             setPlayerHelper(to: .vox)
-        default:
-            super.keyDown(with: event)
+        case KeyCombination(kVK_Escape):
+            if let window = self.window { window.setVisibility(false) }
+        case KeyCombination(kVK_LeftArrow), KeyCombination(kVK_ANSI_A):
+            helper.previousTrack()
+        case KeyCombination(kVK_Space), KeyCombination(kVK_ANSI_S):
+            helper.togglePlayPause()
+        case KeyCombination(kVK_RightArrow), KeyCombination(kVK_ANSI_D):
+            helper.nextTrack()
+        case KeyCombination(kVK_Return), KeyCombination(kVK_ANSI_W):
+            showPlayer()
+        case KeyCombination(kVK_ANSI_X):
+            helper.shuffling = !helper.shuffling
+        case KeyCombination(kVK_ANSI_R):
+            helper.repeating = !helper.repeating
+        case KeyCombination(kVK_ANSI_L):
+            if var helper = helper as? LikablePlayerHelper { helper.liked = !helper.liked }
+        default: super.keyDown(with: event)
         }
     }
     

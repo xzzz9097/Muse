@@ -8,6 +8,7 @@
 
 import Cocoa
 import QuartzCore
+import Carbon.HIToolbox
 
 @available(OSX 10.12.2, *)
 fileprivate extension NSButton {
@@ -198,6 +199,22 @@ class ViewController: NSViewController {
         actionTabView.selectTabViewItem(at: index)
     }
     
+    // MARK: Key handlers
+    
+    override func keyDown(with event: NSEvent) {
+        switch KeyCombination(event.modifierFlags, event.keyCode) {
+        case KeyCombination(.command, kVK_ANSI_1):
+            goToActionTab(at: 0)
+        case KeyCombination(.command, kVK_ANSI_2):
+            goToActionTab(at: 1)
+        case KeyCombination(kVK_ANSI_I):
+            showTitleView()
+        case KeyCombination(kVK_ANSI_B):
+            shouldShowActionBar = !shouldShowActionBar
+        default: break
+        }
+    }
+    
     // MARK: UI preparation
     
     override func viewDidLoad() {
@@ -218,6 +235,15 @@ class ViewController: NSViewController {
         showActionBarView()
         
         registerObserver()
+        
+        registerKeyDown()
+    }
+    
+    func registerKeyDown() {
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            self.keyDown(with: event)
+            return event
+        }
     }
     
     func registerObserver() {

@@ -19,8 +19,13 @@ struct KeyCombination {
         self.keyCode   = Int(keyCode)
     }
     
-    init(_ modifiers: NSEventModifierFlags? = nil, _ keyCode: Int) {
+    init(_ modifiers: NSEventModifierFlags, _ keyCode: Int) {
         self.modifiers = modifiers
+        self.keyCode   = keyCode
+    }
+    
+    init(_ keyCode: Int) {
+        self.modifiers = nil
         self.keyCode   = keyCode
     }
 }
