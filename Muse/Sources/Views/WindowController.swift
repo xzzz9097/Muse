@@ -267,21 +267,21 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             setPlayerHelper(to: .itunes)
         case KeyCombination(.command, kVK_ANSI_V):
             setPlayerHelper(to: .vox)
-        case KeyCombination(kVK_Escape):
+        case kVK_Escape:
             if let window = self.window { window.setVisibility(false) }
-        case KeyCombination(kVK_LeftArrow), KeyCombination(kVK_ANSI_A):
+        case kVK_LeftArrow, kVK_ANSI_A:
             helper.previousTrack()
-        case KeyCombination(kVK_Space), KeyCombination(kVK_ANSI_S):
+        case kVK_Space, kVK_ANSI_S:
             helper.togglePlayPause()
-        case KeyCombination(kVK_RightArrow), KeyCombination(kVK_ANSI_D):
+        case kVK_RightArrow, kVK_ANSI_D:
             helper.nextTrack()
-        case KeyCombination(kVK_Return), KeyCombination(kVK_ANSI_W):
+        case kVK_Return, kVK_ANSI_W:
             showPlayer()
-        case KeyCombination(kVK_ANSI_X):
+        case kVK_ANSI_X:
             helper.shuffling = !helper.shuffling
-        case KeyCombination(kVK_ANSI_R):
+        case kVK_ANSI_R:
             helper.repeating = !helper.repeating
-        case KeyCombination(kVK_ANSI_L):
+        case kVK_ANSI_L:
             if var helper = helper as? LikablePlayerHelper { helper.liked = !helper.liked }
         default: super.keyDown(with: event)
         }

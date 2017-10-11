@@ -207,9 +207,9 @@ class ViewController: NSViewController {
             goToActionTab(at: 0)
         case KeyCombination(.command, kVK_ANSI_2):
             goToActionTab(at: 1)
-        case KeyCombination(kVK_ANSI_I):
+        case kVK_ANSI_I:
             showTitleView()
-        case KeyCombination(kVK_ANSI_B):
+        case kVK_ANSI_B:
             shouldShowActionBar = !shouldShowActionBar
         default: break
         }
