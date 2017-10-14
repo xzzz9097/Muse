@@ -136,8 +136,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var previousButton:        NSButton!
     @IBOutlet weak var nextButton:            NSButton!
     @IBOutlet weak var songProgressBarHeight: NSLayoutConstraint!
-    @IBOutlet weak var nextTabButton:         NSButton!
-    @IBOutlet weak var previousTabButton:     NSButton!
+    @IBOutlet weak var nextTabButton:         NSCustomizableButton!
+    @IBOutlet weak var previousTabButton:     NSCustomizableButton!
     
     // MARK: Superviews
     
@@ -404,7 +404,19 @@ class ViewController: NSViewController {
         }
         
         [nextTabButton, previousTabButton].forEach {
-            $0?.circleShaped(scale: 1/5)
+            guard let button = $0 else { return }
+            
+            button.circleShaped(scale: 1/5)
+            
+            // Dim tab buttons when hovered
+            button.onMouseHoverStateChange = { state in
+                switch state {
+                case .entered:
+                    button.alphaValue = 0.5
+                case .exited:
+                    button.alphaValue = 1.0
+                }
+            }
         }
         
         nextTabButton.action     = #selector(goToNextActionTab)
