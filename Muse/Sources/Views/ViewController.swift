@@ -412,9 +412,9 @@ class ViewController: NSViewController {
             button.onMouseHoverStateChange = { state in
                 switch state {
                 case .entered:
-                    button.alphaValue = 0.5
+                    button.animator().alphaValue = 0.5
                 case .exited:
-                    button.alphaValue = 1.0
+                    button.animator().alphaValue = 1.0
                 }
             }
         }
