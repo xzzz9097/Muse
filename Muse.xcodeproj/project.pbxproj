@@ -17,6 +17,7 @@
 		0C474DB31F839BEB0067BC8C /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */; };
 		0C474DB51F839C720067BC8C /* PlayerNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB41F839C720067BC8C /* PlayerNotification.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
+		0C4AF0491F9A305000240EAB /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4AF0481F9A305000240EAB /* SearchController.swift */; };
 		0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */; };
 		0C56FEDA1F4AB5E200A247CB /* Imageable+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */; };
 		0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */; };
@@ -135,6 +136,7 @@
 		0C474DB41F839C720067BC8C /* PlayerNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNotification.swift; sourceTree = "<group>"; };
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
+		0C4AF0481F9A305000240EAB /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
 		0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Imageable+Tint.swift"; sourceTree = "<group>"; };
 		0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchBarMaker.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 			children = (
 				0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
+				0C4AF0481F9A305000240EAB /* SearchController.swift */,
 				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
 				0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */,
 			);
@@ -707,6 +710,7 @@
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
+				0C4AF0491F9A305000240EAB /* SearchController.swift in Sources */,
 				0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */,
 				0C3EEA4A1F8A1D8300056FA7 /* KeyCombination.swift in Sources */,
 				0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */,

@@ -48,6 +48,15 @@ import SpotifyKit
     @objc optional var artworkUrl: String { get }
 }
 
+// The SpotifyKit object, available to all classes
+var spotifyManager = SpotifyManager(
+    with: SpotifyManager.SpotifyDeveloperApplication(
+        clientId: "fff95f1ce70e4dffb534bf9bbdf8da6d",
+        clientSecret: "d5757f19f36644d4b85b9f63abe0ef1f",
+        redirectUri: "muse://callback"
+    )
+)
+
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
@@ -58,15 +67,6 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
     
     // The SBApplication object buond to the helper class
     private let application: SpotifyApplication? = SBApplication.init(bundleIdentifier: BundleIdentifier)
-
-    // The SpotifyKit object bound to the helper class
-    private var spotifyManager = SpotifyManager(
-        with: SpotifyManager.SpotifyDeveloperApplication(
-            clientId: "fff95f1ce70e4dffb534bf9bbdf8da6d",
-            clientSecret: "d5757f19f36644d4b85b9f63abe0ef1f",
-            redirectUri: "muse://callback"
-        )
-    )
     
     private init() {
         if !spotifyManager.hasToken {

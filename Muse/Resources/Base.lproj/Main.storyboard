@@ -167,7 +167,7 @@
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="" width="272" minWidth="40" maxWidth="1000" id="guT-6j-csq">
+                                                        <tableColumn identifier="NameCell" width="272" minWidth="40" maxWidth="1000" id="guT-6j-csq" userLabel="Name">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -547,6 +547,7 @@
                         <outlet property="previousButton" destination="Eef-uq-zvm" id="1vn-eC-Dse"/>
                         <outlet property="previousTabButton" destination="XVN-v6-Fch" id="5eb-Og-UUA"/>
                         <outlet property="repeatButton" destination="Ozc-M5-qX1" id="g9Q-sX-xdu"/>
+                        <outlet property="resultsTableView" destination="WLZ-4d-ebi" id="IPI-jV-wjt"/>
                         <outlet property="shuffleButton" destination="jN5-2R-ZRB" id="tNG-Uh-1DX"/>
                         <outlet property="songProgressBar" destination="3IF-e0-Ota" id="jVJ-Wl-Bww"/>
                         <outlet property="songProgressBarHeight" destination="5Mw-8i-HJ2" id="iKX-90-Vw9"/>

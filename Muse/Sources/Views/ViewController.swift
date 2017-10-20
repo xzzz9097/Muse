@@ -9,6 +9,7 @@
 import Cocoa
 import QuartzCore
 import Carbon.HIToolbox
+import SpotifyKit
 
 @available(OSX 10.12.2, *)
 fileprivate extension NSButton {
@@ -84,9 +85,12 @@ enum MainViewMode {
 }
 
 @available(OSX 10.12.2, *)
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSTextFieldDelegate {
     
     // MARK: Properties
+    
+    // The search results
+    var trackSearchResults: [SpotifyTrack] = []
     
     // Action view auto close
     let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
@@ -157,6 +161,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var songProgressBarHeight: NSLayoutConstraint!
     @IBOutlet weak var nextTabButton:         NSCustomizableButton!
     @IBOutlet weak var previousTabButton:     NSCustomizableButton!
+    @IBOutlet weak var resultsTableView:      NSTableView!
     
     // MARK: Superviews
     
@@ -297,6 +302,7 @@ class ViewController: NSViewController {
         prepareLastActionView()
         prepareActionBarButtons()
         prepareTitleView()
+        prepareResultsTableView()
     }
 
     override var representedObject: Any? {
@@ -321,6 +327,11 @@ class ViewController: NSViewController {
         layer.shadowColor = NSColor.controlShadowColor.cgColor
         layer.shadowRadius = 0.5
         layer.shadowOpacity = 1
+    }
+    
+    func prepareResultsTableView() {
+        resultsTableView.delegate   = self
+        resultsTableView.dataSource = self
     }
     
     func prepareSongProgressBar() {
@@ -466,6 +477,7 @@ class ViewController: NSViewController {
         titleTextField.addGestureRecognizer(searchGestureRecognizer)
         
         titleTextField.focusRingType = .none
+        titleTextField.delegate      = self
     }
     
     // MARK: UI activation
@@ -716,6 +728,14 @@ class ViewController: NSViewController {
     func updateSongProgressSlider(with position: Double) {
         // Update always on progress bar
         songProgressBar.doubleValue = position
+    }
+    
+    // MARK: NSTextFieldDelegate
+    
+    override func controlTextDidChange(_ obj: Notification) {
+        if let field = obj.object as? NSTextField {
+            search(field.stringValue)
+        }
     }
     
 }
