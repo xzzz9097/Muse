@@ -138,7 +138,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // If an event is sent from TouchBar control strip button should not be refreshed
     // Set to true at event sent, reset to false after notification is received
     var eventSentFromApp = false
-
+    
     // MARK: Actions
     
     func controlsSegmentedViewClicked(_ sender: NSSegmentedControl) {

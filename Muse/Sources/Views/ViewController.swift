@@ -119,6 +119,25 @@ class ViewController: NSViewController {
         return windowController.helper
     }
     
+    // A gesture recognizer for single click events
+    var searchGestureRecognizer: NSGestureRecognizer {
+        let recognizer = NSClickGestureRecognizer()
+        
+        recognizer.target = self
+        recognizer.action = #selector(searchGestureHandler(_:))
+        
+        return recognizer
+    }
+    
+    func searchGestureHandler(_ sender: NSGestureRecognizer?) {
+        // Enable editing and empty the field
+        titleTextField.isEditable  = true
+        titleTextField.isEnabled   = true
+        
+        // Make first responder -> start editing
+        titleTextField.becomeFirstResponder()
+    }
+    
     // MARK: Outlets
 
     @IBOutlet weak var fullSongArtworkView:   NSImageView!
@@ -435,9 +454,18 @@ class ViewController: NSViewController {
         layer.masksToBounds = true
         
         titleSuperview.onMouseHoverStateChange = { state in
+            if state == .exited {
+                self.titleTextField.isEditable = false
+                self.titleTextField.isEnabled  = false
+            }
+            
             self.titleTextField.stringValue = state == .exited ?
                 self.titleLabelView.stringValue : self.albumArtistLabelView.stringValue
         }
+        
+        titleTextField.addGestureRecognizer(searchGestureRecognizer)
+        
+        titleTextField.focusRingType = .none
     }
     
     // MARK: UI activation
