@@ -202,6 +202,10 @@ class ViewController: NSViewController {
     // MARK: Key handlers
     
     override func keyDown(with event: NSEvent) {
+        // Ensure that no text field is first responder
+        // We don't want to intercept keystrokes while text editing
+        if let _ = view.window?.firstResponder as? NSTextView { return }
+        
         switch KeyCombination(event.modifierFlags, event.keyCode) {
         case KeyCombination(.command, kVK_ANSI_1):
             goToActionTab(at: 0)
