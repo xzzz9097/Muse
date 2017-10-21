@@ -19,19 +19,15 @@ extension ViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView,
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView? {
-        guard let identifier = tableColumn?.identifier else { return nil }
+        guard   let identifier = tableColumn?.identifier,
+                identifier == CellIndentifier.name else { return nil }
         
-        var text = ""
-        
-        switch identifier {
-        case CellIndentifier.name:
-            text = trackSearchResults[row].name
-        default: break
-        }
-        
-        if let cell = tableView.make(withIdentifier: identifier, owner: self) as? NSTableCellView {
-            cell.textField?.stringValue = text
+        if let cell = tableView.make(withIdentifier: identifier, owner: self) as? ResultsTableCellView {
+            cell.textField?.stringValue = trackSearchResults[row].name
             cell.textField?.textColor   = colors[1]
+            
+            cell.secondTextField?.stringValue = trackSearchResults[row].artist.name
+            cell.secondTextField?.textColor   = colors[2]
             
             return cell
         }
