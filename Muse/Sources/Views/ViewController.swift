@@ -169,6 +169,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     var actionSuperview:           NSView!
     var titleSuperview:            NSHoverableView!
     var actionBarSuperview:        NSView!
+    var resultsSuperview:          NSView!
     
     var mainView: NSHoverableView? {
         return self.view as? NSHoverableView
@@ -252,13 +253,15 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview as? NSHoverableView
         actionBarSuperview        = actionTabView.superview
+        resultsSuperview          = resultsTableView.superview
         
         actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
         
         [titleAlbumArtistSuperview,
          actionSuperview,
          titleSuperview,
-         actionTabView].forEach { $0?.wantsLayer = true }
+         actionTabView,
+         resultsSuperview].forEach { $0?.wantsLayer = true }
         
         showActionBarView()
         
@@ -330,8 +333,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     }
     
     func prepareResultsTableView() {
-        resultsTableView.delegate   = self
-        resultsTableView.dataSource = self
+        resultsTableView.delegate        = self
+        resultsTableView.dataSource      = self
+        resultsTableView.backgroundColor = .clear
     }
     
     func prepareSongProgressBar() {
@@ -665,7 +669,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
         
         // Set the superviews background color and animate it
-        [ titleAlbumArtistSuperview, actionSuperview, titleSuperview, actionTabView ].forEach {
+        [ titleAlbumArtistSuperview, actionSuperview, titleSuperview, actionTabView, resultsSuperview ].forEach {
             $0?.layer?.animateChange(to: backgroundColor.cgColor,
                                      for: CALayer.kBackgroundColorPath)
         }
