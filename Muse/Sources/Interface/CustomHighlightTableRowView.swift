@@ -8,19 +8,24 @@
 
 class CustomHighLightTableRowView: NSTableRowView {
     
-    var fillColor: NSColor = .clear
+    // The custom highlight selection color
+    var fillColor: NSColor?
     
-    convenience init(fillColor: NSColor) {
+    convenience init(fillColor: NSColor?) {
         self.init()
         
         self.fillColor = fillColor
     }
     
+    /**
+     Override drawSelection to paint a custom highlight fill in the selected row
+     */
     override func drawSelection(in dirtyRect: NSRect) {
-        guard selectionHighlightStyle != .none else { return }
+        guard selectionHighlightStyle != .none, let fillColor = fillColor else { return }
         
         fillColor.set()
         
+        // Fill the row rect (bounds) with the custom highlight color
         NSBezierPath.fill(bounds)
     }
 }
