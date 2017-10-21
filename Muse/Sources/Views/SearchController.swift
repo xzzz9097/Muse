@@ -31,6 +31,7 @@ extension ViewController: NSTableViewDelegate {
         
         if let cell = tableView.make(withIdentifier: identifier, owner: self) as? NSTableCellView {
             cell.textField?.stringValue = text
+            cell.textField?.textColor   = colors[1]
             
             return cell
         }
