@@ -39,7 +39,8 @@ extension ViewController: NSTableViewDelegate {
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         if  let tableView = notification.object as? NSTableView,
-            let spotifyHelper = helper as? SpotifyHelper {
+            let spotifyHelper = helper as? SpotifyHelper,
+            tableView.selectedRow >= 0 {
             spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
         }
     }
