@@ -26,6 +26,7 @@ import SpotifyKit
     
     // Playback control functions
     @objc optional func play()
+    @objc optional func playTrack(_ uri: String, inContext: String)
     @objc optional func pause()
     @objc optional func playpause()
     @objc optional func nextTrack()
@@ -155,6 +156,10 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
     
     func internalPreviousTrack() {
         application?.previousTrack?()
+    }
+    
+    func play(uri: String, context: String = "") {
+        application?.playTrack?(uri, inContext: context)
     }
     
     // MARK: Playback status

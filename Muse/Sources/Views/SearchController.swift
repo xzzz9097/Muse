@@ -36,6 +36,13 @@ extension ViewController: NSTableViewDelegate {
         
         return nil
     }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        if  let tableView = notification.object as? NSTableView,
+            let spotifyHelper = helper as? SpotifyHelper {
+            spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
+        }
+    }
 }
 
 @available(OSX 10.12.2, *)
