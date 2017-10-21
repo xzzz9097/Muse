@@ -44,6 +44,10 @@ extension ViewController: NSTableViewDelegate {
             spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
         }
     }
+    
+    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {        
+        return CustomHighLightTableRowView(fillColor: colors[3] ?? .clear)
+    }
 }
 
 @available(OSX 10.12.2, *)
