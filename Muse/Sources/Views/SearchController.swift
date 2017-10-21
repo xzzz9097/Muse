@@ -23,9 +23,11 @@ extension ViewController: NSTableViewDelegate {
                 identifier == CellIndentifier.name else { return nil }
         
         if let cell = tableView.make(withIdentifier: identifier, owner: self) as? ResultsTableCellView {
+            // First table cell field: track name
             cell.textField?.stringValue = trackSearchResults[row].name
             cell.textField?.textColor   = colors[1]
             
+            // Second table cell field: artist name
             cell.secondTextField?.stringValue = trackSearchResults[row].artist.name
             cell.secondTextField?.textColor   = colors[2]
             
