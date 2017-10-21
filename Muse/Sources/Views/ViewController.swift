@@ -137,18 +137,20 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         let recognizer = NSClickGestureRecognizer()
         
         recognizer.target = self
-        recognizer.action = #selector(searchGestureHandler(_:))
+        recognizer.action = #selector(startSearch)
         
         return recognizer
     }
     
-    func searchGestureHandler(_ sender: NSGestureRecognizer?) {
+    func startSearch() {
         // Enable editing and empty the field
         titleTextField.isEditable  = true
         titleTextField.isEnabled   = true
         
         // Make first responder -> start editing
         titleTextField.becomeFirstResponder()
+        
+        showResultsTableView(show: true)
     }
     
     // MARK: Outlets
