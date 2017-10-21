@@ -92,6 +92,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     // The search results
     var trackSearchResults: [SpotifyTrack] = []
     
+    // Current artwork image colors
+    var colors: [NSColor?] = []
+    
     // Action view auto close
     let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
     var actionViewAutoCloseTimer: Timer        = Timer() // The timer
@@ -641,10 +644,12 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         actionImageView.tintedImage = (actionImageView.image ?? PlayerAction.play.image!).tint(with: color)
     }
     
-    func colorViews(with colors: ImageColors) {
+    func colorViews(with imageColors: ImageColors) {
         // Blend all colors with 50% of lightGray to avoid too contrasty views
-        let colors = [ colors.background, colors.primary, colors.secondary, colors.detail ]
-                .map { $0?.blended(withFraction: 0.5, of: .lightGray) }
+        colors = [ imageColors.background,
+                   imageColors.primary,
+                   imageColors.secondary,
+                   imageColors.detail ] .map { $0?.blended(withFraction: 0.5, of: .lightGray) }
         
         guard   let backgroundColor = colors[0],
                 let primaryColor    = colors[1],
