@@ -113,6 +113,12 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
+    var shouldShowResultsTableView = false {
+        didSet {
+            showResultsTableView()
+        }
+    }
+    
     // MARK: Helpers
     
     var helper: PlayerHelper {
@@ -164,7 +170,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var songProgressBarHeight: NSLayoutConstraint!
     @IBOutlet weak var nextTabButton:         NSCustomizableButton!
     @IBOutlet weak var previousTabButton:     NSCustomizableButton!
-    @IBOutlet weak var resultsTableView:      NSTableView!
+    @IBOutlet weak var resultsTableView:      NSTableView?
     
     // MARK: Superviews
     
@@ -243,6 +249,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             showTitleView()
         case kVK_ANSI_B:
             shouldShowActionBar = !shouldShowActionBar
+        case kVK_ANSI_F:
+            shouldShowResultsTableView = !shouldShowResultsTableView
         default: break
         }
     }
@@ -256,9 +264,10 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview as? NSHoverableView
         actionBarSuperview        = actionTabView.superview
-        resultsSuperview          = resultsTableView.superview?.superview?.superview
+        resultsSuperview          = resultsTableView?.superview?.superview?.superview
         
         actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
+        resultsSuperview.translatesAutoresizingMaskIntoConstraints   = true
         
         [titleAlbumArtistSuperview,
          actionSuperview,
@@ -267,6 +276,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
          resultsSuperview].forEach { $0?.wantsLayer = true }
         
         showActionBarView()
+        showResultsTableView()
         
         registerObserver()
         
@@ -336,9 +346,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     }
     
     func prepareResultsTableView() {
-        resultsTableView.delegate        = self
-        resultsTableView.dataSource      = self
-        resultsTableView.backgroundColor = .clear
+        resultsTableView?.delegate        = self
+        resultsTableView?.dataSource      = self
+        resultsTableView?.backgroundColor = .clear
     }
     
     func prepareSongProgressBar() {
@@ -591,6 +601,17 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
+    func showResultsTableView(show: Bool? = nil) {
+        let show = show != nil ? show! : shouldShowResultsTableView
+        
+        view.toggleSubviewVisibilityAndResize(subview: resultsSuperview,
+                                              visible: show)
+        
+        if shouldShowResultsTableView {
+            prepareResultsTableView()
+        }
+    }
+    
     // MARK: UI refresh
     
     func updateButtons() {
@@ -699,7 +720,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         colorActionBar(highlight: highlightColor)
         
         // Update table view with new colors
-        resultsTableView.reloadData()
+        resultsTableView?.reloadData()
     }
     
     func colorActionBar(background: CGColor? = nil,

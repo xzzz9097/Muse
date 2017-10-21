@@ -70,7 +70,7 @@ extension ViewController {
             self?.trackSearchResults = tracks
             
             // Refresh table view
-            self?.resultsTableView.reloadData()
+            self?.resultsTableView?.reloadData()
         }
     }
 }
