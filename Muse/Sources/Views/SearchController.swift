@@ -36,17 +36,15 @@ extension ViewController: NSTableViewDelegate {
         
         return nil
     }
-    
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        if  let tableView = notification.object as? NSTableView,
-            let spotifyHelper = helper as? SpotifyHelper,
-            tableView.selectedRow >= 0 {
-            spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
-        }
-    }
-    
+
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {        
         return CustomHighLightTableRowView(fillColor: colors[3] ?? .clear)
+    }
+    
+    func tableViewDoubleClicked(tableView: NSTableView) {
+        if let spotifyHelper = helper as? SpotifyHelper, tableView.selectedRow >= 0 {
+            spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
+        }
     }
 }
 

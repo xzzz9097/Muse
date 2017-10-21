@@ -349,6 +349,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         resultsTableView?.delegate        = self
         resultsTableView?.dataSource      = self
         resultsTableView?.backgroundColor = .clear
+        resultsTableView?.doubleAction    = #selector(tableViewDoubleClicked)
     }
     
     func prepareSongProgressBar() {
