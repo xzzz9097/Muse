@@ -256,7 +256,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview as? NSHoverableView
         actionBarSuperview        = actionTabView.superview
-        resultsSuperview          = resultsTableView.superview
+        resultsSuperview          = resultsTableView.superview?.superview?.superview
         
         actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
         
