@@ -38,7 +38,7 @@ extension ViewController: NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {        
-        return CustomHighLightTableRowView(fillColor: colors[3] ?? .clear)
+        return CustomHighLightTableRowView(fillColor: colors[3])
     }
     
     func tableViewDoubleClicked(tableView: NSTableView) {
@@ -69,6 +69,9 @@ extension ViewController {
             
             // Refresh table view
             self?.resultsTableView?.reloadData()
+            
+            // Automatically select first result
+            self?.resultsTableView?.selectRowIndexes([0], byExtendingSelection: false)
         }
     }
 }
