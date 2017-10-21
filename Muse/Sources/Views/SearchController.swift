@@ -36,14 +36,6 @@ extension ViewController: NSTableViewDelegate {
         
         return nil
     }
-    
-    /**
-     Intercept proposed selection index and return blank set.
-     This makes the tableView rows non-selectable
-     */
-    func tableView(_ tableView: NSTableView, selectionIndexesForProposedSelection proposedSelectionIndexes: IndexSet) -> IndexSet {
-        return []
-    }
 }
 
 @available(OSX 10.12.2, *)
