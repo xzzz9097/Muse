@@ -725,7 +725,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         colorActionBar(highlight: highlightColor)
         
         // Update table view with new colors
-        resultsTableView?.reloadData()
+        resultsTableView?.reloadData(keepingSelection: true)
     }
     
     func colorActionBar(background: CGColor? = nil,

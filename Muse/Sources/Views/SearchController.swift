@@ -9,7 +9,7 @@
 import Cocoa
 import SpotifyKit
 
-fileprivate extension NSTableView {
+extension NSTableView {
     
     /**
      Reloads tableView data and highlights first entry
@@ -25,6 +25,22 @@ fileprivate extension NSTableView {
         self.selectRowIndexes([0], byExtendingSelection: false)
     }
     
+    /**
+     Reloads tableView data while keeping selection
+     */
+    func reloadData(keepingSelection: Bool) {
+        // Save currently selected row
+        let selectedRow = self.selectedRow
+        
+        // Refresh tableView data
+        self.reloadData()
+        
+        // Restore previous selection
+        self.selectRowIndexes([selectedRow], byExtendingSelection: false)
+    }
+}
+    
+fileprivate extension NSTableView {
     /**
      The cell view at the requested index. Returns 0 if index is out of bounds.
      */
