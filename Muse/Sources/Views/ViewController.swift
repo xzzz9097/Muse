@@ -487,20 +487,26 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         layer.cornerRadius = 7.5
         layer.masksToBounds = true
         
-        titleSuperview.onMouseHoverStateChange = { state in
-            if state == .exited {
-                self.titleTextField.isEditable = false
-                self.titleTextField.isEnabled  = false
-            }
+        titleSuperview.onMouseHoverStateChange = { [weak self] state in
+            guard let strongSelf = self else { return }
             
-            self.titleTextField.stringValue = state == .exited ?
-                self.titleLabelView.stringValue : self.albumArtistLabelView.stringValue
+            if state == .exited { strongSelf.disableTitleViewEditing() }
+            
+            strongSelf.titleTextField.stringValue = state == .exited ?
+                strongSelf.titleLabelView.stringValue : strongSelf.albumArtistLabelView.stringValue
         }
         
         titleTextField.addGestureRecognizer(searchGestureRecognizer)
         
         titleTextField.focusRingType = .none
         titleTextField.delegate      = self
+    }
+    
+    func disableTitleViewEditing() {
+        titleTextField.isEditable = false
+        titleTextField.isEnabled  = false
+        
+        titleTextField.sizeToFit()
     }
     
     // MARK: UI activation

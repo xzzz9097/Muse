@@ -95,6 +95,8 @@ extension ViewController: NSTableViewDelegate {
         if let spotifyHelper = helper as? SpotifyHelper, tableView.selectedRow >= 0 {
             spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
         }
+        
+        disableTitleViewEditing()
     }
     
     /**
