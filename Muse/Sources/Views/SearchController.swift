@@ -9,7 +9,7 @@
 import Cocoa
 import SpotifyKit
 
-extension NSTableView {
+fileprivate extension NSTableView {
     
     /**
      Reloads tableView data and highlights first entry
@@ -20,6 +20,15 @@ extension NSTableView {
         
         // Automatically select first result
         self.selectRowIndexes([0], byExtendingSelection: false)
+    }
+    
+    /**
+     The cell view at the requested index. Returns 0 if index is out of bounds.
+     */
+    func cell(at row: Int) -> ResultsTableCellView? {
+        if row < 0 { return nil }
+        
+        return self.view(atColumn: 0, row: row, makeIfNecessary: false) as? ResultsTableCellView
     }
 }
 
@@ -38,11 +47,14 @@ extension ViewController: NSTableViewDelegate {
         if let cell = tableView.make(withIdentifier: identifier, owner: self) as? ResultsTableCellView {
             // First table cell field: track name
             cell.textField?.stringValue = trackSearchResults[row].name
-            cell.textField?.textColor   = colors[1]
             
             // Second table cell field: artist name
             cell.secondTextField?.stringValue = trackSearchResults[row].artist.name
-            cell.secondTextField?.textColor   = colors[2]
+            
+            // Set text colors
+            [ cell.textField, cell.secondTextField ].enumerated().forEach {
+                $1?.textColor = colors[$0 + 1]
+            }
             
             return cell
         }
@@ -64,6 +76,26 @@ extension ViewController: NSTableViewDelegate {
         if let spotifyHelper = helper as? SpotifyHelper, tableView.selectedRow >= 0 {
             spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
         }
+    }
+    
+    /**
+     Intercepts selection event to adapt text color to highlight.
+     */
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        let currentlySelectedCell = tableView.cell(at: tableView.selectedRow)
+        let nextSelectedCell =      tableView.cell(at: row)
+        
+        // Invert text colors on the newly selected cell to make it readable
+        [ nextSelectedCell?.textField, nextSelectedCell?.secondTextField ].forEach {
+            $0?.textColor = colors[0]
+        }
+        
+        // Restore original colors on previously selected cell
+        [ currentlySelectedCell?.textField, currentlySelectedCell?.secondTextField ].enumerated().forEach {
+            $1?.textColor = colors[$0 + 1]
+        }
+        
+        return true
     }
 }
 
