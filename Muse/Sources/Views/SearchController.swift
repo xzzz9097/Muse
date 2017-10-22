@@ -12,15 +12,14 @@ import SpotifyKit
 @available(OSX 10.12.2, *)
 extension ViewController: NSTableViewDelegate {
     
-    fileprivate enum CellIndentifier {
-        static let name = "NameCell"
-    }
-    
+    /**
+     Table cell generation
+     2 fields: result (track) name and author
+     */
     func tableView(_ tableView: NSTableView,
                    viewFor tableColumn: NSTableColumn?,
                    row: Int) -> NSView? {
-        guard   let identifier = tableColumn?.identifier,
-                identifier == CellIndentifier.name else { return nil }
+        guard let identifier = tableColumn?.identifier else { return nil }
         
         if let cell = tableView.make(withIdentifier: identifier, owner: self) as? ResultsTableCellView {
             // First table cell field: track name
@@ -37,10 +36,16 @@ extension ViewController: NSTableViewDelegate {
         return nil
     }
 
+    /**
+     Specify custom row class for table view for personalized highlight color
+     */
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {        
         return CustomHighLightTableRowView(fillColor: colors[3])
     }
     
+    /**
+     Double click action, set as tableView.doubleAction
+     */
     func tableViewDoubleClicked(tableView: NSTableView) {
         if let spotifyHelper = helper as? SpotifyHelper, tableView.selectedRow >= 0 {
             spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
