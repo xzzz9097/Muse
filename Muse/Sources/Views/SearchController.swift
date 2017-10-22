@@ -9,6 +9,20 @@
 import Cocoa
 import SpotifyKit
 
+extension NSTableView {
+    
+    /**
+     Reloads tableView data and highlights first entry
+     */
+    func reloadData(selectingFirst: Bool) {
+        // Refresh table view data
+        self.reloadData()
+        
+        // Automatically select first result
+        self.selectRowIndexes([0], byExtendingSelection: false)
+    }
+}
+
 @available(OSX 10.12.2, *)
 extension ViewController: NSTableViewDelegate {
     
@@ -73,10 +87,7 @@ extension ViewController {
             self?.trackSearchResults = tracks
             
             // Refresh table view
-            self?.resultsTableView?.reloadData()
-            
-            // Automatically select first result
-            self?.resultsTableView?.selectRowIndexes([0], byExtendingSelection: false)
+            self?.resultsTableView?.reloadData(selectingFirst: true)
         }
     }
 }
