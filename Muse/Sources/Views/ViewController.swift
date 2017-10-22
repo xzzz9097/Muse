@@ -143,6 +143,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     }
     
     func startSearch() {
+        titleSuperview.isHidden = false
+        
         // Enable editing and empty the field
         titleTextField.isEditable  = true
         titleTextField.isEnabled   = true
@@ -251,8 +253,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             showTitleView()
         case kVK_ANSI_B:
             shouldShowActionBar = !shouldShowActionBar
-        case kVK_ANSI_F:
-            shouldShowResultsTableView = !shouldShowResultsTableView
+        case KeyCombination(.command, kVK_ANSI_F):
+            startSearch()
         default: break
         }
     }
