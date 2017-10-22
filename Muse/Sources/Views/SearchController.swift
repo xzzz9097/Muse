@@ -28,7 +28,7 @@ fileprivate extension NSTableView {
     func cell(at row: Int) -> ResultsTableCellView? {
         if row < 0 { return nil }
         
-        return self.view(atColumn: 0, row: row, makeIfNecessary: false) as? ResultsTableCellView
+        return self.view(atColumn: 0, row: row, makeIfNecessary: true) as? ResultsTableCellView
     }
 }
 
@@ -83,12 +83,6 @@ extension ViewController: NSTableViewDelegate {
      */
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         let currentlySelectedCell = tableView.cell(at: tableView.selectedRow)
-        let nextSelectedCell =      tableView.cell(at: row)
-        
-        // Invert text colors on the newly selected cell to make it readable
-        [ nextSelectedCell?.textField, nextSelectedCell?.secondTextField ].forEach {
-            $0?.textColor = colors[0]
-        }
         
         // Restore original colors on previously selected cell
         [ currentlySelectedCell?.textField, currentlySelectedCell?.secondTextField ].enumerated().forEach {
@@ -96,6 +90,15 @@ extension ViewController: NSTableViewDelegate {
         }
         
         return true
+    }
+    
+    func tableViewSelectionDidChange(_ notification: Notification) {
+        let selectedCell = resultsTableView?.cell(at: resultsTableView?.selectedRow ?? -1)
+        
+        // Invert text colors on the newly selected cell to make it readable
+        [ selectedCell?.textField, selectedCell?.secondTextField ].forEach {
+            $0?.textColor = colors[0]
+        }
     }
 }
 
