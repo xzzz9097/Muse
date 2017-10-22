@@ -174,7 +174,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var songProgressBarHeight: NSLayoutConstraint!
     @IBOutlet weak var nextTabButton:         NSCustomizableButton!
     @IBOutlet weak var previousTabButton:     NSCustomizableButton!
-    @IBOutlet weak var resultsTableView:      NSTableView?
+    @IBOutlet weak var resultsTableView:      KeySensitiveTableView?
     
     // MARK: Superviews
     
@@ -354,6 +354,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         resultsTableView?.dataSource      = self
         resultsTableView?.backgroundColor = .clear
         resultsTableView?.doubleAction    = #selector(tableViewDoubleClicked)
+        resultsTableView?.returnAction    = tableViewDoubleClicked
     }
     
     func prepareSongProgressBar() {
