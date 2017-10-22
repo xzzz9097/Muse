@@ -143,7 +143,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     }
     
     func startSearch() {
-        titleSuperview.isHidden = false
+        showTitleView(shouldClose: false)
         
         // Enable editing and empty the field
         titleTextField.isEditable  = true
