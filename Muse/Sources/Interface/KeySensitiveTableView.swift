@@ -18,7 +18,7 @@ class KeySensitiveTableView: NSTableView {
     
     /**
      Intercept key events performed while the table is first responder.
-     For our purpuoses we discard all events except ⏎, ⬅ and ➡
+     For our purpuoses we discard all events except ⏎, ⬆ and ⬇
      */
     override func keyDown(with event: NSEvent) {
         switch KeyCombination(event.modifierFlags, event.keyCode) {
@@ -31,5 +31,13 @@ class KeySensitiveTableView: NSTableView {
             super.keyDown(with: event)
         default: return // Ditch all other keycodes
         }
+    }
+    
+    /**
+     Prevent tableView from becoming first responder.
+     It will only programmatically receive keyDown(_:) events from textField.
+     */
+    override func becomeFirstResponder() -> Bool {
+        return false
     }
 }

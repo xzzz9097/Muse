@@ -777,5 +777,21 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
+    /**
+     Intercept NSTextField key events. We use this to forward some to tableView.
+     */
+    func control(_ control: NSControl,
+                 textView: NSTextView,
+                 doCommandBy commandSelector: Selector) -> Bool {
+        switch commandSelector {
+        case #selector(moveUp(_:)), #selector(moveDown(_:)), #selector(insertNewline(_:)):
+            // Forward ⏎, ⬆ and ⬇ to tableView
+            resultsTableView?.keyDown(with: NSApp.currentEvent!)
+            return true
+        default:
+            return false
+        }
+    }
+    
 }
 
