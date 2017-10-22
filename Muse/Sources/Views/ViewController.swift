@@ -507,6 +507,11 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         titleTextField.isEnabled  = false
         
         titleTextField.sizeToFit()
+        
+        // Hide results table after small delay
+        DispatchQueue.main.run(after: 750) { [weak self] in
+            self?.showResultsTableView(show: false)
+        }
     }
     
     // MARK: UI activation
@@ -793,6 +798,10 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         case #selector(moveUp(_:)), #selector(moveDown(_:)), #selector(insertNewline(_:)):
             // Forward ⏎, ⬆ and ⬇ to tableView
             resultsTableView?.keyDown(with: NSApp.currentEvent!)
+            return true
+        case #selector(cancelOperation(_:)):
+            // End editing on escape key press
+            disableTitleViewEditing()
             return true
         default:
             return false
