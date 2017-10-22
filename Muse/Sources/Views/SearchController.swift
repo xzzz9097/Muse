@@ -169,10 +169,10 @@ extension ViewController {
         if canceled {
             // Restore text to song title
             titleTextField.stringValue = titleLabelView.stringValue
-        
-            // Show view with autoclose
-            showTitleView()
         }
+        
+        // Restart the autoclose timer
+        launchTitleViewAutoCloseTimer()
         
         // Hide results table after small delay
         DispatchQueue.main.run(after: canceled ? 0 : 750) { [weak self] in

@@ -503,10 +503,14 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         guard shouldClose, mainViewMode != .expanded else { return }
         
         // Restart the autoclose timer
+        launchTitleViewAutoCloseTimer()
+    }
+    
+    func launchTitleViewAutoCloseTimer() {
         titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTimeout,
-                                                       repeats: false) { timer in
+                                                       repeats: false) { [weak self] timer in
             // Hide the view and invalidate the timer
-            self.titleSuperview.animator().isHidden = true
+            self?.titleSuperview.animator().isHidden = true
             timer.invalidate()
         }
     }
