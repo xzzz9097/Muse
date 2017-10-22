@@ -18,6 +18,9 @@ fileprivate extension NSTableView {
         // Refresh table view data
         self.reloadData()
         
+        // Scroll to the top
+        self.scrollRowToVisible(0)
+        
         // Automatically select first result
         self.selectRowIndexes([0], byExtendingSelection: false)
     }
