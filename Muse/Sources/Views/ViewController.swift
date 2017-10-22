@@ -142,19 +142,6 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         return recognizer
     }
     
-    func startSearch() {
-        showTitleView(shouldClose: false)
-        
-        // Enable editing and empty the field
-        titleTextField.isEditable  = true
-        titleTextField.isEnabled   = true
-        
-        // Make first responder -> start editing
-        titleTextField.becomeFirstResponder()
-        
-        showResultsTableView(show: true)
-    }
-    
     // MARK: Outlets
 
     @IBOutlet weak var fullSongArtworkView:   NSImageView!
@@ -490,7 +477,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         titleSuperview.onMouseHoverStateChange = { [weak self] state in
             guard let strongSelf = self else { return }
             
-            if state == .exited { strongSelf.disableTitleViewEditing() }
+            if state == .exited { strongSelf.endSearch() }
             
             strongSelf.titleTextField.stringValue = state == .exited ?
                 strongSelf.titleLabelView.stringValue : strongSelf.albumArtistLabelView.stringValue
@@ -500,18 +487,6 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         titleTextField.focusRingType = .none
         titleTextField.delegate      = self
-    }
-    
-    func disableTitleViewEditing() {
-        titleTextField.isEditable = false
-        titleTextField.isEnabled  = false
-        
-        titleTextField.sizeToFit()
-        
-        // Hide results table after small delay
-        DispatchQueue.main.run(after: 750) { [weak self] in
-            self?.showResultsTableView(show: false)
-        }
     }
     
     // MARK: UI activation
@@ -801,7 +776,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             return true
         case #selector(cancelOperation(_:)):
             // End editing on escape key press
-            disableTitleViewEditing()
+            endSearch(canceled: true)
             return true
         default:
             return false

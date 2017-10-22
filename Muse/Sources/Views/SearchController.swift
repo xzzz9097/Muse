@@ -96,7 +96,7 @@ extension ViewController: NSTableViewDelegate {
             spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
         }
         
-        disableTitleViewEditing()
+        endSearch()
     }
     
     /**
@@ -144,6 +144,39 @@ extension ViewController {
             
             // Refresh table view
             self?.resultsTableView?.reloadData(selectingFirst: true)
+        }
+    }
+    
+    func startSearch() {
+        showTitleView(shouldClose: false)
+        
+        // Enable editing and empty the field
+        titleTextField.isEditable  = true
+        titleTextField.isEnabled   = true
+        titleTextField.stringValue = ""
+        
+        // Make first responder -> start editing
+        titleTextField.becomeFirstResponder()
+        
+        showResultsTableView(show: true)
+    }
+    
+    func endSearch(canceled: Bool = false) {
+        // Disable editing
+        titleTextField.isEditable  = false
+        titleTextField.isEnabled   = false
+        
+        if canceled {
+            // Restore text to song title
+            titleTextField.stringValue = titleLabelView.stringValue
+        
+            // Show view with autoclose
+            showTitleView()
+        }
+        
+        // Hide results table after small delay
+        DispatchQueue.main.run(after: canceled ? 0 : 750) { [weak self] in
+            self?.showResultsTableView(show: false)
         }
     }
 }
