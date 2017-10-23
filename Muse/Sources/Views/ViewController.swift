@@ -410,8 +410,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         if hidden {
             // Hide title view after 500ms
-            DispatchQueue.main.run(after: 500) {
-                self.titleSuperview.animator().isHidden = true
+            DispatchQueue.main.run(after: 500) { [weak self] in
+                self?.titleSuperview.animator().isHidden = !(self?.mainViewMode.isHoveredMode ?? true)
             }
         } else {
             // Stop title view auto close timer
