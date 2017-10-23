@@ -628,6 +628,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         eventSentFromApp = false
         
         toggleControlStripButton(visible: true)
+        
+        // End search in VC
+        onViewController {
+            // TODO: implement this in some other way
+            $0.endSearch(canceled: true)
+        }
     }
     
     func toggleControlStripButton(force: Bool = false, visible: Bool = false) {
