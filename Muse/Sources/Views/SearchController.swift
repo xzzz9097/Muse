@@ -139,6 +139,10 @@ extension ViewController {
      Performs Spotify search query and set results array to the fetched results
      */
     func search(_ text: String) {
+        // Require at least two characters for making requests
+        // Too short queries take long time and may come after new ones
+        guard text.count > 2 else { return }
+        
         spotifyManager.find(SpotifyTrack.self, text) { [weak self] tracks in
             self?.trackSearchResults = tracks
             
