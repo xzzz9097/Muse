@@ -158,6 +158,9 @@ extension ViewController {
         // Make first responder -> start editing
         titleTextField.becomeFirstResponder()
         
+        // Reload data keeping selection
+        resultsTableView?.reloadData(keepingSelection: true)
+        
         showResultsTableView(show: true)
     }
     
