@@ -102,6 +102,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     // The search results
     var trackSearchResults: [SpotifyTrack] = []
     
+    // Time of last track search
+    var trackSearchStartTime: TimeInterval = 0
+    
     // Current artwork image colors
     var colors: [NSColor?] = []
     

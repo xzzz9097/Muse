@@ -143,11 +143,20 @@ extension ViewController {
         // Too short queries take long time and may come after new ones
         guard text.count > 2 else { return }
         
+        // Capture search request time
+        let trackSearchStartTime = Date.timeIntervalSinceReferenceDate
+        
         spotifyManager.find(SpotifyTrack.self, text) { [weak self] tracks in
-            self?.trackSearchResults = tracks
+            // Only parse response if launch time is greater than last one
+            // Otherwise is just an old response which should be discarded
+            guard let strongSelf = self, trackSearchStartTime > strongSelf.trackSearchStartTime else { return }
+            
+            // Updated search results and start time
+            strongSelf.trackSearchResults   = tracks
+            strongSelf.trackSearchStartTime = trackSearchStartTime
             
             // Refresh table view
-            self?.resultsTableView?.reloadData(selectingFirst: true)
+            strongSelf.resultsTableView?.reloadData(selectingFirst: true)
         }
     }
     
