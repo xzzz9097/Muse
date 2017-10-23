@@ -73,6 +73,16 @@ fileprivate extension NSLayoutConstraint {
     }
 }
 
+extension NSTextField {
+    
+    /**
+     Sets caret color for current window's field editor
+     */
+    func setCaretColor(in window: NSWindow?, _ color: NSColor) {
+        ( window?.fieldEditor(true, for: self) as? NSTextView )?.insertionPointColor = color
+    }
+}
+
 enum MainViewMode {
     
     case compressed
@@ -701,6 +711,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             $0?.textColor = primaryColor
         }
         albumArtistLabelView.textColor = secondaryColor
+        
+        // Set caret color
+        titleTextField.setCaretColor(in: self.view.window, primaryColor)
         
         // And on the progress bar
         if let barCell = songProgressBar.cell as? SliderCell {

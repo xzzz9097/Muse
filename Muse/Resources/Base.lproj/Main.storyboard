@@ -484,14 +484,14 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-B7-OOh" customClass="NSHoverableView" customModule="Muse" customModuleProvider="target">
-                                <rect key="frame" x="102" y="239" width="72" height="40"/>
+                                <rect key="frame" x="118" y="239" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xcG-Ud-ij9">
-                                        <rect key="frame" x="8" y="11" width="56" height="19"/>
+                                        <rect key="frame" x="8" y="11" width="24" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="220" id="POx-Wa-Afc"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" placeholderString="Search" id="7lh-Aw-7B1">
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" id="7lh-Aw-7B1">
                                             <font key="font" metaFont="systemLight" size="15"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
