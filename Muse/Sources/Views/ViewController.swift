@@ -73,6 +73,13 @@ fileprivate extension NSLayoutConstraint {
     }
 }
 
+fileprivate extension NSWindow {
+    
+    static let MainWindowSize:  CGFloat = 310.0
+    
+    static let ResultsViewSize: CGFloat = 180.0
+}
+
 extension NSTextField {
     
     /**
@@ -271,7 +278,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         resultsSuperview          = resultsTableView?.superview?.superview?.superview
         
         actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
-        resultsSuperview.translatesAutoresizingMaskIntoConstraints   = true
+        // resultsSuperview.translatesAutoresizingMaskIntoConstraints   = true
         
         [titleAlbumArtistSuperview,
          actionSuperview,
@@ -613,8 +620,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     func showResultsTableView(show: Bool? = nil) {
         let show = show != nil ? show! : shouldShowResultsTableView
         
-        view.toggleSubviewVisibilityAndResize(subview: resultsSuperview,
-                                              visible: show)
+        view.toggleViewVisibilityAndResize(viewHeight: NSWindow.ResultsViewSize,
+                                           windowHeight: NSWindow.MainWindowSize,
+                                           visible: show)
         
         if shouldShowResultsTableView {
             prepareResultsTableView()

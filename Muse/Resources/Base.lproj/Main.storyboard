@@ -155,11 +155,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Muse" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl" customClass="NSHoverableView" customModule="Muse" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="275" height="490"/>
+                        <rect key="frame" x="0.0" y="0.0" width="275" height="310"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="7BN-5H-ErM" userLabel="Results View">
-                                <rect key="frame" x="0.0" y="0.0" width="275" height="180"/>
+                                <rect key="frame" x="0.0" y="-180" width="275" height="180"/>
                                 <subviews>
                                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p2X-4R-LVZ">
                                         <rect key="frame" x="0.0" y="10" width="275" height="170"/>
@@ -229,6 +229,9 @@
                                                 </tableView>
                                             </subviews>
                                         </clipView>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="170" id="rH6-Nn-dv2"/>
+                                        </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="oFB-s6-MkV">
                                             <rect key="frame" x="0.0" y="174" width="275" height="16"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -247,7 +250,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ac2-hk-qvo" userLabel="Tab View">
-                                <rect key="frame" x="0.0" y="180" width="275" height="35"/>
+                                <rect key="frame" x="0.0" y="0.0" width="275" height="35"/>
                                 <subviews>
                                     <tabView drawsBackground="NO" type="noTabsNoBorder" initialItem="0UA-Bh-XN1" translatesAutoresizingMaskIntoConstraints="NO" id="VdQ-8J-q9u">
                                         <rect key="frame" x="0.0" y="0.0" width="275" height="35"/>
@@ -414,7 +417,7 @@
                                 </constraints>
                             </customView>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FL1-mx-O2f">
-                                <rect key="frame" x="0.0" y="215" width="275" height="275"/>
+                                <rect key="frame" x="0.0" y="35" width="275" height="275"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="275" id="Hlj-tU-niT"/>
                                     <constraint firstAttribute="width" constant="275" id="Ome-Fv-3Oe"/>
@@ -422,7 +425,7 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="MEf-4T-602"/>
                             </imageView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-iE-c3d">
-                                <rect key="frame" x="0.0" y="444" width="275" height="46"/>
+                                <rect key="frame" x="0.0" y="264" width="275" height="46"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-tH-5t7">
                                         <rect key="frame" x="8" y="20" width="259" height="20"/>
@@ -459,7 +462,7 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy">
-                                <rect key="frame" x="118" y="333" width="40" height="40"/>
+                                <rect key="frame" x="118" y="153" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8BH-TZ-iv9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
@@ -490,7 +493,7 @@
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-B7-OOh" customClass="NSHoverableView" customModule="Muse" customModuleProvider="target">
-                                <rect key="frame" x="118" y="239" width="40" height="40"/>
+                                <rect key="frame" x="118" y="59" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xcG-Ud-ij9">
                                         <rect key="frame" x="8" y="11" width="24" height="19"/>
@@ -514,7 +517,7 @@
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Pz7-i3-rTV">
-                                <rect key="frame" x="0.0" y="215" width="275" height="2"/>
+                                <rect key="frame" x="0.0" y="35" width="275" height="2"/>
                                 <subviews>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3IF-e0-Ota">
                                         <rect key="frame" x="-2" y="-2" width="279" height="6"/>
@@ -536,7 +539,6 @@
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="7BN-5H-ErM" secondAttribute="bottom" id="AKa-q7-6FA"/>
                             <constraint firstAttribute="trailing" secondItem="Ac2-hk-qvo" secondAttribute="trailing" id="BaQ-r9-ajp"/>
                             <constraint firstItem="7BN-5H-ErM" firstAttribute="top" secondItem="Ac2-hk-qvo" secondAttribute="bottom" id="GUz-aS-qqJ"/>
                             <constraint firstItem="Ac2-hk-qvo" firstAttribute="top" secondItem="FL1-mx-O2f" secondAttribute="bottom" id="HNS-im-VvA"/>
