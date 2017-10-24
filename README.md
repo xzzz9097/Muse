@@ -11,6 +11,7 @@ An open-source Spotify, iTunes and Vox controller with TouchBar support, system-
 <img src=Screenshots/TouchBar2.png width="1094">
 
 ### Download
+New: [4.0 alpha](https://github.com/xzzz9097/Muse/releases/tag/v4.0-alpha.1)
 [3.0](https://github.com/xzzz9097/Muse/releases/tag/v3.0-beta.1)
 
 ### Control strip integration
