@@ -455,7 +455,8 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         )
         
         controlStripButton?.textColor     = NSColor.white.withAlphaComponent(0.8)
-        controlStripButton?.fontSize      = 16.0
+        controlStripButton?.font          = NSFont.monospacedDigitSystemFont(ofSize: 16.0,
+                                                                             weight: NSFontWeightRegular)
         controlStripButton?.imagePosition = .imageOverlaps
         controlStripButton?.isBordered    = false
         controlStripButton?.imageScaling  = .scaleNone
