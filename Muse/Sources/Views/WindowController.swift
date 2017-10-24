@@ -947,7 +947,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             // Set timer tolerance
             // Improves performance by giving the system more headroom
             // for polling frequency. 
-            songTrackingTimer.tolerance = 0.25
+            songTrackingTimer.tolerance = 0.1
         } else {
             syncSongProgressSlider()
         }
