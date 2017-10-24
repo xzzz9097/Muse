@@ -60,6 +60,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         sender.state = showSongTitleInMenuBarActionHandler() ? NSOnState : NSOffState
     }
     
+    @IBAction func customizeTouchBar(_ sender: NSMenuItem) {
+        if #available(OSX 10.12.2, *) { NSApp.toggleTouchBarCustomizationPalette(self) }
+    }
+    
     // MARK: Data saving
     
     private static var supportFiles = [String]()

@@ -108,6 +108,12 @@
                                             <action selector="showSongTitleMenuItemClicked:" target="Voe-Tx-rLC" id="utl-eQ-LU4"/>
                                         </connections>
                                     </menuItem>
+                                    <menuItem title="Customize Touch Bar" id="h0V-dE-tS8" userLabel="Customize Touch Bar">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="customizeTouchBar:" target="Voe-Tx-rLC" id="Xqq-K0-BJf"/>
+                                        </connections>
+                                    </menuItem>
                                 </items>
                             </menu>
                         </menuItem>

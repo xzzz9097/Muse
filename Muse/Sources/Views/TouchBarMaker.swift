@@ -44,6 +44,9 @@ extension WindowController: NSTouchBarDelegate {
                                             .likeButton,
                                             .soundPopoverButton]
         
+        // Allow customization of NSTouchBar items
+        touchBar.customizationAllowedItemIdentifiers = touchBar.defaultItemIdentifiers
+        
         return touchBar
     }
     
@@ -182,6 +185,22 @@ extension WindowController: NSTouchBarDelegate {
             item = NSPopoverTouchBarItem(identifier: identifier)
             (item.view as? NSButton)?.imagePosition = .imageOnly
             (item.view as? NSButton)?.addTouchBarButtonWidthConstraint()
+        default:
+            break
+        }
+        
+        // Append customization labels
+        switch identifier {
+        case .songProgressSlider:
+            (item as? NSMediaSliderTouchBarItem)?.customizationLabel = "Progress slider"
+        case .soundPopoverButton:
+            (item as? NSPopoverTouchBarItem)?.customizationLabel = "Sound and playback options"
+        case .songArtworkTitleButton:
+            (item as? NSCustomTouchBarItem)?.customizationLabel = "Song artwork and title"
+        case .likeButton:
+            (item as? NSCustomTouchBarItem)?.customizationLabel = "Like song"
+        case .controlsSegmentedView:
+            (item as? NSCustomTouchBarItem)?.customizationLabel = "Playback controls"
         default:
             break
         }
