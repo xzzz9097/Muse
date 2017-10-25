@@ -63,13 +63,19 @@ fileprivate extension NSTabView {
 
 fileprivate extension NSLayoutConstraint {
     
-    enum SongProgressBarMode: Int {
+    enum SongProgressBarMode: CGFloat {
         case compressed = 2
         case expanded   = 11
     }
     
     var progressBarMode: SongProgressBarMode? {
-        return SongProgressBarMode(rawValue: Int(self.constant))
+        set {
+            if let mode = newValue { self.constant = mode.rawValue }
+        }
+        
+        get {
+            return SongProgressBarMode(rawValue: self.constant)
+        }
     }
 }
 
@@ -90,14 +96,59 @@ extension NSTextField {
     }
 }
 
+enum MainViewComponent {
+    
+    case main
+    case actionBar
+    case results
+    case expandedProgressBar
+    case tabDots
+    case songTitle
+    
+    var height: CGFloat? {
+        switch self {
+        case .main:
+            return 275
+        case .actionBar:
+            return 35
+        case .results:
+            return 180
+        default:
+            return nil
+        }
+    }
+}
+
 enum MainViewMode {
     
     case compressed
     case partiallyExpanded
     case expanded
+    case expandedWithResults
     
     var isHoveredMode: Bool {
-        return self == .expanded
+        return self == .expanded || self == .expandedWithResults
+    }
+    
+    var components: [MainViewComponent] {
+        switch self {
+        case .partiallyExpanded:
+            return [.main, .actionBar]
+        case .expanded:
+            return [.main, .actionBar, .expandedProgressBar, .tabDots, .songTitle]
+        case .expandedWithResults:
+            return [.main, .actionBar, .expandedProgressBar, .tabDots, .songTitle, .results]
+        default:
+            return [.main]
+        }
+    }
+    
+    var height: CGFloat {
+        return self.components.reduce(0) { $0 + ($1.height ?? 0) }
+    }
+    
+    func has(_ component: MainViewComponent) -> Bool {
+        return self.components.contains(component)
     }
 }
 
@@ -278,7 +329,6 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         resultsSuperview          = resultsTableView?.superview?.superview?.superview
         
         actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
-        // resultsSuperview.translatesAutoresizingMaskIntoConstraints   = true
         
         [titleAlbumArtistSuperview,
          actionSuperview,
@@ -386,12 +436,18 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         updateViewsVisibility()
         
         // Add callback to show/hide views when hovering (animating)
-        mainView?.onMouseHoverStateChange = { state in
+        mainView?.onMouseHoverStateChange = { [weak self] state in
+            guard let strongSelf = self else { return }
+            
             switch state {
             case .entered:
-                self.mainViewMode = .expanded
+                if !strongSelf.mainViewMode.isHoveredMode {
+                    strongSelf.mainViewMode = .expanded
+                }
             case .exited:
-                self.mainViewMode = self.shouldShowActionBar ? .partiallyExpanded : .compressed
+                strongSelf.mainViewMode = strongSelf.shouldShowActionBar ?
+                                          .partiallyExpanded :
+                                          .compressed
             }
         }
         
@@ -410,34 +466,15 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     }
     
     func updateViewsVisibility() {
-        let hidden = !mainViewMode.isHoveredMode
+        showSongTitle(show: mainViewMode.has(.songTitle))
+
+        showActionBarView(show: mainViewMode.has(.actionBar))
         
-        // Change progress bar height
-        songProgressBarHeight.animator().constant = hidden ? 2 : 11
+        showResultsTableView(show: mainViewMode.has(.results))
         
-        // Hide overlay views
-        if !actionSuperview.isHidden { actionSuperview.animator().isHidden = !hidden }
+        showExpandedProgressBar(show: mainViewMode.has(.expandedProgressBar))
         
-        if hidden {
-            // Hide title view after 500ms
-            DispatchQueue.main.run(after: 500) { [weak self] in
-                self?.titleSuperview.animator().isHidden = !(self?.mainViewMode.isHoveredMode ?? true)
-            }
-        } else {
-            // Stop title view auto close timer
-            titleViewAutoCloseTimer.invalidate()
-            
-            // Show title view
-            showTitleView(shouldClose: false)
-        }
-        
-        if !shouldShowActionBar {
-            // Toggle action bar if needed
-            showActionBarView(show: !hidden)
-        }
-        
-        // Toggle tab navigation buttons
-        [nextTabButton, previousTabButton].forEach { $0?.animator().isHidden = hidden }
+        showTabNavigationButtons(show: mainViewMode.has(.tabDots))
     }
     
     func prepareLastActionView() {
@@ -528,9 +565,12 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     
     func launchTitleViewAutoCloseTimer() {
         titleViewAutoCloseTimer = Timer.scheduledTimer(withTimeInterval: titleViewTimeout,
-                                                       repeats: false) { [weak self] timer in
+                                                       repeats: false)
+        { [weak self] timer in
+            guard let strongSelf = self, !strongSelf.mainViewMode.isHoveredMode else { return }
+            
             // Hide the view and invalidate the timer
-            self?.titleSuperview.animator().isHidden = true
+            strongSelf.titleSuperview.animator().isHidden = true
             timer.invalidate()
         }
     }
@@ -626,6 +666,31 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         if shouldShowResultsTableView {
             prepareResultsTableView()
+        }
+    }
+    
+    func showExpandedProgressBar(show: Bool) {
+        songProgressBarHeight.animator().progressBarMode = show ? .expanded : .compressed
+    }
+    
+    func showTabNavigationButtons(show: Bool) {
+        [nextTabButton, previousTabButton].forEach { $0?.isHidden = !show }
+    }
+    
+    func showSongTitle(show: Bool) {
+        if show {
+            // Stop title view auto close timer
+            titleViewAutoCloseTimer.invalidate()
+            
+            // Show title view
+            showTitleView(shouldClose: false)
+        } else {
+            // Hide title view after 500ms
+            DispatchQueue.main.run(after: 500) { [weak self] in
+                guard let strongSelf = self, !strongSelf.mainViewMode.isHoveredMode else { return }
+                
+                strongSelf.titleSuperview.animator().isHidden = !show
+            }
         }
     }
     

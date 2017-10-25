@@ -161,7 +161,8 @@ extension ViewController {
     }
     
     func startSearch() {
-        showTitleView(shouldClose: false)
+        // Reload data keeping selection
+        resultsTableView?.reloadData(keepingSelection: true)
         
         // Enable editing and empty the field
         titleTextField.isEditable  = true
@@ -171,10 +172,7 @@ extension ViewController {
         // Make first responder -> start editing
         titleTextField.becomeFirstResponder()
         
-        // Reload data keeping selection
-        resultsTableView?.reloadData(keepingSelection: true)
-        
-        showResultsTableView(show: true)
+        mainViewMode = .expandedWithResults
     }
     
     func endSearch(canceled: Bool = false) {
@@ -192,7 +190,7 @@ extension ViewController {
         
         // Hide results table after small delay
         DispatchQueue.main.run(after: canceled ? 0 : 750) { [weak self] in
-            self?.showResultsTableView(show: false)
+            self?.mainViewMode = .partiallyExpanded
         }
     }
 }
