@@ -190,7 +190,7 @@ extension ViewController {
         
         // Hide results table after small delay
         DispatchQueue.main.run(after: canceled ? 0 : 750) { [weak self] in
-            self?.mainViewMode = .partiallyExpanded
+            self?.mainViewMode = MainViewMode.defaultMode
         }
     }
 }

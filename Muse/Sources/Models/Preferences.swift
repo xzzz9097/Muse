@@ -18,6 +18,8 @@ enum PreferenceKey: String {
     
     case controlStripHUD = "controlStripHUD"
     
+    case actionBar = "actionBar"
+    
     var name: RawValue {
         return rawValue
     }
@@ -29,7 +31,8 @@ enum PreferenceKey: String {
     static let defaults: [PreferenceKey: Any] = [.peekToolbarsOnHover: true,
                                                  .menuBarTitle:        true,
                                                  .controlStripItem:    true,
-                                                 .controlStripHUD:     true]
+                                                 .controlStripHUD:     true,
+                                                 .actionBar:           true]
     
     static func registerDefaults() {
         UserDefaults.standard.register(defaults: defaults.userDefaultsCompatible)

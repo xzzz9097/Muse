@@ -18,13 +18,18 @@ extension NSView {
      */
     func toggleSubviewVisibilityAndResize(subviewHeight: CGFloat,
                                           windowHeight: CGFloat,
+                                          otherViewsHeight: [CGFloat] = [0],
                                           visible: Bool) {
         guard let window = window else { return }
         
         // Check input conditions: current window size and requested view visibility
         switch ( window.frame.size.height, visible ) {
-        case ( windowHeight + subviewHeight, false ) :
+        case ( windowHeight + subviewHeight, false ):
             // Window height is base + view's -> view is visible -> allow hiding (vis.: false)
+            break
+        case ( windowHeight + subviewHeight + otherViewsHeight.reduce(0, +), false ):
+            break
+        case ( windowHeight + subviewHeight - otherViewsHeight.reduce(0, +), false ):
             break
         case ( windowHeight, true ):
             // Window height is base only -> view is hidden -> allow showing (vis.: true)

@@ -119,6 +119,10 @@ enum MainViewMode {
     case expanded
     case expandedWithResults
     
+    static var defaultMode: MainViewMode {
+        return Preference<Bool>(.actionBar).value ? .partiallyExpanded : .compressed
+    }
+    
     var isHoveredMode: Bool {
         return self == .expanded || self == .expandedWithResults
     }
@@ -170,10 +174,18 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     // Preferences
     let shouldPeekControls = true  // Hide/show controls on mouse hover
     let shouldShowArtist   = false // Show artist in title popup view
-    
-    var shouldShowActionBar = true {
-        didSet {
-            showActionBarView()
+ 
+    var shouldShowActionBar: Bool {
+        set {
+            Preference<Bool>(.actionBar).set(newValue)
+            
+            if !mainViewMode.isHoveredMode {
+                mainViewMode = MainViewMode.defaultMode
+            }
+        }
+        
+        get {
+            return Preference<Bool>(.actionBar).value
         }
     }
     
@@ -239,7 +251,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         return self.view as? NSHoverableView
     }
     
-    var mainViewMode: MainViewMode = .partiallyExpanded {
+    var mainViewMode: MainViewMode = MainViewMode.defaultMode {
         didSet {
             updateViewsVisibility()
         }
@@ -436,9 +448,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
                     strongSelf.mainViewMode = .expanded
                 }
             case .exited:
-                strongSelf.mainViewMode = strongSelf.shouldShowActionBar ?
-                                          .partiallyExpanded :
-                                          .compressed
+                strongSelf.mainViewMode = MainViewMode.defaultMode
             }
         }
         
@@ -458,7 +468,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     
     func updateViewsVisibility() {
         showSongTitle(show: mainViewMode.has(.songTitle))
-
+        
         showActionBarView(show: mainViewMode.has(.actionBar))
         
         showResultsTableView(show: mainViewMode.has(.results))
@@ -635,10 +645,11 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     }
     
     func showActionBarView(show: Bool? = nil) {
-        let show = show != nil ? show! : shouldShowActionBar
+        let show = show ?? shouldShowActionBar
         
         view.toggleSubviewVisibilityAndResize(subviewHeight: MainViewComponent.actionBar.height!,
                                               windowHeight: MainViewMode.compressed.height,
+                                              otherViewsHeight: [MainViewComponent.results.height!],
                                               visible: show)
         
         // Setup action bar buttons and colors
@@ -653,6 +664,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         view.toggleSubviewVisibilityAndResize(subviewHeight: MainViewComponent.results.height!,
                                               windowHeight: MainViewMode.expanded.height,
+                                              otherViewsHeight: [MainViewComponent.actionBar.height!],
                                               visible: show)
         
         if shouldShowResultsTableView {
