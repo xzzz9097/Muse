@@ -328,8 +328,6 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         actionBarSuperview        = actionTabView.superview
         resultsSuperview          = resultsTableView?.superview?.superview?.superview
         
-        actionBarSuperview.translatesAutoresizingMaskIntoConstraints = true
-        
         [titleAlbumArtistSuperview,
          actionSuperview,
          titleSuperview,
@@ -646,7 +644,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     func showActionBarView(show: Bool? = nil) {
         let show = show != nil ? show! : shouldShowActionBar
         
-        view.toggleSubviewVisibilityAndResize(subview: actionBarSuperview,
+        view.toggleSubviewVisibilityAndResize(subviewHeight: MainViewComponent.actionBar.height!,
+                                              windowHeight: MainViewMode.compressed.height,
                                               visible: show)
         
         // Setup action bar buttons and colors
