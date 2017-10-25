@@ -10,24 +10,35 @@ import Cocoa
 
 extension NSView {
     
-    func toggleViewVisibilityAndResize(viewHeight: CGFloat,
-                                       windowHeight: CGFloat,
-                                       visible: Bool) {
+    /**
+     Hides or shows a subview of 'self' and resizes self and the window accordingly
+     - parameter subviewHeight: the height of the view whose visibility will be toggled
+     - parameter windowHeight: the height of the window without the subvuew
+     - parameter visible: hide (false) or show (true) the view
+     */
+    func toggleSubviewVisibilityAndResize(subviewHeight: CGFloat,
+                                          windowHeight: CGFloat,
+                                          visible: Bool) {
         guard let window = window else { return }
         
-        switch window.frame.size.height {
-        case windowHeight + viewHeight:
-            if visible { return }
-        case windowHeight:
-            if !visible { return }
-        default:
+        // Check input conditions: current window size and requested view visibility
+        switch ( window.frame.size.height, visible ) {
+        case ( windowHeight + subviewHeight, false ) :
+            // Window height is base + view's -> view is visible -> allow hiding (vis.: false)
             break
+        case ( windowHeight, true ):
+            // Window height is base only -> view is hidden -> allow showing (vis.: true)
+            break
+        default:
+            // Ignore any other cases
+            return
         }
         
         var frame = window.frame
         
-        frame.size.height += visible ? viewHeight : -viewHeight
-        frame.origin.y    -= visible ? viewHeight : -viewHeight
+        // Increase frame height and shift it up to balance
+        frame.size.height += visible ? subviewHeight : -subviewHeight
+        frame.origin.y    -= visible ? subviewHeight : -subviewHeight
         
         window.setFrame(frame, display: false, animate: true)
     }

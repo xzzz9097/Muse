@@ -620,9 +620,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     func showResultsTableView(show: Bool? = nil) {
         let show = show != nil ? show! : shouldShowResultsTableView
         
-        view.toggleViewVisibilityAndResize(viewHeight: NSWindow.ResultsViewSize,
-                                           windowHeight: NSWindow.MainWindowSize,
-                                           visible: show)
+        view.toggleSubviewVisibilityAndResize(subviewHeight: NSWindow.ResultsViewSize,
+                                              windowHeight: NSWindow.MainWindowSize,
+                                              visible: show)
         
         if shouldShowResultsTableView {
             prepareResultsTableView()
