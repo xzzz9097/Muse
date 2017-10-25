@@ -79,13 +79,6 @@ fileprivate extension NSLayoutConstraint {
     }
 }
 
-fileprivate extension NSWindow {
-    
-    static let MainWindowSize:  CGFloat = 310.0
-    
-    static let ResultsViewSize: CGFloat = 180.0
-}
-
 extension NSTextField {
     
     /**
@@ -658,8 +651,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     func showResultsTableView(show: Bool? = nil) {
         let show = show != nil ? show! : shouldShowResultsTableView
         
-        view.toggleSubviewVisibilityAndResize(subviewHeight: NSWindow.ResultsViewSize,
-                                              windowHeight: NSWindow.MainWindowSize,
+        view.toggleSubviewVisibilityAndResize(subviewHeight: MainViewComponent.results.height!,
+                                              windowHeight: MainViewMode.expanded.height,
                                               visible: show)
         
         if shouldShowResultsTableView {
