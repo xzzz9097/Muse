@@ -651,7 +651,6 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         // Setup action bar buttons and colors
         if shouldShowActionBar {
-            prepareActionBarButtons()
             colorActionBar(background: titleSuperview.layer?.backgroundColor,
                            highlight: (songProgressBar.cell as! SliderCell).highlightColor)
         }
