@@ -19,7 +19,8 @@ extension NSView {
     func toggleSubviewVisibilityAndResize(subviewHeight: CGFloat,
                                           windowHeight: CGFloat,
                                           otherViewsHeight: [CGFloat] = [0],
-                                          visible: Bool) {
+                                          visible: Bool,
+                                          completionHandler: @escaping () -> () = {}) {
         guard let window = window else { return }
         
         // Check input conditions: current window size and requested view visibility
@@ -28,14 +29,17 @@ extension NSView {
             // Window height is base + view's -> view is visible -> allow hiding (vis.: false)
             break
         case ( windowHeight + subviewHeight + otherViewsHeight.reduce(0, +), false ):
+            // Consider other views present
             break
         case ( windowHeight + subviewHeight - otherViewsHeight.reduce(0, +), false ):
+            // Or hidden
             break
         case ( windowHeight, true ):
             // Window height is base only -> view is hidden -> allow showing (vis.: true)
             break
         default:
-            // Ignore any other cases
+            // Ignore any other cases, but evaluate completionHandler none the less
+            completionHandler()
             return
         }
         
@@ -45,7 +49,13 @@ extension NSView {
         frame.size.height += visible ? subviewHeight : -subviewHeight
         frame.origin.y    -= visible ? subviewHeight : -subviewHeight
         
-        window.setFrame(frame, display: false, animate: true)
+        // Run the animation at personalized speed
+        NSAnimationContext.runAnimationGroup( { context in
+            context.duration                = 1/3
+            context.allowsImplicitAnimation = true
+            
+            window.setFrame(frame, display: true)
+        } ) { completionHandler() }
     }
     
     /**
