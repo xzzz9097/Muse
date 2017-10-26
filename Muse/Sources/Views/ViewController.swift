@@ -469,8 +469,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     func updateViewsVisibility() {
         showSongTitle(show: mainViewMode.has(.songTitle))
         
-        show(actionBarView: mainViewMode.has(.actionBar),
-             resultsTableView: mainViewMode.has(.results))
+        showActionBarView(show: mainViewMode.has(.actionBar))
+        
+        showResultsTableView(show: mainViewMode.has(.results))
         
         showExpandedProgressBar(show: mainViewMode.has(.expandedProgressBar))
         
@@ -643,14 +644,13 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
-    func showActionBarView(show: Bool? = nil, completionHandler: @escaping () -> () = {}) {
+    func showActionBarView(show: Bool? = nil) {
         let show = show ?? shouldShowActionBar
         
         view.toggleSubviewVisibilityAndResize(subviewHeight: MainViewComponent.actionBar.height!,
                                               windowHeight: MainViewMode.compressed.height,
                                               otherViewsHeight: [MainViewComponent.results.height!],
-                                              visible: show,
-                                              completionHandler: completionHandler)
+                                              visible: show)
         
         // Setup action bar buttons and colors
         if shouldShowActionBar {
@@ -659,33 +659,16 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
-    func showResultsTableView(show: Bool? = nil, completionHandler: @escaping () -> () = {}) {
+    func showResultsTableView(show: Bool? = nil) {
         let show = show != nil ? show! : shouldShowResultsTableView
         
         view.toggleSubviewVisibilityAndResize(subviewHeight: MainViewComponent.results.height!,
                                               windowHeight: MainViewMode.expanded.height,
                                               otherViewsHeight: [MainViewComponent.actionBar.height!],
-                                              visible: show,
-                                              completionHandler: completionHandler)
+                                              visible: show)
         
         if shouldShowResultsTableView {
             prepareResultsTableView()
-        }
-    }
-    
-    func show(actionBarView: Bool, resultsTableView: Bool) {
-        guard let window = self.view.window else { return }
-        
-        switch window.frame.height {
-        case MainViewMode.expandedWithResults.height:
-            // If window is expanded, toggle table view visibility before action bar
-            showResultsTableView(show: resultsTableView) { [weak self] in
-                self?.showActionBarView(show: actionBarView)
-            }
-        default:
-            showActionBarView(show: actionBarView) { [weak self] in
-                self?.showResultsTableView(show: resultsTableView)
-            }
         }
     }
     
