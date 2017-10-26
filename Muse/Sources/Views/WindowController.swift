@@ -724,6 +724,32 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         songArtworkTitleButton?.action        = #selector(songArtworkTitleButtonClicked(_:))
         
         songArtworkTitleButton?.hasRoundedLeadingImage = true
+        
+        songArtworkTitleButton?.addGestureRecognizer(songArtworkTitleButtonPanGestureRecognizer)
+    }
+    
+    /**
+     Recognizes pan (aka touch drag) gestures on the song artwork+title button.
+     We use this to toggle song information on the button
+     */
+    var songArtworkTitleButtonPanGestureRecognizer: NSGestureRecognizer {
+        let recognizer = NSPanGestureRecognizer()
+        
+        recognizer.target = self
+        recognizer.action = #selector(songArtworkTitleButtonPanGestureHandler(_:))
+        
+        recognizer.allowedTouchTypes = .direct
+        
+        return recognizer
+    }
+    
+    func songArtworkTitleButtonPanGestureHandler(_ recognizer: NSPanGestureRecognizer) {
+        if case .began = recognizer.state {
+            songArtworkTitleButton?.title =
+                recognizer.translation(in: songArtworkTitleButton).x > 0 ?
+                song.name.truncate(at: songTitleMaximumLength)           :
+                song.artist.truncate(at: songTitleMaximumLength)
+        }
     }
     
     func prepareSoundSlider() {
