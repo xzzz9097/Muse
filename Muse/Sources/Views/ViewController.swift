@@ -535,7 +535,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         titleSuperview.onMouseHoverStateChange = { [weak self] state in
             guard let strongSelf = self else { return }
             
-            if state == .exited { strongSelf.endSearch() }
+            if state == .exited, strongSelf.mainViewMode == .expandedWithResults {
+                strongSelf.endSearch()
+            }
             
             strongSelf.titleTextField.stringValue = state == .exited ?
                 strongSelf.titleLabelView.stringValue : strongSelf.albumArtistLabelView.stringValue
