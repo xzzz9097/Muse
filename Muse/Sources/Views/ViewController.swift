@@ -89,6 +89,20 @@ extension NSTextField {
     }
 }
 
+extension ImageColors {
+    
+    func map(_ transform: (NSColor?) -> (NSColor?)) -> ImageColors {
+        let colors = [background, primary, secondary, detail].map {
+            transform($0)
+        }
+        
+        return ImageColors(background: colors[0],
+                           primary:    colors[1],
+                           secondary:  colors[2],
+                           detail:     colors[3])
+    }
+}
+
 enum MainViewComponent {
     
     case main
@@ -161,7 +175,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     var trackSearchStartTime: TimeInterval = 0
     
     // Current artwork image colors
-    var colors: [NSColor?] = []
+    var colors: ImageColors?
     
     // Action view auto close
     let actionViewTimeout:        TimeInterval = 1       // Timeout in seconds
@@ -754,15 +768,14 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     
     func colorViews(with imageColors: ImageColors) {
         // Blend all colors with 50% of lightGray to avoid too contrasty views
-        colors = [ imageColors.background,
-                   imageColors.primary,
-                   imageColors.secondary,
-                   imageColors.detail ] .map { $0?.blended(withFraction: 0.5, of: .lightGray) }
+        colors = imageColors.map { $0?.blended(withFraction: 0.5, of: .lightGray) }
         
-        guard   let backgroundColor = colors[0],
-                let primaryColor    = colors[1],
-                var secondaryColor  = colors[2],
-                let detailColor     = colors[3] else { return }
+        // guard let colors = colors else { return }
+        
+        guard   let backgroundColor = colors?.background,
+                let primaryColor    = colors?.primary,
+                var secondaryColor  = colors?.secondary,
+                let detailColor     = colors?.detail else { return }
         
         // Pick the more contrasting color compared to primary between secondary and detail
         secondaryColor = secondaryColor.distance(from: primaryColor) >

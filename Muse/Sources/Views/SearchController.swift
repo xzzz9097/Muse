@@ -66,14 +66,11 @@ extension ViewController: NSTableViewDelegate {
         if let cell = tableView.make(withIdentifier: identifier, owner: self) as? ResultsTableCellView {
             // First table cell field: track name
             cell.textField?.stringValue = trackSearchResults[row].name
+            cell.textField?.textColor   = colors?.primary
             
             // Second table cell field: artist name
             cell.secondTextField?.stringValue = trackSearchResults[row].artist.name
-            
-            // Set text colors
-            [ cell.textField, cell.secondTextField ].enumerated().forEach {
-                $1?.textColor = colors[$0 + 1]
-            }
+            cell.secondTextField?.textColor   = colors?.secondary
             
             return cell
         }
@@ -85,7 +82,7 @@ extension ViewController: NSTableViewDelegate {
      Specify custom row class for table view for personalized highlight color
      */
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {        
-        return CustomHighLightTableRowView(fillColor: colors[3])
+        return CustomHighLightTableRowView(fillColor: colors?.detail)
     }
     
     /**
@@ -106,9 +103,8 @@ extension ViewController: NSTableViewDelegate {
         let currentlySelectedCell = tableView.cell(at: tableView.selectedRow)
         
         // Restore original colors on previously selected cell
-        [ currentlySelectedCell?.textField, currentlySelectedCell?.secondTextField ].enumerated().forEach {
-            $1?.textColor = colors[$0 + 1]
-        }
+        currentlySelectedCell?.textField?.textColor       = colors?.primary
+        currentlySelectedCell?.secondTextField?.textColor = colors?.secondary
         
         return true
     }
@@ -118,7 +114,7 @@ extension ViewController: NSTableViewDelegate {
         
         // Invert text colors on the newly selected cell to make it readable
         [ selectedCell?.textField, selectedCell?.secondTextField ].forEach {
-            $0?.textColor = colors[0]
+            $0?.textColor = colors?.background
         }
     }
 }
