@@ -101,6 +101,23 @@ extension ImageColors {
                            secondary:  colors[2],
                            detail:     colors[3])
     }
+    
+    var designatedSecondary: NSColor? {
+        return secondary.distance(from: primary) >
+            detail.distance(from: primary) ? secondary : detail
+    }
+    
+    var highlight: NSColor? {
+        if secondary.distance(from: primary) < 0.02 {
+            if secondary.isDarkColor {
+                return secondary.blended(withFraction: 0.5, of: .lightGray)
+            } else {
+                return secondary.blended(withFraction: 0.5, of: .darkGray)
+            }
+        }
+        
+        return secondary
+    }
 }
 
 enum MainViewComponent {
@@ -774,25 +791,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         guard   let backgroundColor = colors?.background,
                 let primaryColor    = colors?.primary,
-                var secondaryColor  = colors?.secondary,
-                let detailColor     = colors?.detail else { return }
-        
-        // Pick the more contrasting color compared to primary between secondary and detail
-        secondaryColor = secondaryColor.distance(from: primaryColor) >
-                            detailColor.distance(from: primaryColor) ? secondaryColor : detailColor
-        
-        var highlightColor = secondaryColor
-        
-        // Hotfix for unreadable slider highlight when I and II color are too similar
-        // We blend the highlight color with light or dark gray,
-        // for dark or light primary color respectively
-        if highlightColor.distance(from: primaryColor) < 0.02 {
-            if  highlightColor.isDarkColor {
-                highlightColor = secondaryColor.blended(withFraction: 0.5, of: .lightGray)!
-            } else {
-                highlightColor = secondaryColor.blended(withFraction: 0.5, of: .darkGray)!
-            }
-        }
+                let secondaryColor  = colors?.designatedSecondary,
+                let highlightColor  = colors?.highlight else { return }
         
         // Set the superviews background color and animate it
         [ titleAlbumArtistSuperview, actionSuperview, titleSuperview, actionTabView, resultsSuperview ].forEach {

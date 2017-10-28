@@ -70,7 +70,7 @@ extension ViewController: NSTableViewDelegate {
             
             // Second table cell field: artist name
             cell.secondTextField?.stringValue = trackSearchResults[row].artist.name
-            cell.secondTextField?.textColor   = colors?.secondary
+            cell.secondTextField?.textColor   = colors?.designatedSecondary
             
             return cell
         }
@@ -82,7 +82,7 @@ extension ViewController: NSTableViewDelegate {
      Specify custom row class for table view for personalized highlight color
      */
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {        
-        return CustomHighLightTableRowView(fillColor: colors?.detail)
+        return CustomHighLightTableRowView(fillColor: colors?.highlight)
     }
     
     /**
@@ -104,7 +104,7 @@ extension ViewController: NSTableViewDelegate {
         
         // Restore original colors on previously selected cell
         currentlySelectedCell?.textField?.textColor       = colors?.primary
-        currentlySelectedCell?.secondTextField?.textColor = colors?.secondary
+        currentlySelectedCell?.secondTextField?.textColor = colors?.designatedSecondary
         
         return true
     }
