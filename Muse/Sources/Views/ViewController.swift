@@ -109,11 +109,7 @@ extension ImageColors {
     
     var highlight: NSColor? {
         if let secondary = designatedSecondary, secondary.distance(from: primary) < 0.02 {
-            if secondary.isDarkColor {
-                return secondary.blended(withFraction: 0.5, of: .lightGray)
-            } else {
-                return secondary.blended(withFraction: 0.5, of: .darkGray)
-            }
+            return secondary.blended(withFraction: 0.5, of: secondary.isDarkColor ? .lightGray : .darkGray)
         }
         
         return designatedSecondary
