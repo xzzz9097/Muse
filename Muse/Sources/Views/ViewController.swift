@@ -475,7 +475,11 @@ class ViewController: NSViewController, NSTextFieldDelegate {
                     strongSelf.mainViewMode = .expanded
                 }
             case .exited:
-                strongSelf.mainViewMode = MainViewMode.defaultMode
+                if strongSelf.mainViewMode == .expandedWithResults {
+                    strongSelf.endSearch(canceled: true)
+                } else {
+                    strongSelf.mainViewMode = MainViewMode.defaultMode
+                }
             }
         }
         
@@ -563,8 +567,10 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             guard let strongSelf = self else { return }
             
             if state == .exited, strongSelf.mainViewMode == .expandedWithResults {
-                strongSelf.endSearch()
+                strongSelf.endSearch(canceled: true)
             }
+            
+            guard strongSelf.mainViewMode != .expandedWithResults else { return }
             
             strongSelf.titleTextField.stringValue = state == .exited ?
                 strongSelf.titleLabelView.stringValue : strongSelf.albumArtistLabelView.stringValue
