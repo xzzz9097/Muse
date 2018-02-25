@@ -827,6 +827,23 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Notification handling
     
+    func initWakeNotificationWatcher() {
+        // Attach the NotificationObserver for system wake notification
+        NSWorkspace.shared().notificationCenter.addObserver(forName: .NSWorkspaceDidWake,
+                                                            object: nil,
+                                                            queue: nil,
+                                                            using: hookWakeNotification)
+    }
+    
+    func hookWakeNotification(notification: Notification) {
+        // Reset and reload touchBar when system wakes up
+        touchBar                = nil
+        didPresentAsSystemModal = false
+        
+        // Update control strip button visibility
+        toggleControlStripButton(visible: true)
+    }
+    
     func initNotificationWatchers() {
         for (_, notification) in manager.TrackChangedNotifications {
             // Attach the NotificationObserver for Spotify notifications
@@ -835,6 +852,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                                                                 name: notification,
                                                                 object: nil)
         }
+        
+        // Also initialize the wake notification watcher
+        initWakeNotificationWatcher()
     }
     
     func deinitNotificationWatchers() {
