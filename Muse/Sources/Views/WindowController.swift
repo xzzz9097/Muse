@@ -827,6 +827,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Notification handling
     
+    func initNotificationWatchers() {
+        // Set up player and system wake event watchers
+        initPlayerNotificationWatchers()
+        initWakeNotificationWatcher()
+    }
+    
     func initWakeNotificationWatcher() {
         // Attach the NotificationObserver for system wake notification
         NSWorkspace.shared().notificationCenter.addObserver(forName: .NSWorkspaceDidWake,
@@ -844,20 +850,17 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         toggleControlStripButton(visible: true)
     }
     
-    func initNotificationWatchers() {
+    func initPlayerNotificationWatchers() {
         for (_, notification) in manager.TrackChangedNotifications {
             // Attach the NotificationObserver for Spotify notifications
-            DistributedNotificationCenter.default().addObserver(self,
-                                                                selector: #selector(hookNotification(notification:)),
-                                                                name: notification,
-                                                                object: nil)
+            DistributedNotificationCenter.default().addObserver(forName: notification,
+                                                                object: nil,
+                                                                queue: nil,
+                                                                using: hookPlayerNotification)
         }
-        
-        // Also initialize the wake notification watcher
-        initWakeNotificationWatcher()
     }
     
-    func deinitNotificationWatchers() {
+    func deinitPlayerNotificationWatchers() {
         for (_, notification) in manager.TrackChangedNotifications {
             // Remove the NotificationObserver
             DistributedNotificationCenter.default().removeObserver(self,
@@ -866,7 +869,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    func isClosing(with notification: NSNotification) -> Bool {
+    func isClosing(with notification: Notification) -> Bool {
         guard let userInfo = notification.userInfo else { return false }
         
         // This is only for Spotify and iTunes!
@@ -890,7 +893,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         return false
     }
     
-    func hookNotification(notification: NSNotification) {
+    func hookPlayerNotification(notification: Notification) {
         // When Spotify is quitted, it sends an NSNotification
         // with only PlayerStateStopped, that causes it to
         // reopen for being polled by Muse
@@ -1143,7 +1146,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     func windowWillClose(_ notification: Notification) {
         // Remove the observer when window is closed
-        deinitNotificationWatchers()
+        deinitPlayerNotificationWatchers()
         
         // Invalidate progress timer
         deinitSongTrackingTimer()
