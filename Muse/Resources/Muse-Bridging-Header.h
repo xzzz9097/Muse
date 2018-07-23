@@ -6,3 +6,4 @@
 #import "DDHotKeyUtilities.h"
 #import "PlayerStates.h"
 #import "DFRPrivateHeader.h"
+#import <iTunesLibrary/ITLibrary.h>
