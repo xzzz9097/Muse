@@ -102,6 +102,13 @@ protocol LikablePlayerHelper {
     var liked: Bool { set get }
 }
 
+protocol SearchablePlayerHelper {
+    
+    // MARK: Searching
+    
+    func search() -> [Song]
+}
+
 extension PlayerHelper where Self: InternalPlayerHelper {
     
     // MARK: Playback controls
