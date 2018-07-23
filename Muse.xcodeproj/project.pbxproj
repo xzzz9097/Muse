@@ -41,6 +41,7 @@
 		0CAB4EC72106387900CC118A /* SpotifyKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB4EC32106387800CC118A /* SpotifyKit.swift */; };
 		0CAB4EC82106387900CC118A /* WebCommunications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB4EC42106387800CC118A /* WebCommunications.swift */; };
 		0CAB4EC92106387900CC118A /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB4EC52106387900CC118A /* Keychain.swift */; };
+		0CAB4ED221064F8600CC118A /* iTunesLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CAB4ED121064F8600CC118A /* iTunesLibrary.framework */; };
 		0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */; };
 		0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */; };
 		0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */; };
@@ -172,6 +173,7 @@
 		0CAB4EC32106387800CC118A /* SpotifyKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyKit.swift; sourceTree = "<group>"; };
 		0CAB4EC42106387800CC118A /* WebCommunications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCommunications.swift; sourceTree = "<group>"; };
 		0CAB4EC52106387900CC118A /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		0CAB4ED121064F8600CC118A /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = ../../../../../Library/Frameworks/iTunesLibrary.framework; sourceTree = "<group>"; };
 		0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerHelper.swift; sourceTree = "<group>"; };
 		0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MPRemoteCommand+Extensions.swift"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CAB4ED221064F8600CC118A /* iTunesLibrary.framework in Frameworks */,
 				0C1B1F5F1F17C065009D4588 /* DFRFoundation.framework in Frameworks */,
 				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
@@ -454,6 +457,7 @@
 		7E9AA20CAC9772D1BED5DCE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0CAB4ED121064F8600CC118A /* iTunesLibrary.framework */,
 				0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */,
 				0C676BD61DF443C900B75164 /* AVKit.framework */,
 				0C676BD41DF443AD00B75164 /* AVFoundation.framework */,
@@ -538,6 +542,7 @@
 				TargetAttributes = {
 					0CFF46651DE3826300A3BE8E = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 95ZS5S2W7X;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -913,15 +918,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 95ZS5S2W7X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Muse/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Resources/Muse-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -934,15 +944,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 95ZS5S2W7X;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Muse/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Muse/Resources/Muse-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
