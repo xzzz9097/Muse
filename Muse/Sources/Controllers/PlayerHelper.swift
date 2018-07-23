@@ -106,7 +106,7 @@ protocol SearchablePlayerHelper {
     
     // MARK: Searching
     
-    func search() -> [Song]
+    func search(title: String, completionHandler: @escaping (([Song]) -> Void))
 }
 
 extension PlayerHelper where Self: InternalPlayerHelper {

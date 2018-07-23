@@ -61,7 +61,7 @@ var spotifyManager = SpotifyManager(
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
-class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper {
+class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper {
     
     // Singleton constructor
     static let shared = SpotifyHelper()
@@ -285,6 +285,16 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
                                 completionHandler: completionHandler)
     }
     
+    // MARK: Searching
+    
+    func search(title: String, completionHandler: @escaping (([Song]) -> Void)) {
+        // Map our parsed SpotifyTracks to standard song items
+        // TODO: test me!
+        spotifyManager.find(SpotifyTrack.self, title) {
+            completionHandler($0.map { $0.song })
+        }
+    }
+    
     // MARK: Application identifier
     
     static let BundleIdentifier = "com.spotify.client"
@@ -293,4 +303,15 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
     
     static let rawTrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
     
+}
+
+extension SpotifyTrack {
+    
+    // Convert SpotifyTrack to a Muse Player song item
+    var song: Song {
+        return Song(name: self.name,
+                    artist: self.artist.name,
+                    album: self.album?.name ?? "",
+                    duration: 0) // TODO: add proper duration!
+    }
 }
