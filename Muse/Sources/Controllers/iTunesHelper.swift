@@ -55,12 +55,20 @@ import ScriptingBridge
     @objc optional var description: String { get }
 }
 
+// The iTunes library
+fileprivate let library = try? ITLibrary(apiVersion: "1.0")
+
+// All songs in the library
+fileprivate var librarySongs: [ITLibMediaItem]? {
+    return library?.allMediaItems.filter { $0.mediaKind == .kindSong }
+}
+
 extension SBObject: iTunesArtworkProtocol { }
 
 // Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }
 
-class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper {
+class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper {
     
     // SIngleton constructor
     static let shared = iTunesHelper()
@@ -206,6 +214,20 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
     
     var internalLiked: Bool { return application?.currentTrack?.loved ?? false }
     
+    // MARK: Searching
+    
+    func search(title: String, completionHandler: @escaping (([Song]) -> Void)) {
+        guard let songs = librarySongs else { return }
+        
+        // Search for matching tracks and asynchronously dispatch them
+        // TODO: also evaluate match for artist and album name
+        DispatchQueue.main.async {
+            completionHandler(songs
+                .filter { $0.title.lowercased().contains(title.lowercased()) }
+                .map { $0.song })
+        }
+    }
+    
     // MARK: Application identifier
     
     static let BundleIdentifier = "com.apple.iTunes"
@@ -214,4 +236,15 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
     
     static let rawTrackChangedNotification = BundleIdentifier + ".playerInfo"
     
+}
+
+extension ITLibMediaItem {
+    // TODO: constrain protocl to mediaKindSong items
+    
+    var song: Song {
+        return Song(name: self.title,
+                    artist: self.artist?.name ?? "",
+                    album: self.album.title ?? "",
+                    duration: Double(self.totalTime))
+    }
 }
