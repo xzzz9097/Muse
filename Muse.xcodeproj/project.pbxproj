@@ -37,6 +37,10 @@
 		0C9B62331E1EAE9100660633 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B62321E1EAE9100660633 /* ButtonCell.swift */; };
 		0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */; };
 		0CA5FA621ED1DC9500248A91 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */; };
+		0CAB4EC62106387900CC118A /* SpotifyItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB4EC22106387800CC118A /* SpotifyItems.swift */; };
+		0CAB4EC72106387900CC118A /* SpotifyKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB4EC32106387800CC118A /* SpotifyKit.swift */; };
+		0CAB4EC82106387900CC118A /* WebCommunications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB4EC42106387800CC118A /* WebCommunications.swift */; };
+		0CAB4EC92106387900CC118A /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CAB4EC52106387900CC118A /* Keychain.swift */; };
 		0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */; };
 		0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */; };
 		0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */; };
@@ -164,6 +168,10 @@
 		0C9B62321E1EAE9100660633 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DFRPrivateHeader.m; sourceTree = "<group>"; };
 		0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		0CAB4EC22106387800CC118A /* SpotifyItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyItems.swift; sourceTree = "<group>"; };
+		0CAB4EC32106387800CC118A /* SpotifyKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotifyKit.swift; sourceTree = "<group>"; };
+		0CAB4EC42106387800CC118A /* WebCommunications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCommunications.swift; sourceTree = "<group>"; };
+		0CAB4EC52106387900CC118A /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		0CAD6F971DE4B3CF00736B00 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
 		0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerHelper.swift; sourceTree = "<group>"; };
 		0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MPRemoteCommand+Extensions.swift"; sourceTree = "<group>"; };
@@ -242,6 +250,17 @@
 			path = Muse/Libraries/DDHotKey;
 			sourceTree = SOURCE_ROOT;
 		};
+		0CAB4EC12106385400CC118A /* SpotifyKit */ = {
+			isa = PBXGroup;
+			children = (
+				0CAB4EC52106387900CC118A /* Keychain.swift */,
+				0CAB4EC22106387800CC118A /* SpotifyItems.swift */,
+				0CAB4EC32106387800CC118A /* SpotifyKit.swift */,
+				0CAB4EC42106387800CC118A /* WebCommunications.swift */,
+			);
+			path = SpotifyKit;
+			sourceTree = "<group>";
+		};
 		0CAD6F981DE4B3CF00736B00 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +278,7 @@
 		0CFA8E231F7AE9F300D1AE83 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				0CAB4EC12106385400CC118A /* SpotifyKit */,
 				0CFA8E261F7AEAA700D1AE83 /* Controllers */,
 				0CFA8E271F7AEACA00D1AE83 /* Interface */,
 				0CFA8E251F7AEA5B00D1AE83 /* Extensions */,
@@ -714,12 +734,15 @@
 				0CCD27681DF01F440039ACDC /* DDHotKeyUtilities.m in Sources */,
 				0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */,
 				0CFF46971DE383A300A3BE8E /* SpotifyHelper.swift in Sources */,
+				0CAB4EC92106387900CC118A /* Keychain.swift in Sources */,
 				0C8E3BC11E3CC43900C8EBD1 /* iTunesHelper.swift in Sources */,
 				0C9A60C71DE75DCC0051CDC6 /* Imageable+Download.swift in Sources */,
+				0CAB4EC82106387900CC118A /* WebCommunications.swift in Sources */,
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
 				0C4AF0491F9A305000240EAB /* SearchController.swift in Sources */,
+				0CAB4EC72106387900CC118A /* SpotifyKit.swift in Sources */,
 				0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */,
 				0C3EEA4A1F8A1D8300056FA7 /* KeyCombination.swift in Sources */,
 				0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */,
@@ -736,6 +759,7 @@
 				0C474DB51F839C720067BC8C /* PlayerNotification.swift in Sources */,
 				0C474DB31F839BEB0067BC8C /* PlayerEvent.swift in Sources */,
 				0CDD1ADB1DF04B570027661A /* SliderCell.swift in Sources */,
+				0CAB4EC62106387900CC118A /* SpotifyItems.swift in Sources */,
 				0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */,
 				0CF8B7E41DF9772900CDD130 /* NSHoverableView.swift in Sources */,
 				0C6C10B31F9B60B400C20061 /* ResultsTableCellView.swift in Sources */,

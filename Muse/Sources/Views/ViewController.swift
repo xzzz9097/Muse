@@ -9,7 +9,6 @@
 import Cocoa
 import QuartzCore
 import Carbon.HIToolbox
-import SpotifyKit
 
 @available(OSX 10.12.2, *)
 fileprivate extension NSButton {

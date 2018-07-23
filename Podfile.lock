@@ -1,24 +1,3 @@
-PODS:
-  - Sparkle (1.18.1)
-  - SpotifyKit (0.0.4)
-
-DEPENDENCIES:
-  - Sparkle
-  - SpotifyKit (from `https://github.com/xzzz9097/SpotifyKit.git`)
-
-EXTERNAL SOURCES:
-  SpotifyKit:
-    :git: https://github.com/xzzz9097/SpotifyKit.git
-
-CHECKOUT OPTIONS:
-  SpotifyKit:
-    :commit: f223e432c544189a5a43527ed0b5e4c832032d75
-    :git: https://github.com/xzzz9097/SpotifyKit.git
-
-SPEC CHECKSUMS:
-  Sparkle: 06ea33170007c5937ee54da481b4481af98fac79
-  SpotifyKit: 2c4aeac581823275b46169ba829b49e532979f6c
-
-PODFILE CHECKSUM: febe3668f41452211c7f8604b8f00b1b2b7ee6de
+PODFILE CHECKSUM: db6182feeefe0942d59e1bf63757ab37e17f2388
 
 COCOAPODS: 1.3.1

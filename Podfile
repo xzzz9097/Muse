@@ -7,9 +7,9 @@ target 'Muse' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  pod 'Sparkle'
+#  pod 'Sparkle'
 
   # Pods for Swiftify
-  pod 'SpotifyKit', :git => 'https://github.com/xzzz9097/SpotifyKit.git'
+#  pod 'SpotifyKit', :git => 'https://github.com/xzzz9097/SpotifyKit.git'
 
 end

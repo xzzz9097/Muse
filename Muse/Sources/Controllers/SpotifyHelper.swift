@@ -8,8 +8,6 @@
 
 import ScriptingBridge
 
-import SpotifyKit
-
 // Protocol for Spotify application queries
 // These props. and funcs. are set to optional in order
 // to be overridded and implemented by the bridge itself
