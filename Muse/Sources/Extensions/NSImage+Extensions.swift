@@ -68,11 +68,16 @@ extension NSImage {
      - parameter squareCrop: if true
      - returns: self scaled to requested size
      */
-    func resized(to newSize: CGSize, squareCrop: Bool = true) -> NSImage {
+    func resized(to newSize: CGSize,
+                 squareCrop: Bool = true,
+                 marginCrop: CGFloat = 0.0) -> NSImage {
         return self.edit(size: newSize) {
             image, size in
             
-            var fromRect = NSZeroRect
+            var fromRect = NSMakeRect(marginCrop,
+                                      marginCrop,
+                                      image.size.width  - 2 * marginCrop,
+                                      image.size.height - 2 * marginCrop)
             let inRect   = NSMakeRect(0, 0, size.width, size.height)
             
             if squareCrop, image.size.width != image.size.height {

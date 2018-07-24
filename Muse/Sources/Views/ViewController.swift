@@ -763,11 +763,12 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
         
         // If the image is not square we cut it instead of stretching it
-        if  let image = fullSongArtworkView.image,
-            image.size.width != image.size.height {
+        // We also crop the margin a bit to cut blank corners
+        if let image = fullSongArtworkView.image {
             fullSongArtworkView.image = image.resized(
                 to: NSMakeSize(fullSongArtworkView.frame.width,
-                               fullSongArtworkView.frame.height)
+                               fullSongArtworkView.frame.height),
+                marginCrop: 1.0
             )
         }
     }
