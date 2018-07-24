@@ -10,6 +10,10 @@ import Foundation
 
 struct Song: Equatable {
     
+    // Address of the song (URI or file location)
+    
+    var address: String
+    
     // MARK: Song attributes
     
     var name: String
@@ -38,10 +42,11 @@ struct Song: Equatable {
     // MARK: Initializers
     
     init() {
-        self.init(name: "", artist: "", album: "", duration: 0)
+        self.init(address: "", name: "", artist: "", album: "", duration: 0)
     }
     
-    init(name: String, artist: String, album: String, duration: Double) {
+    init(address: String, name: String, artist: String, album: String, duration: Double) {
+        self.address = address
         self.name = name
         self.artist = artist
         self.album = album

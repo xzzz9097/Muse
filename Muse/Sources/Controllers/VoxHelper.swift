@@ -10,6 +10,8 @@ import ScriptingBridge
 
 @objc fileprivate protocol VoxApplication {
     // Track properties
+    @objc optional var uniqueID:     String { get }
+    @objc optional var trackUrl:     String { get }
     @objc optional var track:        String { get }
     @objc optional var artist:       String { get }
     @objc optional var album:        String { get }
@@ -57,7 +59,8 @@ class VoxHelper: PlayerHelper, InternalPlayerHelper {
     var song: Song {
         guard let application = application else { return Song() }
         
-        return Song(name: application.track!,
+        return Song(address: application.trackUrl!,
+                    name: application.track!,
                     artist: application.artist!,
                     album: application.album!,
                     duration: application.totalTime!)
