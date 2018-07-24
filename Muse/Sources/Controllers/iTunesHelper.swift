@@ -26,6 +26,7 @@ import ScriptingBridge
     @objc optional func playpause()
     @objc optional func nextTrack()
     @objc optional func previousTrack()
+    @objc optional func openLocation(_ url: NSURL)
     
     // Playback properties - setters
     @objc optional func setPlayerPosition(_ position: Double)
@@ -37,12 +38,14 @@ import ScriptingBridge
 // Protocol for iTunes track object
 @objc fileprivate protocol iTunesTrackProtocol {
     // Track properties
-    @objc optional var name:     String { get }
-    @objc optional var artist:   String { get }
-    @objc optional var album:    String { get }
-    @objc optional var duration: Double { get }
-    @objc optional var artworks: [iTunesArtworkProtocol] { get }
-    @objc optional var loved:    Bool { get }
+    @objc optional var persistentID: String { get }
+    @objc optional var location:     String { get }
+    @objc optional var name:         String { get }
+    @objc optional var artist:       String { get }
+    @objc optional var album:        String { get }
+    @objc optional var duration:     Double { get }
+    @objc optional var artworks:     [iTunesArtworkProtocol] { get }
+    @objc optional var loved:        Bool { get }
     
     // Track properties - setters
     @objc optional func setLoved(_ loved: Bool)
@@ -68,7 +71,7 @@ extension SBObject: iTunesArtworkProtocol { }
 // Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }
 
-class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper {
+class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper, PlayablePlayerHelper {
     
     // SIngleton constructor
     static let shared = iTunesHelper()
@@ -85,7 +88,8 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
     var song: Song {
         guard let currentTrack = application?.currentTrack else { return Song() }
         
-        return Song(name: currentTrack.name!,
+        return Song(address: currentTrack.persistentID!,
+                    name: currentTrack.name!,
                     artist: currentTrack.artist!,
                     album: currentTrack.album!,
                     duration: trackDuration)
@@ -228,6 +232,16 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
         }
     }
     
+    // MARK: Playing
+    
+    func play(_ address: String) {
+        // Build an AppleScript query to play our track
+        // because ScriptingBridge binding for opening a file seems broken
+        let query = "tell application \"iTunes\"\n play POSIX file \"\(address)\" \nend tell"
+        
+        NSAppleScript(source: query)?.executeAndReturnError(nil)
+    }
+    
     // MARK: Application identifier
     
     static let BundleIdentifier = "com.apple.iTunes"
@@ -242,7 +256,8 @@ extension ITLibMediaItem {
     // TODO: constrain protocl to mediaKindSong items
     
     var song: Song {
-        return Song(name: self.title,
+        return Song(address: self.location?.path ?? "", // TODO: check for remote tracks
+                    name: self.title,
                     artist: self.artist?.name ?? "",
                     album: self.album.title ?? "",
                     duration: Double(self.totalTime))

@@ -181,7 +181,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     // MARK: Properties
     
     // The search results
-    var trackSearchResults: [SpotifyTrack] = []
+    var trackSearchResults: [Song] = []
     
     // Time of last track search
     var trackSearchStartTime: TimeInterval = 0

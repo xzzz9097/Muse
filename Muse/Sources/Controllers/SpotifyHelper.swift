@@ -113,7 +113,8 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
     var song: Song {
         guard let currentTrack = application?.currentTrack else { return Song() }
         
-        return Song(name: currentTrack.name!,
+        return Song(address: currentTrack.id!,
+                    name: currentTrack.name!,
                     artist: currentTrack.artist!,
                     album: currentTrack.album!,
                     duration: trackDuration)
@@ -307,7 +308,8 @@ extension SpotifyTrack {
     
     // Convert SpotifyTrack to a Muse Player song item
     var song: Song {
-        return Song(name: self.name,
+        return Song(address: self.uri,
+                    name: self.name,
                     artist: self.artist.name,
                     album: self.album?.name ?? "",
                     duration: 0) // TODO: add proper duration!

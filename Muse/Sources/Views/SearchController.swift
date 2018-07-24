@@ -68,7 +68,7 @@ extension ViewController: NSTableViewDelegate {
             cell.textField?.textColor   = colors?.primary
             
             // Second table cell field: artist name
-            cell.secondTextField?.stringValue = trackSearchResults[row].artist.name
+            cell.secondTextField?.stringValue = trackSearchResults[row].artist
             cell.secondTextField?.textColor   = colors?.designatedSecondary
             
             return cell
@@ -88,8 +88,11 @@ extension ViewController: NSTableViewDelegate {
      Double click action, set as tableView.doubleAction
      */
     func tableViewDoubleClicked(tableView: NSTableView) {
-        if let spotifyHelper = helper as? SpotifyHelper, tableView.selectedRow >= 0 {
-            spotifyHelper.play(uri: trackSearchResults[tableView.selectedRow].uri)
+        // TODO: test this for Spotify
+        
+        // Play the requested track using the specific player feature
+        if let helper = helper as? PlayablePlayerHelper, tableView.selectedRow >= 0 {
+            helper.play(trackSearchResults[tableView.selectedRow].address)
         }
         
         endSearch()
@@ -141,21 +144,25 @@ extension ViewController {
         // Capture search request time
         let trackSearchStartTime = Date.timeIntervalSinceReferenceDate
         
-        spotifyManager.find(SpotifyTrack.self, text) { [weak self] tracks in
-            // Only parse response if launch time is greater than last one
-            // Otherwise is just an old response which should be discarded
-            guard let strongSelf = self, trackSearchStartTime > strongSelf.trackSearchStartTime else { return }
-            
-            // Updated search results and start time
-            strongSelf.trackSearchResults   = tracks
-            strongSelf.trackSearchStartTime = trackSearchStartTime
-            
-            // Refresh table view
-            strongSelf.resultsTableView?.reloadData(selectingFirst: true)
+        if let helper = helper as? SearchablePlayerHelper {
+            helper.search(title: text) { [weak self] tracks in
+                // Only parse response if launch time is greater than last one
+                // Otherwise is just an old response which should be discarded
+                guard let strongSelf = self, trackSearchStartTime > strongSelf.trackSearchStartTime else { return }
+                
+                // Updated search results and start time
+                strongSelf.trackSearchResults   = tracks
+                strongSelf.trackSearchStartTime = trackSearchStartTime
+                
+                // Refresh table view
+                strongSelf.resultsTableView?.reloadData(selectingFirst: true)
+            }
         }
     }
     
     func startSearch() {
+        guard helper is SearchablePlayerHelper else { return }
+        
         // Reload data keeping selection
         resultsTableView?.reloadData(keepingSelection: true)
         

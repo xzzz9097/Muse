@@ -109,6 +109,11 @@ protocol SearchablePlayerHelper {
     func search(title: String, completionHandler: @escaping (([Song]) -> Void))
 }
 
+protocol PlayablePlayerHelper {
+    
+    func play(_ address: String)
+}
+
 extension PlayerHelper where Self: InternalPlayerHelper {
     
     // MARK: Playback controls
