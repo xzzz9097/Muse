@@ -48,6 +48,9 @@ class DrawableView: NSView {
     // The color of the shape
     var shapeColor: NSColor = .black
     
+    // The thickness of the shape
+    var shapeThickness: CGFloat = 1.5
+    
     // The path of the shape
     var shapePath: ShapePath?
     
@@ -81,7 +84,7 @@ class DrawableView: NSView {
         line.move(to: path.startPoint)
         line.line(to: path.endPoint)
         
-        line.lineWidth = 2.0
+        line.lineWidth = shapeThickness
         
         line.stroke()
     }

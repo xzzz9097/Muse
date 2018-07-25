@@ -251,6 +251,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     @IBOutlet weak var titleLabelView:        NSTextField!
     @IBOutlet weak var albumArtistLabelView:  NSTextField!
     @IBOutlet weak var actionImageView:       NSImageView!
+    @IBOutlet weak var actionCheckView:       DrawableView!
     @IBOutlet weak var actionTextField:       NSTextField!
     @IBOutlet weak var titleTextField:        NSTextField!
     @IBOutlet weak var songProgressBar:       NSSlider!
@@ -269,7 +270,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
-    var actionSuperview:           DrawableView!
+    var actionSuperview:           NSView!
     var titleSuperview:            NSHoverableView!
     var actionBarSuperview:        NSView!
     var resultsSuperview:          NSView!
@@ -355,7 +356,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         super.viewDidLoad()
 
         titleAlbumArtistSuperview = titleLabelView.superview
-        actionSuperview           = actionImageView.superview as? DrawableView
+        actionSuperview           = actionImageView.superview
         titleSuperview            = titleTextField.superview as? NSHoverableView
         actionBarSuperview        = actionTabView.superview
         resultsSuperview          = resultsTableView?.superview?.superview?.superview
@@ -520,7 +521,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         actionSuperview.shadow = NSShadow()
         setShadow(for: layer)
         
-        actionSuperview.shapePath = DrawableViewShapePath.forCheckLineIn(actionSuperview, margin: 8.0)
+        actionCheckView.shapePath = DrawableViewShapePath.forCheckLineIn(actionCheckView,
+                                                                         margin: 8.0)
     }
     
     func prepareActionBarButtons() {
@@ -647,7 +649,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             }
             
             // Send the request to the view
-            actionSuperview.shouldDrawShape = shouldCheck
+            actionCheckView.shouldDrawShape = shouldCheck
         case .scrub(_, let time):
             // Hide image view if scrubbing
             actionImageView.isHidden = true
@@ -777,11 +779,6 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         [playButton, previousButton, nextButton, likeButton, shuffleButton, repeatButton].forEach {
             $0?.tintedImage = $0?.image?.tint(with: color)
         }
-        
-        // Color action image too
-        // We have to give a fallback image to ensure action image gets tinted at first start
-        // Because it is not given a default value otherwise
-        actionImageView.tintedImage = (actionImageView.image ?? PlayerAction.play.image!).tint(with: color)
     }
     
     func colorViews(with imageColors: ImageColors) {
@@ -826,7 +823,18 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         // Update table view with new colors
         resultsTableView?.reloadData(keepingSelection: true)
         
-        actionSuperview.shapeColor = secondaryColor
+        // Color last action view items
+        colorLastActionView(imageColor: primaryColor, checkColor: highlightColor)
+    }
+    
+    func colorLastActionView(imageColor: NSColor, checkColor: NSColor) {
+        // Color action image too
+        // We have to give a fallback image to ensure action image gets tinted at first start
+        // Because it is not given a default value otherwise
+        actionImageView.tintedImage = (actionImageView.image ?? PlayerAction.play.image!).tint(with: imageColor)
+        
+        // Also reset the color of the action check
+        actionCheckView.shapeColor = checkColor
     }
     
     func colorActionBar(background: CGColor? = nil,

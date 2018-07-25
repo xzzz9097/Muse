@@ -461,7 +461,7 @@
                                     <constraint firstAttribute="trailing" secondItem="OP7-ud-xJg" secondAttribute="trailing" constant="10" id="smo-dz-dJ2"/>
                                 </constraints>
                             </customView>
-                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy" customClass="DrawableView" customModule="Muse" customModuleProvider="target">
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy">
                                 <rect key="frame" x="118" y="118" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8BH-TZ-iv9">
@@ -479,17 +479,24 @@
                                         </constraints>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="q5d-mm-DGp"/>
                                     </imageView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="sd8-5f-N8c" customClass="DrawableView" customModule="Muse" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                    </customView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="sd8-5f-N8c" firstAttribute="top" secondItem="L8t-8O-zhy" secondAttribute="top" id="02j-vn-jqf"/>
                                     <constraint firstAttribute="trailing" secondItem="8BH-TZ-iv9" secondAttribute="trailing" constant="10" id="6mR-hG-gEj"/>
+                                    <constraint firstItem="sd8-5f-N8c" firstAttribute="leading" secondItem="L8t-8O-zhy" secondAttribute="leading" id="94n-au-f7U"/>
                                     <constraint firstItem="n4M-1Y-2JZ" firstAttribute="centerX" secondItem="L8t-8O-zhy" secondAttribute="centerX" id="DIX-4R-dGI"/>
                                     <constraint firstItem="n4M-1Y-2JZ" firstAttribute="centerY" secondItem="L8t-8O-zhy" secondAttribute="centerY" id="Ghv-kd-8lL"/>
+                                    <constraint firstAttribute="bottom" secondItem="sd8-5f-N8c" secondAttribute="bottom" id="HRW-ty-9KL"/>
                                     <constraint firstItem="8BH-TZ-iv9" firstAttribute="leading" secondItem="L8t-8O-zhy" secondAttribute="leading" constant="10" id="HYl-Db-fw1"/>
                                     <constraint firstItem="n4M-1Y-2JZ" firstAttribute="leading" secondItem="L8t-8O-zhy" secondAttribute="leading" constant="5" id="KlO-cP-e5m"/>
                                     <constraint firstAttribute="trailing" secondItem="n4M-1Y-2JZ" secondAttribute="trailing" constant="5" id="OpN-Xb-3yR"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="bSE-I7-WcL"/>
                                     <constraint firstItem="8BH-TZ-iv9" firstAttribute="centerY" secondItem="L8t-8O-zhy" secondAttribute="centerY" id="cQK-aR-ken"/>
                                     <constraint firstAttribute="height" constant="40" id="eTR-XI-53F"/>
+                                    <constraint firstAttribute="trailing" secondItem="sd8-5f-N8c" secondAttribute="trailing" id="yWN-Vz-xOH"/>
                                 </constraints>
                             </customView>
                             <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xX2-B7-OOh" customClass="NSHoverableView" customModule="Muse" customModuleProvider="target">
@@ -562,6 +569,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="actionCheckView" destination="sd8-5f-N8c" id="X7a-js-w5n"/>
                         <outlet property="actionImageView" destination="n4M-1Y-2JZ" id="F3O-Co-NpG"/>
                         <outlet property="actionTabView" destination="VdQ-8J-q9u" id="pNV-fb-aNZ"/>
                         <outlet property="actionTextField" destination="8BH-TZ-iv9" id="jV7-Bf-Te1"/>
