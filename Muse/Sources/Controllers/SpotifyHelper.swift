@@ -61,7 +61,7 @@ var spotifyManager = SpotifyManager(
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
-class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper {
+class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper, PlayablePlayerHelper {
     
     // Singleton constructor
     static let shared = SpotifyHelper()
@@ -290,10 +290,16 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
     
     func search(title: String, completionHandler: @escaping (([Song]) -> Void)) {
         // Map our parsed SpotifyTracks to standard song items
-        // TODO: test me!
         spotifyManager.find(SpotifyTrack.self, title) {
             completionHandler($0.map { $0.song })
         }
+    }
+    
+    // MARK: Playing
+    
+    func play(_ address: String) {
+        // Pass the helper play call to Spotify ScriptingBridge binding
+        play(uri: address)
     }
     
     // MARK: Application identifier
