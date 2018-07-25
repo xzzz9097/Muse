@@ -269,7 +269,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     // MARK: Superviews
     
     var titleAlbumArtistSuperview: NSView!
-    var actionSuperview:           NSView!
+    var actionSuperview:           DrawableView!
     var titleSuperview:            NSHoverableView!
     var actionBarSuperview:        NSView!
     var resultsSuperview:          NSView!
@@ -355,7 +355,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         super.viewDidLoad()
 
         titleAlbumArtistSuperview = titleLabelView.superview
-        actionSuperview           = actionImageView.superview
+        actionSuperview           = actionImageView.superview as? DrawableView
         titleSuperview            = titleTextField.superview as? NSHoverableView
         actionBarSuperview        = actionTabView.superview
         resultsSuperview          = resultsTableView?.superview?.superview?.superview
@@ -519,6 +519,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         // Set shadow
         actionSuperview.shadow = NSShadow()
         setShadow(for: layer)
+        
+        actionSuperview.shapePath = DrawableViewShapePath.forCheckLineIn(actionSuperview, margin: 8.0)
     }
     
     func prepareActionBarButtons() {
@@ -631,25 +633,21 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             actionImageView.setImagePreservingTint(image)
         }
         
-        // TODO: more testing
         switch action {
         case .shuffling, .repeating, .like:
-            var shouldTint = false
+            var shouldCheck = false
             
-            // Determine if we should tint the action image with light gray
+            // Determine if we should draw a check on the action view
             // to highlight off state for the action
-            // TODO: more visible highlighting method
             switch action {
-            case .shuffling(let shuffling): shouldTint = !shuffling
-            case .repeating(let repeating): shouldTint = !repeating
-            case .like(let liked):          shouldTint = !liked
+            case .shuffling(let shuffling): shouldCheck = !shuffling
+            case .repeating(let repeating): shouldCheck = !repeating
+            case .like(let liked):          shouldCheck = !liked
             default: break
             }
             
-            // Tint the image
-            if shouldTint {
-                actionImageView.setImagePreservingTint(actionImageView.image?.withAlpha(0.5))
-            }
+            // Send the request to the view
+            actionSuperview.shouldDrawShape = shouldCheck
         case .scrub(_, let time):
             // Hide image view if scrubbing
             actionImageView.isHidden = true
@@ -827,6 +825,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         // Update table view with new colors
         resultsTableView?.reloadData(keepingSelection: true)
+        
+        actionSuperview.shapeColor = secondaryColor
     }
     
     func colorActionBar(background: CGColor? = nil,

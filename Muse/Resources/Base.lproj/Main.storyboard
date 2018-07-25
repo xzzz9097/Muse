@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
@@ -461,7 +461,7 @@
                                     <constraint firstAttribute="trailing" secondItem="OP7-ud-xJg" secondAttribute="trailing" constant="10" id="smo-dz-dJ2"/>
                                 </constraints>
                             </customView>
-                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy">
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8t-8O-zhy" customClass="DrawableView" customModule="Muse" customModuleProvider="target">
                                 <rect key="frame" x="118" y="118" width="40" height="40"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8BH-TZ-iv9">

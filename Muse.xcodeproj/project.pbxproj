@@ -13,6 +13,7 @@
 		0C1F20F41F2B9F3C0055ACAC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */; };
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
 		0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3750D01EFC29C700EE19AE /* Slider.swift */; };
+		0C38D0F42108925700572D5A /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C38D0F32108925700572D5A /* DrawableView.swift */; };
 		0C3EEA4A1F8A1D8300056FA7 /* KeyCombination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3EEA491F8A1D8300056FA7 /* KeyCombination.swift */; };
 		0C3FFF491F9CD5B1006B7A5C /* KeySensitiveTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3FFF481F9CD5B1006B7A5C /* KeySensitiveTableView.swift */; };
 		0C474DB31F839BEB0067BC8C /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */; };
@@ -135,6 +136,7 @@
 		0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFRPrivateHeader.h; sourceTree = "<group>"; };
 		0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = ../../../../System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<group>"; };
 		0C3750D01EFC29C700EE19AE /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
+		0C38D0F32108925700572D5A /* DrawableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableView.swift; sourceTree = "<group>"; };
 		0C3EEA491F8A1D8300056FA7 /* KeyCombination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombination.swift; sourceTree = "<group>"; };
 		0C3FFF481F9CD5B1006B7A5C /* KeySensitiveTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySensitiveTableView.swift; sourceTree = "<group>"; };
 		0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				0C9B62321E1EAE9100660633 /* ButtonCell.swift */,
 				0C6C10B21F9B60B400C20061 /* ResultsTableCellView.swift */,
 				0C3FFF481F9CD5B1006B7A5C /* KeySensitiveTableView.swift */,
+				0C38D0F32108925700572D5A /* DrawableView.swift */,
 				0C6C10B41F9B8FDF00C20061 /* CustomHighlightTableRowView.swift */,
 				0C3750D01EFC29C700EE19AE /* Slider.swift */,
 				0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */,
@@ -712,6 +715,7 @@
 				0C5E94F81E214A02000E0013 /* Double+Extensions.swift in Sources */,
 				0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */,
 				0C56FEDA1F4AB5E200A247CB /* Imageable+Tint.swift in Sources */,
+				0C38D0F42108925700572D5A /* DrawableView.swift in Sources */,
 				0CCD27671DF01F440039ACDC /* DDHotKeyTextField.m in Sources */,
 				0C1F20EC1F2B21E50055ACAC /* NSCustomizableButton.swift in Sources */,
 				0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */,
