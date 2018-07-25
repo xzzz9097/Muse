@@ -182,7 +182,9 @@ extension ViewController {
         // Disable editing
         titleTextField.isEditable  = false
         titleTextField.isEnabled   = false
-        titleTextField.setNeedsDisplay()
+
+        // Ensure that the text field has the right width
+        titleTextField.animator().invalidateIntrinsicContentSize()
         
         if canceled {
             // Restore text to song title
