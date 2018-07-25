@@ -100,6 +100,9 @@ protocol LikablePlayerHelper {
     // MARK: Starring
     
     var liked: Bool { set get }
+    
+    @discardableResult
+    mutating func toggleLiked() -> Bool
 }
 
 protocol SearchablePlayerHelper {
@@ -182,11 +185,29 @@ extension PlayerHelper where Self: InternalPlayerHelper {
     }
 }
 
+@discardableResult
+fileprivate func toggle(value: inout Bool) -> Bool {
+    let newValue = !value
+    value = newValue
+    
+    return newValue
+}
+
 extension PlayerHelper {
     
     var liked: Bool {
         set { }
         get { return false }
+    }
+    
+    @discardableResult
+    mutating func toggleRepeating() -> Bool {
+        return toggle(value: &repeating)
+    }
+    
+    @discardableResult
+    mutating func toggleShuffling() -> Bool {
+        return toggle(value: &shuffling)
     }
 }
 
@@ -204,6 +225,14 @@ extension PlayerHelper where Self: LikableInternalPlayerHelper {
         get {
             return internalLiked
         }
+    }
+}
+
+extension PlayerHelper where Self: LikablePlayerHelper {
+    
+    @discardableResult
+    mutating func toggleLiked() -> Bool {
+        return toggle(value: &liked)
     }
 }
 

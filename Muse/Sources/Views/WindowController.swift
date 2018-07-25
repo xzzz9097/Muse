@@ -206,7 +206,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func likeButtonClicked(_ sender: NSButton) {
         // Reverse like on current track if supported
         if var helper = helper as? LikablePlayerHelper {
-            helper.liked = !helper.liked
+            helper.toggleLiked()
         }
     }
     
@@ -282,11 +282,11 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         case kVK_Return, kVK_ANSI_W:
             showPlayer()
         case kVK_ANSI_X:
-            helper.shuffling = !helper.shuffling
+            helper.toggleShuffling()
         case kVK_ANSI_R:
-            helper.repeating = !helper.repeating
+            helper.toggleRepeating()
         case kVK_ANSI_L:
-            if var helper = helper as? LikablePlayerHelper { helper.liked = !helper.liked }
+            if var helper = helper as? LikablePlayerHelper { helper.toggleLiked() }
         default: super.keyDown(with: event)
         }
     }

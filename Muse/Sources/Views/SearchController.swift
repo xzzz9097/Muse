@@ -182,6 +182,7 @@ extension ViewController {
         // Disable editing
         titleTextField.isEditable  = false
         titleTextField.isEnabled   = false
+        titleTextField.setNeedsDisplay()
         
         if canceled {
             // Restore text to song title
