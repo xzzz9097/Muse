@@ -112,6 +112,13 @@ protocol SearchablePlayerHelper {
     func search(title: String, completionHandler: @escaping (([Song]) -> Void))
 }
 
+protocol PlaylistablePlayerHelper {
+    
+    // MARK: Playlists
+    
+    var playlists: [Playlist] { get }
+}
+
 protocol PlayablePlayerHelper {
     
     func play(_ address: String)

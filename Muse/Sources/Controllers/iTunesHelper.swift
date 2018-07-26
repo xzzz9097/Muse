@@ -71,7 +71,7 @@ extension SBObject: iTunesArtworkProtocol { }
 // Protocols will be implemented and populated through here
 extension SBApplication: iTunesApplication { }
 
-class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper, PlayablePlayerHelper {
+class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper, PlayablePlayerHelper, PlaylistablePlayerHelper {
     
     // SIngleton constructor
     static let shared = iTunesHelper()
@@ -240,6 +240,16 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
         let query = "tell application \"iTunes\"\n play POSIX file \"\(address)\" \nend tell"
         
         NSAppleScript(source: query)?.executeAndReturnError(nil)
+    }
+    
+    // MARK: Playlists
+    
+    var playlists: [Playlist] {
+        guard let playlists = library?.allPlaylists else { return [] }
+        
+        // Build playlists by mapping the initializer
+        // TODO: extend ITLib to create a converter with more properties
+        return playlists.map { Playlist(name: $0.name) }
     }
     
     // MARK: Application identifier

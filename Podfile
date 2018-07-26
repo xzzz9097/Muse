@@ -9,6 +9,8 @@ target 'Muse' do
 
   pod 'Sparkle'
 
+  pod 'MASPreferences'
+
   # Pods for Swiftify
   pod 'SpotifyKit', :git => 'https://github.com/xzzz9097/SpotifyKit.git'
 

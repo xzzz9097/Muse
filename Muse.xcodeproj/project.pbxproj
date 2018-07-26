@@ -14,6 +14,9 @@
 		0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */; };
 		0C3750D11EFC29C700EE19AE /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3750D01EFC29C700EE19AE /* Slider.swift */; };
 		0C38D0F42108925700572D5A /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C38D0F32108925700572D5A /* DrawableView.swift */; };
+		0C38D0FB2109CF5400572D5A /* PlaylistsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C38D0FA2109CF5400572D5A /* PlaylistsController.swift */; };
+		0C38D0FD2109D04E00572D5A /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C38D0FC2109D04E00572D5A /* Playlist.swift */; };
+		0C38D0FF2109D41200572D5A /* ResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C38D0FE2109D41200572D5A /* ResultsController.swift */; };
 		0C3EEA4A1F8A1D8300056FA7 /* KeyCombination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3EEA491F8A1D8300056FA7 /* KeyCombination.swift */; };
 		0C3FFF491F9CD5B1006B7A5C /* KeySensitiveTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C3FFF481F9CD5B1006B7A5C /* KeySensitiveTableView.swift */; };
 		0C474DB31F839BEB0067BC8C /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */; };
@@ -137,6 +140,9 @@
 		0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = ../../../../System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<group>"; };
 		0C3750D01EFC29C700EE19AE /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		0C38D0F32108925700572D5A /* DrawableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawableView.swift; sourceTree = "<group>"; };
+		0C38D0FA2109CF5400572D5A /* PlaylistsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsController.swift; sourceTree = "<group>"; };
+		0C38D0FC2109D04E00572D5A /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		0C38D0FE2109D41200572D5A /* ResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsController.swift; sourceTree = "<group>"; };
 		0C3EEA491F8A1D8300056FA7 /* KeyCombination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCombination.swift; sourceTree = "<group>"; };
 		0C3FFF481F9CD5B1006B7A5C /* KeySensitiveTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySensitiveTableView.swift; sourceTree = "<group>"; };
 		0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerEvent.swift; sourceTree = "<group>"; };
@@ -327,6 +333,7 @@
 			children = (
 				0C3EEA491F8A1D8300056FA7 /* KeyCombination.swift */,
 				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
+				0C38D0FC2109D04E00572D5A /* Playlist.swift */,
 				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
 				0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */,
 				0C474DB41F839C720067BC8C /* PlayerNotification.swift */,
@@ -350,6 +357,8 @@
 			children = (
 				0C5B6CC61F1E4D6D007DDC0F /* TouchBarMaker.swift */,
 				0CFF466B1DE3826300A3BE8E /* ViewController.swift */,
+				0C38D0FA2109CF5400572D5A /* PlaylistsController.swift */,
+				0C38D0FE2109D41200572D5A /* ResultsController.swift */,
 				0C4AF0481F9A305000240EAB /* SearchController.swift */,
 				0CFF46941DE382BA00A3BE8E /* WindowController.swift */,
 				0C676BD81DF4834100B75164 /* WindowController+RemoteCommandCenter.swift */,
@@ -656,12 +665,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MASPreferences/MASPreferences.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/SpotifyKit/SpotifyKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASPreferences.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpotifyKit.framework",
@@ -728,6 +739,8 @@
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
+				0C38D0FB2109CF5400572D5A /* PlaylistsController.swift in Sources */,
+				0C38D0FF2109D41200572D5A /* ResultsController.swift in Sources */,
 				0C4AF0491F9A305000240EAB /* SearchController.swift in Sources */,
 				0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */,
 				0C3EEA4A1F8A1D8300056FA7 /* KeyCombination.swift in Sources */,
@@ -739,6 +752,7 @@
 				0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */,
 				0CEAEB3D1E15A34400BD68D5 /* VoxHelper.swift in Sources */,
 				0C676BD91DF4834100B75164 /* WindowController+RemoteCommandCenter.swift in Sources */,
+				0C38D0FD2109D04E00572D5A /* Playlist.swift in Sources */,
 				0C9B62331E1EAE9100660633 /* ButtonCell.swift in Sources */,
 				0C9B62271E1C357100660633 /* NSImageColors.swift in Sources */,
 				0CEAEB391E14583500BD68D5 /* String+Extensions.swift in Sources */,

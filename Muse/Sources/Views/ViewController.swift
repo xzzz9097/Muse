@@ -181,8 +181,20 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     
     // MARK: Properties
     
+    // The results mode
+    enum ResultsMode {
+        case trackSearch
+        case playlists
+    }
+    
+    // Results mode master switch
+    var resultsMode: ResultsMode = .trackSearch
+    
     // The search results
     var trackSearchResults: [Song] = []
+    
+    // The playlists results
+    var playlistsResults: [Playlist] = []
     
     // Time of last track search
     var trackSearchStartTime: TimeInterval = 0
@@ -346,6 +358,8 @@ class ViewController: NSViewController, NSTextFieldDelegate {
             shouldShowActionBar = !shouldShowActionBar
         case KeyCombination(.command, kVK_ANSI_F):
             startSearch()
+        case KeyCombination(.command, kVK_ANSI_P):
+            startPlaylists()
         default: break
         }
     }
