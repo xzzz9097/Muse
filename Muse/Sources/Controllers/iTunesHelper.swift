@@ -246,11 +246,12 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
     
     var playlists: [Playlist] {
         guard let playlists = library?.allPlaylists else { return [] }
-        
+
         // Build playlists by mapping the initializer
         // TODO: extend ITLib to create a converter with more properties
-        return playlists.map { Playlist(id: Int($0.persistentID),
-                                        name: $0.name) }
+        return playlists
+            .filter { !$0.isMaster && $0.distinguishedKind == .kindNone }
+            .map { Playlist(id: Int($0.persistentID), name: $0.name) }
     }
     
     func play(playlist named: String) {
