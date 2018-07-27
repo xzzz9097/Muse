@@ -364,6 +364,42 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
+    /**
+     - parameter direction: true for up, false for down
+     - return: true if the event has been handled by the ViewController
+     */
+    @discardableResult
+    func handleArrowKeys() -> Bool {
+        if mainViewMode == .expandedWithResults {
+            resultsTableView?.keyDown(with: NSApp.currentEvent!)
+            return true
+        }
+        
+        // Pass the event back to WindowController
+        return false
+    }
+    
+    /**
+     Handles escape key events sent fron WindowController
+     - return: true if the event has been handled by the ViewController
+     */
+    @discardableResult
+    func handleEscape() -> Bool {
+        if mainViewMode == .expandedWithResults {
+            switch resultsMode {
+            case .trackSearch:
+                endSearch(canceled: true)
+            case .playlists:
+                endPlaylists()
+            }
+            
+            return true
+        }
+        
+        // Pass the event back to WindowController
+        return false
+    }
+    
     // MARK: UI preparation
     
     override func viewDidLoad() {
@@ -908,11 +944,11 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         switch commandSelector {
         case #selector(moveUp(_:)), #selector(moveDown(_:)), #selector(insertNewline(_:)):
             // Forward ⏎, ⬆ and ⬇ to tableView
-            resultsTableView?.keyDown(with: NSApp.currentEvent!)
+            handleArrowKeys()
             return true
         case #selector(cancelOperation(_:)):
             // End editing on escape key press
-            endSearch(canceled: true)
+            handleEscape()
             return true
         default:
             return false

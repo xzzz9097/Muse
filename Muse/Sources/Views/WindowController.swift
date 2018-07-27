@@ -30,6 +30,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     let nowPlayingInfoCenter    = MPNowPlayingInfoCenter.default()
     let remoteCommandCenter     = MPRemoteCommandCenter.shared()
     
+    // MARK: Key monitor
+    var eventMonitor: Any?
+    
     // MARK: Runtime properties
     
     var song                           = Song()
@@ -259,36 +262,72 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Key handlers
     
-    override func keyDown(with event: NSEvent) {
+    func initKeyDownHandler() {
+        eventMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: NSEventMask.keyDown,
+            handler: { event in
+                if self.handleKeyDown(with: event) { return nil }
+                
+                return event
+        })
+    }
+    
+    func deinitKeyDownHandler() {
+        if let monitor = eventMonitor {
+            NSEvent.removeMonitor(monitor)
+        }
+    }
+    
+    func handleKeyDown(with event: NSEvent) -> Bool {
         // Ensure that no text field is first responder
         // We don't want to intercept keystrokes while text editing
-        if let _ = window?.firstResponder as? NSTextView { return }
+        if let _ = window?.firstResponder as? NSTextView { return false }
         
         switch KeyCombination(event.modifierFlags, event.keyCode) {
         case KeyCombination(.command, kVK_ANSI_S):
             setPlayerHelper(to: .spotify)
+            return true
         case KeyCombination(.command, kVK_ANSI_I):
             setPlayerHelper(to: .itunes)
+            return true
         case KeyCombination(.command, kVK_ANSI_V):
             setPlayerHelper(to: .vox)
+            return true
         case kVK_Escape:
-            if let window = self.window { window.setVisibility(false) }
+            onViewController {
+                if !$0.handleEscape() {
+                    if let window = self.window { window.setVisibility(false) }
+                }
+            }
+            return true
         case kVK_LeftArrow, kVK_ANSI_A:
             helper.previousTrack()
+            return true
         case kVK_Space, kVK_ANSI_S:
             helper.togglePlayPause()
+            return true
         case kVK_RightArrow, kVK_ANSI_D:
             helper.nextTrack()
+            return true
+        case kVK_UpArrow, kVK_DownArrow:
+            onViewController { $0.handleArrowKeys() }
+            return true
         case kVK_Return, kVK_ANSI_W:
             showPlayer()
+            return true
         case kVK_ANSI_X:
             helper.toggleShuffling()
+            return true
         case kVK_ANSI_R:
             helper.toggleRepeating()
+            return true
         case kVK_ANSI_L:
             if var helper = helper as? LikablePlayerHelper { helper.toggleLiked() }
-        default: super.keyDown(with: event)
+        default:
+            break
         }
+        
+        return false
     }
     
     func registerHotkey() {
@@ -561,6 +600,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         // Initialize AEManager for URL handling
         initEventManager()
+        
+        // Initialize event monitor for keyDown
+        initKeyDownHandler()
         
         // Initialize notification watcher
         initNotificationWatchers()
@@ -1147,6 +1189,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func windowWillClose(_ notification: Notification) {
         // Remove the observer when window is closed
         deinitPlayerNotificationWatchers()
+        
+        // Remove the keyDown event monitor
+        deinitKeyDownHandler()
         
         // Invalidate progress timer
         deinitSongTrackingTimer()
