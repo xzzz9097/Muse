@@ -64,8 +64,8 @@ extension ViewController {
     
     func loadPlaylists() {
         if let helper = helper as? PlaylistablePlayerHelper {
-            DispatchQueue.main.async { [weak self] in
-                self?.playlistsResults = helper.playlists
+            helper.playlists { [weak self] in
+                self?.playlistsResults = $0
                 
                 self?.resultsTableView?.reloadData(selectingFirst: true)
             }

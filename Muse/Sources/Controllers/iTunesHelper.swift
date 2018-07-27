@@ -244,21 +244,23 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
     
     // MARK: Playlists
     
-    var playlists: [Playlist] {
-        guard let playlists = library?.allPlaylists else { return [] }
-
+    func playlists(completionHandler: @escaping (([Playlist]) -> Void)) {
+        guard let playlists = library?.allPlaylists else { return }
+        
         // Build playlists by mapping the initializer
         // TODO: extend ITLib to create a converter with more properties
-        return playlists
-            .filter { !$0.isMaster && $0.distinguishedKind == .kindNone }
-            .map { Playlist(id: Int($0.persistentID), name: $0.name) }
+        DispatchQueue.main.async {
+            completionHandler(
+                playlists
+                    .filter { !$0.isMaster && $0.distinguishedKind == .kindNone }
+                    .map { Playlist(id: Int($0.persistentID), name: $0.name) }
+            )
+        }
     }
     
     func play(playlist named: String) {
         // Build an AppleScript query to play our playlist
         let query = "tell application \"iTunes\"\n play user playlist named \"\(named)\" \nend tell"
-        
-        print(query)
         
         NSAppleScript(source: query)?.executeAndReturnError(nil)
     }

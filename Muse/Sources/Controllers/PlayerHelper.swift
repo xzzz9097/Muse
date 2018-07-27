@@ -116,7 +116,7 @@ protocol PlaylistablePlayerHelper {
     
     // MARK: Playlists
     
-    var playlists: [Playlist] { get }
+    func playlists(completionHandler: @escaping (([Playlist]) -> Void))
     
     func play(playlist named: String)
 }
