@@ -38,6 +38,12 @@ extension ViewController {
     }
     
     func playlistsTableViewDoubleClicked(tableView: NSTableView) {
+        // Play the requested playlist using the specific player feature
+        if let helper = helper as? PlaylistablePlayerHelper, tableView.selectedRow >= 0 {
+            helper.play(playlist: playlistsResults[tableView.selectedRow].name)
+        }
+        
+        endPlaylists()
     }
 }
 

@@ -249,7 +249,17 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
         
         // Build playlists by mapping the initializer
         // TODO: extend ITLib to create a converter with more properties
-        return playlists.map { Playlist(name: $0.name) }
+        return playlists.map { Playlist(id: Int($0.persistentID),
+                                        name: $0.name) }
+    }
+    
+    func play(playlist named: String) {
+        // Build an AppleScript query to play our playlist
+        let query = "tell application \"iTunes\"\n play user playlist named \"\(named)\" \nend tell"
+        
+        print(query)
+        
+        NSAppleScript(source: query)?.executeAndReturnError(nil)
     }
     
     // MARK: Application identifier

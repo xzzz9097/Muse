@@ -942,7 +942,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
                  textView: NSTextView,
                  doCommandBy commandSelector: Selector) -> Bool {
         switch commandSelector {
-        case #selector(moveUp(_:)), #selector(moveDown(_:)), #selector(insertNewline(_:)):
+        case #selector(moveUp(_:)), #selector(moveDown(_:)):
             // Forward ⏎, ⬆ and ⬇ to tableView
             handleArrowKeys()
             return true

@@ -117,6 +117,8 @@ protocol PlaylistablePlayerHelper {
     // MARK: Playlists
     
     var playlists: [Playlist] { get }
+    
+    func play(playlist named: String)
 }
 
 protocol PlayablePlayerHelper {

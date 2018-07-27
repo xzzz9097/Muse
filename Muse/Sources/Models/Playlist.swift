@@ -9,6 +9,10 @@
 import Foundation
 
 struct Playlist {
+
+    // The identifier for the playlist
+    var id:   Int
     
+    // The name of the playlist
     var name: String
 }
