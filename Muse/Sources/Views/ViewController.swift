@@ -369,7 +369,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
      - return: true if the event has been handled by the ViewController
      */
     @discardableResult
-    func handleArrowKeys() -> Bool {
+    func handleArrowKeysOrReturn() -> Bool {
         if mainViewMode == .expandedWithResults {
             resultsTableView?.keyDown(with: NSApp.currentEvent!)
             return true
@@ -942,9 +942,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
                  textView: NSTextView,
                  doCommandBy commandSelector: Selector) -> Bool {
         switch commandSelector {
-        case #selector(moveUp(_:)), #selector(moveDown(_:)):
+        case #selector(moveUp(_:)), #selector(moveDown(_:)), #selector(insertNewline(_:)):
             // Forward ⏎, ⬆ and ⬇ to tableView
-            handleArrowKeys()
+            handleArrowKeysOrReturn()
             return true
         case #selector(cancelOperation(_:)):
             // End editing on escape key press
@@ -953,6 +953,10 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         default:
             return false
         }
+    }
+    
+    var windowController: WindowController? {
+        return view.window?.windowController as? WindowController
     }
     
 }

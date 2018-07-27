@@ -278,6 +278,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
+    @discardableResult
     func handleKeyDown(with event: NSEvent) -> Bool {
         // Ensure that no text field is first responder
         // We don't want to intercept keystrokes while text editing
@@ -310,9 +311,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             helper.nextTrack()
             return true
         case kVK_UpArrow, kVK_DownArrow:
-            onViewController { $0.handleArrowKeys() }
+            onViewController { $0.handleArrowKeysOrReturn() }
             return true
-        case kVK_Return, kVK_ANSI_W:
+        case kVK_Return:
+            onViewController { [weak self] in
+                if !$0.handleArrowKeysOrReturn() {
+                    self?.showPlayer()
+                }
+            }
+        case kVK_ANSI_W:
             showPlayer()
             return true
         case kVK_ANSI_X:
