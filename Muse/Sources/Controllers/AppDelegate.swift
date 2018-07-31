@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Preferences
     
-    let preferencesWindowController: NSWindowController = MASPreferencesWindowController(viewControllers: [GeneralPreferencesViewController()])
+    let preferencesWindowController: NSWindowController = MASPreferencesWindowController(viewControllers: [GeneralPreferencesViewController(), AccountsPreferencesViewController()])
     
     // MARK: Data saving
     

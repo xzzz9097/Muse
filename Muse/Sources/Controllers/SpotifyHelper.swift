@@ -310,6 +310,20 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
     
     static let rawTrackChangedNotification = BundleIdentifier + ".PlaybackStateChanged"
     
+    // MARK: Account
+    
+    static func account(completionHandler: @escaping ((Account) -> Void)) {
+        spotifyManager.myProfile { profile in
+            guard let imageURL = URL(string: profile.artUri) else { return }
+            
+            NSImage.download(from: imageURL, fallback: NSImage(named: NSImageNameUserAccounts)!) {
+                completionHandler(Account(username: profile.name,
+                                          email: profile.email ?? "",
+                                          image: $0.oval()))
+            }
+        }
+    }
+    
 }
 
 extension SpotifyTrack {
