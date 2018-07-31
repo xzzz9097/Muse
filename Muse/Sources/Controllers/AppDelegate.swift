@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import MASPreferences
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -22,19 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // TODO: do this without callbacks!
     
     var windowToggledHandler: () -> () = { }
-    
-    var showControlStripItemHandler: () -> (Bool) = { return false }
-    
-    var showHUDForControlStripActionHandler: () -> (Bool) = { return false }
-    
-    var showSongTitleInMenuBarActionHandler: () -> (Bool) = { return false }
 
     // MARK: Outlets
     
     @IBOutlet weak var menuBarMenu: NSMenu!
-    @IBOutlet weak var showControlStripButtonMenuItem: NSMenuItem!
-    @IBOutlet weak var showControlStripHUDMenuItem: NSMenuItem!
-    @IBOutlet weak var showSongTitleMenuItem: NSMenuItem!
     
     // MARK: Actions
     
@@ -48,21 +40,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared().terminate(self)
     }
     
-    @IBAction func showControlStripItemMenuItemClicked(_ sender: NSMenuItem) {
-        sender.state = showControlStripItemHandler() ? NSOnState : NSOffState
-    }
-    
-    @IBAction func showHUDForControlStripActionMenuItemClicked(_ sender: NSMenuItem) {
-        sender.state = showHUDForControlStripActionHandler() ? NSOnState : NSOffState
-    }
-    
-    @IBAction func showSongTitleMenuItemClicked(_ sender: NSMenuItem) {
-        sender.state = showSongTitleInMenuBarActionHandler() ? NSOnState : NSOffState
+    @IBAction func preferencesMenuItemClicked(_ sender: Any) {
+        preferencesWindowController.showWindow(self)
     }
     
     @IBAction func customizeTouchBar(_ sender: NSMenuItem) {
         if #available(OSX 10.12.2, *) { NSApp.toggleTouchBarCustomizationPalette(self) }
     }
+    
+    // MARK: Preferences
+    
+    let preferencesWindowController: NSWindowController = MASPreferencesWindowController(viewControllers: [GeneralPreferencesViewController()])
     
     // MARK: Data saving
     
@@ -165,22 +153,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Register dafault user preferences
         registerDefaultPreferences()
-        
-        // Load menu items
-        prepareMenuItems()
     }
     
     func registerDefaultPreferences() {
         PreferenceKey.registerDefaults()
-    }
-    
-    func prepareMenuItems() {
-        showControlStripButtonMenuItem.state = Preference<Bool>(.controlStripItem).value ?
-                                               NSOnState : NSOffState
-        showControlStripHUDMenuItem.state    = Preference<Bool>(.controlStripHUD).value ?
-                                               NSOnState : NSOffState
-        showSongTitleMenuItem.state          = Preference<Bool>(.menuBarTitle).value ?
-                                               NSOnState : NSOffState
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {

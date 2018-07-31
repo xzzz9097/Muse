@@ -75,8 +75,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // Show control strip item
     var shouldShowControlStripItem: Bool {
         set {
-            Preference<Bool>(.controlStripItem).set(newValue)
-        
             if let window = window, !window.isKeyWindow {
                 toggleControlStripButton(force: true, visible: newValue)
             }
@@ -89,10 +87,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // Show OSD on control strip button action
     var shouldShowHUDForControlStripAction: Bool {
-        set {
-            Preference<Bool>(.controlStripHUD).set(newValue)
-        }
-        
         get {
             return Preference<Bool>(.controlStripHUD).value
         }
@@ -101,8 +95,6 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // Constant for enabling title on menuBar
     var shouldSetTitleOnMenuBar: Bool {
         set {
-            Preference<Bool>(.menuBarTitle).set(newValue)
-            
             updateMenuBar()
         }
         
@@ -459,20 +451,15 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
             }
         }
         
-        if let delegate = self.delegate {
-            // Callback for AppDelegate window toggled
-            delegate.windowToggledHandler        = hotkeyAction
-            delegate.showControlStripItemHandler = {
-                self.shouldShowControlStripItem = !self.shouldShowControlStripItem
-                return self.shouldShowControlStripItem
-            }
-            delegate.showHUDForControlStripActionHandler = {
-                self.shouldShowHUDForControlStripAction = !self.shouldShowHUDForControlStripAction
-                return self.shouldShowHUDForControlStripAction
-            }
-            delegate.showSongTitleInMenuBarActionHandler = {
-                self.shouldSetTitleOnMenuBar = !self.shouldSetTitleOnMenuBar
-                return self.shouldSetTitleOnMenuBar
+        PreferenceNotification<Bool>.observe { [weak self] event in
+            guard let strongSelf = self else { return }
+            
+            switch event.key {
+            case .controlStripItem:
+                strongSelf.shouldShowControlStripItem = event.value
+            case .menuBarTitle:
+                strongSelf.shouldSetTitleOnMenuBar = event.value
+            default: break
             }
         }
     }

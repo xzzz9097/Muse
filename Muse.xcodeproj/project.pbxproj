@@ -22,6 +22,10 @@
 		0C474DB31F839BEB0067BC8C /* PlayerEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */; };
 		0C474DB51F839C720067BC8C /* PlayerNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C474DB41F839C720067BC8C /* PlayerNotification.swift */; };
 		0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C48DA411E181C0B0059BA69 /* PlayersManager.swift */; };
+		0C4AC6AB210F51CA0064D7BD /* GeneralPreferencesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C4AC6AA210F51CA0064D7BD /* GeneralPreferencesView.xib */; };
+		0C4AC6AD210F542F0064D7BD /* GeneralPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4AC6AC210F542F0064D7BD /* GeneralPreferencesViewController.swift */; };
+		0C4AC6AF210F7F1A0064D7BD /* PreferenceNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4AC6AE210F7F1A0064D7BD /* PreferenceNotification.swift */; };
+		0C4AC6B1210F811F0064D7BD /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4AC6B0210F811F0064D7BD /* Notification.swift */; };
 		0C4AF0491F9A305000240EAB /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C4AF0481F9A305000240EAB /* SearchController.swift */; };
 		0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */; };
 		0C56FEDA1F4AB5E200A247CB /* Imageable+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */; };
@@ -149,6 +153,10 @@
 		0C474DB41F839C720067BC8C /* PlayerNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNotification.swift; sourceTree = "<group>"; };
 		0C48DA411E181C0B0059BA69 /* PlayersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayersManager.swift; sourceTree = "<group>"; };
 		0C4943471DF8753500AE622E /* PlayerStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerStates.h; sourceTree = "<group>"; };
+		0C4AC6AA210F51CA0064D7BD /* GeneralPreferencesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferencesView.xib; sourceTree = "<group>"; };
+		0C4AC6AC210F542F0064D7BD /* GeneralPreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesViewController.swift; sourceTree = "<group>"; };
+		0C4AC6AE210F7F1A0064D7BD /* PreferenceNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceNotification.swift; sourceTree = "<group>"; };
+		0C4AC6B0210F811F0064D7BD /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		0C4AF0481F9A305000240EAB /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		0C55B89C1F3F87C7002B4CF0 /* NSView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Extensions.swift"; sourceTree = "<group>"; };
 		0C56FED91F4AB5E200A247CB /* Imageable+Tint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Imageable+Tint.swift"; sourceTree = "<group>"; };
@@ -239,6 +247,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C4AC6A9210F51710064D7BD /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
+				0C4AC6AA210F51CA0064D7BD /* GeneralPreferencesView.xib */,
+				0C4AC6AC210F542F0064D7BD /* GeneralPreferencesViewController.swift */,
+				0C4AC6AE210F7F1A0064D7BD /* PreferenceNotification.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		0C9A60CD1DE79AE50051CDC6 /* DDHotKey */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +289,7 @@
 		0CFA8E231F7AE9F300D1AE83 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				0C4AC6A9210F51710064D7BD /* Preferences */,
 				0CFA8E261F7AEAA700D1AE83 /* Controllers */,
 				0CFA8E271F7AEACA00D1AE83 /* Interface */,
 				0CFA8E251F7AEA5B00D1AE83 /* Extensions */,
@@ -332,11 +352,11 @@
 			isa = PBXGroup;
 			children = (
 				0C3EEA491F8A1D8300056FA7 /* KeyCombination.swift */,
-				0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */,
 				0C38D0FC2109D04E00572D5A /* Playlist.swift */,
 				0C9A60BD1DE6071F0051CDC6 /* Song.swift */,
 				0C474DB21F839BEB0067BC8C /* PlayerEvent.swift */,
 				0C474DB41F839C720067BC8C /* PlayerNotification.swift */,
+				0C4AC6B0210F811F0064D7BD /* Notification.swift */,
 				0C4943471DF8753500AE622E /* PlayerStates.h */,
 			);
 			path = Models;
@@ -637,6 +657,7 @@
 			files = (
 				0CA5FA621ED1DC9500248A91 /* dsa_pub.pem in Resources */,
 				0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */,
+				0C4AC6AB210F51CA0064D7BD /* GeneralPreferencesView.xib in Resources */,
 				0CFF46711DE3826300A3BE8E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -736,6 +757,7 @@
 				0CFF46971DE383A300A3BE8E /* SpotifyHelper.swift in Sources */,
 				0C8E3BC11E3CC43900C8EBD1 /* iTunesHelper.swift in Sources */,
 				0C9A60C71DE75DCC0051CDC6 /* Imageable+Download.swift in Sources */,
+				0C4AC6AD210F542F0064D7BD /* GeneralPreferencesViewController.swift in Sources */,
 				0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */,
 				0C21EBC01E12F9C700E9268C /* NSWindow+Extensions.swift in Sources */,
 				0CFF46951DE382BA00A3BE8E /* WindowController.swift in Sources */,
@@ -745,6 +767,7 @@
 				0C5B6CC71F1E4D6D007DDC0F /* TouchBarMaker.swift in Sources */,
 				0C3EEA4A1F8A1D8300056FA7 /* KeyCombination.swift in Sources */,
 				0C48DA421E181C0B0059BA69 /* PlayersManager.swift in Sources */,
+				0C4AC6B1210F811F0064D7BD /* Notification.swift in Sources */,
 				0CEAEB3F1E16624800BD68D5 /* DispatchQueue+Extensions.swift in Sources */,
 				0C55B89D1F3F87C7002B4CF0 /* NSView+Extensions.swift in Sources */,
 				0C3FFF491F9CD5B1006B7A5C /* KeySensitiveTableView.swift in Sources */,
@@ -766,6 +789,7 @@
 				0C8B16791F82A31C0009BE7B /* NSBezierPath+CGPath.swift in Sources */,
 				0C6C10B51F9B8FDF00C20061 /* CustomHighlightTableRowView.swift in Sources */,
 				0CD2870E1E106D4600EF0E73 /* NSImage+Extensions.swift in Sources */,
+				0C4AC6AF210F7F1A0064D7BD /* PreferenceNotification.swift in Sources */,
 				0C9B622C1E1D696400660633 /* Animations.swift in Sources */,
 				0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */,
 			);

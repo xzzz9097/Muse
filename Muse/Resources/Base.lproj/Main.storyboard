@@ -66,9 +66,6 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Muse" customModuleProvider="target">
                     <connections>
                         <outlet property="menuBarMenu" destination="3ym-64-pdK" id="XDT-Sh-nTN"/>
-                        <outlet property="showControlStripButtonMenuItem" destination="1FW-Uh-J16" id="NGK-q8-uRi"/>
-                        <outlet property="showControlStripHUDMenuItem" destination="O3t-ck-ZbM" id="DLl-6I-zaH"/>
-                        <outlet property="showSongTitleMenuItem" destination="qvj-jq-Q3C" id="iq4-XY-dsi"/>
                     </connections>
                 </customObject>
                 <menu id="3ym-64-pdK">
@@ -80,42 +77,23 @@
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="kk4-va-XnQ"/>
+                        <menuItem title="Customize Touch Bar" id="h0V-dE-tS8" userLabel="Customize Touch Bar">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="customizeTouchBar:" target="Voe-Tx-rLC" id="Xqq-K0-BJf"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Preferences" keyEquivalent="," id="dCp-UH-qtu" userLabel="Preferences">
+                            <connections>
+                                <action selector="preferencesMenuItemClicked:" target="Voe-Tx-rLC" id="SZz-8z-7BL"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="4BP-kE-61n"/>
                         <menuItem title="Check for updates..." id="Rjx-Kb-s7F">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="checkForUpdates:" target="tvw-ff-7tM" id="WQY-K3-ly3"/>
                             </connections>
-                        </menuItem>
-                        <menuItem title="Options" id="rrG-9k-WkS" userLabel="Options">
-                            <modifierMask key="keyEquivalentModifierMask"/>
-                            <menu key="submenu" id="hnE-2I-Fxe">
-                                <items>
-                                    <menuItem title="Show control strip button" state="on" id="1FW-Uh-J16">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                        <connections>
-                                            <action selector="showControlStripItemMenuItemClicked:" target="Ady-hI-5gd" id="2cj-GK-kJp"/>
-                                        </connections>
-                                    </menuItem>
-                                    <menuItem title="Show HUD for control strip action" state="on" id="O3t-ck-ZbM">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                        <connections>
-                                            <action selector="showHUDForControlStripActionMenuItemClicked:" target="Ady-hI-5gd" id="Nzj-aa-djM"/>
-                                        </connections>
-                                    </menuItem>
-                                    <menuItem title="Song title in menu bar" state="on" id="qvj-jq-Q3C">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                        <connections>
-                                            <action selector="showSongTitleMenuItemClicked:" target="Voe-Tx-rLC" id="utl-eQ-LU4"/>
-                                        </connections>
-                                    </menuItem>
-                                    <menuItem title="Customize Touch Bar" id="h0V-dE-tS8" userLabel="Customize Touch Bar">
-                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                        <connections>
-                                            <action selector="customizeTouchBar:" target="Voe-Tx-rLC" id="Xqq-K0-BJf"/>
-                                        </connections>
-                                    </menuItem>
-                                </items>
-                            </menu>
                         </menuItem>
                         <menuItem title="Quit Muse" keyEquivalent="q" id="yNZ-Pt-Iyt">
                             <connections>

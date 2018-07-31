@@ -58,10 +58,6 @@ extension Preferenceable {
         return userDefaults.object(for: key) as? ValueType ?? defaultValue
     }
     
-    func set(_ value: ValueType) {
-        userDefaults.set(value, for: key)
-    }
-    
     var defaultValue: ValueType {
         return key.defaultValue as! ValueType
     }
@@ -76,6 +72,13 @@ struct Preference<T>: Preferenceable {
     
     init (_ key: PreferenceKey) {
         self.key = key
+    }
+    
+    func set(_ value: T) {
+        userDefaults.set(value, for: key)
+        
+        // Send a notification when a new value is set
+        PreferenceNotification<ValueType>.init(self).post()
     }
     
 }
