@@ -19,17 +19,9 @@ protocol Notificationable {
     var event: EventType { set get }
 }
 
-struct InternalNotification<T>: Notificationable {
+class InternalNotification<T> {
     
     typealias EventType = T
-    
-    static var name: Notification.Name {
-        return Notification.Name("")
-    }
-    
-    static var notificationKey: String {
-        return ""
-    }
     
     var event: EventType
     
@@ -54,7 +46,7 @@ extension Notificationable {
      Sets up an observer for the specified event
      executing the given closure
      */
-    static func observe(block: @escaping (EventType) -> ()) {
+    static func observe(block: @escaping (EventType) -> ()) {        
         NotificationCenter.default.addObserver(
             forName: Self.name,
             object: nil,

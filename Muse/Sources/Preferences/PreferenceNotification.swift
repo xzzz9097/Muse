@@ -8,16 +8,14 @@
 
 import Foundation
 
-typealias PreferenceNotification<T> = InternalNotification<Preference<T>>
-
-extension InternalNotification where T == Preference<Any> {
+class PreferenceNotification<T>: InternalNotification<Preference<T>>, Notificationable {
     
-    var name: Notification.Name {
+    static var name: Notification.Name {
         return Notification.Name("musePreferenceNotification")
     }
     
-    var notificationKey: String {
+    static var notificationKey: String {
         return "preferenceNotification"
     }
-    
 }
+
