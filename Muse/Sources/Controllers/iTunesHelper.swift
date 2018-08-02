@@ -253,7 +253,9 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
             completionHandler(
                 playlists
                     .filter { !$0.isMaster && $0.distinguishedKind == .kindNone }
-                    .map { Playlist(id: Int($0.persistentID), name: $0.name) }
+                    .map { Playlist(id: Int($0.persistentID),
+                                    name: $0.name,
+                                    count: $0.items.count) }
             )
         }
     }

@@ -27,8 +27,8 @@ extension ViewController {
             cell.textField?.stringValue = playlistsResults[row].name
             cell.textField?.textColor   = colors?.primary
             
-            // Second table cell field: blank
-            cell.secondTextField?.stringValue = ""
+            // Second table cell field: playlists item count
+            cell.secondTextField?.stringValue = String(playlistsResults[row].count)
             cell.secondTextField?.textColor   = colors?.designatedSecondary
             
             return cell
