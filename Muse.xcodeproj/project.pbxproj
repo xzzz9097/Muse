@@ -143,6 +143,7 @@
 		0C1F20EB1F2B21E50055ACAC /* NSCustomizableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSCustomizableButton.swift; sourceTree = "<group>"; };
 		0C1F20F31F2B9F3C0055ACAC /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		0C21EBBF1E12F9C700E9268C /* NSWindow+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extensions.swift"; sourceTree = "<group>"; };
+		0C2B530E211494C800C3B060 /* Muse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Muse.entitlements; sourceTree = "<group>"; };
 		0C3382C91F14D866000D74F9 /* DFRPrivateHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFRPrivateHeader.h; sourceTree = "<group>"; };
 		0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = ../../../../System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<group>"; };
 		0C3750D01EFC29C700EE19AE /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
@@ -441,6 +442,7 @@
 		0CFF46681DE3826300A3BE8E /* Muse */ = {
 			isa = PBXGroup;
 			children = (
+				0C2B530E211494C800C3B060 /* Muse.entitlements */,
 				0CFA8E291F7AEB2D00D1AE83 /* Libraries */,
 				0CFA8E231F7AE9F300D1AE83 /* Sources */,
 				0CFA8E2C1F7AECA200D1AE83 /* Resources */,
@@ -566,6 +568,11 @@
 						DevelopmentTeam = 95ZS5S2W7X;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					0CFF46761DE3826300A3BE8E = {
 						CreatedOnToolsVersion = 8.1;
@@ -948,6 +955,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Muse/Muse.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -974,6 +982,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Muse/Muse.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
