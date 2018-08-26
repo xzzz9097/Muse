@@ -11,7 +11,7 @@ import Foundation
 struct Playlist {
 
     // The identifier for the playlist
-    var id: Int
+    var id: String
     
     // The name of the playlist
     var name: String

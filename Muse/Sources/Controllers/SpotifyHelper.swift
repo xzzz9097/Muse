@@ -61,7 +61,7 @@ var spotifyManager = SpotifyManager(
 // Protocols will implemented and populated through here
 extension SBApplication: SpotifyApplication { }
 
-class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper, PlayablePlayerHelper {
+class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, LikableInternalPlayerHelper, SearchablePlayerHelper, PlayablePlayerHelper, PlaylistablePlayerHelper {
     
     // Singleton constructor
     static let shared = SpotifyHelper()
@@ -302,6 +302,21 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
         play(uri: address)
     }
     
+    // MARK: Playlists
+    
+    func playlists(completionHandler: @escaping (([Playlist]) -> Void)) {
+        spotifyManager.library(SpotifyPlaylist.self) {
+            completionHandler($0.map { $0.playlist })
+        }
+    }
+    
+    /**
+     - parameter playlist: the Spotify URI of the playlist
+     */
+    func play(playlist: String) {
+        play(uri: playlist)
+    }
+    
     // MARK: Application identifier
     
     static let BundleIdentifier = "com.spotify.client"
@@ -335,5 +350,15 @@ extension SpotifyTrack {
                     artist: self.artist.name,
                     album: self.album?.name ?? "",
                     duration: 0) // TODO: add proper duration!
+    }
+}
+
+extension SpotifyPlaylist {
+    
+    // Convert SpotifyPlaylist to a Muse Player playlist item
+    var playlist: Playlist {
+        return Playlist(id: self.uri,
+                        name: self.name,
+                        count: self.collectionTracks?.count ?? 0)
     }
 }

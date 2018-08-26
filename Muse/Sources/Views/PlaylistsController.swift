@@ -38,8 +38,13 @@ extension ViewController {
     }
     
     func playlistsTableViewDoubleClicked(tableView: NSTableView) {
+        guard   let helper = helper as? PlaylistablePlayerHelper,
+                tableView.selectedRow >= 0 else { return }
+        
         // Play the requested playlist using the specific player feature
-        if let helper = helper as? PlaylistablePlayerHelper, tableView.selectedRow >= 0 {
+        if helper is SpotifyHelper {
+            helper.play(playlist: playlistsResults[tableView.selectedRow].id)
+        } else if helper is iTunesHelper {
             helper.play(playlist: playlistsResults[tableView.selectedRow].name)
         }
         

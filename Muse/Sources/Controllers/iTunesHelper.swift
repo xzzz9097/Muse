@@ -253,16 +253,17 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
             completionHandler(
                 playlists
                     .filter { !$0.isMaster && $0.distinguishedKind == .kindNone }
-                    .map { Playlist(id: Int($0.persistentID),
-                                    name: $0.name,
-                                    count: $0.items.count) }
+                    .map { $0.playlist }
             )
         }
     }
     
-    func play(playlist named: String) {
+    /**
+     - parameter playlist: the iTunes name of the playlist
+     */
+    func play(playlist: String) {
         // Build an AppleScript query to play our playlist
-        let query = "tell application \"iTunes\"\n play user playlist named \"\(named)\" \nend tell"
+        let query = "tell application \"iTunes\"\n play user playlist named \"\(playlist)\" \nend tell"
         
         NSAppleScript(source: query)?.executeAndReturnError(nil)
     }
@@ -286,5 +287,14 @@ extension ITLibMediaItem {
                     artist: self.artist?.name ?? "",
                     album: self.album.title ?? "",
                     duration: Double(self.totalTime))
+    }
+}
+
+extension ITLibPlaylist {
+    
+    var playlist: Playlist {
+        return Playlist(id: self.persistentID.stringValue,
+                        name: self.name,
+                        count: self.items.count)
     }
 }

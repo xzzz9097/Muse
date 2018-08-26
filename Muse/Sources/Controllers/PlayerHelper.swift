@@ -118,7 +118,7 @@ protocol PlaylistablePlayerHelper {
     
     func playlists(completionHandler: @escaping (([Playlist]) -> Void))
     
-    func play(playlist named: String)
+    func play(playlist: String)
 }
 
 protocol PlayablePlayerHelper {
