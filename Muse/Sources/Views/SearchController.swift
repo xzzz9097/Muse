@@ -60,10 +60,6 @@ extension ViewController {
 extension ViewController {
     
     func searchTrack(_ title: String) {
-        // Require at least two characters for making requests
-        // Too short queries take long time and may come after new ones
-        guard title.count > 2 else { return }
-        
         // Capture search request time
         let trackSearchStartTime = Date.timeIntervalSinceReferenceDate
         
