@@ -122,3 +122,54 @@ extension ViewController: NSTableViewDataSource {
         }
     }
 }
+
+@available(OSX 10.12.2, *)
+extension ViewController {
+    
+    /**
+     Text has been received from controlTextDidChange.
+     Performs Spotify search query and set results array to the fetched results
+     */
+    func search(_ text: String) {
+        switch resultsMode {
+        case .trackSearch:
+            searchTrack(text)
+        case .playlists:
+            searchPlaylist(text)
+        }
+    }
+    
+    func startSearch() {
+        // Enable editing and empty the field
+        titleTextField.isEditable  = true
+        titleTextField.isEnabled   = true
+        titleTextField.stringValue = ""
+        
+        // Make first responder -> start editing
+        titleTextField.becomeFirstResponder()
+        
+        mainViewMode = .expandedWithResults
+    }
+    
+    func endSearch(canceled: Bool = false) {
+        // Disable editing
+        titleTextField.isEditable  = false
+        titleTextField.isEnabled   = false
+        
+        // Ensure that the text field has the right width
+        titleTextField.animator().invalidateIntrinsicContentSize()
+        
+        if canceled {
+            // Restore text to song title
+            titleTextField.stringValue = titleLabelView.stringValue
+        }
+        
+        // Restart the autoclose timer
+        launchTitleViewAutoCloseTimer()
+        
+        // Hide results table after small delay
+        DispatchQueue.main.run(after: canceled ? 0 : 750) { [weak self] in
+            self?.mainViewMode = MainViewMode.defaultMode
+        }
+    }
+}

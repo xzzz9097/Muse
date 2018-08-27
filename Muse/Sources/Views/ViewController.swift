@@ -357,9 +357,9 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         case kVK_ANSI_B:
             shouldShowActionBar = !shouldShowActionBar
         case KeyCombination(.command, kVK_ANSI_F):
-            startSearch()
+            startTrackSearch()
         case KeyCombination(.command, kVK_ANSI_P):
-            startPlaylists()
+            startPlaylistsSearch()
         default: break
         }
     }
@@ -386,12 +386,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     @discardableResult
     func handleEscape() -> Bool {
         if mainViewMode == .expandedWithResults {
-            switch resultsMode {
-            case .trackSearch:
-                endSearch(canceled: true)
-            case .playlists:
-                endPlaylists()
-            }
+            endSearch(canceled: true)
             
             return true
         }

@@ -59,20 +59,16 @@ extension ViewController {
 @available(OSX 10.12.2, *)
 extension ViewController {
     
-    /**
-     Text has been received from controlTextDidChange.
-     Performs Spotify search query and set results array to the fetched results
-     */
-    func search(_ text: String) {
+    func searchTrack(_ title: String) {
         // Require at least two characters for making requests
         // Too short queries take long time and may come after new ones
-        guard text.count > 2 else { return }
+        guard title.count > 2 else { return }
         
         // Capture search request time
         let trackSearchStartTime = Date.timeIntervalSinceReferenceDate
         
         if let helper = helper as? SearchablePlayerHelper {
-            helper.search(title: text) { [weak self] tracks in
+            helper.search(title: title) { [weak self] tracks in
                 // Only parse response if launch time is greater than last one
                 // Otherwise is just an old response which should be discarded
                 guard let strongSelf = self, trackSearchStartTime > strongSelf.trackSearchStartTime else { return }
@@ -87,7 +83,7 @@ extension ViewController {
         }
     }
     
-    func startSearch() {
+    func startTrackSearch() {
         guard helper is SearchablePlayerHelper else { return }
         
         // Switch results mode first
@@ -96,36 +92,6 @@ extension ViewController {
         // Reload data keeping selection
         resultsTableView?.reloadData(keepingSelection: true)
         
-        // Enable editing and empty the field
-        titleTextField.isEditable  = true
-        titleTextField.isEnabled   = true
-        titleTextField.stringValue = ""
-        
-        // Make first responder -> start editing
-        titleTextField.becomeFirstResponder()
-        
-        mainViewMode = .expandedWithResults
-    }
-    
-    func endSearch(canceled: Bool = false) {
-        // Disable editing
-        titleTextField.isEditable  = false
-        titleTextField.isEnabled   = false
-
-        // Ensure that the text field has the right width
-        titleTextField.animator().invalidateIntrinsicContentSize()
-        
-        if canceled {
-            // Restore text to song title
-            titleTextField.stringValue = titleLabelView.stringValue
-        }
-        
-        // Restart the autoclose timer
-        launchTitleViewAutoCloseTimer()
-        
-        // Hide results table after small delay
-        DispatchQueue.main.run(after: canceled ? 0 : 750) { [weak self] in
-            self?.mainViewMode = MainViewMode.defaultMode
-        }
+        startSearch()
     }
 }

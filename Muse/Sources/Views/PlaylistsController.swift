@@ -48,7 +48,7 @@ extension ViewController {
             helper.play(playlist: playlistsResults[tableView.selectedRow].name)
         }
         
-        endPlaylists()
+        endSearch()
     }
 }
 
@@ -67,29 +67,38 @@ extension ViewController {
 @available(OSX 10.12.2, *)
 extension ViewController {
     
-    func loadPlaylists() {
+    func searchPlaylist(_ text: String) {
+        loadPlaylists(filtered: text)
+    }
+    
+    func loadPlaylists(filtered byQuery: String = "") {
         if let helper = helper as? PlaylistablePlayerHelper {
             helper.playlists { [weak self] in
-                self?.playlistsResults = $0
+                if !byQuery.isEmpty {
+                    self?.playlistsResults = $0.filter {
+                        $0.name.localizedCaseInsensitiveContains(byQuery)
+                    }
+                } else {
+                    self?.playlistsResults = $0
+                }
                 
                 self?.resultsTableView?.reloadData(selectingFirst: true)
             }
         }
     }
     
-    func startPlaylists() {
+    func startPlaylistsSearch() {
         guard helper is PlaylistablePlayerHelper else { return }
         
         // Switch results mode first
         resultsMode = .playlists
         
+        // Reload data keeping selection
+        resultsTableView?.reloadData(keepingSelection: true)
+        
         // Preload the playlists
         loadPlaylists()
         
-        mainViewMode = .expandedWithResults
-    }
-    
-    func endPlaylists() {
-        self.mainViewMode = .defaultMode
+        startSearch()
     }
 }
