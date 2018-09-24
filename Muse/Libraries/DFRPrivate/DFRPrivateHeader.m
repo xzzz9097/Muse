@@ -27,16 +27,33 @@
 @implementation NSTouchBar (DFRAccess)
 
 - (void)presentAsSystemModalForItem:(NSTouchBarItem *)item {
-    [NSTouchBar presentSystemModalFunctionBar:self
-                     systemTrayItemIdentifier:item.identifier];
+    [self presentAsSystemModalForItemIdentifier:item.identifier];
+}
+
+- (void)presentAsSystemModalForItemIdentifier:(NSTouchBarItemIdentifier)identifier {
+    if (@available(macOS 10.14, *)) {
+        [NSTouchBar presentSystemModalTouchBar:self
+                      systemTrayItemIdentifier:identifier];
+    } else {
+        [NSTouchBar presentSystemModalFunctionBar:self
+                         systemTrayItemIdentifier:identifier];
+    }
 }
 
 - (void)dismissSystemModal {
-    [NSTouchBar dismissSystemModalFunctionBar:self];
+    if (@available(macOS 10.14, *)) {
+        [NSTouchBar dismissSystemModalTouchBar:self];
+    } else {
+        [NSTouchBar dismissSystemModalFunctionBar:self];
+    }
 }
 
 - (void)minimizeSystemModal {
-    [NSTouchBar minimizeSystemModalFunctionBar:self];
+    if (@available(macOS 10.14, *)) {
+        [NSTouchBar minimizeSystemModalTouchBar:self];
+    } else {
+        [NSTouchBar minimizeSystemModalFunctionBar:self];
+    }
 }
 
 @end

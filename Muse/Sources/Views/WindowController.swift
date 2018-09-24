@@ -110,7 +110,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     let controlStripItem = NSControlStripTouchBarItem(identifier: .controlStripButton)
     
-    weak var controlStripButton: NSCustomizableButton? {
+    var controlStripButton: NSCustomizableButton? {
         set {
             controlStripItem.view = newValue!
         }

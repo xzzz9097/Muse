@@ -158,10 +158,7 @@ extension WindowController: NSTouchBarDelegate {
     }
     
     func openPopoverBar(_ sender: NSButton) {
-        NSTouchBar.presentSystemModalFunctionBar(
-            popoverBar,
-            systemTrayItemIdentifier: NSTouchBarItemIdentifier.soundPopoverButton.rawValue
-        )
+        popoverBar?.presentAsSystemModal(forItemIdentifier: .soundPopoverButton)
     }
     
     /**

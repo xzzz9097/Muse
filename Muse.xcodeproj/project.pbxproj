@@ -48,7 +48,6 @@
 		0C9B62331E1EAE9100660633 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9B62321E1EAE9100660633 /* ButtonCell.swift */; };
 		0CA45AC31F17D0DB00B2DD21 /* DFRPrivateHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA45AC21F17D0DB00B2DD21 /* DFRPrivateHeader.m */; };
 		0CA5FA621ED1DC9500248A91 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0CA5FA611ED1DC9500248A91 /* dsa_pub.pem */; };
-		0CAB4ED221064F8600CC118A /* iTunesLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CAB4ED121064F8600CC118A /* iTunesLibrary.framework */; };
 		0CB0E0511DEE04AD00B4DF17 /* PlayerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB0E0501DEE04AD00B4DF17 /* PlayerHelper.swift */; };
 		0CC8466B1DF728AE00941787 /* MPRemoteCommand+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC8466A1DF728AE00941787 /* MPRemoteCommand+Extensions.swift */; };
 		0CCD27661DF01F440039ACDC /* DDHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CCD27611DF01F440039ACDC /* DDHotKeyCenter.m */; };
@@ -61,6 +60,7 @@
 		0CEAEB3F1E16624800BD68D5 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */; };
 		0CF8B7E41DF9772900CDD130 /* NSHoverableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */; };
 		0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */; };
+		0CFAE22121597E400010215E /* iTunesLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFAE22021597E3F0010215E /* iTunesLibrary.framework */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
 		0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466D1DE3826300A3BE8E /* Assets.xcassets */; };
@@ -205,6 +205,7 @@
 		0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSHoverableView.swift; sourceTree = "<group>"; };
 		0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		0CFAE22021597E3F0010215E /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = ../../../../../System/Library/Frameworks/iTunesLibrary.framework; sourceTree = "<group>"; };
 		0CFF46661DE3826300A3BE8E /* Muse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Muse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CFF46691DE3826300A3BE8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CFF466B1DE3826300A3BE8E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -229,10 +230,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CAB4ED221064F8600CC118A /* iTunesLibrary.framework in Frameworks */,
 				0C1B1F5F1F17C065009D4588 /* DFRFoundation.framework in Frameworks */,
 				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
+				0CFAE22121597E400010215E /* iTunesLibrary.framework in Frameworks */,
 				FD9F763CA855EFBC8846FCDC /* Pods_Muse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				0CAB4ED121064F8600CC118A /* iTunesLibrary.framework */,
+				0CFAE22021597E3F0010215E /* iTunesLibrary.framework */,
 				0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */,
 				0C676BD61DF443C900B75164 /* AVKit.framework */,
 				0C676BD41DF443AD00B75164 /* AVFoundation.framework */,
@@ -506,7 +508,6 @@
 				0CFF46631DE3826300A3BE8E /* Frameworks */,
 				0CFF46641DE3826300A3BE8E /* Resources */,
 				1A4CC0C78FE35E1A8380752A /* [CP] Embed Pods Frameworks */,
-				F4864ADC8C3C6DC2FFECCE72 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -705,14 +706,12 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MASPreferences/MASPreferences.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
-				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/SpotifyKit/SpotifyKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASPreferences.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpotifyKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -736,21 +735,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F4864ADC8C3C6DC2FFECCE72 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Muse/Pods-Muse-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

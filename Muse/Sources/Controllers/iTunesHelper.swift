@@ -7,6 +7,7 @@
 //
 
 import ScriptingBridge
+import iTunesLibrary
 
 // Protocol for iTunes application queries
 @objc fileprivate protocol iTunesApplication {
@@ -280,18 +281,18 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
 
 extension ITLibMediaItem {
     // TODO: constrain protocl to mediaKindSong items
-    
+
     var song: Song {
         return Song(address: self.location?.path ?? "", // TODO: check for remote tracks
-                    name: self.title,
-                    artist: self.artist?.name ?? "",
-                    album: self.album.title ?? "",
-                    duration: Double(self.totalTime))
+            name: self.title,
+            artist: self.artist?.name ?? "",
+            album: self.album.title ?? "",
+            duration: Double(self.totalTime))
     }
 }
 
 extension ITLibPlaylist {
-    
+
     var playlist: Playlist {
         return Playlist(id: self.persistentID.stringValue,
                         name: self.name,
