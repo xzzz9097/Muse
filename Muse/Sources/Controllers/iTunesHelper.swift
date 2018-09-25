@@ -45,6 +45,7 @@ import iTunesLibrary
     @objc optional var artist:       String { get }
     @objc optional var album:        String { get }
     @objc optional var duration:     Double { get }
+    @objc optional var time:         String { get }
     @objc optional var artworks:     [iTunesArtworkProtocol] { get }
     @objc optional var loved:        Bool { get }
     
@@ -149,7 +150,7 @@ class iTunesHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Lik
     
     var trackDuration: Double {
         // Return current track duration
-        return application?.currentTrack?.duration ?? 0
+        return Double(MMSSString: application?.currentTrack?.time ?? "") ?? 0
     }
     
     func internalScrub(to doubleValue: Double?, touching: Bool) {
