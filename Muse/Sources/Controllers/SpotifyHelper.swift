@@ -359,6 +359,6 @@ extension SpotifyPlaylist {
     var playlist: Playlist {
         return Playlist(id: self.uri,
                         name: self.name,
-                        count: self.collectionTracks?.count ?? 0)
+                        count: self.count)
     }
 }
