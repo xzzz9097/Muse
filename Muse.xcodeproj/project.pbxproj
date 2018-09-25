@@ -703,7 +703,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MASPreferences/MASPreferences.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
 				"${BUILT_PRODUCTS_DIR}/SpotifyKit/SpotifyKit.framework",
@@ -716,7 +716,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7EA399383C680EA91AECE5D3 /* [CP] Check Pods Manifest.lock */ = {
