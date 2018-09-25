@@ -17,14 +17,14 @@ extension String {
      So it works for both variable and constant strings
      */
     func truncate(at length: Int) -> String {
-        guard self.characters.count > length else { return self }
+        guard self.count > length else { return self }
         
         // Split string till limited index
         var truncated = self.substring(to: self.index(self.startIndex, offsetBy: length))
         
-        if truncated.characters.last == " " {
+        if truncated.last == " " {
             // Remove last character if it's a space
-            truncated.characters.removeLast()
+            truncated.removeLast()
         }
         
         // Append the 'wrap' symbol

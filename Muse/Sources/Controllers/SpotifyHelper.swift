@@ -130,7 +130,7 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
         guard   let application  = application,
                 let currentTrack = application.currentTrack,
                 let id           = currentTrack.id,
-                id.characters.count > 14 else { return "" }
+                id.count > 14 else { return "" }
         
         // AppleScript returns "spotify:track:id"
         // We need to cut the initial part of the string
