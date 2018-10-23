@@ -2,9 +2,14 @@
 <channel>
 <title>Muse</title>
 <item>
-<title>2.2</title>
-<pubDate>Sun, 25 Jun 2017 22:42:16 +0200</pubDate>
+<title>4.1</title>
+<description><![CDATA[<ul>
+<li><p>macOS 10.12 Mojave compatibility: fixed TouchBar and AppleScript permissions</p></li>
+<li><p>playlist support for Spotify and iTunes (toggle with cmd+p from popup view)</p></li>
+<li><p>track search for Spotify and iTunes (toggle with cmd+f from popup view)</p></li>
+</ul>]]></description>
+<pubDate>Tue, 25 Sep 2018 17:32:22 +0200</pubDate>
 <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>
-<enclosure url="https://github.com/xzzz9097/Muse/files/1100614/Muse22.zip" sparkle:version="11" sparkle:shortVersionString="2.2" length="5619910" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCGvWiI8WL1irXsYVUWXjmaAllwiQIUbVYok8sDFq63GptYoGab9o0iRLA="/>
+<enclosure url="https://github.com/xzzz9097/Muse/releases/download/4.1/Muse.app.zip" sparkle:version="15" sparkle:shortVersionString="4.1" length="6579419" type="application/octet-stream" sparkle:dsaSignature="##SIGNATURE##"/>
 </item>
 </channel></rss>
