@@ -14,7 +14,7 @@ At first start you'll be prompted to log into your Spotify account. It's not str
 
 ### Usage
 Summon it with <kbd>control</kbd> + <kbd>command</kbd> + <kbd>s</kbd>
-You'll be greeted with an album art window in the middle of the screen, and the playback controls on your TouchBar. Pressing the hotkey one more time makes them both disappear, and they also auto-hide when you focus another application. Bring up the window and press <kbd>command</kbd> + <kbd>q</kbd> or <kbd>esc</kbd> to quit the app.
+You'll be greeted with an album art window in the middle of the screen, and the playback controls on your TouchBar. Pressing the hotkey one more time makes them both disappear, and they also auto-hide when you focus another application. Bring up the window and press <kbd>esc</kbd> to close the app or <kbd>command</kbd> + <kbd>q</kbd> to quit the app.
 System-wide now playing controls are also accessible from the leftmost button of the control strip, just like iTunes and Safari ones.
 Spotify, iTunes and Vox are currently supported. The app automatically guesses the right player to control basing on availability and playback notifications, but you can manually toggle them with the shortcuts described below.
 
