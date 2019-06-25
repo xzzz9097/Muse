@@ -40,6 +40,7 @@
 		0C8162B81F29021300529F5E /* NSMediaSliderTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8162B71F29021300529F5E /* NSMediaSliderTouchBarItem.swift */; };
 		0C8B16791F82A31C0009BE7B /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8B16781F82A31C0009BE7B /* NSBezierPath+CGPath.swift */; };
 		0C8E3BC11E3CC43900C8EBD1 /* iTunesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */; };
+		0C999A3722C29FEC00E9637A /* iTunesLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C999A3522C29BB400E9637A /* iTunesLibrary.framework */; };
 		0C9A60BE1DE6071F0051CDC6 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60BD1DE6071F0051CDC6 /* Song.swift */; };
 		0C9A60C71DE75DCC0051CDC6 /* Imageable+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */; };
 		0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C9A60D81DE79B6D0051CDC6 /* Carbon.framework */; };
@@ -230,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C999A3722C29FEC00E9637A /* iTunesLibrary.framework in Frameworks */,
 				0C1B1F5F1F17C065009D4588 /* DFRFoundation.framework in Frameworks */,
 				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
@@ -947,11 +949,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 95ZS5S2W7X;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
-					"$(LOCAL_LIBRARY_DIR)/Frameworks",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/Muse/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;
@@ -974,10 +971,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 95ZS5S2W7X;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/Muse/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Muse;

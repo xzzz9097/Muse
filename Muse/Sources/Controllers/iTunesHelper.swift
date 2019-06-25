@@ -7,6 +7,7 @@
 //
 
 import ScriptingBridge
+import iTunesLibrary
 
 // Protocol for iTunes application queries
 @objc fileprivate protocol iTunesApplication {
