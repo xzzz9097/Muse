@@ -29,7 +29,7 @@ class AccountsPreferencesViewController: NSViewController, MASPreferencesViewCon
     
     var toolbarItemLabel: String? = "Accounts"
     
-    var toolbarItemImage: NSImage? = NSImage(named: NSImageNameUserAccounts)
+    var toolbarItemImage: NSImage? = NSImage(named: NSImage.Name.userAccounts)
     
     // MARK: Account preferences
     

@@ -11,26 +11,26 @@ extension NSImage {
     
     // MARK: Project drawables
     
-    static let menuBarIcon  = NSImage(named: "menuBarIcon")!.forUI()
+    static let menuBarIcon  = NSImage(named: NSImage.Name(rawValue: "menuBarIcon"))!.forUI()
     
-    static let defaultBg    = NSImage(named: "DefaultBackground")!
+    static let defaultBg    = NSImage(named: NSImage.Name(rawValue: "DefaultBackground"))!
     
-    static let shuffling    = NSImage(named: "DFRShuffle")!.forUI()
-    static let repeating    = NSImage(named: "DFRRepeat")!.forUI()
-    static let like         = NSImage(named: "DFRLike")!.forUI()
-    static let liked        = NSImage(named: "DFRLiked")
+    static let shuffling    = NSImage(named: NSImage.Name(rawValue: "DFRShuffle"))!.forUI()
+    static let repeating    = NSImage(named: NSImage.Name(rawValue: "DFRRepeat"))!.forUI()
+    static let like         = NSImage(named: NSImage.Name(rawValue: "DFRLike"))!.forUI()
+    static let liked        = NSImage(named: NSImage.Name(rawValue: "DFRLiked"))
     
-    static let previous     = NSImage(named: NSImageNameTouchBarRewindTemplate)!
-    static let next         = NSImage(named: NSImageNameTouchBarFastForwardTemplate)!
-    static let play         = NSImage(named: NSImageNameTouchBarPlayTemplate)!
-    static let pause        = NSImage(named: NSImageNameTouchBarPauseTemplate)!
+    static let previous     = NSImage(named: NSImage.Name.touchBarRewindTemplate)!
+    static let next         = NSImage(named: NSImage.Name.touchBarFastForwardTemplate)!
+    static let play         = NSImage(named: NSImage.Name.touchBarPlayTemplate)!
+    static let pause        = NSImage(named: NSImage.Name.touchBarPauseTemplate)!
     
-    static let volumeLow    = NSImage(named: NSImageNameTouchBarAudioOutputVolumeLowTemplate)
-    static let volumeMedium = NSImage(named: NSImageNameTouchBarAudioOutputVolumeMediumTemplate)
-    static let volumeHigh   = NSImage(named: NSImageNameTouchBarAudioOutputVolumeHighTemplate)
+    static let volumeLow    = NSImage(named: NSImage.Name.touchBarAudioOutputVolumeLowTemplate)
+    static let volumeMedium = NSImage(named: NSImage.Name.touchBarAudioOutputVolumeMediumTemplate)
+    static let volumeHigh   = NSImage(named: NSImage.Name.touchBarAudioOutputVolumeHighTemplate)
     
-    static let playhead     = NSImage(named: NSImageNameTouchBarPlayheadTemplate)
-    static let playbar      = NSImage(named: "playbar")
+    static let playhead     = NSImage(named: NSImage.Name.touchBarPlayheadTemplate)
+    static let playbar      = NSImage(named: NSImage.Name(rawValue: "playbar"))
     
 }
 
@@ -120,7 +120,7 @@ extension NSImage {
         let image = NSImage(size: size)
         image.lockFocus()
         
-        NSGraphicsContext.current()?.imageInterpolation = .high
+        NSGraphicsContext.current?.imageInterpolation = .high
         let frame = NSRect(origin: .zero, size: size)
         NSBezierPath(ovalIn: frame).addClip()
         draw(at: .zero, from: frame, operation: .sourceOver, fraction: 1)

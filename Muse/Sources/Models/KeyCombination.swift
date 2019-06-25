@@ -9,16 +9,16 @@
 import Foundation
 
 struct KeyCombination {
-    let modifiers: NSEventModifierFlags?
+    let modifiers: NSEvent.ModifierFlags?
     
     let keyCode: Int
     
-    init(_ modifiers: NSEventModifierFlags, _ keyCode: uint16) {
+    init(_ modifiers: NSEvent.ModifierFlags, _ keyCode: uint16) {
         self.modifiers = modifiers
         self.keyCode   = Int(keyCode)
     }
     
-    init(_ modifiers: NSEventModifierFlags, _ keyCode: Int) {
+    init(_ modifiers: NSEvent.ModifierFlags, _ keyCode: Int) {
         self.modifiers = modifiers
         self.keyCode   = keyCode
     }
@@ -41,7 +41,7 @@ func ~=(lhs: Int, rhs: KeyCombination) -> Bool {
     return rhs.keyCode == lhs
 }
 
-typealias KeyCombinationTuple = (NSEventModifierFlags, Int)
+typealias KeyCombinationTuple = (NSEvent.ModifierFlags, Int)
 
 func ~=(lhs: KeyCombinationTuple, rhs: KeyCombinationTuple) -> Bool {
     return lhs.0 ~= rhs.0 && lhs.1 ~= rhs.1

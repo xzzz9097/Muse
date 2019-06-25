@@ -313,9 +313,9 @@ class SliderCell: NSSliderCell {
         
         paraghraphStyle.alignment = isLeftOfKnob ? .left : .right
         
-        return [NSFontAttributeName: NSFont.systemFont(ofSize: infoFontSize),
-                NSForegroundColorAttributeName: isLeftOfKnob ? infoFontLeftColor : infoFontRightColor,
-                NSParagraphStyleAttributeName: paraghraphStyle]
+        return [NSAttributedStringKey.font.rawValue: NSFont.systemFont(ofSize: infoFontSize),
+                NSAttributedStringKey.foregroundColor.rawValue: isLeftOfKnob ? infoFontLeftColor : infoFontRightColor,
+                NSAttributedStringKey.paragraphStyle.rawValue: paraghraphStyle]
     }
     
 }

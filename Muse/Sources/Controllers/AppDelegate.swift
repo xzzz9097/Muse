@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Properties
     
-    let menuItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+    let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
     // TODO: do this without callbacks!
     
@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func quitMenuItemClicked(_ sender: Any) {
         // Quit the application
-        NSApplication.shared().terminate(self)
+        NSApplication.shared.terminate(self)
     }
     
     @IBAction func preferencesMenuItemClicked(_ sender: Any) {
@@ -145,7 +145,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Enable TouchBar overlay if 10.12.2
         if #available(OSX 10.12.2, *) {
-            NSApplication.shared().isAutomaticCustomizeTouchBarMenuItemEnabled = true
+            NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
         }
         
         // Create the menu item

@@ -8,10 +8,10 @@
 
 import Cocoa
 
-extension NSTrackingAreaOptions {
+extension NSTrackingArea.Options {
     
     // An OptionSet with the needed mouse tracking flags
-    static var defaultMouse: NSTrackingAreaOptions {
+    static var defaultMouse: NSTrackingArea.Options {
         return [.mouseEnteredAndExited, .activeAlways]
     }
 }

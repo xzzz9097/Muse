@@ -78,7 +78,7 @@ extension ViewController: NSTableViewDelegate {
     /**
      Double click action, set as tableView.doubleAction
      */
-    func tableViewDoubleClicked(tableView: NSTableView) {
+    @objc func tableViewDoubleClicked(tableView: NSTableView) {
         switch resultsMode {
         case .trackSearch:
             searchTableViewDoubleClicked(tableView: tableView)
@@ -138,7 +138,7 @@ extension ViewController {
             searchPlaylist(text)
         }
     }
-    
+    @objc  
     func startSearch() {
         // Enable editing and empty the field
         titleTextField.isEditable  = true

@@ -273,7 +273,7 @@ extension PlayerHelper {
     
     var path: String? {
         // Returns the path of the player application
-        return NSWorkspace.shared()
+        return NSWorkspace.shared
             .absolutePathForApplication(withBundleIdentifier: Self.BundleIdentifier)
     }
     
@@ -281,7 +281,7 @@ extension PlayerHelper {
         guard let path = path else { return nil }
         
         // Returns the icon of the player application
-        return NSWorkspace.shared().icon(forFile: path)
+        return NSWorkspace.shared.icon(forFile: path)
     }
     
     // MARK: Notification ID

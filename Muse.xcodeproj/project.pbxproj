@@ -60,7 +60,6 @@
 		0CEAEB3F1E16624800BD68D5 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CEAEB3E1E16624800BD68D5 /* DispatchQueue+Extensions.swift */; };
 		0CF8B7E41DF9772900CDD130 /* NSHoverableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF8B7E31DF9772900CDD130 /* NSHoverableView.swift */; };
 		0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFA0FDC1DF37059007DA6AE /* MediaPlayer.framework */; };
-		0CFAE22121597E400010215E /* iTunesLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CFAE22021597E3F0010215E /* iTunesLibrary.framework */; };
 		0CFF466A1DE3826300A3BE8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF46691DE3826300A3BE8E /* AppDelegate.swift */; };
 		0CFF466C1DE3826300A3BE8E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF466B1DE3826300A3BE8E /* ViewController.swift */; };
 		0CFF466E1DE3826300A3BE8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CFF466D1DE3826300A3BE8E /* Assets.xcassets */; };
@@ -177,6 +176,7 @@
 		0C8162B71F29021300529F5E /* NSMediaSliderTouchBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMediaSliderTouchBarItem.swift; sourceTree = "<group>"; };
 		0C8B16781F82A31C0009BE7B /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		0C8E3BC01E3CC43900C8EBD1 /* iTunesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iTunesHelper.swift; sourceTree = "<group>"; };
+		0C999A3522C29BB400E9637A /* iTunesLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iTunesLibrary.framework; path = System/Library/Frameworks/iTunesLibrary.framework; sourceTree = SDKROOT; };
 		0C9A60BD1DE6071F0051CDC6 /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		0C9A60C61DE75DCC0051CDC6 /* Imageable+Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Imageable+Download.swift"; sourceTree = "<group>"; };
 		0C9A60C81DE76EBB0051CDC6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -233,7 +233,6 @@
 				0C1B1F5F1F17C065009D4588 /* DFRFoundation.framework in Frameworks */,
 				0CFA0FDD1DF37059007DA6AE /* MediaPlayer.framework in Frameworks */,
 				0C9A60D91DE79B6D0051CDC6 /* Carbon.framework in Frameworks */,
-				0CFAE22121597E400010215E /* iTunesLibrary.framework in Frameworks */,
 				FD9F763CA855EFBC8846FCDC /* Pods_Muse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,6 +482,7 @@
 			children = (
 				0CAB4ED121064F8600CC118A /* iTunesLibrary.framework */,
 				0CFAE22021597E3F0010215E /* iTunesLibrary.framework */,
+				0C999A3522C29BB400E9637A /* iTunesLibrary.framework */,
 				0C3382CD1F14F372000D74F9 /* DFRFoundation.framework */,
 				0C676BD61DF443C900B75164 /* AVKit.framework */,
 				0C676BD41DF443AD00B75164 /* AVFoundation.framework */,
@@ -707,12 +707,14 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Muse/Pods-Muse-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MASPreferences/MASPreferences.framework",
 				"${PODS_ROOT}/Sparkle/Sparkle.framework",
+				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/SpotifyKit/SpotifyKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MASPreferences.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpotifyKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

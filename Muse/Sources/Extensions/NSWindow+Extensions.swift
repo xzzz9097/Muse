@@ -40,19 +40,19 @@ extension NSWindow {
     var isVisibleAsHUD: Bool {
         set {
             if newValue {
-                self.level = NSScreenSaverWindowLevel
+                self.level = NSWindow.Level.screenSaver
                 self.hidesOnDeactivate = false
                 self.orderFrontRegardless()
             } else {
                 self.fadeClose(duration: 0.4) {
-                    self.level = NSNormalWindowLevel
+                    self.level = NSWindow.Level.normal
                     self.hidesOnDeactivate = true
                 }
             }
         }
         
         get {
-            return   self.level == NSScreenSaverWindowLevel &&
+            return   self.level == NSWindow.Level.screenSaver &&
                     !self.hidesOnDeactivate
         }
     }

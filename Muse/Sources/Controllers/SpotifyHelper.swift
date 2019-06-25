@@ -331,7 +331,7 @@ class SpotifyHelper: PlayerHelper, LikablePlayerHelper, InternalPlayerHelper, Li
         spotifyManager.myProfile { profile in
             guard let imageURL = URL(string: profile.artUri) else { return }
             
-            NSImage.download(from: imageURL, fallback: NSImage(named: NSImageNameUserAccounts)!) {
+            NSImage.download(from: imageURL, fallback: NSImage(named: NSImage.Name.userAccounts)!) {
                 completionHandler(Account(username: profile.name,
                                           email: profile.email ?? "",
                                           image: $0.oval()))

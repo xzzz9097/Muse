@@ -314,7 +314,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     @IBAction func songProgressSliderValueChanged(_ sender: Any) {
         // Track progress slider changes
         if let slider = sender as? NSSlider {
-            guard let currentEvent = NSApplication.shared().currentEvent else { return }
+            guard let currentEvent = NSApplication.shared.currentEvent else { return }
             
             if currentEvent.type == .leftMouseDragged {
                 // Detected mouse down
@@ -328,11 +328,11 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         }
     }
     
-    func goToNextActionTab() {
+    @objc func goToNextActionTab() {
         actionTabView.selectNextTabViewItem(self)
     }
     
-    func goToPreviousActionTab() {
+    @objc func goToPreviousActionTab() {
         actionTabView.selectPreviousTabViewItem(self)
     }
     

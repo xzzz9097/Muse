@@ -21,7 +21,7 @@ class GeneralPreferencesViewController: NSViewController, MASPreferencesViewCont
     
     var toolbarItemLabel: String? = "General"
     
-    var toolbarItemImage: NSImage? = NSImage(named: NSImageNamePreferencesGeneral)
+    var toolbarItemImage: NSImage? = NSImage(named: NSImage.Name.preferencesGeneral)
     
     // MARK: General preferences
     

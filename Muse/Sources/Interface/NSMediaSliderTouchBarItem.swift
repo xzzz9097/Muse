@@ -10,7 +10,7 @@ import Cocoa
 @available(OSX 10.12.2, *)
 class NSMediaSliderTouchBarItem: NSSliderTouchBarItem {
     
-    override init(identifier: NSTouchBarItemIdentifier) {
+    override init(identifier: NSTouchBarItem.Identifier) {
         super.init(identifier: identifier)
         
         prepareSlider()

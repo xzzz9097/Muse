@@ -19,7 +19,7 @@ extension ViewController {
                          row: Int) -> NSView? {
         guard let identifier = tableColumn?.identifier else { return nil }
         
-        if let cell = tableView.make(withIdentifier: identifier, owner: self) as? ResultsTableCellView {
+        if let cell = tableView.makeView(withIdentifier: identifier, owner: self) as? ResultsTableCellView {
             // First table cell field: track name
             cell.textField?.stringValue = trackSearchResults[row].name
             cell.textField?.textColor   = colors?.primary

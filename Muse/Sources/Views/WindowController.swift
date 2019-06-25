@@ -10,8 +10,9 @@ import Cocoa
 import Carbon.HIToolbox
 import MediaPlayer
 
-fileprivate extension NSTouchBarItemIdentifier {
-    static let controlStripButton = NSTouchBarItemIdentifier(
+@available(OSX 10.12.2, *)
+fileprivate extension NSTouchBarItem.Identifier {
+    static let controlStripButton = NSTouchBarItem.Identifier(
         rawValue: "\(Bundle.main.bundleIdentifier!).TouchBarItem.controlStripButton"
     )
 }
@@ -21,7 +22,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: App delegate getter
     
-    let delegate = NSApplication.shared().delegate as? AppDelegate
+    let delegate = NSApplication.shared.delegate as? AppDelegate
     
     // MARK: Helpers
 
@@ -136,7 +137,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     // MARK: Actions
     
-    func controlsSegmentedViewClicked(_ sender: NSSegmentedControl) {
+    @objc func controlsSegmentedViewClicked(_ sender: NSSegmentedControl) {
         switch sender.selectedSegment {
         case 0:
             helper.previousTrack()
@@ -149,7 +150,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    func shuffleRepeatSegmentedViewClicked(_ sender: NSSegmentedControl) {
+    @objc func shuffleRepeatSegmentedViewClicked(_ sender: NSSegmentedControl) {
         let selectedSegment = sender.selectedSegment
         
         switch selectedSegment {
@@ -164,7 +165,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    func shuffleButtonClicked(_ sender: Any) {
+    @objc func shuffleButtonClicked(_ sender: Any) {
         switch sender {
         case let segmented as NSSegmentedControl:
             helper.shuffling = segmented.isSelected(forSegment: segmented.selectedSegment)
@@ -175,7 +176,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    func repeatButtonClicked(_ sender: Any) {
+    @objc func repeatButtonClicked(_ sender: Any) {
         switch sender {
         case let segmented as NSSegmentedControl:
             helper.repeating = segmented.isSelected(forSegment: segmented.selectedSegment)
@@ -255,8 +256,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     // MARK: Key handlers
     
     func initKeyDownHandler() {
-        eventMonitor = NSEvent.addLocalMonitorForEvents(
-            matching: NSEventMask.keyDown,
+        eventMonitor = NSEvent.addLocalMonitorForEvents(matching: NSEvent.EventTypeMask.keyDown,
             handler: { event in
                 if self.handleKeyDown(with: event) { return nil }
                 
@@ -332,7 +332,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func registerHotkey() {
         guard let hotkeyCenter = DDHotKeyCenter.shared() else { return }
         
-        let modifiers: UInt = NSEventModifierFlags.control.rawValue | NSEventModifierFlags.command.rawValue
+        let modifiers: UInt = NSEvent.ModifierFlags.control.rawValue | NSEvent.ModifierFlags.command.rawValue
         
         // Register system-wide summon hotkey
         hotkeyCenter.registerHotKey(withKeyCode: UInt16(kVK_ANSI_S),
@@ -489,7 +489,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         
         controlStripButton?.textColor     = NSColor.white.withAlphaComponent(0.8)
         controlStripButton?.font          = NSFont.monospacedDigitSystemFont(ofSize: 16.0,
-                                                                             weight: NSFontWeightRegular)
+                                                                             weight: NSFont.Weight.regular)
         controlStripButton?.imagePosition = .imageOverlaps
         controlStripButton?.isBordered    = false
         controlStripButton?.imageScaling  = .scaleNone
@@ -577,9 +577,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     /**
-     Reveals the designated NSTouchBar when control strip button is pressed
+     Reveals the designated NSTouchBar when control strip button @objc is pressed
      */
-    func presentModalTouchBar() {
+    @objc func presentModalTouchBar() {
         updatePopoverButtonForControlStrip()
         
         touchBar?.presentAsSystemModal(for: controlStripItem)
@@ -683,9 +683,9 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     func prepareWindow() {
         guard let window = self.window else { return }
         
-        window.titleVisibility = NSWindowTitleVisibility.hidden;
+        window.titleVisibility = NSWindow.TitleVisibility.hidden;
         window.titlebarAppearsTransparent = true
-        window.styleMask.update(with: NSWindowStyleMask.fullSizeContentView)
+        window.styleMask.update(with: NSWindow.StyleMask.fullSizeContentView)
         
         // Set fixed window position (at the center of the screen)
         window.center()
@@ -841,7 +841,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     }
     
     /**
-     Catches URLs with specific prefix ("muse://")
+     Catches URLs with specific prefix (@objc "muse://")
      */
     func handleURLEvent(event: NSAppleEventDescriptor,
                         replyEvent: NSAppleEventDescriptor) {
@@ -1078,7 +1078,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // And the View's slider
         onViewController { controller in
             controller.updateSongProgressSlider(with: position / self.song.duration)
-        }
+            @objc       }
     }
     
     func syncSongProgressSlider() {
