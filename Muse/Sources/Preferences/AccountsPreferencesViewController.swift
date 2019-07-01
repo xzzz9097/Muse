@@ -11,8 +11,8 @@ import MASPreferences
 
 class AccountsPreferencesViewController: NSViewController, MASPreferencesViewController {
 
-    override var nibName: String? {
-        return "AccountsPreferencesView"
+    override var nibName: NSNib.Name? {
+        return NSNib.Name(rawValue: "AccountsPreferencesView")
     }
     
     // MARK: Outlets

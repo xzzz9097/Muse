@@ -194,12 +194,12 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         updateSoundPopoverButton(for: helper.volume)
     }
     
-    func songArtworkTitleButtonClicked(_ sender: NSButton) {
+    @objc func songArtworkTitleButtonClicked(_ sender: NSButton) {
         // Jump to player when the artwork on the TouchBar is tapped
         showPlayer()
     }
     
-    func likeButtonClicked(_ sender: NSButton) {
+    @objc func likeButtonClicked(_ sender: NSButton) {
         // Reverse like on current track if supported
         if var helper = helper as? LikablePlayerHelper {
             helper.toggleLiked()
@@ -342,7 +342,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
                                     object: nil)
     }
     
-    func hotkeyAction() {
+    @objc func hotkeyAction() {
         if let window = self.window {
             if didPresentAsSystemModal {
                 // Dismiss system modal bar before opening the window
@@ -537,7 +537,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         return recognizer
     }
     
-    func controlStripButtonPressureGestureHandler(_ sender: NSGestureRecognizer?) {
+    @objc func controlStripButtonPressureGestureHandler(_ sender: NSGestureRecognizer?) {
         guard let recognizer = sender else { return }
         
         switch recognizer.state {
@@ -553,7 +553,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         }
     }
     
-    func controlStripButtonPanGestureHandler(_ sender: NSGestureRecognizer?) {
+    @objc func controlStripButtonPanGestureHandler(_ sender: NSGestureRecognizer?) {
         guard let recognizer = sender as? NSPanGestureRecognizer else { return }
         
         switch recognizer.state {
@@ -768,7 +768,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
      Recognizes pan (aka touch drag) gestures on the song artwork+title button.
      We use this to toggle song information on the button
      */
-    var songArtworkTitleButtonPanGestureRecognizer: NSGestureRecognizer {
+    @objc var songArtworkTitleButtonPanGestureRecognizer: NSGestureRecognizer {
         let recognizer = NSPanGestureRecognizer()
         
         recognizer.target = self
@@ -779,7 +779,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         return recognizer
     }
     
-    func songArtworkTitleButtonPanGestureHandler(_ recognizer: NSPanGestureRecognizer) {
+    @objc func songArtworkTitleButtonPanGestureHandler(_ recognizer: NSPanGestureRecognizer) {
         if case .began = recognizer.state {
             songArtworkTitleButton?.title =
                 recognizer.translation(in: songArtworkTitleButton).x > 0 ?
@@ -843,7 +843,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     /**
      Catches URLs with specific prefix (@objc "muse://")
      */
-    func handleURLEvent(event: NSAppleEventDescriptor,
+    @objc func handleURLEvent(event: NSAppleEventDescriptor,
                         replyEvent: NSAppleEventDescriptor) {
         if  let urlDescriptor = event.paramDescriptor(forKeyword: keyDirectObject),
             let urlString     = urlDescriptor.stringValue,
@@ -871,7 +871,7 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
     
     func initWakeNotificationWatcher() {
         // Attach the NotificationObserver for system wake notification
-        NSWorkspace.shared().notificationCenter.addObserver(forName: .NSWorkspaceDidWake,
+        NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.didWakeNotification,
                                                             object: nil,
                                                             queue: nil,
                                                             using: hookWakeNotification)
@@ -1078,10 +1078,10 @@ class WindowController: NSWindowController, NSWindowDelegate, SliderDelegate {
         // And the View's slider
         onViewController { controller in
             controller.updateSongProgressSlider(with: position / self.song.duration)
-            @objc       }
+        }
     }
     
-    func syncSongProgressSlider() {
+    @objc func syncSongProgressSlider() {
         guard helper.playerState != .stopped else {
             // Reset song data if player is stopped
             resetSong()

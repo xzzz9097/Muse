@@ -11,8 +11,8 @@ import MASPreferences
 
 class GeneralPreferencesViewController: NSViewController, MASPreferencesViewController {
     
-    override var nibName: String? {
-        return "GeneralPreferencesView"
+    override var nibName: NSNib.Name? {
+        return NSNib.Name(rawValue: "GeneralPreferencesView")
     }
     
     // MARK: MASPreferencesViewController

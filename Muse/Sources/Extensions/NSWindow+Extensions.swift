@@ -111,7 +111,7 @@ extension NSWindow {
             context.allowsImplicitAnimation = true
             
             self.setFrame(frame, display: true)
-        }, completionHandler: { _ in animationCompletionHandler() })
+        }, completionHandler: { animationCompletionHandler() })
     }
     
 }

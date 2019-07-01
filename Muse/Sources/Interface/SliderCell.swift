@@ -308,14 +308,15 @@ class SliderCell: NSSliderCell {
     /**
      Font attributes for the info text
      */
-    func infoFontAttributes(for rect: NSRect) -> [String: Any] {
+    func infoFontAttributes(for rect: NSRect) -> [NSAttributedStringKey: Any] {
         let isLeftOfKnob = shouldInfoBeLeft(of: rect)
         
         paraghraphStyle.alignment = isLeftOfKnob ? .left : .right
         
-        return [NSAttributedStringKey.font.rawValue: NSFont.systemFont(ofSize: infoFontSize),
-                NSAttributedStringKey.foregroundColor.rawValue: isLeftOfKnob ? infoFontLeftColor : infoFontRightColor,
-                NSAttributedStringKey.paragraphStyle.rawValue: paraghraphStyle]
+        
+        return [.font: NSFont.systemFont(ofSize: infoFontSize),
+                .foregroundColor: isLeftOfKnob ? infoFontLeftColor : infoFontRightColor,
+                .paragraphStyle: paraghraphStyle]
     }
     
 }

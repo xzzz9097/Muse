@@ -75,11 +75,10 @@ class NSCustomizableButton: NSButton, NSMouseHoverableView {
                   target: target,
                   action: action)
         
+        // Use custom button cell
+        self.cell = ButtonCell()
+        
         self.hasRoundedLeadingImage = hasRoundedLeadingImage
-    }
-    
-    override class func cellClass() -> AnyClass? {
-        return ButtonCell.self
     }
     
 }

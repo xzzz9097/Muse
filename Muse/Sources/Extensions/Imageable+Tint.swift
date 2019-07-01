@@ -45,7 +45,7 @@ extension NSImage {
         
         // Then apply the tint
         color.set()
-        NSRectFillUsingOperation(imageRect, .sourceAtop)
+        imageRect.fill(using: .sourceAtop)
         
         tinted.unlockFocus()
         
