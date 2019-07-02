@@ -71,12 +71,13 @@ class NSCustomizableButton: NSButton, NSMouseHoverableView {
                      target: Any?,
                      action: Selector?,
                      hasRoundedLeadingImage: Bool) {
-        self.init(title: title,
-                  target: target,
-                  action: action)
+        self.init()
         
         // Use custom button cell
-        self.cell = ButtonCell()
+        self.cell    = ButtonCell()
+        cell?.title  = title
+        cell?.target = target as AnyObject?
+        cell?.action = action
         
         self.hasRoundedLeadingImage = hasRoundedLeadingImage
     }
